@@ -51,6 +51,11 @@ PY
 SPEC="$CLEAN_SPEC"
 echo "Sanitized spec -> ${SPEC}"
 
+# openapi-generator does not delete files for operations that no longer exist;
+# wipe the generated dirs first so dropped endpoints (e.g. /internal/*) don't
+# linger as stale clients.
+rm -rf sdk/python sdk/typescript sdk/go
+
 # --- Python -> package: agentdrive_sdk, PyPI dist: agentdrive-sdk ---
 $GEN -i "$SPEC" -g python -o sdk/python \
   --additional-properties=packageName=agentdrive_sdk,projectName=agentdrive-sdk,packageVersion="${VERSION}",library=urllib3 \
