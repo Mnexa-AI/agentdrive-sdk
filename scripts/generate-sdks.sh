@@ -14,6 +14,29 @@ GEN="npx --yes @openapitools/openapi-generator-cli@latest generate"
 
 echo "Generating SDKs from ${SPEC} (version ${VERSION})"
 
+# openapi-generator's Go templates emit invalid code for object/array `default`
+# values (e.g. `var options CompileOptions = {wait=false}`). Strip those defaults
+# into a sanitized spec used for generation; scalar defaults are left intact.
+CLEAN_SPEC="$(dirname "$SPEC")/.openapi.clean.json"
+python3 - "$SPEC" "$CLEAN_SPEC" <<'PY'
+import json, sys
+src, dst = sys.argv[1], sys.argv[2]
+d = json.load(open(src))
+def walk(o):
+    if isinstance(o, dict):
+        if isinstance(o.get("default"), (dict, list)):
+            del o["default"]
+        for v in o.values():
+            walk(v)
+    elif isinstance(o, list):
+        for v in o:
+            walk(v)
+walk(d)
+json.dump(d, open(dst, "w"))
+PY
+SPEC="$CLEAN_SPEC"
+echo "Sanitized spec -> ${SPEC}"
+
 # --- Python -> package: agentdrive_sdk, PyPI dist: agentdrive-sdk ---
 $GEN -i "$SPEC" -g python -o sdk/python \
   --additional-properties=packageName=agentdrive_sdk,projectName=agentdrive-sdk,packageVersion="${VERSION}",library=urllib3 \
@@ -24,9 +47,15 @@ $GEN -i "$SPEC" -g typescript-fetch -o sdk/typescript \
   --additional-properties=npmName=@mnexa-ai/agentdrive-sdk,npmVersion="${VERSION}",supportsES6=true,typescriptThreePlus=true \
   --git-host="$GIT_HOST" --git-user-id="$GIT_USER" --git-repo-id="$GIT_REPO"
 
-# --- Go -> module: github.com/Mnexa-AI/agentdrive-sdk/go ---
+# --- Go -> module: github.com/Mnexa-AI/agentdrive-sdk/sdk/go ---
 $GEN -i "$SPEC" -g go -o sdk/go \
   --additional-properties=packageName=agentdrive,isGoSubmodule=true,enumClassPrefix=true \
   --git-host="$GIT_HOST" --git-user-id="$GIT_USER" --git-repo-id="$GIT_REPO"
+
+# The module must be importable at its location in the monorepo so that
+# `go get github.com/Mnexa-AI/agentdrive-sdk/sdk/go@<tag>` resolves. Version
+# tags for this submodule are `sdk/go/vX.Y.Z` (see publish.yml).
+GO_MODULE="${GIT_HOST}/${GIT_USER}/${GIT_REPO}/sdk/go"
+sed -i.bak "1s|^module .*|module ${GO_MODULE}|" sdk/go/go.mod && rm -f sdk/go/go.mod.bak
 
 echo "Done. SDKs written to sdk/{python,typescript,go}."

@@ -8,7 +8,7 @@ REST clients for the AgentDrive API, **generated** from the live OpenAPI spec
 |---|---|---|---|
 | Python | [`python/`](python/) | `agentdrive-sdk` (PyPI) | `python` (urllib3) |
 | TypeScript | [`typescript/`](typescript/) | `@agentdrive/sdk` (npm) | `typescript-fetch` |
-| Go | [`go/`](go/) | `github.com/Mnexa-AI/agentdrive-sdk/go` | `go` |
+| Go | [`go/`](go/) | `github.com/Mnexa-AI/agentdrive-sdk/sdk/go` | `go` |
 
 ## Regenerating
 

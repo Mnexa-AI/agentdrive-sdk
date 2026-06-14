@@ -69,7 +69,7 @@ jobs:
           set -euo pipefail
           RAW="${{ github.event.inputs.version || github.event.release.tag_name }}"
           VERSION="${RAW#v}"
-          TAG="go/v${VERSION}"
+          TAG="sdk/go/v${VERSION}"
           git config user.name  "agentdrive-bot"
           git config user.email "support@agentdrive.run"
           if git rev-parse "$TAG" >/dev/null 2>&1; then

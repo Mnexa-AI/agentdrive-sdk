@@ -15,6 +15,7 @@ sdk/go/bin/
 # openapi-generator
 .openapi-generator/
 openapitools.json
+sdk/.openapi.clean.json
 
 # OS
 .DS_Store

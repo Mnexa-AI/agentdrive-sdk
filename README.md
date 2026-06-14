@@ -39,7 +39,7 @@ pip install agentdrive-sdk
 npm install @agentdrive/sdk
 
 # Go
-go get github.com/Mnexa-AI/agentdrive-sdk/go
+go get github.com/Mnexa-AI/agentdrive-sdk/sdk/go
 ```
 
 > The bare `agentdrive` package on PyPI is the [stdio MCP companion](https://pypi.org/project/agentdrive/); the REST SDK ships as `agentdrive-sdk`.
