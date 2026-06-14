@@ -788,7 +788,6 @@ paths:
         name: label
         required: false
         schema:
-          default: []
           items:
             description: Restore at this path instead of the original. Soft-deletes
               the live occupant at the original path with audit `metadata.cause='restore_conflict_rename'`.
@@ -797,6 +796,7 @@ paths:
             type: string
           title: Label
           type: array
+          default: null
         style: form
       - explode: true
         in: query
@@ -888,15 +888,11 @@ paths:
         name: label
         required: false
         schema:
-          default: []
           items:
-            description: Restore at this path instead of the original. Soft-deletes
-              the live occupant at the original path with audit `metadata.cause='restore_conflict_rename'`.
-              Mutually exclusive with `overwrite`.
-            nullable: true
             type: string
           title: Label
           type: array
+          default: null
         style: form
       - explode: true
         in: query
@@ -1030,11 +1026,11 @@ paths:
         name: label
         required: false
         schema:
-          default: []
           items:
             type: string
           title: Label
           type: array
+          default: null
         style: form
       - explode: true
         in: query
@@ -1070,7 +1066,6 @@ paths:
         name: modality
         required: false
         schema:
-          default: []
           items:
             description: Restore at this path instead of the original. Soft-deletes
               the live occupant at the original path with audit `metadata.cause='restore_conflict_rename'`.
@@ -1079,6 +1074,7 @@ paths:
             type: string
           title: Modality
           type: array
+          default: null
         style: form
       - explode: true
         in: query
@@ -3399,11 +3395,11 @@ paths:
         name: label
         required: false
         schema:
-          default: []
           items:
             type: string
           title: Label
           type: array
+          default: null
         style: form
       - explode: true
         in: query
@@ -4571,12 +4567,12 @@ components:
           title: Contact
           type: string
         attachments:
-          default: []
           items:
             format: binary
             type: string
           title: Attachments
           type: array
+          default: null
         csrf:
           title: Csrf
           type: string
@@ -4932,19 +4928,23 @@ components:
     CompileJobIn:
       example:
         task: latex.compile
-        options: ""
+        options:
+          entrypoint: entrypoint
+          engine: engine
+          wait: false
       properties:
         task:
           default: latex.compile
           title: Task
           type: string
         options:
-          allOf:
-          - $ref: "#/components/schemas/CompileOptions"
-          default:
-            wait: false
+          $ref: "#/components/schemas/CompileOptions"
       title: CompileJobIn
     CompileOptions:
+      example:
+        entrypoint: entrypoint
+        engine: engine
+        wait: false
       properties:
         entrypoint:
           nullable: true

@@ -819,7 +819,7 @@ with agentdrive_sdk.ApiClient(configuration) as api_client:
     path = '' # str |  (optional) (default to '')
     wiki = 0 # int |  (optional) (default to 0)
     type = '' # str |  (optional) (default to '')
-    label = [] # List[str] |  (optional) (default to [])
+    label = ['label_example'] # List[str] |  (optional)
     vis = '' # str |  (optional) (default to '')
     after = '' # str |  (optional) (default to '')
     before = '' # str |  (optional) (default to '')
@@ -847,7 +847,7 @@ Name | Type | Description  | Notes
  **path** | **str**|  | [optional] [default to &#39;&#39;]
  **wiki** | **int**|  | [optional] [default to 0]
  **type** | **str**|  | [optional] [default to &#39;&#39;]
- **label** | [**List[str]**](str.md)|  | [optional] [default to []]
+ **label** | [**List[str]**](str.md)|  | [optional] 
  **vis** | **str**|  | [optional] [default to &#39;&#39;]
  **after** | **str**|  | [optional] [default to &#39;&#39;]
  **before** | **str**|  | [optional] [default to &#39;&#39;]
@@ -1897,11 +1897,11 @@ with agentdrive_sdk.ApiClient(configuration) as api_client:
     api_instance = agentdrive_sdk.DefaultApi(api_client)
     q = 'q_example' # str | 
     mode = hybrid # str |  (optional) (default to hybrid)
-    label = [] # List[str] |  (optional) (default to [])
+    label = ['label_example'] # List[str] |  (optional)
     file_type = 'file_type_example' # str |  (optional)
     prefix = 'prefix_example' # str |  (optional)
     visibility = all # str |  (optional) (default to all)
-    modality = [] # List[Optional[str]] |  (optional) (default to [])
+    modality = ['modality_example'] # List[Optional[str]] |  (optional)
     updated_after = '2013-10-20T19:20:30+01:00' # datetime |  (optional)
     updated_before = '2013-10-20T19:20:30+01:00' # datetime |  (optional)
     limit = 20 # int |  (optional) (default to 20)
@@ -1925,11 +1925,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **q** | **str**|  | 
  **mode** | **str**|  | [optional] [default to hybrid]
- **label** | [**List[str]**](str.md)|  | [optional] [default to []]
+ **label** | [**List[str]**](str.md)|  | [optional] 
  **file_type** | **str**|  | [optional] 
  **prefix** | **str**|  | [optional] 
  **visibility** | **str**|  | [optional] [default to all]
- **modality** | [**List[Optional[str]]**](str.md)|  | [optional] [default to []]
+ **modality** | [**List[Optional[str]]**](str.md)|  | [optional] 
  **updated_after** | **datetime**|  | [optional] 
  **updated_before** | **datetime**|  | [optional] 
  **limit** | **int**|  | [optional] [default to 20]
@@ -2893,7 +2893,7 @@ with agentdrive_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = agentdrive_sdk.DefaultApi(api_client)
     prefix = '' # str |  (optional) (default to '')
-    label = [] # List[Optional[str]] |  (optional) (default to [])
+    label = ['label_example'] # List[Optional[str]] |  (optional)
     file_type = 'file_type_example' # str |  (optional)
     cursor = 'cursor_example' # str |  (optional)
     limit = 50 # int |  (optional) (default to 50)
@@ -2916,7 +2916,7 @@ with agentdrive_sdk.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **prefix** | **str**|  | [optional] [default to &#39;&#39;]
- **label** | [**List[Optional[str]]**](str.md)|  | [optional] [default to []]
+ **label** | [**List[Optional[str]]**](str.md)|  | [optional] 
  **file_type** | **str**|  | [optional] 
  **cursor** | **str**|  | [optional] 
  **limit** | **int**|  | [optional] [default to 50]
@@ -5119,7 +5119,7 @@ with agentdrive_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = agentdrive_sdk.DefaultApi(api_client)
     q = 'q_example' # str | 
-    label = [] # List[Optional[str]] |  (optional) (default to [])
+    label = ['label_example'] # List[str] |  (optional)
     file_type = 'file_type_example' # str |  (optional)
     prefix = 'prefix_example' # str |  (optional)
     visibility = all # str |  (optional) (default to all)
@@ -5145,7 +5145,7 @@ with agentdrive_sdk.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **q** | **str**|  | 
- **label** | [**List[Optional[str]]**](str.md)|  | [optional] [default to []]
+ **label** | [**List[str]**](str.md)|  | [optional] 
  **file_type** | **str**|  | [optional] 
  **prefix** | **str**|  | [optional] 
  **visibility** | **str**|  | [optional] [default to all]

@@ -1331,10 +1331,6 @@ func (a *DefaultAPIService) DashboardDashboardGetExecute(r ApiDashboardDashboard
 		} else {
 			parameterAddToHeaderOrQuery(localVarQueryParams, "label", t, "form", "multi")
 		}
-	} else {
-		var defaultValue []string = []string{}
-		parameterAddToHeaderOrQuery(localVarQueryParams, "label", defaultValue, "form", "multi")
-		r.label = &defaultValue
 	}
 	if r.vis != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "vis", r.vis, "form", "")
@@ -3349,10 +3345,6 @@ func (a *DefaultAPIService) FindV0FindGetExecute(r ApiFindV0FindGetRequest) (*Fi
 		} else {
 			parameterAddToHeaderOrQuery(localVarQueryParams, "label", t, "form", "multi")
 		}
-	} else {
-		var defaultValue []string = []string{}
-		parameterAddToHeaderOrQuery(localVarQueryParams, "label", defaultValue, "form", "multi")
-		r.label = &defaultValue
 	}
 	if r.fileType != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "file_type", r.fileType, "form", "")
@@ -3377,10 +3369,6 @@ func (a *DefaultAPIService) FindV0FindGetExecute(r ApiFindV0FindGetRequest) (*Fi
 		} else {
 			parameterAddToHeaderOrQuery(localVarQueryParams, "modality", t, "form", "multi")
 		}
-	} else {
-		var defaultValue []*string = []*string{}
-		parameterAddToHeaderOrQuery(localVarQueryParams, "modality", defaultValue, "form", "multi")
-		r.modality = &defaultValue
 	}
 	if r.updatedAfter != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_after", r.updatedAfter, "form", "")
@@ -5140,10 +5128,6 @@ func (a *DefaultAPIService) ListArtifactsV0ArtifactsGetExecute(r ApiListArtifact
 		} else {
 			parameterAddToHeaderOrQuery(localVarQueryParams, "label", t, "form", "multi")
 		}
-	} else {
-		var defaultValue []*string = []*string{}
-		parameterAddToHeaderOrQuery(localVarQueryParams, "label", defaultValue, "form", "multi")
-		r.label = &defaultValue
 	}
 	if r.fileType != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "file_type", r.fileType, "form", "")
@@ -9002,7 +8986,7 @@ type ApiSearchV0SearchGetRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	q *string
-	label *[]*string
+	label *[]string
 	fileType *string
 	prefix *string
 	visibility *string
@@ -9017,7 +9001,7 @@ func (r ApiSearchV0SearchGetRequest) Q(q string) ApiSearchV0SearchGetRequest {
 	return r
 }
 
-func (r ApiSearchV0SearchGetRequest) Label(label []*string) ApiSearchV0SearchGetRequest {
+func (r ApiSearchV0SearchGetRequest) Label(label []string) ApiSearchV0SearchGetRequest {
 	r.label = &label
 	return r
 }
@@ -9134,10 +9118,6 @@ func (a *DefaultAPIService) SearchV0SearchGetExecute(r ApiSearchV0SearchGetReque
 		} else {
 			parameterAddToHeaderOrQuery(localVarQueryParams, "label", t, "form", "multi")
 		}
-	} else {
-		var defaultValue []*string = []*string{}
-		parameterAddToHeaderOrQuery(localVarQueryParams, "label", defaultValue, "form", "multi")
-		r.label = &defaultValue
 	}
 	if r.fileType != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "file_type", r.fileType, "form", "")

@@ -19743,7 +19743,7 @@ class DefaultApi:
     def search_v0_search_get(
         self,
         q: Annotated[str, Field(min_length=1, strict=True, max_length=200)],
-        label: Optional[List[Optional[StrictStr]]] = None,
+        label: Optional[List[StrictStr]] = None,
         file_type: Optional[StrictStr] = None,
         prefix: Optional[StrictStr] = None,
         visibility: Optional[StrictStr] = None,
@@ -19771,7 +19771,7 @@ class DefaultApi:
         :param q: (required)
         :type q: str
         :param label:
-        :type label: List[Optional[str]]
+        :type label: List[str]
         :param file_type:
         :type file_type: str
         :param prefix:
@@ -19843,7 +19843,7 @@ class DefaultApi:
     def search_v0_search_get_with_http_info(
         self,
         q: Annotated[str, Field(min_length=1, strict=True, max_length=200)],
-        label: Optional[List[Optional[StrictStr]]] = None,
+        label: Optional[List[StrictStr]] = None,
         file_type: Optional[StrictStr] = None,
         prefix: Optional[StrictStr] = None,
         visibility: Optional[StrictStr] = None,
@@ -19871,7 +19871,7 @@ class DefaultApi:
         :param q: (required)
         :type q: str
         :param label:
-        :type label: List[Optional[str]]
+        :type label: List[str]
         :param file_type:
         :type file_type: str
         :param prefix:
@@ -19943,7 +19943,7 @@ class DefaultApi:
     def search_v0_search_get_without_preload_content(
         self,
         q: Annotated[str, Field(min_length=1, strict=True, max_length=200)],
-        label: Optional[List[Optional[StrictStr]]] = None,
+        label: Optional[List[StrictStr]] = None,
         file_type: Optional[StrictStr] = None,
         prefix: Optional[StrictStr] = None,
         visibility: Optional[StrictStr] = None,
@@ -19971,7 +19971,7 @@ class DefaultApi:
         :param q: (required)
         :type q: str
         :param label:
-        :type label: List[Optional[str]]
+        :type label: List[str]
         :param file_type:
         :type file_type: str
         :param prefix:

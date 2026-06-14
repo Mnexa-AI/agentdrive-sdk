@@ -784,7 +784,7 @@ func main() {
 	path := "path_example" // string |  (optional) (default to "")
 	wiki := int32(56) // int32 |  (optional) (default to 0)
 	type_ := "type__example" // string |  (optional) (default to "")
-	label := []string{"Inner_example"} // []string |  (optional) (default to {})
+	label := []string{"Inner_example"} // []string |  (optional)
 	vis := "vis_example" // string |  (optional) (default to "")
 	after := "after_example" // string |  (optional) (default to "")
 	before := "before_example" // string |  (optional) (default to "")
@@ -819,7 +819,7 @@ Name | Type | Description  | Notes
  **path** | **string** |  | [default to &quot;&quot;]
  **wiki** | **int32** |  | [default to 0]
  **type_** | **string** |  | [default to &quot;&quot;]
- **label** | **[]string** |  | [default to {}]
+ **label** | **[]string** |  | 
  **vis** | **string** |  | [default to &quot;&quot;]
  **after** | **string** |  | [default to &quot;&quot;]
  **before** | **string** |  | [default to &quot;&quot;]
@@ -1789,11 +1789,11 @@ import (
 func main() {
 	q := "q_example" // string | 
 	mode := "mode_example" // string |  (optional) (default to "hybrid")
-	label := []string{"Inner_example"} // []string |  (optional) (default to {})
+	label := []string{"Inner_example"} // []string |  (optional)
 	fileType := "fileType_example" // string |  (optional)
 	prefix := "prefix_example" // string |  (optional)
 	visibility := "visibility_example" // string |  (optional) (default to "all")
-	modality := []*string{"Inner_example"} // []*string |  (optional) (default to {})
+	modality := []*string{"Inner_example"} // []*string |  (optional)
 	updatedAfter := time.Now() // time.Time |  (optional)
 	updatedBefore := time.Now() // time.Time |  (optional)
 	limit := int32(56) // int32 |  (optional) (default to 20)
@@ -1824,11 +1824,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **q** | **string** |  | 
  **mode** | **string** |  | [default to &quot;hybrid&quot;]
- **label** | **[]string** |  | [default to {}]
+ **label** | **[]string** |  | 
  **fileType** | **string** |  | 
  **prefix** | **string** |  | 
  **visibility** | **string** |  | [default to &quot;all&quot;]
- **modality** | **[]string** |  | [default to {}]
+ **modality** | **[]string** |  | 
  **updatedAfter** | **time.Time** |  | 
  **updatedBefore** | **time.Time** |  | 
  **limit** | **int32** |  | [default to 20]
@@ -2786,7 +2786,7 @@ import (
 
 func main() {
 	prefix := "prefix_example" // string |  (optional) (default to "")
-	label := []*string{"Inner_example"} // []*string |  (optional) (default to {})
+	label := []*string{"Inner_example"} // []*string |  (optional)
 	fileType := "fileType_example" // string |  (optional)
 	cursor := "cursor_example" // string |  (optional)
 	limit := int32(56) // int32 |  (optional) (default to 50)
@@ -2816,7 +2816,7 @@ Other parameters are passed through a pointer to a apiListArtifactsV0ArtifactsGe
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **prefix** | **string** |  | [default to &quot;&quot;]
- **label** | **[]string** |  | [default to {}]
+ **label** | **[]string** |  | 
  **fileType** | **string** |  | 
  **cursor** | **string** |  | 
  **limit** | **int32** |  | [default to 50]
@@ -4881,7 +4881,7 @@ import (
 
 func main() {
 	q := "q_example" // string | 
-	label := []*string{"Inner_example"} // []*string |  (optional) (default to {})
+	label := []string{"Inner_example"} // []string |  (optional)
 	fileType := "fileType_example" // string |  (optional)
 	prefix := "prefix_example" // string |  (optional)
 	visibility := "visibility_example" // string |  (optional) (default to "all")
@@ -4914,7 +4914,7 @@ Other parameters are passed through a pointer to a apiSearchV0SearchGetRequest s
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **q** | **string** |  | 
- **label** | **[]string** |  | [default to {}]
+ **label** | **[]string** |  | 
  **fileType** | **string** |  | 
  **prefix** | **string** |  | 
  **visibility** | **string** |  | [default to &quot;all&quot;]

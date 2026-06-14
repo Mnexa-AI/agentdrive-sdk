@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Task** | Pointer to **string** |  | [optional] [default to "latex.compile"]
-**Options** | Pointer to [**CompileOptions**](CompileOptions.md) |  | [optional] [default to {wait=false}]
+**Options** | Pointer to [**CompileOptions**](CompileOptions.md) |  | [optional] 
 
 ## Methods
 

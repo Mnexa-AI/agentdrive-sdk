@@ -31,8 +31,6 @@ func NewCompileJobIn() *CompileJobIn {
 	this := CompileJobIn{}
 	var task string = "latex.compile"
 	this.Task = &task
-	var options CompileOptions = {wait=false}
-	this.Options = &options
 	return &this
 }
 
@@ -43,8 +41,6 @@ func NewCompileJobInWithDefaults() *CompileJobIn {
 	this := CompileJobIn{}
 	var task string = "latex.compile"
 	this.Task = &task
-	var options CompileOptions = {wait=false}
-	this.Options = &options
 	return &this
 }
 
