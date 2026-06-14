@@ -22,6 +22,18 @@ python3 - "$SPEC" "$CLEAN_SPEC" <<'PY'
 import json, sys
 src, dst = sys.argv[1], sys.argv[2]
 d = json.load(open(src))
+
+# 1. Drop internal-only endpoints so the public SDKs never ship clients for them.
+#    (Belt-and-suspenders: these are also being removed from the live public
+#    OpenAPI schema upstream.)
+paths = d.get("paths", {})
+dropped = [p for p in paths if p.startswith("/internal/")]
+for p in dropped:
+    del paths[p]
+
+# 2. openapi-generator's Go templates emit invalid code for object/array `default`
+#    values (e.g. `var options CompileOptions = {wait=false}`). Strip those;
+#    scalar defaults are left intact.
 def walk(o):
     if isinstance(o, dict):
         if isinstance(o.get("default"), (dict, list)):
@@ -32,7 +44,9 @@ def walk(o):
         for v in o:
             walk(v)
 walk(d)
+
 json.dump(d, open(dst, "w"))
+print(f"  dropped {len(dropped)} internal path(s): {dropped}", file=sys.stderr)
 PY
 SPEC="$CLEAN_SPEC"
 echo "Sanitized spec -> ${SPEC}"
