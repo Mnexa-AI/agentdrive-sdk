@@ -519,6 +519,17 @@ export interface WebNewFolderWebFoldersNewPostRequest {
     returnTo?: string;
 }
 
+export interface WebProjectCompileWebProjectsFldIdCompilePostRequest {
+    fldId: string;
+    csrf: string;
+    engine?: string;
+    entrypoint?: string;
+}
+
+export interface WebProjectFilesWebProjectsFldIdFilesGetRequest {
+    fldId: string;
+}
+
 export interface WebProjectPreviewWebProjectsFldIdPreviewGetRequest {
     fldId: string;
 }
@@ -682,7 +693,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Complete a WorkOS sign-in.  Three failure modes the route is responsible for shaping into user-readable errors:   * Missing/mismatched state cookie or signed state — LOGIN_FLOW_INVALID     (400). Almost always means the user took >10 minutes on the     AuthKit page or copy-pasted the callback URL into a different     browser.   * `authenticate_with_code` raises — AUTH_CODE_INVALID (400). The     code was consumed or invalid; the user re-initiates and gets     a fresh code.   * `sync_from_workos` raises — WORKOS_UNAVAILABLE (502) with     Retry-After: 30. WorkOS API call failed AFTER the code was     consumed; local DB is untouched (sync_from_workos opens its     tx after the WorkOS call returns).
+     * Complete a sign-in.  Handles the auth provider\'s OAuth callback and shapes failures into user-readable errors:   * an invalid or expired login flow — LOGIN_FLOW_INVALID (400);   * an invalid or already-used authorization code — AUTH_CODE_INVALID (400);   * the upstream auth provider being unavailable — WORKOS_UNAVAILABLE (502),     returned with Retry-After.
      * Callback
      */
     async callbackAuthCallbackGetRaw(requestParameters: CallbackAuthCallbackGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
@@ -697,7 +708,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Complete a WorkOS sign-in.  Three failure modes the route is responsible for shaping into user-readable errors:   * Missing/mismatched state cookie or signed state — LOGIN_FLOW_INVALID     (400). Almost always means the user took >10 minutes on the     AuthKit page or copy-pasted the callback URL into a different     browser.   * `authenticate_with_code` raises — AUTH_CODE_INVALID (400). The     code was consumed or invalid; the user re-initiates and gets     a fresh code.   * `sync_from_workos` raises — WORKOS_UNAVAILABLE (502) with     Retry-After: 30. WorkOS API call failed AFTER the code was     consumed; local DB is untouched (sync_from_workos opens its     tx after the WorkOS call returns).
+     * Complete a sign-in.  Handles the auth provider\'s OAuth callback and shapes failures into user-readable errors:   * an invalid or expired login flow — LOGIN_FLOW_INVALID (400);   * an invalid or already-used authorization code — AUTH_CODE_INVALID (400);   * the upstream auth provider being unavailable — WORKOS_UNAVAILABLE (502),     returned with Retry-After.
      * Callback
      */
     async callbackAuthCallbackGet(requestParameters: CallbackAuthCallbackGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
@@ -1197,7 +1208,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Soft-delete the user + their solo workspace + drive.  v1 semantics (solo orgs): deleting the account also deletes the workspace and its data with one aligned retention window. The GC sweeper hard-purges all three atomically when the window closes — see docs/workos-integration-design.md §6 and `core/gc.py` Phase 1-4.  For users in v1, \"delete my account\" means \"delete everything mine,\" matching Notion / Linear / Slack consumer-tier semantics. Membership-transfer for shared orgs lands in v1.5+.  Termination semantics — the response 302s through WorkOS\'s `get_logout_url` so the upstream AuthKit session cookie is cleared on `api.workos.com` BEFORE the user lands back on our origin. Without that hop the browser still holds a valid WorkOS session; a follow-up \"Get a drive\" / sign-in click silently re-authenticates via that cookie and JIT-provisions a NEW user row under the same WorkOS identity — making the just-deleted account appear to come back. Same pattern as `web/auth_routes.py::logout`. Falls back to a local-only redirect if no `workos_session_id` is stashed (pre-S4 sessions) or the SDK call surprises us — the local cookie still gets cleared so the user lands somewhere safe.
+     * Soft-delete the user + their solo workspace + drive.  v1 semantics (solo orgs): deleting the account also deletes the workspace and its data under one aligned retention window, after which everything is hard-purged. \"Delete my account\" means \"delete everything mine,\" matching Notion / Linear / Slack consumer-tier semantics. Membership-transfer for shared orgs lands in v1.5+.  The response routes through the auth provider\'s logout so the upstream session is cleared before the user returns, preventing a silent re-authentication that would re-provision the just-deleted account. Falls back to a local-only redirect when there is no upstream session to clear.
      * Delete Account
      */
     async deleteAccountWebAccountDeletePostRaw(requestParameters: DeleteAccountWebAccountDeletePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
@@ -1212,7 +1223,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Soft-delete the user + their solo workspace + drive.  v1 semantics (solo orgs): deleting the account also deletes the workspace and its data with one aligned retention window. The GC sweeper hard-purges all three atomically when the window closes — see docs/workos-integration-design.md §6 and `core/gc.py` Phase 1-4.  For users in v1, \"delete my account\" means \"delete everything mine,\" matching Notion / Linear / Slack consumer-tier semantics. Membership-transfer for shared orgs lands in v1.5+.  Termination semantics — the response 302s through WorkOS\'s `get_logout_url` so the upstream AuthKit session cookie is cleared on `api.workos.com` BEFORE the user lands back on our origin. Without that hop the browser still holds a valid WorkOS session; a follow-up \"Get a drive\" / sign-in click silently re-authenticates via that cookie and JIT-provisions a NEW user row under the same WorkOS identity — making the just-deleted account appear to come back. Same pattern as `web/auth_routes.py::logout`. Falls back to a local-only redirect if no `workos_session_id` is stashed (pre-S4 sessions) or the SDK call surprises us — the local cookie still gets cleared so the user lands somewhere safe.
+     * Soft-delete the user + their solo workspace + drive.  v1 semantics (solo orgs): deleting the account also deletes the workspace and its data under one aligned retention window, after which everything is hard-purged. \"Delete my account\" means \"delete everything mine,\" matching Notion / Linear / Slack consumer-tier semantics. Membership-transfer for shared orgs lands in v1.5+.  The response routes through the auth provider\'s logout so the upstream session is cleared before the user returns, preventing a silent re-authentication that would re-provision the just-deleted account. Falls back to a local-only redirect when there is no upstream session to clear.
      * Delete Account
      */
     async deleteAccountWebAccountDeletePost(requestParameters: DeleteAccountWebAccountDeletePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
@@ -4004,7 +4015,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Start fresh under the same WorkOS identity. JIT-provisions a new user / org / drive via the same `sync_from_workos` the happy path uses; the soft-deleted record stays in trash with its original purge_at until the GC sweeps it. Land on /welcome so the user sees the freshly-minted API key once.  Tab-concurrency note: if the user has /auth/recovery open in two tabs and clicks Recover in tab A then Start fresh in tab B, this handler sees a pending_recovery payload whose `soft_deleted_user_id` is now LIVE (tab A\'s restore won). The `sync_from_workos` upsert on `workos_user_id` will UPDATE the live row\'s mutable fields instead of INSERTing — i.e., the second tab\'s Start-fresh effectively no-ops because the partial-unique-index arbiter is no longer filtered out by `deleted_at IS NULL`. End user is still signed in correctly as the recovered user; the second tab\'s audit event reflects the declined intent even though no new row was minted. Acceptable drift; not worth distributed locking for.
+     * Start fresh under the same identity.  Provisions a new user / org / drive; the soft-deleted record stays in trash until garbage-collected. Lands on /welcome so the user sees the freshly-minted API key once.
      * Recovery New Account
      */
     async recoveryNewAccountAuthRecoveryNewAccountPostRaw(requestParameters: RecoveryNewAccountAuthRecoveryNewAccountPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
@@ -4019,7 +4030,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Start fresh under the same WorkOS identity. JIT-provisions a new user / org / drive via the same `sync_from_workos` the happy path uses; the soft-deleted record stays in trash with its original purge_at until the GC sweeps it. Land on /welcome so the user sees the freshly-minted API key once.  Tab-concurrency note: if the user has /auth/recovery open in two tabs and clicks Recover in tab A then Start fresh in tab B, this handler sees a pending_recovery payload whose `soft_deleted_user_id` is now LIVE (tab A\'s restore won). The `sync_from_workos` upsert on `workos_user_id` will UPDATE the live row\'s mutable fields instead of INSERTing — i.e., the second tab\'s Start-fresh effectively no-ops because the partial-unique-index arbiter is no longer filtered out by `deleted_at IS NULL`. End user is still signed in correctly as the recovered user; the second tab\'s audit event reflects the declined intent even though no new row was minted. Acceptable drift; not worth distributed locking for.
+     * Start fresh under the same identity.  Provisions a new user / org / drive; the soft-deleted record stays in trash until garbage-collected. Lands on /welcome so the user sees the freshly-minted API key once.
      * Recovery New Account
      */
     async recoveryNewAccountAuthRecoveryNewAccountPost(requestParameters: RecoveryNewAccountAuthRecoveryNewAccountPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
@@ -5654,6 +5665,140 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async webNewFolderWebFoldersNewPost(requestParameters: WebNewFolderWebFoldersNewPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
         const response = await this.webNewFolderWebFoldersNewPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for webProjectCompileWebProjectsFldIdCompilePost without sending the request
+     */
+    async webProjectCompileWebProjectsFldIdCompilePostRequestOpts(requestParameters: WebProjectCompileWebProjectsFldIdCompilePostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['fldId'] == null) {
+            throw new runtime.RequiredError(
+                'fldId',
+                'Required parameter "fldId" was null or undefined when calling webProjectCompileWebProjectsFldIdCompilePost().'
+            );
+        }
+
+        if (requestParameters['csrf'] == null) {
+            throw new runtime.RequiredError(
+                'csrf',
+                'Required parameter "csrf" was null or undefined when calling webProjectCompileWebProjectsFldIdCompilePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const consumes: runtime.Consume[] = [
+            { contentType: 'application/x-www-form-urlencoded' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['engine'] != null) {
+            formParams.append('engine', requestParameters['engine'] as any);
+        }
+
+        if (requestParameters['entrypoint'] != null) {
+            formParams.append('entrypoint', requestParameters['entrypoint'] as any);
+        }
+
+        if (requestParameters['csrf'] != null) {
+            formParams.append('csrf', requestParameters['csrf'] as any);
+        }
+
+
+        let urlPath = `/web/projects/{fld_id}/compile`;
+        urlPath = urlPath.replace('{fld_id}', encodeURIComponent(String(requestParameters['fldId'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: formParams,
+        };
+    }
+
+    /**
+     * Web Project Compile
+     */
+    async webProjectCompileWebProjectsFldIdCompilePostRaw(requestParameters: WebProjectCompileWebProjectsFldIdCompilePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.webProjectCompileWebProjectsFldIdCompilePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Web Project Compile
+     */
+    async webProjectCompileWebProjectsFldIdCompilePost(requestParameters: WebProjectCompileWebProjectsFldIdCompilePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.webProjectCompileWebProjectsFldIdCompilePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for webProjectFilesWebProjectsFldIdFilesGet without sending the request
+     */
+    async webProjectFilesWebProjectsFldIdFilesGetRequestOpts(requestParameters: WebProjectFilesWebProjectsFldIdFilesGetRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['fldId'] == null) {
+            throw new runtime.RequiredError(
+                'fldId',
+                'Required parameter "fldId" was null or undefined when calling webProjectFilesWebProjectsFldIdFilesGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/web/projects/{fld_id}/files`;
+        urlPath = urlPath.replace('{fld_id}', encodeURIComponent(String(requestParameters['fldId'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Cookie-authed file tree + read-only source manifest for the LaTeX workspace (handoff §3). Same auth contract as the preview poll (401 / 404-not-403). Source bytes themselves stream from `/a/{art_id}?raw=1` (owner session authorizes private files) — this endpoint only lists.
+     * Web Project Files
+     */
+    async webProjectFilesWebProjectsFldIdFilesGetRaw(requestParameters: WebProjectFilesWebProjectsFldIdFilesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.webProjectFilesWebProjectsFldIdFilesGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Cookie-authed file tree + read-only source manifest for the LaTeX workspace (handoff §3). Same auth contract as the preview poll (401 / 404-not-403). Source bytes themselves stream from `/a/{art_id}?raw=1` (owner session authorizes private files) — this endpoint only lists.
+     * Web Project Files
+     */
+    async webProjectFilesWebProjectsFldIdFilesGet(requestParameters: WebProjectFilesWebProjectsFldIdFilesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.webProjectFilesWebProjectsFldIdFilesGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

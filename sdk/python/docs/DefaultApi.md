@@ -92,6 +92,8 @@ Method | HTTP request | Description
 [**web_delete_folder_web_folders_delete_post**](DefaultApi.md#web_delete_folder_web_folders_delete_post) | **POST** /web/folders/delete | Web Delete Folder
 [**web_move_folder_web_folders_move_post**](DefaultApi.md#web_move_folder_web_folders_move_post) | **POST** /web/folders/move | Web Move Folder
 [**web_new_folder_web_folders_new_post**](DefaultApi.md#web_new_folder_web_folders_new_post) | **POST** /web/folders/new | Web New Folder
+[**web_project_compile_web_projects_fld_id_compile_post**](DefaultApi.md#web_project_compile_web_projects_fld_id_compile_post) | **POST** /web/projects/{fld_id}/compile | Web Project Compile
+[**web_project_files_web_projects_fld_id_files_get**](DefaultApi.md#web_project_files_web_projects_fld_id_files_get) | **GET** /web/projects/{fld_id}/files | Web Project Files
 [**web_project_preview_web_projects_fld_id_preview_get**](DefaultApi.md#web_project_preview_web_projects_fld_id_preview_get) | **GET** /web/projects/{fld_id}/preview | Web Project Preview
 [**web_put_artifact_web_artifacts_path_put**](DefaultApi.md#web_put_artifact_web_artifacts_path_put) | **PUT** /web/artifacts/{path} | Web Put Artifact
 [**web_rename_artifact_web_artifacts_rename_post**](DefaultApi.md#web_rename_artifact_web_artifacts_rename_post) | **POST** /web/artifacts/rename | Web Rename Artifact
@@ -230,21 +232,14 @@ No authorization required
 
 Callback
 
-Complete a WorkOS sign-in.
+Complete a sign-in.
 
-Three failure modes the route is responsible for shaping into
+Handles the auth provider's OAuth callback and shapes failures into
 user-readable errors:
-  * Missing/mismatched state cookie or signed state — LOGIN_FLOW_INVALID
-    (400). Almost always means the user took >10 minutes on the
-    AuthKit page or copy-pasted the callback URL into a different
-    browser.
-  * `authenticate_with_code` raises — AUTH_CODE_INVALID (400). The
-    code was consumed or invalid; the user re-initiates and gets
-    a fresh code.
-  * `sync_from_workos` raises — WORKOS_UNAVAILABLE (502) with
-    Retry-After: 30. WorkOS API call failed AFTER the code was
-    consumed; local DB is untouched (sync_from_workos opens its
-    tx after the WorkOS call returns).
+  * an invalid or expired login flow — LOGIN_FLOW_INVALID (400);
+  * an invalid or already-used authorization code — AUTH_CODE_INVALID (400);
+  * the upstream auth provider being unavailable — WORKOS_UNAVAILABLE (502),
+    returned with Retry-After.
 
 ### Example
 
@@ -885,26 +880,16 @@ Delete Account
 Soft-delete the user + their solo workspace + drive.
 
 v1 semantics (solo orgs): deleting the account also deletes the
-workspace and its data with one aligned retention window. The
-GC sweeper hard-purges all three atomically when the window
-closes — see docs/workos-integration-design.md §6 and
-`core/gc.py` Phase 1-4.
+workspace and its data under one aligned retention window, after
+which everything is hard-purged. "Delete my account" means "delete
+everything mine," matching Notion / Linear / Slack consumer-tier
+semantics. Membership-transfer for shared orgs lands in v1.5+.
 
-For users in v1, "delete my account" means "delete everything
-mine," matching Notion / Linear / Slack consumer-tier semantics.
-Membership-transfer for shared orgs lands in v1.5+.
-
-Termination semantics — the response 302s through WorkOS's
-`get_logout_url` so the upstream AuthKit session cookie is cleared
-on `api.workos.com` BEFORE the user lands back on our origin.
-Without that hop the browser still holds a valid WorkOS session;
-a follow-up "Get a drive" / sign-in click silently re-authenticates
-via that cookie and JIT-provisions a NEW user row under the same
-WorkOS identity — making the just-deleted account appear to come
-back. Same pattern as `web/auth_routes.py::logout`. Falls back to
-a local-only redirect if no `workos_session_id` is stashed
-(pre-S4 sessions) or the SDK call surprises us — the local
-cookie still gets cleared so the user lands somewhere safe.
+The response routes through the auth provider's logout so the
+upstream session is cleared before the user returns, preventing a
+silent re-authentication that would re-provision the just-deleted
+account. Falls back to a local-only redirect when there is no
+upstream session to clear.
 
 ### Example
 
@@ -4487,24 +4472,11 @@ No authorization required
 
 Recovery New Account
 
-Start fresh under the same WorkOS identity. JIT-provisions a
-new user / org / drive via the same `sync_from_workos` the happy
-path uses; the soft-deleted record stays in trash with its
-original purge_at until the GC sweeps it. Land on /welcome so
-the user sees the freshly-minted API key once.
+Start fresh under the same identity.
 
-Tab-concurrency note: if the user has /auth/recovery open in two
-tabs and clicks Recover in tab A then Start fresh in tab B, this
-handler sees a pending_recovery payload whose
-`soft_deleted_user_id` is now LIVE (tab A's restore won). The
-`sync_from_workos` upsert on `workos_user_id` will UPDATE the
-live row's mutable fields instead of INSERTing — i.e., the
-second tab's Start-fresh effectively no-ops because the
-partial-unique-index arbiter is no longer filtered out by
-`deleted_at IS NULL`. End user is still signed in correctly as
-the recovered user; the second tab's audit event reflects the
-declined intent even though no new row was minted. Acceptable
-drift; not worth distributed locking for.
+Provisions a new user / org / drive; the soft-deleted record stays
+in trash until garbage-collected. Lands on /welcome so the user sees
+the freshly-minted API key once.
 
 ### Example
 
@@ -6520,6 +6492,149 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/x-www-form-urlencoded
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **web_project_compile_web_projects_fld_id_compile_post**
+> object web_project_compile_web_projects_fld_id_compile_post(fld_id, csrf, engine=engine, entrypoint=entrypoint)
+
+Web Project Compile
+
+### Example
+
+
+```python
+import agentdrive_sdk
+from agentdrive_sdk.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.agentdrive.run
+# See configuration.py for a list of all supported configuration parameters.
+configuration = agentdrive_sdk.Configuration(
+    host = "https://api.agentdrive.run"
+)
+
+
+# Enter a context with an instance of the API client
+with agentdrive_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = agentdrive_sdk.DefaultApi(api_client)
+    fld_id = 'fld_id_example' # str | 
+    csrf = 'csrf_example' # str | 
+    engine = '' # str |  (optional) (default to '')
+    entrypoint = '' # str |  (optional) (default to '')
+
+    try:
+        # Web Project Compile
+        api_response = api_instance.web_project_compile_web_projects_fld_id_compile_post(fld_id, csrf, engine=engine, entrypoint=entrypoint)
+        print("The response of DefaultApi->web_project_compile_web_projects_fld_id_compile_post:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling DefaultApi->web_project_compile_web_projects_fld_id_compile_post: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **fld_id** | **str**|  | 
+ **csrf** | **str**|  | 
+ **engine** | **str**|  | [optional] [default to &#39;&#39;]
+ **entrypoint** | **str**|  | [optional] [default to &#39;&#39;]
+
+### Return type
+
+**object**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/x-www-form-urlencoded
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **web_project_files_web_projects_fld_id_files_get**
+> object web_project_files_web_projects_fld_id_files_get(fld_id)
+
+Web Project Files
+
+Cookie-authed file tree + read-only source manifest for the LaTeX
+workspace (handoff §3). Same auth contract as the preview poll (401 /
+404-not-403). Source bytes themselves stream from `/a/{art_id}?raw=1`
+(owner session authorizes private files) — this endpoint only lists.
+
+### Example
+
+
+```python
+import agentdrive_sdk
+from agentdrive_sdk.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.agentdrive.run
+# See configuration.py for a list of all supported configuration parameters.
+configuration = agentdrive_sdk.Configuration(
+    host = "https://api.agentdrive.run"
+)
+
+
+# Enter a context with an instance of the API client
+with agentdrive_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = agentdrive_sdk.DefaultApi(api_client)
+    fld_id = 'fld_id_example' # str | 
+
+    try:
+        # Web Project Files
+        api_response = api_instance.web_project_files_web_projects_fld_id_files_get(fld_id)
+        print("The response of DefaultApi->web_project_files_web_projects_fld_id_files_get:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling DefaultApi->web_project_files_web_projects_fld_id_files_get: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **fld_id** | **str**|  | 
+
+### Return type
+
+**object**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 ### HTTP response details

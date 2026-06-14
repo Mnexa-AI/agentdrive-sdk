@@ -2535,21 +2535,14 @@ paths:
   /auth/callback:
     get:
       description: |-
-        Complete a WorkOS sign-in.
+        Complete a sign-in.
 
-        Three failure modes the route is responsible for shaping into
+        Handles the auth provider's OAuth callback and shapes failures into
         user-readable errors:
-          * Missing/mismatched state cookie or signed state — LOGIN_FLOW_INVALID
-            (400). Almost always means the user took >10 minutes on the
-            AuthKit page or copy-pasted the callback URL into a different
-            browser.
-          * `authenticate_with_code` raises — AUTH_CODE_INVALID (400). The
-            code was consumed or invalid; the user re-initiates and gets
-            a fresh code.
-          * `sync_from_workos` raises — WORKOS_UNAVAILABLE (502) with
-            Retry-After: 30. WorkOS API call failed AFTER the code was
-            consumed; local DB is untouched (sync_from_workos opens its
-            tx after the WorkOS call returns).
+          * an invalid or expired login flow — LOGIN_FLOW_INVALID (400);
+          * an invalid or already-used authorization code — AUTH_CODE_INVALID (400);
+          * the upstream auth provider being unavailable — WORKOS_UNAVAILABLE (502),
+            returned with Retry-After.
       operationId: callback_auth_callback_get
       parameters:
       - explode: true
@@ -2688,24 +2681,11 @@ paths:
   /auth/recovery/new-account:
     post:
       description: |-
-        Start fresh under the same WorkOS identity. JIT-provisions a
-        new user / org / drive via the same `sync_from_workos` the happy
-        path uses; the soft-deleted record stays in trash with its
-        original purge_at until the GC sweeps it. Land on /welcome so
-        the user sees the freshly-minted API key once.
+        Start fresh under the same identity.
 
-        Tab-concurrency note: if the user has /auth/recovery open in two
-        tabs and clicks Recover in tab A then Start fresh in tab B, this
-        handler sees a pending_recovery payload whose
-        `soft_deleted_user_id` is now LIVE (tab A's restore won). The
-        `sync_from_workos` upsert on `workos_user_id` will UPDATE the
-        live row's mutable fields instead of INSERTing — i.e., the
-        second tab's Start-fresh effectively no-ops because the
-        partial-unique-index arbiter is no longer filtered out by
-        `deleted_at IS NULL`. End user is still signed in correctly as
-        the recovered user; the second tab's audit event reflects the
-        declined intent even though no new row was minted. Acceptable
-        drift; not worth distributed locking for.
+        Provisions a new user / org / drive; the soft-deleted record stays
+        in trash until garbage-collected. Lands on /welcome so the user sees
+        the freshly-minted API key once.
       operationId: recovery_new_account_auth_recovery_new_account_post
       requestBody:
         content:
@@ -2785,6 +2765,36 @@ paths:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
       summary: Web Artifact Indexed
+  /web/projects/{fld_id}/files:
+    get:
+      description: |-
+        Cookie-authed file tree + read-only source manifest for the LaTeX
+        workspace (handoff §3). Same auth contract as the preview poll (401 /
+        404-not-403). Source bytes themselves stream from `/a/{art_id}?raw=1`
+        (owner session authorizes private files) — this endpoint only lists.
+      operationId: web_project_files_web_projects__fld_id__files_get
+      parameters:
+      - explode: false
+        in: path
+        name: fld_id
+        required: true
+        schema:
+          title: Fld Id
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Web Project Files
   /web/projects/{fld_id}/preview:
     get:
       description: |-
@@ -3365,6 +3375,37 @@ paths:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
       summary: Web Restore Artifact
+  /web/projects/{fld_id}/compile:
+    post:
+      operationId: web_project_compile_web_projects__fld_id__compile_post
+      parameters:
+      - explode: false
+        in: path
+        name: fld_id
+        required: true
+        schema:
+          title: Fld Id
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Body_web_project_compile_web_projects__fld_id__compile_post"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Web Project Compile
   /web/folders/restore:
     post:
       operationId: web_restore_folder_web_folders_restore_post
@@ -3549,26 +3590,16 @@ paths:
         Soft-delete the user + their solo workspace + drive.
 
         v1 semantics (solo orgs): deleting the account also deletes the
-        workspace and its data with one aligned retention window. The
-        GC sweeper hard-purges all three atomically when the window
-        closes — see docs/workos-integration-design.md §6 and
-        `core/gc.py` Phase 1-4.
+        workspace and its data under one aligned retention window, after
+        which everything is hard-purged. "Delete my account" means "delete
+        everything mine," matching Notion / Linear / Slack consumer-tier
+        semantics. Membership-transfer for shared orgs lands in v1.5+.
 
-        For users in v1, "delete my account" means "delete everything
-        mine," matching Notion / Linear / Slack consumer-tier semantics.
-        Membership-transfer for shared orgs lands in v1.5+.
-
-        Termination semantics — the response 302s through WorkOS's
-        `get_logout_url` so the upstream AuthKit session cookie is cleared
-        on `api.workos.com` BEFORE the user lands back on our origin.
-        Without that hop the browser still holds a valid WorkOS session;
-        a follow-up "Get a drive" / sign-in click silently re-authenticates
-        via that cookie and JIT-provisions a NEW user row under the same
-        WorkOS identity — making the just-deleted account appear to come
-        back. Same pattern as `web/auth_routes.py::logout`. Falls back to
-        a local-only redirect if no `workos_session_id` is stashed
-        (pre-S4 sessions) or the SDK call surprises us — the local
-        cookie still gets cleared so the user lands somewhere safe.
+        The response routes through the auth provider's logout so the
+        upstream session is cleared before the user returns, preventing a
+        silent re-authentication that would re-provision the just-deleted
+        account. Falls back to a local-only redirect when there is no
+        upstream session to clear.
       operationId: delete_account_web_account_delete_post
       requestBody:
         content:
@@ -4433,6 +4464,22 @@ components:
       - csrf
       - name
       title: Body_web_new_folder_web_folders_new_post
+    Body_web_project_compile_web_projects__fld_id__compile_post:
+      properties:
+        engine:
+          default: ""
+          title: Engine
+          type: string
+        entrypoint:
+          default: ""
+          title: Entrypoint
+          type: string
+        csrf:
+          title: Csrf
+          type: string
+      required:
+      - csrf
+      title: Body_web_project_compile_web_projects__fld_id__compile_post
     Body_web_rename_artifact_web_artifacts_rename_post:
       properties:
         art_id:

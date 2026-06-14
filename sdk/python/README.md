@@ -183,6 +183,8 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**web_delete_folder_web_folders_delete_post**](docs/DefaultApi.md#web_delete_folder_web_folders_delete_post) | **POST** /web/folders/delete | Web Delete Folder
 *DefaultApi* | [**web_move_folder_web_folders_move_post**](docs/DefaultApi.md#web_move_folder_web_folders_move_post) | **POST** /web/folders/move | Web Move Folder
 *DefaultApi* | [**web_new_folder_web_folders_new_post**](docs/DefaultApi.md#web_new_folder_web_folders_new_post) | **POST** /web/folders/new | Web New Folder
+*DefaultApi* | [**web_project_compile_web_projects_fld_id_compile_post**](docs/DefaultApi.md#web_project_compile_web_projects_fld_id_compile_post) | **POST** /web/projects/{fld_id}/compile | Web Project Compile
+*DefaultApi* | [**web_project_files_web_projects_fld_id_files_get**](docs/DefaultApi.md#web_project_files_web_projects_fld_id_files_get) | **GET** /web/projects/{fld_id}/files | Web Project Files
 *DefaultApi* | [**web_project_preview_web_projects_fld_id_preview_get**](docs/DefaultApi.md#web_project_preview_web_projects_fld_id_preview_get) | **GET** /web/projects/{fld_id}/preview | Web Project Preview
 *DefaultApi* | [**web_put_artifact_web_artifacts_path_put**](docs/DefaultApi.md#web_put_artifact_web_artifacts_path_put) | **PUT** /web/artifacts/{path} | Web Put Artifact
 *DefaultApi* | [**web_rename_artifact_web_artifacts_rename_post**](docs/DefaultApi.md#web_rename_artifact_web_artifacts_rename_post) | **POST** /web/artifacts/rename | Web Rename Artifact

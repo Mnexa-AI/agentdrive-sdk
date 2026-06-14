@@ -1167,6 +1167,34 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService WebProjectCompileWebProjectsFldIdCompilePost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var fldId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.WebProjectCompileWebProjectsFldIdCompilePost(context.Background(), fldId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService WebProjectFilesWebProjectsFldIdFilesGet", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var fldId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.WebProjectFilesWebProjectsFldIdFilesGet(context.Background(), fldId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService WebProjectPreviewWebProjectsFldIdPreviewGet", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

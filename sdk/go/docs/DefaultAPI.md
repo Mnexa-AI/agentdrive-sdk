@@ -92,6 +92,8 @@ Method | HTTP request | Description
 [**WebDeleteFolderWebFoldersDeletePost**](DefaultAPI.md#WebDeleteFolderWebFoldersDeletePost) | **Post** /web/folders/delete | Web Delete Folder
 [**WebMoveFolderWebFoldersMovePost**](DefaultAPI.md#WebMoveFolderWebFoldersMovePost) | **Post** /web/folders/move | Web Move Folder
 [**WebNewFolderWebFoldersNewPost**](DefaultAPI.md#WebNewFolderWebFoldersNewPost) | **Post** /web/folders/new | Web New Folder
+[**WebProjectCompileWebProjectsFldIdCompilePost**](DefaultAPI.md#WebProjectCompileWebProjectsFldIdCompilePost) | **Post** /web/projects/{fld_id}/compile | Web Project Compile
+[**WebProjectFilesWebProjectsFldIdFilesGet**](DefaultAPI.md#WebProjectFilesWebProjectsFldIdFilesGet) | **Get** /web/projects/{fld_id}/files | Web Project Files
 [**WebProjectPreviewWebProjectsFldIdPreviewGet**](DefaultAPI.md#WebProjectPreviewWebProjectsFldIdPreviewGet) | **Get** /web/projects/{fld_id}/preview | Web Project Preview
 [**WebPutArtifactWebArtifactsPathPut**](DefaultAPI.md#WebPutArtifactWebArtifactsPathPut) | **Put** /web/artifacts/{path} | Web Put Artifact
 [**WebRenameArtifactWebArtifactsRenamePost**](DefaultAPI.md#WebRenameArtifactWebArtifactsRenamePost) | **Post** /web/artifacts/rename | Web Rename Artifact
@@ -6198,6 +6200,150 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: application/x-www-form-urlencoded
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## WebProjectCompileWebProjectsFldIdCompilePost
+
+> interface{} WebProjectCompileWebProjectsFldIdCompilePost(ctx, fldId).Csrf(csrf).Engine(engine).Entrypoint(entrypoint).Execute()
+
+Web Project Compile
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/Mnexa-AI/agentdrive-sdk/agentdrive"
+)
+
+func main() {
+	fldId := "fldId_example" // string | 
+	csrf := "csrf_example" // string | 
+	engine := "engine_example" // string |  (optional) (default to "")
+	entrypoint := "entrypoint_example" // string |  (optional) (default to "")
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.WebProjectCompileWebProjectsFldIdCompilePost(context.Background(), fldId).Csrf(csrf).Engine(engine).Entrypoint(entrypoint).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.WebProjectCompileWebProjectsFldIdCompilePost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `WebProjectCompileWebProjectsFldIdCompilePost`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.WebProjectCompileWebProjectsFldIdCompilePost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**fldId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiWebProjectCompileWebProjectsFldIdCompilePostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **csrf** | **string** |  | 
+ **engine** | **string** |  | [default to &quot;&quot;]
+ **entrypoint** | **string** |  | [default to &quot;&quot;]
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/x-www-form-urlencoded
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## WebProjectFilesWebProjectsFldIdFilesGet
+
+> interface{} WebProjectFilesWebProjectsFldIdFilesGet(ctx, fldId).Execute()
+
+Web Project Files
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/Mnexa-AI/agentdrive-sdk/agentdrive"
+)
+
+func main() {
+	fldId := "fldId_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.WebProjectFilesWebProjectsFldIdFilesGet(context.Background(), fldId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.WebProjectFilesWebProjectsFldIdFilesGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `WebProjectFilesWebProjectsFldIdFilesGet`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.WebProjectFilesWebProjectsFldIdFilesGet`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**fldId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiWebProjectFilesWebProjectsFldIdFilesGetRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

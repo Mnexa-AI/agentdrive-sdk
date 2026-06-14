@@ -92,6 +92,8 @@ All URIs are relative to *https://api.agentdrive.run*
 | [**webDeleteFolderWebFoldersDeletePost**](DefaultApi.md#webdeletefolderwebfoldersdeletepost) | **POST** /web/folders/delete | Web Delete Folder |
 | [**webMoveFolderWebFoldersMovePost**](DefaultApi.md#webmovefolderwebfoldersmovepost) | **POST** /web/folders/move | Web Move Folder |
 | [**webNewFolderWebFoldersNewPost**](DefaultApi.md#webnewfolderwebfoldersnewpost) | **POST** /web/folders/new | Web New Folder |
+| [**webProjectCompileWebProjectsFldIdCompilePost**](DefaultApi.md#webprojectcompilewebprojectsfldidcompilepost) | **POST** /web/projects/{fld_id}/compile | Web Project Compile |
+| [**webProjectFilesWebProjectsFldIdFilesGet**](DefaultApi.md#webprojectfileswebprojectsfldidfilesget) | **GET** /web/projects/{fld_id}/files | Web Project Files |
 | [**webProjectPreviewWebProjectsFldIdPreviewGet**](DefaultApi.md#webprojectpreviewwebprojectsfldidpreviewget) | **GET** /web/projects/{fld_id}/preview | Web Project Preview |
 | [**webPutArtifactWebArtifactsPathPut**](DefaultApi.md#webputartifactwebartifactspathput) | **PUT** /web/artifacts/{path} | Web Put Artifact |
 | [**webRenameArtifactWebArtifactsRenamePost**](DefaultApi.md#webrenameartifactwebartifactsrenamepost) | **POST** /web/artifacts/rename | Web Rename Artifact |
@@ -224,7 +226,7 @@ No authorization required
 
 Callback
 
-Complete a WorkOS sign-in.  Three failure modes the route is responsible for shaping into user-readable errors:   * Missing/mismatched state cookie or signed state — LOGIN_FLOW_INVALID     (400). Almost always means the user took &gt;10 minutes on the     AuthKit page or copy-pasted the callback URL into a different     browser.   * &#x60;authenticate_with_code&#x60; raises — AUTH_CODE_INVALID (400). The     code was consumed or invalid; the user re-initiates and gets     a fresh code.   * &#x60;sync_from_workos&#x60; raises — WORKOS_UNAVAILABLE (502) with     Retry-After: 30. WorkOS API call failed AFTER the code was     consumed; local DB is untouched (sync_from_workos opens its     tx after the WorkOS call returns).
+Complete a sign-in.  Handles the auth provider\&#39;s OAuth callback and shapes failures into user-readable errors:   * an invalid or expired login flow — LOGIN_FLOW_INVALID (400);   * an invalid or already-used authorization code — AUTH_CODE_INVALID (400);   * the upstream auth provider being unavailable — WORKOS_UNAVAILABLE (502),     returned with Retry-After.
 
 ### Example
 
@@ -856,7 +858,7 @@ No authorization required
 
 Delete Account
 
-Soft-delete the user + their solo workspace + drive.  v1 semantics (solo orgs): deleting the account also deletes the workspace and its data with one aligned retention window. The GC sweeper hard-purges all three atomically when the window closes — see docs/workos-integration-design.md §6 and &#x60;core/gc.py&#x60; Phase 1-4.  For users in v1, \&quot;delete my account\&quot; means \&quot;delete everything mine,\&quot; matching Notion / Linear / Slack consumer-tier semantics. Membership-transfer for shared orgs lands in v1.5+.  Termination semantics — the response 302s through WorkOS\&#39;s &#x60;get_logout_url&#x60; so the upstream AuthKit session cookie is cleared on &#x60;api.workos.com&#x60; BEFORE the user lands back on our origin. Without that hop the browser still holds a valid WorkOS session; a follow-up \&quot;Get a drive\&quot; / sign-in click silently re-authenticates via that cookie and JIT-provisions a NEW user row under the same WorkOS identity — making the just-deleted account appear to come back. Same pattern as &#x60;web/auth_routes.py::logout&#x60;. Falls back to a local-only redirect if no &#x60;workos_session_id&#x60; is stashed (pre-S4 sessions) or the SDK call surprises us — the local cookie still gets cleared so the user lands somewhere safe.
+Soft-delete the user + their solo workspace + drive.  v1 semantics (solo orgs): deleting the account also deletes the workspace and its data under one aligned retention window, after which everything is hard-purged. \&quot;Delete my account\&quot; means \&quot;delete everything mine,\&quot; matching Notion / Linear / Slack consumer-tier semantics. Membership-transfer for shared orgs lands in v1.5+.  The response routes through the auth provider\&#39;s logout so the upstream session is cleared before the user returns, preventing a silent re-authentication that would re-provision the just-deleted account. Falls back to a local-only redirect when there is no upstream session to clear.
 
 ### Example
 
@@ -4356,7 +4358,7 @@ No authorization required
 
 Recovery New Account
 
-Start fresh under the same WorkOS identity. JIT-provisions a new user / org / drive via the same &#x60;sync_from_workos&#x60; the happy path uses; the soft-deleted record stays in trash with its original purge_at until the GC sweeps it. Land on /welcome so the user sees the freshly-minted API key once.  Tab-concurrency note: if the user has /auth/recovery open in two tabs and clicks Recover in tab A then Start fresh in tab B, this handler sees a pending_recovery payload whose &#x60;soft_deleted_user_id&#x60; is now LIVE (tab A\&#39;s restore won). The &#x60;sync_from_workos&#x60; upsert on &#x60;workos_user_id&#x60; will UPDATE the live row\&#39;s mutable fields instead of INSERTing — i.e., the second tab\&#39;s Start-fresh effectively no-ops because the partial-unique-index arbiter is no longer filtered out by &#x60;deleted_at IS NULL&#x60;. End user is still signed in correctly as the recovered user; the second tab\&#39;s audit event reflects the declined intent even though no new row was minted. Acceptable drift; not worth distributed locking for.
+Start fresh under the same identity.  Provisions a new user / org / drive; the soft-deleted record stays in trash until garbage-collected. Lands on /welcome so the user sees the freshly-minted API key once.
 
 ### Example
 
@@ -6267,6 +6269,149 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: `application/x-www-form-urlencoded`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## webProjectCompileWebProjectsFldIdCompilePost
+
+> any webProjectCompileWebProjectsFldIdCompilePost(fldId, csrf, engine, entrypoint)
+
+Web Project Compile
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { WebProjectCompileWebProjectsFldIdCompilePostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    fldId: fldId_example,
+    // string
+    csrf: csrf_example,
+    // string (optional)
+    engine: engine_example,
+    // string (optional)
+    entrypoint: entrypoint_example,
+  } satisfies WebProjectCompileWebProjectsFldIdCompilePostRequest;
+
+  try {
+    const data = await api.webProjectCompileWebProjectsFldIdCompilePost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **fldId** | `string` |  | [Defaults to `undefined`] |
+| **csrf** | `string` |  | [Defaults to `undefined`] |
+| **engine** | `string` |  | [Optional] [Defaults to `&#39;&#39;`] |
+| **entrypoint** | `string` |  | [Optional] [Defaults to `&#39;&#39;`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/x-www-form-urlencoded`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## webProjectFilesWebProjectsFldIdFilesGet
+
+> any webProjectFilesWebProjectsFldIdFilesGet(fldId)
+
+Web Project Files
+
+Cookie-authed file tree + read-only source manifest for the LaTeX workspace (handoff §3). Same auth contract as the preview poll (401 / 404-not-403). Source bytes themselves stream from &#x60;/a/{art_id}?raw&#x3D;1&#x60; (owner session authorizes private files) — this endpoint only lists.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { WebProjectFilesWebProjectsFldIdFilesGetRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    fldId: fldId_example,
+  } satisfies WebProjectFilesWebProjectsFldIdFilesGetRequest;
+
+  try {
+    const data = await api.webProjectFilesWebProjectsFldIdFilesGet(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **fldId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: `application/json`
 
 

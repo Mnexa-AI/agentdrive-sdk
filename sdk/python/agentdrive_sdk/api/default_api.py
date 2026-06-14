@@ -559,7 +559,7 @@ class DefaultApi:
     ) -> object:
         """Callback
 
-        Complete a WorkOS sign-in.  Three failure modes the route is responsible for shaping into user-readable errors:   * Missing/mismatched state cookie or signed state — LOGIN_FLOW_INVALID     (400). Almost always means the user took >10 minutes on the     AuthKit page or copy-pasted the callback URL into a different     browser.   * `authenticate_with_code` raises — AUTH_CODE_INVALID (400). The     code was consumed or invalid; the user re-initiates and gets     a fresh code.   * `sync_from_workos` raises — WORKOS_UNAVAILABLE (502) with     Retry-After: 30. WorkOS API call failed AFTER the code was     consumed; local DB is untouched (sync_from_workos opens its     tx after the WorkOS call returns).
+        Complete a sign-in.  Handles the auth provider's OAuth callback and shapes failures into user-readable errors:   * an invalid or expired login flow — LOGIN_FLOW_INVALID (400);   * an invalid or already-used authorization code — AUTH_CODE_INVALID (400);   * the upstream auth provider being unavailable — WORKOS_UNAVAILABLE (502),     returned with Retry-After.
 
         :param code:
         :type code: str
@@ -635,7 +635,7 @@ class DefaultApi:
     ) -> ApiResponse[object]:
         """Callback
 
-        Complete a WorkOS sign-in.  Three failure modes the route is responsible for shaping into user-readable errors:   * Missing/mismatched state cookie or signed state — LOGIN_FLOW_INVALID     (400). Almost always means the user took >10 minutes on the     AuthKit page or copy-pasted the callback URL into a different     browser.   * `authenticate_with_code` raises — AUTH_CODE_INVALID (400). The     code was consumed or invalid; the user re-initiates and gets     a fresh code.   * `sync_from_workos` raises — WORKOS_UNAVAILABLE (502) with     Retry-After: 30. WorkOS API call failed AFTER the code was     consumed; local DB is untouched (sync_from_workos opens its     tx after the WorkOS call returns).
+        Complete a sign-in.  Handles the auth provider's OAuth callback and shapes failures into user-readable errors:   * an invalid or expired login flow — LOGIN_FLOW_INVALID (400);   * an invalid or already-used authorization code — AUTH_CODE_INVALID (400);   * the upstream auth provider being unavailable — WORKOS_UNAVAILABLE (502),     returned with Retry-After.
 
         :param code:
         :type code: str
@@ -711,7 +711,7 @@ class DefaultApi:
     ) -> RESTResponseType:
         """Callback
 
-        Complete a WorkOS sign-in.  Three failure modes the route is responsible for shaping into user-readable errors:   * Missing/mismatched state cookie or signed state — LOGIN_FLOW_INVALID     (400). Almost always means the user took >10 minutes on the     AuthKit page or copy-pasted the callback URL into a different     browser.   * `authenticate_with_code` raises — AUTH_CODE_INVALID (400). The     code was consumed or invalid; the user re-initiates and gets     a fresh code.   * `sync_from_workos` raises — WORKOS_UNAVAILABLE (502) with     Retry-After: 30. WorkOS API call failed AFTER the code was     consumed; local DB is untouched (sync_from_workos opens its     tx after the WorkOS call returns).
+        Complete a sign-in.  Handles the auth provider's OAuth callback and shapes failures into user-readable errors:   * an invalid or expired login flow — LOGIN_FLOW_INVALID (400);   * an invalid or already-used authorization code — AUTH_CODE_INVALID (400);   * the upstream auth provider being unavailable — WORKOS_UNAVAILABLE (502),     returned with Retry-After.
 
         :param code:
         :type code: str
@@ -3198,7 +3198,7 @@ class DefaultApi:
     ) -> object:
         """Delete Account
 
-        Soft-delete the user + their solo workspace + drive.  v1 semantics (solo orgs): deleting the account also deletes the workspace and its data with one aligned retention window. The GC sweeper hard-purges all three atomically when the window closes — see docs/workos-integration-design.md §6 and `core/gc.py` Phase 1-4.  For users in v1, \"delete my account\" means \"delete everything mine,\" matching Notion / Linear / Slack consumer-tier semantics. Membership-transfer for shared orgs lands in v1.5+.  Termination semantics — the response 302s through WorkOS's `get_logout_url` so the upstream AuthKit session cookie is cleared on `api.workos.com` BEFORE the user lands back on our origin. Without that hop the browser still holds a valid WorkOS session; a follow-up \"Get a drive\" / sign-in click silently re-authenticates via that cookie and JIT-provisions a NEW user row under the same WorkOS identity — making the just-deleted account appear to come back. Same pattern as `web/auth_routes.py::logout`. Falls back to a local-only redirect if no `workos_session_id` is stashed (pre-S4 sessions) or the SDK call surprises us — the local cookie still gets cleared so the user lands somewhere safe.
+        Soft-delete the user + their solo workspace + drive.  v1 semantics (solo orgs): deleting the account also deletes the workspace and its data under one aligned retention window, after which everything is hard-purged. \"Delete my account\" means \"delete everything mine,\" matching Notion / Linear / Slack consumer-tier semantics. Membership-transfer for shared orgs lands in v1.5+.  The response routes through the auth provider's logout so the upstream session is cleared before the user returns, preventing a silent re-authentication that would re-provision the just-deleted account. Falls back to a local-only redirect when there is no upstream session to clear.
 
         :param confirm: (required)
         :type confirm: str
@@ -3270,7 +3270,7 @@ class DefaultApi:
     ) -> ApiResponse[object]:
         """Delete Account
 
-        Soft-delete the user + their solo workspace + drive.  v1 semantics (solo orgs): deleting the account also deletes the workspace and its data with one aligned retention window. The GC sweeper hard-purges all three atomically when the window closes — see docs/workos-integration-design.md §6 and `core/gc.py` Phase 1-4.  For users in v1, \"delete my account\" means \"delete everything mine,\" matching Notion / Linear / Slack consumer-tier semantics. Membership-transfer for shared orgs lands in v1.5+.  Termination semantics — the response 302s through WorkOS's `get_logout_url` so the upstream AuthKit session cookie is cleared on `api.workos.com` BEFORE the user lands back on our origin. Without that hop the browser still holds a valid WorkOS session; a follow-up \"Get a drive\" / sign-in click silently re-authenticates via that cookie and JIT-provisions a NEW user row under the same WorkOS identity — making the just-deleted account appear to come back. Same pattern as `web/auth_routes.py::logout`. Falls back to a local-only redirect if no `workos_session_id` is stashed (pre-S4 sessions) or the SDK call surprises us — the local cookie still gets cleared so the user lands somewhere safe.
+        Soft-delete the user + their solo workspace + drive.  v1 semantics (solo orgs): deleting the account also deletes the workspace and its data under one aligned retention window, after which everything is hard-purged. \"Delete my account\" means \"delete everything mine,\" matching Notion / Linear / Slack consumer-tier semantics. Membership-transfer for shared orgs lands in v1.5+.  The response routes through the auth provider's logout so the upstream session is cleared before the user returns, preventing a silent re-authentication that would re-provision the just-deleted account. Falls back to a local-only redirect when there is no upstream session to clear.
 
         :param confirm: (required)
         :type confirm: str
@@ -3342,7 +3342,7 @@ class DefaultApi:
     ) -> RESTResponseType:
         """Delete Account
 
-        Soft-delete the user + their solo workspace + drive.  v1 semantics (solo orgs): deleting the account also deletes the workspace and its data with one aligned retention window. The GC sweeper hard-purges all three atomically when the window closes — see docs/workos-integration-design.md §6 and `core/gc.py` Phase 1-4.  For users in v1, \"delete my account\" means \"delete everything mine,\" matching Notion / Linear / Slack consumer-tier semantics. Membership-transfer for shared orgs lands in v1.5+.  Termination semantics — the response 302s through WorkOS's `get_logout_url` so the upstream AuthKit session cookie is cleared on `api.workos.com` BEFORE the user lands back on our origin. Without that hop the browser still holds a valid WorkOS session; a follow-up \"Get a drive\" / sign-in click silently re-authenticates via that cookie and JIT-provisions a NEW user row under the same WorkOS identity — making the just-deleted account appear to come back. Same pattern as `web/auth_routes.py::logout`. Falls back to a local-only redirect if no `workos_session_id` is stashed (pre-S4 sessions) or the SDK call surprises us — the local cookie still gets cleared so the user lands somewhere safe.
+        Soft-delete the user + their solo workspace + drive.  v1 semantics (solo orgs): deleting the account also deletes the workspace and its data under one aligned retention window, after which everything is hard-purged. \"Delete my account\" means \"delete everything mine,\" matching Notion / Linear / Slack consumer-tier semantics. Membership-transfer for shared orgs lands in v1.5+.  The response routes through the auth provider's logout so the upstream session is cleared before the user returns, preventing a silent re-authentication that would re-provision the just-deleted account. Falls back to a local-only redirect when there is no upstream session to clear.
 
         :param confirm: (required)
         :type confirm: str
@@ -17473,7 +17473,7 @@ class DefaultApi:
     ) -> object:
         """Recovery New Account
 
-        Start fresh under the same WorkOS identity. JIT-provisions a new user / org / drive via the same `sync_from_workos` the happy path uses; the soft-deleted record stays in trash with its original purge_at until the GC sweeps it. Land on /welcome so the user sees the freshly-minted API key once.  Tab-concurrency note: if the user has /auth/recovery open in two tabs and clicks Recover in tab A then Start fresh in tab B, this handler sees a pending_recovery payload whose `soft_deleted_user_id` is now LIVE (tab A's restore won). The `sync_from_workos` upsert on `workos_user_id` will UPDATE the live row's mutable fields instead of INSERTing — i.e., the second tab's Start-fresh effectively no-ops because the partial-unique-index arbiter is no longer filtered out by `deleted_at IS NULL`. End user is still signed in correctly as the recovered user; the second tab's audit event reflects the declined intent even though no new row was minted. Acceptable drift; not worth distributed locking for.
+        Start fresh under the same identity.  Provisions a new user / org / drive; the soft-deleted record stays in trash until garbage-collected. Lands on /welcome so the user sees the freshly-minted API key once.
 
         :param csrf: (required)
         :type csrf: str
@@ -17545,7 +17545,7 @@ class DefaultApi:
     ) -> ApiResponse[object]:
         """Recovery New Account
 
-        Start fresh under the same WorkOS identity. JIT-provisions a new user / org / drive via the same `sync_from_workos` the happy path uses; the soft-deleted record stays in trash with its original purge_at until the GC sweeps it. Land on /welcome so the user sees the freshly-minted API key once.  Tab-concurrency note: if the user has /auth/recovery open in two tabs and clicks Recover in tab A then Start fresh in tab B, this handler sees a pending_recovery payload whose `soft_deleted_user_id` is now LIVE (tab A's restore won). The `sync_from_workos` upsert on `workos_user_id` will UPDATE the live row's mutable fields instead of INSERTing — i.e., the second tab's Start-fresh effectively no-ops because the partial-unique-index arbiter is no longer filtered out by `deleted_at IS NULL`. End user is still signed in correctly as the recovered user; the second tab's audit event reflects the declined intent even though no new row was minted. Acceptable drift; not worth distributed locking for.
+        Start fresh under the same identity.  Provisions a new user / org / drive; the soft-deleted record stays in trash until garbage-collected. Lands on /welcome so the user sees the freshly-minted API key once.
 
         :param csrf: (required)
         :type csrf: str
@@ -17617,7 +17617,7 @@ class DefaultApi:
     ) -> RESTResponseType:
         """Recovery New Account
 
-        Start fresh under the same WorkOS identity. JIT-provisions a new user / org / drive via the same `sync_from_workos` the happy path uses; the soft-deleted record stays in trash with its original purge_at until the GC sweeps it. Land on /welcome so the user sees the freshly-minted API key once.  Tab-concurrency note: if the user has /auth/recovery open in two tabs and clicks Recover in tab A then Start fresh in tab B, this handler sees a pending_recovery payload whose `soft_deleted_user_id` is now LIVE (tab A's restore won). The `sync_from_workos` upsert on `workos_user_id` will UPDATE the live row's mutable fields instead of INSERTing — i.e., the second tab's Start-fresh effectively no-ops because the partial-unique-index arbiter is no longer filtered out by `deleted_at IS NULL`. End user is still signed in correctly as the recovered user; the second tab's audit event reflects the declined intent even though no new row was minted. Acceptable drift; not worth distributed locking for.
+        Start fresh under the same identity.  Provisions a new user / org / drive; the soft-deleted record stays in trash until garbage-collected. Lands on /welcome so the user sees the freshly-minted API key once.
 
         :param csrf: (required)
         :type csrf: str
@@ -25385,6 +25385,587 @@ class DefaultApi:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/web/folders/new',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def web_project_compile_web_projects_fld_id_compile_post(
+        self,
+        fld_id: StrictStr,
+        csrf: StrictStr,
+        engine: Optional[StrictStr] = None,
+        entrypoint: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Web Project Compile
+
+
+        :param fld_id: (required)
+        :type fld_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param engine:
+        :type engine: str
+        :param entrypoint:
+        :type entrypoint: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._web_project_compile_web_projects_fld_id_compile_post_serialize(
+            fld_id=fld_id,
+            csrf=csrf,
+            engine=engine,
+            entrypoint=entrypoint,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def web_project_compile_web_projects_fld_id_compile_post_with_http_info(
+        self,
+        fld_id: StrictStr,
+        csrf: StrictStr,
+        engine: Optional[StrictStr] = None,
+        entrypoint: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Web Project Compile
+
+
+        :param fld_id: (required)
+        :type fld_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param engine:
+        :type engine: str
+        :param entrypoint:
+        :type entrypoint: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._web_project_compile_web_projects_fld_id_compile_post_serialize(
+            fld_id=fld_id,
+            csrf=csrf,
+            engine=engine,
+            entrypoint=entrypoint,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def web_project_compile_web_projects_fld_id_compile_post_without_preload_content(
+        self,
+        fld_id: StrictStr,
+        csrf: StrictStr,
+        engine: Optional[StrictStr] = None,
+        entrypoint: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Web Project Compile
+
+
+        :param fld_id: (required)
+        :type fld_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param engine:
+        :type engine: str
+        :param entrypoint:
+        :type entrypoint: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._web_project_compile_web_projects_fld_id_compile_post_serialize(
+            fld_id=fld_id,
+            csrf=csrf,
+            engine=engine,
+            entrypoint=entrypoint,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _web_project_compile_web_projects_fld_id_compile_post_serialize(
+        self,
+        fld_id,
+        csrf,
+        engine,
+        entrypoint,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if fld_id is not None:
+            _path_params['fld_id'] = fld_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        if engine is not None:
+            _form_params.append(('engine', engine))
+        if entrypoint is not None:
+            _form_params.append(('entrypoint', entrypoint))
+        if csrf is not None:
+            _form_params.append(('csrf', csrf))
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/x-www-form-urlencoded'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/web/projects/{fld_id}/compile',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def web_project_files_web_projects_fld_id_files_get(
+        self,
+        fld_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Web Project Files
+
+        Cookie-authed file tree + read-only source manifest for the LaTeX workspace (handoff §3). Same auth contract as the preview poll (401 / 404-not-403). Source bytes themselves stream from `/a/{art_id}?raw=1` (owner session authorizes private files) — this endpoint only lists.
+
+        :param fld_id: (required)
+        :type fld_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._web_project_files_web_projects_fld_id_files_get_serialize(
+            fld_id=fld_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def web_project_files_web_projects_fld_id_files_get_with_http_info(
+        self,
+        fld_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Web Project Files
+
+        Cookie-authed file tree + read-only source manifest for the LaTeX workspace (handoff §3). Same auth contract as the preview poll (401 / 404-not-403). Source bytes themselves stream from `/a/{art_id}?raw=1` (owner session authorizes private files) — this endpoint only lists.
+
+        :param fld_id: (required)
+        :type fld_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._web_project_files_web_projects_fld_id_files_get_serialize(
+            fld_id=fld_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def web_project_files_web_projects_fld_id_files_get_without_preload_content(
+        self,
+        fld_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Web Project Files
+
+        Cookie-authed file tree + read-only source manifest for the LaTeX workspace (handoff §3). Same auth contract as the preview poll (401 / 404-not-403). Source bytes themselves stream from `/a/{art_id}?raw=1` (owner session authorizes private files) — this endpoint only lists.
+
+        :param fld_id: (required)
+        :type fld_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._web_project_files_web_projects_fld_id_files_get_serialize(
+            fld_id=fld_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _web_project_files_web_projects_fld_id_files_get_serialize(
+        self,
+        fld_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if fld_id is not None:
+            _path_params['fld_id'] = fld_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/web/projects/{fld_id}/files',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

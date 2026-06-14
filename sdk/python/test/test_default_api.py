@@ -642,6 +642,20 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_web_project_compile_web_projects_fld_id_compile_post(self) -> None:
+        """Test case for web_project_compile_web_projects_fld_id_compile_post
+
+        Web Project Compile
+        """
+        pass
+
+    def test_web_project_files_web_projects_fld_id_files_get(self) -> None:
+        """Test case for web_project_files_web_projects_fld_id_files_get
+
+        Web Project Files
+        """
+        pass
+
     def test_web_project_preview_web_projects_fld_id_preview_get(self) -> None:
         """Test case for web_project_preview_web_projects_fld_id_preview_get
 

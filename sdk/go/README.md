@@ -169,6 +169,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**WebDeleteFolderWebFoldersDeletePost**](docs/DefaultAPI.md#webdeletefolderwebfoldersdeletepost) | **Post** /web/folders/delete | Web Delete Folder
 *DefaultAPI* | [**WebMoveFolderWebFoldersMovePost**](docs/DefaultAPI.md#webmovefolderwebfoldersmovepost) | **Post** /web/folders/move | Web Move Folder
 *DefaultAPI* | [**WebNewFolderWebFoldersNewPost**](docs/DefaultAPI.md#webnewfolderwebfoldersnewpost) | **Post** /web/folders/new | Web New Folder
+*DefaultAPI* | [**WebProjectCompileWebProjectsFldIdCompilePost**](docs/DefaultAPI.md#webprojectcompilewebprojectsfldidcompilepost) | **Post** /web/projects/{fld_id}/compile | Web Project Compile
+*DefaultAPI* | [**WebProjectFilesWebProjectsFldIdFilesGet**](docs/DefaultAPI.md#webprojectfileswebprojectsfldidfilesget) | **Get** /web/projects/{fld_id}/files | Web Project Files
 *DefaultAPI* | [**WebProjectPreviewWebProjectsFldIdPreviewGet**](docs/DefaultAPI.md#webprojectpreviewwebprojectsfldidpreviewget) | **Get** /web/projects/{fld_id}/preview | Web Project Preview
 *DefaultAPI* | [**WebPutArtifactWebArtifactsPathPut**](docs/DefaultAPI.md#webputartifactwebartifactspathput) | **Put** /web/artifacts/{path} | Web Put Artifact
 *DefaultAPI* | [**WebRenameArtifactWebArtifactsRenamePost**](docs/DefaultAPI.md#webrenameartifactwebartifactsrenamepost) | **Post** /web/artifacts/rename | Web Rename Artifact

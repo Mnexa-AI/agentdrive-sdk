@@ -250,21 +250,14 @@ func (r ApiCallbackAuthCallbackGetRequest) Execute() (interface{}, *http.Respons
 /*
 CallbackAuthCallbackGet Callback
 
-Complete a WorkOS sign-in.
+Complete a sign-in.
 
-Three failure modes the route is responsible for shaping into
+Handles the auth provider's OAuth callback and shapes failures into
 user-readable errors:
-  * Missing/mismatched state cookie or signed state — LOGIN_FLOW_INVALID
-    (400). Almost always means the user took >10 minutes on the
-    AuthKit page or copy-pasted the callback URL into a different
-    browser.
-  * `authenticate_with_code` raises — AUTH_CODE_INVALID (400). The
-    code was consumed or invalid; the user re-initiates and gets
-    a fresh code.
-  * `sync_from_workos` raises — WORKOS_UNAVAILABLE (502) with
-    Retry-After: 30. WorkOS API call failed AFTER the code was
-    consumed; local DB is untouched (sync_from_workos opens its
-    tx after the WorkOS call returns).
+  * an invalid or expired login flow — LOGIN_FLOW_INVALID (400);
+  * an invalid or already-used authorization code — AUTH_CODE_INVALID (400);
+  * the upstream auth provider being unavailable — WORKOS_UNAVAILABLE (502),
+    returned with Retry-After.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCallbackAuthCallbackGetRequest
@@ -1465,26 +1458,16 @@ DeleteAccountWebAccountDeletePost Delete Account
 Soft-delete the user + their solo workspace + drive.
 
 v1 semantics (solo orgs): deleting the account also deletes the
-workspace and its data with one aligned retention window. The
-GC sweeper hard-purges all three atomically when the window
-closes — see docs/workos-integration-design.md §6 and
-`core/gc.py` Phase 1-4.
+workspace and its data under one aligned retention window, after
+which everything is hard-purged. "Delete my account" means "delete
+everything mine," matching Notion / Linear / Slack consumer-tier
+semantics. Membership-transfer for shared orgs lands in v1.5+.
 
-For users in v1, "delete my account" means "delete everything
-mine," matching Notion / Linear / Slack consumer-tier semantics.
-Membership-transfer for shared orgs lands in v1.5+.
-
-Termination semantics — the response 302s through WorkOS's
-`get_logout_url` so the upstream AuthKit session cookie is cleared
-on `api.workos.com` BEFORE the user lands back on our origin.
-Without that hop the browser still holds a valid WorkOS session;
-a follow-up "Get a drive" / sign-in click silently re-authenticates
-via that cookie and JIT-provisions a NEW user row under the same
-WorkOS identity — making the just-deleted account appear to come
-back. Same pattern as `web/auth_routes.py::logout`. Falls back to
-a local-only redirect if no `workos_session_id` is stashed
-(pre-S4 sessions) or the SDK call surprises us — the local
-cookie still gets cleared so the user lands somewhere safe.
+The response routes through the auth provider's logout so the
+upstream session is cleared before the user returns, preventing a
+silent re-authentication that would re-provision the just-deleted
+account. Falls back to a local-only redirect when there is no
+upstream session to clear.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiDeleteAccountWebAccountDeletePostRequest
@@ -7972,24 +7955,11 @@ func (r ApiRecoveryNewAccountAuthRecoveryNewAccountPostRequest) Execute() (inter
 /*
 RecoveryNewAccountAuthRecoveryNewAccountPost Recovery New Account
 
-Start fresh under the same WorkOS identity. JIT-provisions a
-new user / org / drive via the same `sync_from_workos` the happy
-path uses; the soft-deleted record stays in trash with its
-original purge_at until the GC sweeps it. Land on /welcome so
-the user sees the freshly-minted API key once.
+Start fresh under the same identity.
 
-Tab-concurrency note: if the user has /auth/recovery open in two
-tabs and clicks Recover in tab A then Start fresh in tab B, this
-handler sees a pending_recovery payload whose
-`soft_deleted_user_id` is now LIVE (tab A's restore won). The
-`sync_from_workos` upsert on `workos_user_id` will UPDATE the
-live row's mutable fields instead of INSERTing — i.e., the
-second tab's Start-fresh effectively no-ops because the
-partial-unique-index arbiter is no longer filtered out by
-`deleted_at IS NULL`. End user is still signed in correctly as
-the recovered user; the second tab's audit event reflects the
-declined intent even though no new row was minted. Acceptable
-drift; not worth distributed locking for.
+Provisions a new user / org / drive; the soft-deleted record stays
+in trash until garbage-collected. Lands on /welcome so the user sees
+the freshly-minted API key once.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiRecoveryNewAccountAuthRecoveryNewAccountPostRequest
@@ -11491,6 +11461,261 @@ func (a *DefaultAPIService) WebNewFolderWebFoldersNewPostExecute(r ApiWebNewFold
 		parameterAddToHeaderOrQuery(localVarFormParams, "return_to", r.returnTo, "", "")
 	}
 	parameterAddToHeaderOrQuery(localVarFormParams, "csrf", r.csrf, "", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiWebProjectCompileWebProjectsFldIdCompilePostRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	fldId string
+	csrf *string
+	engine *string
+	entrypoint *string
+}
+
+func (r ApiWebProjectCompileWebProjectsFldIdCompilePostRequest) Csrf(csrf string) ApiWebProjectCompileWebProjectsFldIdCompilePostRequest {
+	r.csrf = &csrf
+	return r
+}
+
+func (r ApiWebProjectCompileWebProjectsFldIdCompilePostRequest) Engine(engine string) ApiWebProjectCompileWebProjectsFldIdCompilePostRequest {
+	r.engine = &engine
+	return r
+}
+
+func (r ApiWebProjectCompileWebProjectsFldIdCompilePostRequest) Entrypoint(entrypoint string) ApiWebProjectCompileWebProjectsFldIdCompilePostRequest {
+	r.entrypoint = &entrypoint
+	return r
+}
+
+func (r ApiWebProjectCompileWebProjectsFldIdCompilePostRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.WebProjectCompileWebProjectsFldIdCompilePostExecute(r)
+}
+
+/*
+WebProjectCompileWebProjectsFldIdCompilePost Web Project Compile
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param fldId
+ @return ApiWebProjectCompileWebProjectsFldIdCompilePostRequest
+*/
+func (a *DefaultAPIService) WebProjectCompileWebProjectsFldIdCompilePost(ctx context.Context, fldId string) ApiWebProjectCompileWebProjectsFldIdCompilePostRequest {
+	return ApiWebProjectCompileWebProjectsFldIdCompilePostRequest{
+		ApiService: a,
+		ctx: ctx,
+		fldId: fldId,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *DefaultAPIService) WebProjectCompileWebProjectsFldIdCompilePostExecute(r ApiWebProjectCompileWebProjectsFldIdCompilePostRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.WebProjectCompileWebProjectsFldIdCompilePost")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/web/projects/{fld_id}/compile"
+	localVarPath = strings.Replace(localVarPath, "{"+"fld_id"+"}", url.PathEscape(parameterValueToString(r.fldId, "fldId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.csrf == nil {
+		return localVarReturnValue, nil, reportError("csrf is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/x-www-form-urlencoded"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.engine != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "engine", r.engine, "", "")
+	}
+	if r.entrypoint != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "entrypoint", r.entrypoint, "", "")
+	}
+	parameterAddToHeaderOrQuery(localVarFormParams, "csrf", r.csrf, "", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiWebProjectFilesWebProjectsFldIdFilesGetRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	fldId string
+}
+
+func (r ApiWebProjectFilesWebProjectsFldIdFilesGetRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.WebProjectFilesWebProjectsFldIdFilesGetExecute(r)
+}
+
+/*
+WebProjectFilesWebProjectsFldIdFilesGet Web Project Files
+
+Cookie-authed file tree + read-only source manifest for the LaTeX
+workspace (handoff §3). Same auth contract as the preview poll (401 /
+404-not-403). Source bytes themselves stream from `/a/{art_id}?raw=1`
+(owner session authorizes private files) — this endpoint only lists.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param fldId
+ @return ApiWebProjectFilesWebProjectsFldIdFilesGetRequest
+*/
+func (a *DefaultAPIService) WebProjectFilesWebProjectsFldIdFilesGet(ctx context.Context, fldId string) ApiWebProjectFilesWebProjectsFldIdFilesGetRequest {
+	return ApiWebProjectFilesWebProjectsFldIdFilesGetRequest{
+		ApiService: a,
+		ctx: ctx,
+		fldId: fldId,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *DefaultAPIService) WebProjectFilesWebProjectsFldIdFilesGetExecute(r ApiWebProjectFilesWebProjectsFldIdFilesGetRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.WebProjectFilesWebProjectsFldIdFilesGet")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/web/projects/{fld_id}/files"
+	localVarPath = strings.Replace(localVarPath, "{"+"fld_id"+"}", url.PathEscape(parameterValueToString(r.fldId, "fldId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
