@@ -28,7 +28,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { ArtifactOut } from '@agentdrive/sdk'
+import type { ArtifactOut } from '@mnexa-ai/agentdrive-sdk'
 
 // TODO: Update the object below with actual values
 const example = {

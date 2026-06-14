@@ -12,7 +12,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { ArtifactSource } from '@agentdrive/sdk'
+import type { ArtifactSource } from '@mnexa-ai/agentdrive-sdk'
 
 // TODO: Update the object below with actual values
 const example = {

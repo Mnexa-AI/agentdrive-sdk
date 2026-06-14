@@ -1,11 +1,11 @@
 {
-  "name": "@agentdrive/sdk",
+  "name": "@mnexa-ai/agentdrive-sdk",
   "version": "0.0.1",
-  "description": "OpenAPI client for @agentdrive/sdk",
+  "description": "OpenAPI client for @mnexa-ai/agentdrive-sdk",
   "author": "OpenAPI-Generator",
   "repository": {
     "type": "git",
-    "url": "https://github.com/GIT_USER_ID/GIT_REPO_ID.git"
+    "url": "https://github.com/Mnexa-AI/agentdrive-sdk.git"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

@@ -19,7 +19,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { SearchHitOut } from '@agentdrive/sdk'
+import type { SearchHitOut } from '@mnexa-ai/agentdrive-sdk'
 
 // TODO: Update the object below with actual values
 const example = {

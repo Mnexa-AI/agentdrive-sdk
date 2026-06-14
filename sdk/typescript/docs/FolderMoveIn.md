@@ -12,7 +12,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { FolderMoveIn } from '@agentdrive/sdk'
+import type { FolderMoveIn } from '@mnexa-ai/agentdrive-sdk'
 
 // TODO: Update the object below with actual values
 const example = {

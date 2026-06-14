@@ -10,7 +10,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { LocationInner } from '@agentdrive/sdk'
+import type { LocationInner } from '@mnexa-ai/agentdrive-sdk'
 
 // TODO: Update the object below with actual values
 const example = {

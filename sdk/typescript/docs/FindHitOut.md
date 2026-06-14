@@ -34,7 +34,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { FindHitOut } from '@agentdrive/sdk'
+import type { FindHitOut } from '@mnexa-ai/agentdrive-sdk'
 
 // TODO: Update the object below with actual values
 const example = {

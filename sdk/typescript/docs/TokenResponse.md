@@ -16,7 +16,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { TokenResponse } from '@agentdrive/sdk'
+import type { TokenResponse } from '@mnexa-ai/agentdrive-sdk'
 
 // TODO: Update the object below with actual values
 const example = {

@@ -23,11 +23,11 @@ Anonymous registration endpoint for MCP clients. Public clients only (PKCE, no c
 import {
   Configuration,
   McpOauthApi,
-} from '@agentdrive/sdk';
-import type { Oauth2RegisterOauth2RegisterPostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { Oauth2RegisterOauth2RegisterPostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new McpOauthApi();
 
   try {
@@ -82,11 +82,11 @@ Revokes an &#x60;adat_&#x60; access token (that token only) or an &#x60;adrt_&#x
 import {
   Configuration,
   McpOauthApi,
-} from '@agentdrive/sdk';
-import type { Oauth2RevokeOauth2RevokePostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { Oauth2RevokeOauth2RevokePostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new McpOauthApi();
 
   try {

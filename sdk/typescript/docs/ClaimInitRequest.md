@@ -13,7 +13,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { ClaimInitRequest } from '@agentdrive/sdk'
+import type { ClaimInitRequest } from '@mnexa-ai/agentdrive-sdk'
 
 // TODO: Update the object below with actual values
 const example = {

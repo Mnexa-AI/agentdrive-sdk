@@ -18,7 +18,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { VersionOut } from '@agentdrive/sdk'
+import type { VersionOut } from '@mnexa-ai/agentdrive-sdk'
 
 // TODO: Update the object below with actual values
 const example = {

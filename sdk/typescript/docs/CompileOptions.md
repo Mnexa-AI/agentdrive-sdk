@@ -13,7 +13,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { CompileOptions } from '@agentdrive/sdk'
+import type { CompileOptions } from '@mnexa-ai/agentdrive-sdk'
 
 // TODO: Update the object below with actual values
 const example = {

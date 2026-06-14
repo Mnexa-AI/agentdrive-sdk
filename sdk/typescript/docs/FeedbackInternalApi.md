@@ -30,11 +30,11 @@ Record a non-transition timeline entry (reply_received, issue_created, pr_opened
 import {
   Configuration,
   FeedbackInternalApi,
-} from '@agentdrive/sdk';
-import type { AppendEventInternalFeedbackFbkIdEventsPostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { AppendEventInternalFeedbackFbkIdEventsPostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new FeedbackInternalApi();
 
   const body = {
@@ -101,11 +101,11 @@ The ONLY place filer identity crosses to a lane. Fails closed (contact&#x3D;true
 import {
   Configuration,
   FeedbackInternalApi,
-} from '@agentdrive/sdk';
-import type { ContactInternalFeedbackFbkIdContactGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ContactInternalFeedbackFbkIdContactGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new FeedbackInternalApi();
 
   const body = {
@@ -169,11 +169,11 @@ Attachment bytes for description-writing (triage only).
 import {
   Configuration,
   FeedbackInternalApi,
-} from '@agentdrive/sdk';
-import type { GetAttachmentInternalFeedbackFbkIdAttachmentsFbaIdGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { GetAttachmentInternalFeedbackFbkIdAttachmentsFbaIdGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new FeedbackInternalApi();
 
   const body = {
@@ -240,11 +240,11 @@ One ticket + its timeline (triage context, comms routing, the interactive \&#39;
 import {
   Configuration,
   FeedbackInternalApi,
-} from '@agentdrive/sdk';
-import type { GetTicketInternalFeedbackFbkIdGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { GetTicketInternalFeedbackFbkIdGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new FeedbackInternalApi();
 
   const body = {
@@ -308,11 +308,11 @@ Attachment metadata — the triage lane describes these into the issue; bytes ne
 import {
   Configuration,
   FeedbackInternalApi,
-} from '@agentdrive/sdk';
-import type { ListAttachmentsInternalFeedbackFbkIdAttachmentsGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ListAttachmentsInternalFeedbackFbkIdAttachmentsGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new FeedbackInternalApi();
 
   const body = {
@@ -376,11 +376,11 @@ Work-finding query (oldest first). Triage drains &#x60;received&#x60;; the sweep
 import {
   Configuration,
   FeedbackInternalApi,
-} from '@agentdrive/sdk';
-import type { ListFeedbackInternalFeedbackGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ListFeedbackInternalFeedbackGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new FeedbackInternalApi();
 
   const body = {
@@ -447,11 +447,11 @@ Notification-ledger write. &#x60;stage&#x60; is required — it IS the idempoten
 import {
   Configuration,
   FeedbackInternalApi,
-} from '@agentdrive/sdk';
-import type { NotifiedInternalFeedbackFbkIdNotifiedPostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { NotifiedInternalFeedbackFbkIdNotifiedPostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new FeedbackInternalApi();
 
   const body = {
@@ -518,11 +518,11 @@ The comms lane\&#39;s outbound work: rows past an enabled policy stage, contact&
 import {
   Configuration,
   FeedbackInternalApi,
-} from '@agentdrive/sdk';
-import type { PendingNotificationsInternalFeedbackPendingNotificationsGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { PendingNotificationsInternalFeedbackPendingNotificationsGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new FeedbackInternalApi();
 
   const body = {
@@ -586,11 +586,11 @@ Drive one state-machine edge as the authenticated lane.  409 carries &#x60;curre
 import {
   Configuration,
   FeedbackInternalApi,
-} from '@agentdrive/sdk';
-import type { TransitionInternalFeedbackFbkIdTransitionPostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { TransitionInternalFeedbackFbkIdTransitionPostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new FeedbackInternalApi();
 
   const body = {

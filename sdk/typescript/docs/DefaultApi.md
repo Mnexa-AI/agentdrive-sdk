@@ -116,11 +116,11 @@ Activity Feed
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { ActivityFeedActivityGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ActivityFeedActivityGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   try {
@@ -173,11 +173,11 @@ Artifact Detail Preview
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { ArtifactDetailPreviewPreviewArtifactDetailGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ArtifactDetailPreviewPreviewArtifactDetailGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   try {
@@ -232,11 +232,11 @@ Complete a WorkOS sign-in.  Three failure modes the route is responsible for sha
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { CallbackAuthCallbackGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { CallbackAuthCallbackGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -304,11 +304,11 @@ Cancel a queued/running job
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { CancelJobV0JobsJobIdCancelPostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { CancelJobV0JobsJobIdCancelPostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -373,11 +373,11 @@ Collection Detail
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { CollectionDetailCollectionsSlugGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { CollectionDetailCollectionsSlugGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -441,11 +441,11 @@ Connectors landing — Google Drive, Notion, etc. Each connector pipes its files
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { ConnectorsPageConnectorsGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ConnectorsPageConnectorsGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   try {
@@ -500,11 +500,11 @@ Create a new artifact at &#x60;path&#x60; whose bytes are identical to the sourc
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { CopyArtifactRouteV0ArtifactsArtIdCopyPostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { CopyArtifactRouteV0ArtifactsArtIdCopyPostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -577,11 +577,11 @@ Create a folder at the URL path. Idempotent — a second call for the same live 
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { CreateFolderByPathV0FoldersPathPostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { CreateFolderByPathV0FoldersPathPostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -652,11 +652,11 @@ Danger Zone Old
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { DangerZoneOldDashboardDangerGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { DangerZoneOldDashboardDangerGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   try {
@@ -709,11 +709,11 @@ Danger Zone
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { DangerZoneSettingsDangerGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { DangerZoneSettingsDangerGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   try {
@@ -766,11 +766,11 @@ Dashboard
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { DashboardDashboardGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { DashboardDashboardGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -864,11 +864,11 @@ Soft-delete the user + their solo workspace + drive.  v1 semantics (solo orgs): 
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { DeleteAccountWebAccountDeletePostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { DeleteAccountWebAccountDeletePostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -933,11 +933,11 @@ Delete Artifact
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { DeleteArtifactV0ArtifactsPathDeleteRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { DeleteArtifactV0ArtifactsPathDeleteRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -1010,11 +1010,11 @@ Mark the drive for cleanup. All tenant data (artifacts, versions, wiki, embeddin
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { DeleteDriveRouteV0DrivesDriveIdDeleteRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { DeleteDriveRouteV0DrivesDriveIdDeleteRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -1082,11 +1082,11 @@ Soft-delete a folder by stable ID (cascade with ?recursive&#x3D;true)
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { DeleteFolderByIdV0FoldersFldIdDeleteRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { DeleteFolderByIdV0FoldersFldIdDeleteRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -1159,11 +1159,11 @@ Soft-delete the folder. Refuses if the folder has live descendants unless &#x60;
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { DeleteFolderByPathV0FoldersPathDeleteRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { DeleteFolderByPathV0FoldersPathDeleteRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -1234,11 +1234,11 @@ Delete Key
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { DeleteKeyWebKeysDeletePostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { DeleteKeyWebKeysDeletePostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -1300,11 +1300,11 @@ Stream the artifact bytes by stable ID (never rendered HTML)
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { DownloadArtifactByIdV0ArtifactsArtIdDownloadGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { DownloadArtifactByIdV0ArtifactsArtIdDownloadGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -1369,11 +1369,11 @@ Stream bytes for a specific version (machine surface)
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { DownloadArtifactVersionV0ArtifactsArtIdVersionsVersionNumberDownloadGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { DownloadArtifactVersionV0ArtifactsArtIdVersionsVersionNumberDownloadGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -1443,11 +1443,11 @@ SnipIt annotation editor for an image artifact.  URL pattern mirrors the artifac
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { EditArtifactAArtIdEditGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { EditArtifactAArtIdEditGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -1509,11 +1509,11 @@ Enqueue a compile job for a project (folder)
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { EnqueueJobV0ProjectsFldIdJobsPostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { EnqueueJobV0ProjectsFldIdJobsPostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -1586,11 +1586,11 @@ Begin a WorkOS sign-in flow on behalf of a Chrome extension.  Stamps &#x60;for&#
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { ExtensionStartAuthExtensionStartGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ExtensionStartAuthExtensionStartGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -1654,11 +1654,11 @@ Render the feedback form. Auth-required.
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { FeedbackFormFeedbackGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { FeedbackFormFeedbackGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   try {
@@ -1713,11 +1713,11 @@ Validate, charge the feedback budget, insert the ticket, redirect with a flash. 
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { FeedbackSubmitFeedbackPostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { FeedbackSubmitFeedbackPostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -1796,11 +1796,11 @@ Passage-level chunk RAG over &#x60;embed_chunks&#x60;. Lexical (&#x60;chunk_tsv&
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { FindV0FindGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { FindV0FindGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -1892,11 +1892,11 @@ Artifact metadata by stable ID (same shape as path /meta)
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { GetArtifactByIdMetaV0ArtifactsArtIdMetaGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { GetArtifactByIdMetaV0ArtifactsArtIdMetaGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -1961,11 +1961,11 @@ Canonical lookup of an artifact by its stable ID
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { GetArtifactByIdV0ArtifactsArtIdGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { GetArtifactByIdV0ArtifactsArtIdGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -2030,11 +2030,11 @@ Get Artifact Meta
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { GetArtifactMetaV0ArtifactsPathMetaGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { GetArtifactMetaV0ArtifactsPathMetaGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -2099,11 +2099,11 @@ Metadata for a specific version of an artifact
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { GetArtifactVersionV0ArtifactsArtIdVersionsVersionNumberGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { GetArtifactVersionV0ArtifactsArtIdVersionsVersionNumberGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -2173,11 +2173,11 @@ Lifecycle status of feedback THIS drive filed. Foreign tickets read as 404 — i
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { GetFeedbackStatusV0FeedbackFbkIdGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { GetFeedbackStatusV0FeedbackFbkIdGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -2242,11 +2242,11 @@ Folder metadata by stable ID (same shape as the bare id route)
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { GetFolderByIdMetaV0FoldersFldIdMetaGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { GetFolderByIdMetaV0FoldersFldIdMetaGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -2311,11 +2311,11 @@ Canonical lookup of a folder by its stable ID
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { GetFolderByIdV0FoldersFldIdGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { GetFolderByIdV0FoldersFldIdGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -2380,11 +2380,11 @@ Read folder metadata by path
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { GetFolderByPathV0FoldersPathGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { GetFolderByPathV0FoldersPathGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -2449,11 +2449,11 @@ Raw compile log (text/plain)
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { GetJobLogsV0JobsJobIdLogsGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { GetJobLogsV0JobsJobIdLogsGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -2518,11 +2518,11 @@ Poll a job
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { GetJobV0JobsJobIdGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { GetJobV0JobsJobIdGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -2587,11 +2587,11 @@ Get a project\&#39;s compile config
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { GetProjectV0ProjectsFldIdGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { GetProjectV0ProjectsFldIdGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -2658,11 +2658,11 @@ Liveness + DB-reachability probe. Used by Cloud Run / k8s healthchecks and any u
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { HealthHealthGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { HealthHealthGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   try {
@@ -2717,11 +2717,11 @@ Returns versions in descending &#x60;version_number&#x60; order. Cursor paginati
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { ListArtifactVersionsV0ArtifactsArtIdVersionsGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ListArtifactVersionsV0ArtifactsArtIdVersionsGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -2794,11 +2794,11 @@ Returns artifacts sorted by path. Filter by &#x60;prefix&#x60;, &#x60;label&#x60
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { ListArtifactsV0ArtifactsGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ListArtifactsV0ArtifactsGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -2877,11 +2877,11 @@ Returns events newest-first. Filters compose with AND.  **Cursor pagination:** p
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { ListEventsRouteV0EventsGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ListEventsRouteV0EventsGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -2961,11 +2961,11 @@ List a project\&#39;s jobs
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { ListProjectJobsV0ProjectsFldIdJobsGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ListProjectJobsV0ProjectsFldIdJobsGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -3038,11 +3038,11 @@ Returns soft-deleted artifacts on the drive plus the drive\&#39;s own soft-delet
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { ListTrashRouteV0DrivesDriveIdTrashGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ListTrashRouteV0DrivesDriveIdTrashGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -3109,11 +3109,11 @@ Begin a WorkOS sign-in flow.  Mints a pre-login state cookie (binds the OAuth fl
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { LoginAuthLoginGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { LoginAuthLoginGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -3177,11 +3177,11 @@ Terminate both the local session AND the upstream WorkOS session.  Without the W
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { LogoutAuthLogoutPostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { LogoutAuthLogoutPostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -3243,11 +3243,11 @@ Marketing
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { MarketingGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { MarketingGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   try {
@@ -3300,11 +3300,11 @@ Marketplace Browse
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { MarketplaceBrowseMarketplaceGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { MarketplaceBrowseMarketplaceGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   try {
@@ -3357,11 +3357,11 @@ Marketplace Detail
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { MarketplaceDetailMarketplaceSlugGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { MarketplaceDetailMarketplaceSlugGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -3425,11 +3425,11 @@ Unified view of every metered dimension: storage (snapshot), writes (current hou
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { MeUsageV0DrivesMeUsageGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { MeUsageV0DrivesMeUsageGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -3493,11 +3493,11 @@ Drive overview for the authenticated bearer token.  Wire-protocol preservation (
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { MeV0DrivesMeGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { MeV0DrivesMeGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -3559,11 +3559,11 @@ Rename / move a folder by stable ID (cascade descendants)
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { MoveFolderByIdV0FoldersFldIdMovePostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { MoveFolderByIdV0FoldersFldIdMovePostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -3636,11 +3636,11 @@ Move the folder identified by URL path to the body\&#39;s &#x60;path&#x60;. All 
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { MoveFolderByPathV0FoldersPathMovePostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { MoveFolderByPathV0FoldersPathMovePostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -3713,11 +3713,11 @@ Disconnect one MCP client: revoke its whole rotation chain (mcp-oauth-design §4
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { OauthDisconnectWebOauthDisconnectPostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { OauthDisconnectWebOauthDisconnectPostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -3782,11 +3782,11 @@ Update folder metadata by stable ID
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { PatchFolderByIdV0FoldersFldIdPatchRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { PatchFolderByIdV0FoldersFldIdPatchRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -3859,11 +3859,11 @@ Partial update — field absence leaves the value unchanged; explicit &#x60;null
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { PatchFolderByPathV0FoldersPathPatchRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { PatchFolderByPathV0FoldersPathPatchRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -3936,11 +3936,11 @@ File feedback. Body: &#x60;{kind, title, body, contact?, attachments?: [art_id, 
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { PostFeedbackV0FeedbackPostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { PostFeedbackV0FeedbackPostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -4004,11 +4004,11 @@ Public privacy &amp; data-handling disclosure. Linked from the marketing footer 
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { PrivacyPagePrivacyGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { PrivacyPagePrivacyGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   try {
@@ -4063,11 +4063,11 @@ Live PDF preview for a project folder (latex-live-preview-design.md).  URL mirro
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { ProjectPreviewPageFFldIdPreviewGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ProjectPreviewPageFFldIdPreviewGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -4129,11 +4129,11 @@ Publisher Profile
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { PublisherProfilePublishersHandleGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { PublisherProfilePublishersHandleGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -4197,11 +4197,11 @@ Upload an artifact at the given path. The path is treated as the artifact\&#39;s
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { PutArtifactV0ArtifactsPathPutRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { PutArtifactV0ArtifactsPathPutRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -4290,11 +4290,11 @@ Set a project\&#39;s compile config (entrypoint/engine/auto_compile)
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { PutProjectV0ProjectsFldIdPutRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { PutProjectV0ProjectsFldIdPutRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -4364,11 +4364,11 @@ Start fresh under the same WorkOS identity. JIT-provisions a new user / org / dr
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { RecoveryNewAccountAuthRecoveryNewAccountPostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { RecoveryNewAccountAuthRecoveryNewAccountPostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -4435,11 +4435,11 @@ Friendly landing for the rare race where the soft-deleted row has been hard-purg
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { RecoveryNewAccountExpiredAuthRecoveryNewAccountExpiredGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { RecoveryNewAccountExpiredAuthRecoveryNewAccountExpiredGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   try {
@@ -4494,11 +4494,11 @@ Show the recover-or-start-fresh decision. Requires a valid &#x60;pending_recover
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { RecoveryPageAuthRecoveryGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { RecoveryPageAuthRecoveryGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   try {
@@ -4553,11 +4553,11 @@ Recover the soft-deleted account. Undelete cascade runs in &#x60;onboarding.reco
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { RecoveryRestoreAuthRecoveryRestorePostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { RecoveryRestoreAuthRecoveryRestorePostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -4621,11 +4621,11 @@ Move the artifact to a new path on the same drive. ID, version history, source r
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { RenameArtifactRouteV0ArtifactsArtIdPatchRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { RenameArtifactRouteV0ArtifactsArtIdPatchRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -4701,11 +4701,11 @@ Clear &#x60;deleted_at&#x60; + &#x60;purge_at&#x60; on a soft-deleted artifact. 
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { RestoreArtifactV0ArtifactsArtIdRestorePostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { RestoreArtifactV0ArtifactsArtIdRestorePostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -4781,11 +4781,11 @@ Clear &#x60;deleted_at&#x60; + &#x60;purge_at&#x60; on a soft-deleted drive. Sof
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { RestoreDriveRouteV0DrivesDriveIdRestorePostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { RestoreDriveRouteV0DrivesDriveIdRestorePostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -4853,11 +4853,11 @@ Rotate Key
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { RotateKeyWebKeysRotatePostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { RotateKeyWebKeysRotatePostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -4921,11 +4921,11 @@ Lexical (not semantic) full-text search powered by Postgres &#x60;websearch_to_t
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { SearchV0SearchGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { SearchV0SearchGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -5013,11 +5013,11 @@ Default settings landing — Account info + Danger zone.
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { SettingsAccountSettingsGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { SettingsAccountSettingsGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   try {
@@ -5072,11 +5072,11 @@ API key tab. Also where reveal_key is rendered after rotation; the reveal is con
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { SettingsApiKeysSettingsApiKeysGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { SettingsApiKeysSettingsApiKeysGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   try {
@@ -5131,11 +5131,11 @@ Quickstart tab — the single connect-and-use surface, consolidating the former 
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { SettingsQuickstartSettingsQuickstartGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { SettingsQuickstartSettingsQuickstartGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   try {
@@ -5190,11 +5190,11 @@ Usage tab — current-period meters against tier caps.  Reads the same data as &
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { SettingsUsageSettingsUsageGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { SettingsUsageSettingsUsageGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   try {
@@ -5247,11 +5247,11 @@ Shared Files
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { SharedFilesSharedGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { SharedFilesSharedGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   try {
@@ -5306,11 +5306,11 @@ Streams an artifact body into AgentDrive using a single-use token that was previ
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { StreamUploadV0UploadTokenPutRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { StreamUploadV0UploadTokenPutRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -5382,11 +5382,11 @@ Public beta terms of service. Linked from the marketing footer.
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { TermsPageTermsGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { TermsPageTermsGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   try {
@@ -5441,11 +5441,11 @@ Flip the per-drive &#x60;indexing_enabled&#x60; flag (privacy opt-out for sendin
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { ToggleIndexingWebAccountIndexingPostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ToggleIndexingWebAccountIndexingPostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -5512,11 +5512,11 @@ Drive-wide Trash: soft-deleted artifacts + folder roots, each with a Restore act
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { TrashWebTrashGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { TrashWebTrashGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   try {
@@ -5569,11 +5569,11 @@ View File
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { ViewFileDriveIdPathGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ViewFileDriveIdPathGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -5646,11 +5646,11 @@ Resolve a stable artifact ID to its path-URL and 302 there.  Auth model matches 
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { ViewPermalinkArtifactAArtIdGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ViewPermalinkArtifactAArtIdGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -5714,11 +5714,11 @@ Resolve a stable folder ID to its current path-URL and 302.  Auth model mirrors 
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { ViewPermalinkFolderFFldIdGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ViewPermalinkFolderFFldIdGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -5782,11 +5782,11 @@ Session-auth companion to &#x60;/v0/artifacts/{path}/meta&#x60; used by the wiki
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { WebArtifactIndexedWebArtifactsIndexedGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { WebArtifactIndexedWebArtifactsIndexedGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -5848,11 +5848,11 @@ Web Copy Artifact
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { WebCopyArtifactWebArtifactsCopyPostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { WebCopyArtifactWebArtifactsCopyPostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -5923,11 +5923,11 @@ Web Delete Artifact Op
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { WebDeleteArtifactOpWebArtifactsDeletePostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { WebDeleteArtifactOpWebArtifactsDeletePostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -5997,11 +5997,11 @@ Cookie-authed delete used by the editor\&#39;s Discard button (&#x60;/a/{art_id}
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { WebDeleteArtifactWebArtifactsPathDeleteRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { WebDeleteArtifactWebArtifactsPathDeleteRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -6066,11 +6066,11 @@ Web Delete Folder
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { WebDeleteFolderWebFoldersDeletePostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { WebDeleteFolderWebFoldersDeletePostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -6141,11 +6141,11 @@ Web Move Folder
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { WebMoveFolderWebFoldersMovePostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { WebMoveFolderWebFoldersMovePostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -6216,11 +6216,11 @@ Web New Folder
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { WebNewFolderWebFoldersNewPostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { WebNewFolderWebFoldersNewPostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -6293,11 +6293,11 @@ Session-auth poll for the live PDF preview page (latex-live-preview- design.md �
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { WebProjectPreviewWebProjectsFldIdPreviewGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { WebProjectPreviewWebProjectsFldIdPreviewGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -6361,11 +6361,11 @@ Cookie-authed write of an image artifact. Used by the SnipIt web editor (&#x60;/
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { WebPutArtifactWebArtifactsPathPutRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { WebPutArtifactWebArtifactsPathPutRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -6430,11 +6430,11 @@ Web Rename Artifact
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { WebRenameArtifactWebArtifactsRenamePostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { WebRenameArtifactWebArtifactsRenamePostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -6505,11 +6505,11 @@ Web Restore Artifact
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { WebRestoreArtifactWebArtifactsRestorePostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { WebRestoreArtifactWebArtifactsRestorePostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -6577,11 +6577,11 @@ Web Restore Folder
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { WebRestoreFolderWebFoldersRestorePostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { WebRestoreFolderWebFoldersRestorePostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -6651,11 +6651,11 @@ Artifact visibility (target &#x3D; &#x60;art_&lt;id&gt;&#x60;) or folder descrip
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { WebSetMetadataWebSetPostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { WebSetMetadataWebSetPostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -6729,11 +6729,11 @@ Web Upload
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { WebUploadWebUploadPostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { WebUploadWebUploadPostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   const body = {
@@ -6807,11 +6807,11 @@ Webhooks Page
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { WebhooksPageWebhooksGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { WebhooksPageWebhooksGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   try {
@@ -6866,11 +6866,11 @@ Show the three-step welcome screen and consume &#x60;reveal_key&#x60;.  Auth-req
 import {
   Configuration,
   DefaultApi,
-} from '@agentdrive/sdk';
-import type { WelcomeWelcomeGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { WelcomeWelcomeGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   try {

@@ -12,7 +12,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { FindPage } from '@agentdrive/sdk'
+import type { FindPage } from '@mnexa-ai/agentdrive-sdk'
 
 // TODO: Update the object below with actual values
 const example = {

@@ -17,7 +17,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { AnonymousIdentityResponse } from '@agentdrive/sdk'
+import type { AnonymousIdentityResponse } from '@mnexa-ai/agentdrive-sdk'
 
 // TODO: Update the object below with actual values
 const example = {

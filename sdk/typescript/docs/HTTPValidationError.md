@@ -11,7 +11,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { HTTPValidationError } from '@agentdrive/sdk'
+import type { HTTPValidationError } from '@mnexa-ai/agentdrive-sdk'
 
 // TODO: Update the object below with actual values
 const example = {

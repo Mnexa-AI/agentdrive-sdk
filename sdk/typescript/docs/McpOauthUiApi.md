@@ -21,11 +21,11 @@ Authorize Decision
 import {
   Configuration,
   McpOauthUiApi,
-} from '@agentdrive/sdk';
-import type { AuthorizeDecisionOauth2AuthorizePostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { AuthorizeDecisionOauth2AuthorizePostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new McpOauthUiApi();
 
   const body = {
@@ -87,11 +87,11 @@ Authorize Page
 import {
   Configuration,
   McpOauthUiApi,
-} from '@agentdrive/sdk';
-import type { AuthorizePageOauth2AuthorizeGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { AuthorizePageOauth2AuthorizeGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new McpOauthUiApi();
 
   try {

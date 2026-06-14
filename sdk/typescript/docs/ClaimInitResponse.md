@@ -15,7 +15,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { ClaimInitResponse } from '@agentdrive/sdk'
+import type { ClaimInitResponse } from '@mnexa-ai/agentdrive-sdk'
 
 // TODO: Update the object below with actual values
 const example = {

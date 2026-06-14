@@ -23,11 +23,11 @@ Browser-form submit from &#x60;/claim&#x60;. CSRF-gated + WorkOS-session-gated. 
 import {
   Configuration,
   ClaimUiApi,
-} from '@agentdrive/sdk';
-import type { ClaimCompleteAgentIdentityClaimCompletePostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ClaimCompleteAgentIdentityClaimCompletePostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new ClaimUiApi();
 
   const body = {
@@ -103,11 +103,11 @@ Three states, each rendered via the same template with a different &#x60;state&#
 import {
   Configuration,
   ClaimUiApi,
-} from '@agentdrive/sdk';
-import type { ClaimPageClaimGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ClaimPageClaimGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new ClaimUiApi();
 
   const body = {

@@ -14,7 +14,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { SourceRef } from '@agentdrive/sdk'
+import type { SourceRef } from '@mnexa-ai/agentdrive-sdk'
 
 // TODO: Update the object below with actual values
 const example = {

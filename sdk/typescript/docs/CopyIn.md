@@ -13,7 +13,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { CopyIn } from '@agentdrive/sdk'
+import type { CopyIn } from '@mnexa-ai/agentdrive-sdk'
 
 // TODO: Update the object below with actual values
 const example = {

@@ -1,4 +1,4 @@
-# @agentdrive/sdk@0.0.1
+# @mnexa-ai/agentdrive-sdk@0.0.1
 
 A TypeScript SDK client for the api.agentdrive.run API.
 
@@ -7,7 +7,7 @@ A TypeScript SDK client for the api.agentdrive.run API.
 First, install the SDK from npm.
 
 ```bash
-npm install @agentdrive/sdk --save
+npm install @mnexa-ai/agentdrive-sdk --save
 ```
 
 Next, try it out.
@@ -17,11 +17,11 @@ Next, try it out.
 import {
   Configuration,
   AgentAuthApi,
-} from '@agentdrive/sdk';
-import type { ExtensionExchangeV0AuthExtensionExchangePostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ExtensionExchangeV0AuthExtensionExchangePostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new AgentAuthApi();
 
   const body = {

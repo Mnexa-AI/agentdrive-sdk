@@ -13,7 +13,7 @@ Name | Type
 ## Example
 
 ```typescript
-import type { ExtensionExchangeRequest } from '@agentdrive/sdk'
+import type { ExtensionExchangeRequest } from '@mnexa-ai/agentdrive-sdk'
 
 // TODO: Update the object below with actual values
 const example = {

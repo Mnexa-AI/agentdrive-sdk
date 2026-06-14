@@ -29,11 +29,11 @@ Single-use opaque ticket → JWT pair. Called once by an extension\&#39;s auth-c
 import {
   Configuration,
   AgentAuthApi,
-} from '@agentdrive/sdk';
-import type { ExtensionExchangeV0AuthExtensionExchangePostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ExtensionExchangeV0AuthExtensionExchangePostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new AgentAuthApi();
 
   const body = {
@@ -97,11 +97,11 @@ Returns a &#x60;user_code&#x60; and &#x60;verification_uri&#x60; (RFC 8628 devic
 import {
   Configuration,
   AgentAuthApi,
-} from '@agentdrive/sdk';
-import type { InitiateClaimAgentIdentityClaimPostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { InitiateClaimAgentIdentityClaimPostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new AgentAuthApi();
 
   const body = {
@@ -165,11 +165,11 @@ Public half of the RSA signing key for identity_assertion + access_token JWTs is
 import {
   Configuration,
   AgentAuthApi,
-} from '@agentdrive/sdk';
-import type { JwksWellKnownJwksJsonGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { JwksWellKnownJwksJsonGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new AgentAuthApi();
 
   try {
@@ -224,11 +224,11 @@ Two grant types:  **&#x60;urn:ietf:params:oauth:grant-type:jwt-bearer&#x60;** (R
 import {
   Configuration,
   AgentAuthApi,
-} from '@agentdrive/sdk';
-import type { Oauth2TokenOauth2TokenPostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { Oauth2TokenOauth2TokenPostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new AgentAuthApi();
 
   const body = {
@@ -298,11 +298,11 @@ Discovery document for the auth.md protocol. Carries the standard RFC 8414 field
 import {
   Configuration,
   AgentAuthApi,
-} from '@agentdrive/sdk';
-import type { OauthAuthorizationServerWellKnownOauthAuthorizationServerGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { OauthAuthorizationServerWellKnownOauthAuthorizationServerGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new AgentAuthApi();
 
   try {
@@ -357,11 +357,11 @@ Path-inserted variant of the protected-resource document. MCP clients derive thi
 import {
   Configuration,
   AgentAuthApi,
-} from '@agentdrive/sdk';
-import type { OauthProtectedResourceMcpWellKnownOauthProtectedResourceMcpGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { OauthProtectedResourceMcpWellKnownOauthProtectedResourceMcpGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new AgentAuthApi();
 
   try {
@@ -416,11 +416,11 @@ Names this server as a protected resource and points clients at the authorizatio
 import {
   Configuration,
   AgentAuthApi,
-} from '@agentdrive/sdk';
-import type { OauthProtectedResourceWellKnownOauthProtectedResourceGetRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { OauthProtectedResourceWellKnownOauthProtectedResourceGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new AgentAuthApi();
 
   try {
@@ -475,11 +475,11 @@ Two registration modes:  **&#x60;type&#x3D;anonymous&#x60;** — Provisions a br
 import {
   Configuration,
   AgentAuthApi,
-} from '@agentdrive/sdk';
-import type { RegisterAgentIdentityAgentIdentityPostRequest } from '@agentdrive/sdk';
+} from '@mnexa-ai/agentdrive-sdk';
+import type { RegisterAgentIdentityAgentIdentityPostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
-  console.log("🚀 Testing @agentdrive/sdk SDK...");
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new AgentAuthApi();
 
   const body = {
