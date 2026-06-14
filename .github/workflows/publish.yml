@@ -38,23 +38,33 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           packages-dir: sdk/python/dist
+          skip-existing: true
 
   npm:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write # OIDC trusted publishing (no NPM token)
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
-      - name: Build & publish
+      # Trusted publishing needs npm >= 11.5.1; Node 20 ships an older npm.
+      - name: Upgrade npm for OIDC trusted publishing
+        run: npm install -g npm@latest
+      - name: Build & publish (OIDC, no token)
         working-directory: sdk/typescript
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           npm install
           npm run build
-          npm publish --access public
+          VERSION="$(node -p "require('./package.json').version")"
+          if npm view "@mnexa-ai/agentdrive-sdk@${VERSION}" version >/dev/null 2>&1; then
+            echo "npm: @mnexa-ai/agentdrive-sdk@${VERSION} already published — skipping."
+          else
+            npm publish --access public
+          fi
 
   go-tag:
     runs-on: ubuntu-latest
