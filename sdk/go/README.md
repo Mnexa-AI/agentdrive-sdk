@@ -178,15 +178,6 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**WebUploadWebUploadPost**](docs/DefaultAPI.md#webuploadwebuploadpost) | **Post** /web/upload | Web Upload
 *DefaultAPI* | [**WebhooksPageWebhooksGet**](docs/DefaultAPI.md#webhookspagewebhooksget) | **Get** /webhooks | Webhooks Page
 *DefaultAPI* | [**WelcomeWelcomeGet**](docs/DefaultAPI.md#welcomewelcomeget) | **Get** /welcome | Welcome
-*FeedbackInternalAPI* | [**AppendEventInternalFeedbackFbkIdEventsPost**](docs/FeedbackInternalAPI.md#appendeventinternalfeedbackfbkideventspost) | **Post** /internal/feedback/{fbk_id}/events | Append Event
-*FeedbackInternalAPI* | [**ContactInternalFeedbackFbkIdContactGet**](docs/FeedbackInternalAPI.md#contactinternalfeedbackfbkidcontactget) | **Get** /internal/feedback/{fbk_id}/contact | Contact
-*FeedbackInternalAPI* | [**GetAttachmentInternalFeedbackFbkIdAttachmentsFbaIdGet**](docs/FeedbackInternalAPI.md#getattachmentinternalfeedbackfbkidattachmentsfbaidget) | **Get** /internal/feedback/{fbk_id}/attachments/{fba_id} | Get Attachment
-*FeedbackInternalAPI* | [**GetTicketInternalFeedbackFbkIdGet**](docs/FeedbackInternalAPI.md#getticketinternalfeedbackfbkidget) | **Get** /internal/feedback/{fbk_id} | Get Ticket
-*FeedbackInternalAPI* | [**ListAttachmentsInternalFeedbackFbkIdAttachmentsGet**](docs/FeedbackInternalAPI.md#listattachmentsinternalfeedbackfbkidattachmentsget) | **Get** /internal/feedback/{fbk_id}/attachments | List Attachments
-*FeedbackInternalAPI* | [**ListFeedbackInternalFeedbackGet**](docs/FeedbackInternalAPI.md#listfeedbackinternalfeedbackget) | **Get** /internal/feedback | List Feedback
-*FeedbackInternalAPI* | [**NotifiedInternalFeedbackFbkIdNotifiedPost**](docs/FeedbackInternalAPI.md#notifiedinternalfeedbackfbkidnotifiedpost) | **Post** /internal/feedback/{fbk_id}/notified | Notified
-*FeedbackInternalAPI* | [**PendingNotificationsInternalFeedbackPendingNotificationsGet**](docs/FeedbackInternalAPI.md#pendingnotificationsinternalfeedbackpendingnotificationsget) | **Get** /internal/feedback/pending-notifications | Pending Notifications
-*FeedbackInternalAPI* | [**TransitionInternalFeedbackFbkIdTransitionPost**](docs/FeedbackInternalAPI.md#transitioninternalfeedbackfbkidtransitionpost) | **Post** /internal/feedback/{fbk_id}/transition | Transition
 *McpOauthAPI* | [**Oauth2RegisterOauth2RegisterPost**](docs/McpOauthAPI.md#oauth2registeroauth2registerpost) | **Post** /oauth2/register | Dynamic Client Registration (RFC 7591)
 *McpOauthAPI* | [**Oauth2RevokeOauth2RevokePost**](docs/McpOauthAPI.md#oauth2revokeoauth2revokepost) | **Post** /oauth2/revoke | Token revocation (RFC 7009)
 *McpOauthUiAPI* | [**AuthorizeDecisionOauth2AuthorizePost**](docs/McpOauthUiAPI.md#authorizedecisionoauth2authorizepost) | **Post** /oauth2/authorize | Authorize Decision

@@ -192,15 +192,6 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**web_upload_web_upload_post**](docs/DefaultApi.md#web_upload_web_upload_post) | **POST** /web/upload | Web Upload
 *DefaultApi* | [**webhooks_page_webhooks_get**](docs/DefaultApi.md#webhooks_page_webhooks_get) | **GET** /webhooks | Webhooks Page
 *DefaultApi* | [**welcome_welcome_get**](docs/DefaultApi.md#welcome_welcome_get) | **GET** /welcome | Welcome
-*FeedbackInternalApi* | [**append_event_internal_feedback_fbk_id_events_post**](docs/FeedbackInternalApi.md#append_event_internal_feedback_fbk_id_events_post) | **POST** /internal/feedback/{fbk_id}/events | Append Event
-*FeedbackInternalApi* | [**contact_internal_feedback_fbk_id_contact_get**](docs/FeedbackInternalApi.md#contact_internal_feedback_fbk_id_contact_get) | **GET** /internal/feedback/{fbk_id}/contact | Contact
-*FeedbackInternalApi* | [**get_attachment_internal_feedback_fbk_id_attachments_fba_id_get**](docs/FeedbackInternalApi.md#get_attachment_internal_feedback_fbk_id_attachments_fba_id_get) | **GET** /internal/feedback/{fbk_id}/attachments/{fba_id} | Get Attachment
-*FeedbackInternalApi* | [**get_ticket_internal_feedback_fbk_id_get**](docs/FeedbackInternalApi.md#get_ticket_internal_feedback_fbk_id_get) | **GET** /internal/feedback/{fbk_id} | Get Ticket
-*FeedbackInternalApi* | [**list_attachments_internal_feedback_fbk_id_attachments_get**](docs/FeedbackInternalApi.md#list_attachments_internal_feedback_fbk_id_attachments_get) | **GET** /internal/feedback/{fbk_id}/attachments | List Attachments
-*FeedbackInternalApi* | [**list_feedback_internal_feedback_get**](docs/FeedbackInternalApi.md#list_feedback_internal_feedback_get) | **GET** /internal/feedback | List Feedback
-*FeedbackInternalApi* | [**notified_internal_feedback_fbk_id_notified_post**](docs/FeedbackInternalApi.md#notified_internal_feedback_fbk_id_notified_post) | **POST** /internal/feedback/{fbk_id}/notified | Notified
-*FeedbackInternalApi* | [**pending_notifications_internal_feedback_pending_notifications_get**](docs/FeedbackInternalApi.md#pending_notifications_internal_feedback_pending_notifications_get) | **GET** /internal/feedback/pending-notifications | Pending Notifications
-*FeedbackInternalApi* | [**transition_internal_feedback_fbk_id_transition_post**](docs/FeedbackInternalApi.md#transition_internal_feedback_fbk_id_transition_post) | **POST** /internal/feedback/{fbk_id}/transition | Transition
 *McpOauthApi* | [**oauth2_register_oauth2_register_post**](docs/McpOauthApi.md#oauth2_register_oauth2_register_post) | **POST** /oauth2/register | Dynamic Client Registration (RFC 7591)
 *McpOauthApi* | [**oauth2_revoke_oauth2_revoke_post**](docs/McpOauthApi.md#oauth2_revoke_oauth2_revoke_post) | **POST** /oauth2/revoke | Token revocation (RFC 7009)
 *McpOauthUiApi* | [**authorize_decision_oauth2_authorize_post**](docs/McpOauthUiApi.md#authorize_decision_oauth2_authorize_post) | **POST** /oauth2/authorize | Authorize Decision

@@ -55,8 +55,6 @@ type APIClient struct {
 
 	DefaultAPI *DefaultAPIService
 
-	FeedbackInternalAPI *FeedbackInternalAPIService
-
 	McpOauthAPI *McpOauthAPIService
 
 	McpOauthUiAPI *McpOauthUiAPIService
@@ -81,7 +79,6 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.AgentAuthAPI = (*AgentAuthAPIService)(&c.common)
 	c.ClaimUiAPI = (*ClaimUiAPIService)(&c.common)
 	c.DefaultAPI = (*DefaultAPIService)(&c.common)
-	c.FeedbackInternalAPI = (*FeedbackInternalAPIService)(&c.common)
 	c.McpOauthAPI = (*McpOauthAPIService)(&c.common)
 	c.McpOauthUiAPI = (*McpOauthUiAPIService)(&c.common)
 

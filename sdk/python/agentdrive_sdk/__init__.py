@@ -21,7 +21,6 @@ __all__ = [
     "AgentAuthApi",
     "ClaimUiApi",
     "DefaultApi",
-    "FeedbackInternalApi",
     "McpOauthApi",
     "McpOauthUiApi",
     "ApiResponse",
@@ -71,7 +70,6 @@ __all__ = [
 from agentdrive_sdk.api.agent_auth_api import AgentAuthApi as AgentAuthApi
 from agentdrive_sdk.api.claim_ui_api import ClaimUiApi as ClaimUiApi
 from agentdrive_sdk.api.default_api import DefaultApi as DefaultApi
-from agentdrive_sdk.api.feedback_internal_api import FeedbackInternalApi as FeedbackInternalApi
 from agentdrive_sdk.api.mcp_oauth_api import McpOauthApi as McpOauthApi
 from agentdrive_sdk.api.mcp_oauth_ui_api import McpOauthUiApi as McpOauthUiApi
 
