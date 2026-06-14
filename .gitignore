@@ -1,0 +1,20 @@
+# Node / TS SDK
+node_modules/
+sdk/typescript/dist/
+
+# Python SDK
+__pycache__/
+*.pyc
+sdk/python/dist/
+sdk/python/*.egg-info/
+.venv/
+
+# Go
+sdk/go/bin/
+
+# openapi-generator
+.openapi-generator/
+openapitools.json
+
+# OS
+.DS_Store
