@@ -62,8 +62,17 @@ jobs:
           VERSION="$(node -p "require('./package.json').version")"
           if npm view "@mnexa-ai/agentdrive-sdk@${VERSION}" version >/dev/null 2>&1; then
             echo "npm: @mnexa-ai/agentdrive-sdk@${VERSION} already published — skipping."
-          else
-            npm publish --access public
+            exit 0
+          fi
+          # `npm view` reads a replica that lags the authoritative write path,
+          # so a freshly/concurrently published version can still 403 here.
+          # Treat "cannot publish over previously published" as success.
+          set +e
+          OUT="$(npm publish --access public 2>&1)"; CODE=$?
+          set -e
+          printf '%s\n' "$OUT"
+          if [ "$CODE" -ne 0 ] && ! printf '%s' "$OUT" | grep -q "cannot publish over the previously published versions"; then
+            exit "$CODE"
           fi
 
   go-tag:
