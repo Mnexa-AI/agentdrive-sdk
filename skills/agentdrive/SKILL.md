@@ -80,7 +80,7 @@ the conventions and patterns below.
 
   The dashboard renders folder rollups, so flat dumps are harder for humans to browse. Two-level nesting is the sweet spot.
 
-- **Visibility.** `public` by default — the artifact gets a URL like `https://agentdrive.run/{drive_id}/{path}`. Pass `visibility: "private"` for anything sensitive (no public URL; only readable via the API key).
+- **Visibility.** `private` by default — the artifact is readable only with your API key. Pass `visibility: "public"` to get an anonymously shareable URL like `https://agentdrive.run/{drive_id}/{path}` (e.g. a report you want to send someone).
 
 - **Content type.** Inferred from the path extension if omitted. For markdown, set `content_type: "text/markdown"` so the viewer renders it as a styled page instead of plain text.
 
