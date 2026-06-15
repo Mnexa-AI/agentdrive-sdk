@@ -4191,7 +4191,7 @@ No authorization required
 
 Upload (or overwrite) an artifact
 
-Upload an artifact at the given path. The path is treated as the artifact\&#39;s location in the drive — re-uploading the same path overwrites in place (idempotent).  **Limits:** request body must not exceed **50 MB**. Path must be non-empty, ≤256 chars, only &#x60;[A-Za-z0-9_./-]&#x60;, no &#x60;..&#x60; segments, no leading/trailing slash. Per-token write rate limit: 100/hour.  **Optional headers:** - &#x60;X-AgentDrive-Visibility&#x60;: &#x60;public&#x60; (default) or &#x60;private&#x60;. - &#x60;X-AgentDrive-Labels&#x60;: comma-separated labels (e.g. &#x60;draft,report&#x60;). Each label: lowercase, &#x60;[a-z0-9_-]+&#x60;, ≤64 chars; ≤16 labels per artifact. - &#x60;X-AgentDrive-Metadata&#x60;: JSON object of agent-attached fields. - &#x60;X-AgentDrive-Source&#x60;: JSON &#x60;{\&quot;refs\&quot;: [...]}&#x60; source provenance. Sentinel semantics: absent ⇒ existing source preserved; present (including &#x60;{\&quot;refs\&quot;: []}&#x60;) ⇒ replaces the existing source. - &#x60;X-AgentDrive-Actor&#x60;: caller-supplied actor name (≤64 chars) for event-log attribution. Untrusted; never used for authz.
+Upload an artifact at the given path. The path is treated as the artifact\&#39;s location in the drive — re-uploading the same path overwrites in place (idempotent).  **Limits:** request body must not exceed **50 MB**. Path must be non-empty, ≤256 chars, only &#x60;[A-Za-z0-9_./-]&#x60;, no &#x60;..&#x60; segments, no leading/trailing slash. Per-token write rate limit: 100/hour.  **Optional headers.** Each preserves the existing artifact\&#39;s value when omitted on an overwrite, and takes the create-default on a new path; send the header to replace it: - &#x60;X-AgentDrive-Visibility&#x60;: &#x60;public&#x60; or &#x60;private&#x60; (new-path default &#x60;private&#x60;). Private artifacts are readable only with your API key; &#x60;public&#x60; gives an anonymously shareable URL. - &#x60;X-AgentDrive-Labels&#x60;: comma-separated labels (e.g. &#x60;draft,report&#x60;); an empty value clears them. Each: lowercase &#x60;[a-z0-9_-]+&#x60;, ≤64 chars; ≤16 labels per artifact. - &#x60;X-AgentDrive-Metadata&#x60;: JSON object of agent-attached fields. - &#x60;X-AgentDrive-Source&#x60;: JSON &#x60;{\&quot;refs\&quot;: [...]}&#x60; source provenance (present, including &#x60;{\&quot;refs\&quot;: []}&#x60;, replaces). - &#x60;X-AgentDrive-Actor&#x60;: caller-supplied actor name (≤64 chars) for event-log attribution. Untrusted; never used for authz.
 
 ### Example
 
@@ -4248,9 +4248,9 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **path** | `string` |  | [Defaults to `undefined`] |
 | **contentType** | `string` |  | [Optional] [Defaults to `&#39;application/octet-stream&#39;`] |
-| **xAgentdriveVisibility** | `string` |  | [Optional] [Defaults to `&#39;public&#39;`] |
-| **xAgentdriveLabels** | `string` |  | [Optional] [Defaults to `&#39;&#39;`] |
-| **xAgentdriveMetadata** | `string` |  | [Optional] [Defaults to `&#39;{}&#39;`] |
+| **xAgentdriveVisibility** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **xAgentdriveLabels** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **xAgentdriveMetadata** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **xAgentdriveSource** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **xAgentdriveActor** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **xAgentdriveChangeSummary** | `string` |  | [Optional] [Defaults to `undefined`] |
@@ -6914,7 +6914,7 @@ example().catch(console.error);
 | **file** | `Blob` |  | [Defaults to `undefined`] |
 | **csrf** | `string` |  | [Defaults to `undefined`] |
 | **destDir** | `string` |  | [Optional] [Defaults to `&#39;&#39;`] |
-| **visibility** | `string` |  | [Optional] [Defaults to `&#39;public&#39;`] |
+| **visibility** | `string` |  | [Optional] [Defaults to `&#39;&#39;`] |
 | **returnTo** | `string` |  | [Optional] [Defaults to `&#39;/dashboard&#39;`] |
 
 ### Return type

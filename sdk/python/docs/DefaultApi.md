@@ -4309,11 +4309,11 @@ Upload an artifact at the given path. The path is treated as the artifact's loca
 
 **Limits:** request body must not exceed **50 MB**. Path must be non-empty, ≤256 chars, only `[A-Za-z0-9_./-]`, no `..` segments, no leading/trailing slash. Per-token write rate limit: 100/hour.
 
-**Optional headers:**
-- `X-AgentDrive-Visibility`: `public` (default) or `private`.
-- `X-AgentDrive-Labels`: comma-separated labels (e.g. `draft,report`). Each label: lowercase, `[a-z0-9_-]+`, ≤64 chars; ≤16 labels per artifact.
+**Optional headers.** Each preserves the existing artifact's value when omitted on an overwrite, and takes the create-default on a new path; send the header to replace it:
+- `X-AgentDrive-Visibility`: `public` or `private` (new-path default `private`). Private artifacts are readable only with your API key; `public` gives an anonymously shareable URL.
+- `X-AgentDrive-Labels`: comma-separated labels (e.g. `draft,report`); an empty value clears them. Each: lowercase `[a-z0-9_-]+`, ≤64 chars; ≤16 labels per artifact.
 - `X-AgentDrive-Metadata`: JSON object of agent-attached fields.
-- `X-AgentDrive-Source`: JSON `{"refs": [...]}` source provenance. Sentinel semantics: absent ⇒ existing source preserved; present (including `{"refs": []}`) ⇒ replaces the existing source.
+- `X-AgentDrive-Source`: JSON `{"refs": [...]}` source provenance (present, including `{"refs": []}`, replaces).
 - `X-AgentDrive-Actor`: caller-supplied actor name (≤64 chars) for event-log attribution. Untrusted; never used for authz.
 
 ### Example
@@ -4338,9 +4338,9 @@ with agentdrive_sdk.ApiClient(configuration) as api_client:
     api_instance = agentdrive_sdk.DefaultApi(api_client)
     path = 'path_example' # str | 
     content_type = 'application/octet-stream' # str |  (optional) (default to 'application/octet-stream')
-    x_agentdrive_visibility = 'public' # str |  (optional) (default to 'public')
-    x_agentdrive_labels = '' # str |  (optional) (default to '')
-    x_agentdrive_metadata = '{}' # str |  (optional) (default to '{}')
+    x_agentdrive_visibility = 'x_agentdrive_visibility_example' # str |  (optional)
+    x_agentdrive_labels = 'x_agentdrive_labels_example' # str |  (optional)
+    x_agentdrive_metadata = 'x_agentdrive_metadata_example' # str |  (optional)
     x_agentdrive_source = 'x_agentdrive_source_example' # str |  (optional)
     x_agentdrive_actor = 'x_agentdrive_actor_example' # str |  (optional)
     x_agentdrive_change_summary = 'x_agentdrive_change_summary_example' # str |  (optional)
@@ -4365,9 +4365,9 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **path** | **str**|  | 
  **content_type** | **str**|  | [optional] [default to &#39;application/octet-stream&#39;]
- **x_agentdrive_visibility** | **str**|  | [optional] [default to &#39;public&#39;]
- **x_agentdrive_labels** | **str**|  | [optional] [default to &#39;&#39;]
- **x_agentdrive_metadata** | **str**|  | [optional] [default to &#39;{}&#39;]
+ **x_agentdrive_visibility** | **str**|  | [optional] 
+ **x_agentdrive_labels** | **str**|  | [optional] 
+ **x_agentdrive_metadata** | **str**|  | [optional] 
  **x_agentdrive_source** | **str**|  | [optional] 
  **x_agentdrive_actor** | **str**|  | [optional] 
  **x_agentdrive_change_summary** | **str**|  | [optional] 
@@ -7122,7 +7122,7 @@ with agentdrive_sdk.ApiClient(configuration) as api_client:
     file = None # bytes | 
     csrf = 'csrf_example' # str | 
     dest_dir = '' # str |  (optional) (default to '')
-    visibility = 'public' # str |  (optional) (default to 'public')
+    visibility = '' # str |  (optional) (default to '')
     return_to = '/dashboard' # str |  (optional) (default to '/dashboard')
 
     try:
@@ -7144,7 +7144,7 @@ Name | Type | Description  | Notes
  **file** | **bytes**|  | 
  **csrf** | **str**|  | 
  **dest_dir** | **str**|  | [optional] [default to &#39;&#39;]
- **visibility** | **str**|  | [optional] [default to &#39;public&#39;]
+ **visibility** | **str**|  | [optional] [default to &#39;&#39;]
  **return_to** | **str**|  | [optional] [default to &#39;/dashboard&#39;]
 
 ### Return type

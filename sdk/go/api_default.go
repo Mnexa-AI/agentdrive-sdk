@@ -7668,11 +7668,11 @@ Upload an artifact at the given path. The path is treated as the artifact's loca
 
 **Limits:** request body must not exceed **50 MB**. Path must be non-empty, ≤256 chars, only `[A-Za-z0-9_./-]`, no `..` segments, no leading/trailing slash. Per-token write rate limit: 100/hour.
 
-**Optional headers:**
-- `X-AgentDrive-Visibility`: `public` (default) or `private`.
-- `X-AgentDrive-Labels`: comma-separated labels (e.g. `draft,report`). Each label: lowercase, `[a-z0-9_-]+`, ≤64 chars; ≤16 labels per artifact.
+**Optional headers.** Each preserves the existing artifact's value when omitted on an overwrite, and takes the create-default on a new path; send the header to replace it:
+- `X-AgentDrive-Visibility`: `public` or `private` (new-path default `private`). Private artifacts are readable only with your API key; `public` gives an anonymously shareable URL.
+- `X-AgentDrive-Labels`: comma-separated labels (e.g. `draft,report`); an empty value clears them. Each: lowercase `[a-z0-9_-]+`, ≤64 chars; ≤16 labels per artifact.
 - `X-AgentDrive-Metadata`: JSON object of agent-attached fields.
-- `X-AgentDrive-Source`: JSON `{"refs": [...]}` source provenance. Sentinel semantics: absent ⇒ existing source preserved; present (including `{"refs": []}`) ⇒ replaces the existing source.
+- `X-AgentDrive-Source`: JSON `{"refs": [...]}` source provenance (present, including `{"refs": []}`, replaces).
 - `X-AgentDrive-Actor`: caller-supplied actor name (≤64 chars) for event-log attribution. Untrusted; never used for authz.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

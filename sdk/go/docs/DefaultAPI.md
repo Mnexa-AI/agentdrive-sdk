@@ -4173,9 +4173,9 @@ import (
 func main() {
 	path := "path_example" // string | 
 	contentType := "contentType_example" // string |  (optional) (default to "application/octet-stream")
-	xAgentdriveVisibility := "xAgentdriveVisibility_example" // string |  (optional) (default to "public")
-	xAgentdriveLabels := "xAgentdriveLabels_example" // string |  (optional) (default to "")
-	xAgentdriveMetadata := "xAgentdriveMetadata_example" // string |  (optional) (default to "{}")
+	xAgentdriveVisibility := "xAgentdriveVisibility_example" // string |  (optional)
+	xAgentdriveLabels := "xAgentdriveLabels_example" // string |  (optional)
+	xAgentdriveMetadata := "xAgentdriveMetadata_example" // string |  (optional)
 	xAgentdriveSource := "xAgentdriveSource_example" // string |  (optional)
 	xAgentdriveActor := "xAgentdriveActor_example" // string |  (optional)
 	xAgentdriveChangeSummary := "xAgentdriveChangeSummary_example" // string |  (optional)
@@ -4211,9 +4211,9 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **contentType** | **string** |  | [default to &quot;application/octet-stream&quot;]
- **xAgentdriveVisibility** | **string** |  | [default to &quot;public&quot;]
- **xAgentdriveLabels** | **string** |  | [default to &quot;&quot;]
- **xAgentdriveMetadata** | **string** |  | [default to &quot;{}&quot;]
+ **xAgentdriveVisibility** | **string** |  | 
+ **xAgentdriveLabels** | **string** |  | 
+ **xAgentdriveMetadata** | **string** |  | 
  **xAgentdriveSource** | **string** |  | 
  **xAgentdriveActor** | **string** |  | 
  **xAgentdriveChangeSummary** | **string** |  | 
@@ -6795,7 +6795,7 @@ func main() {
 	file := os.NewFile(1234, "some_file") // *os.File | 
 	csrf := "csrf_example" // string | 
 	destDir := "destDir_example" // string |  (optional) (default to "")
-	visibility := "visibility_example" // string |  (optional) (default to "public")
+	visibility := "visibility_example" // string |  (optional) (default to "")
 	returnTo := "returnTo_example" // string |  (optional) (default to "/dashboard")
 
 	configuration := openapiclient.NewConfiguration()
@@ -6824,7 +6824,7 @@ Name | Type | Description  | Notes
  **file** | ***os.File** |  | 
  **csrf** | **string** |  | 
  **destDir** | **string** |  | [default to &quot;&quot;]
- **visibility** | **string** |  | [default to &quot;public&quot;]
+ **visibility** | **string** |  | [default to &quot;&quot;]
  **returnTo** | **string** |  | [default to &quot;/dashboard&quot;]
 
 ### Return type
