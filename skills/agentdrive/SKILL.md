@@ -51,7 +51,7 @@ that as the source of truth for signatures. This skill covers *when* and
   `grep` for literal patterns and code symbols. Different jobs — see
   Patterns.
 - **Write** — `upload` a new artifact (text or base64 binary); `move`,
-  `copy`, `delete` to reorganize; `mkdir` for an empty folder; `set` to
+  `copy`, `delete` to reorganize; `mkdir` for an empty folder; `set_metadata` to
   update an artifact's metadata in place.
 - **Versions** — every overwrite keeps history: `versions` lists it,
   `read_version` fetches a past one.
