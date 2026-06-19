@@ -12,13 +12,13 @@ AgentDrive is one remote MCP endpoint with OAuth (no API key to paste):
 https://api.agentdrive.run/mcp
 ```
 
-Per-agent setup (paste-ready blocks): [`docs/add-to-your-agent.md`](docs/add-to-your-agent.md).
-Claude Code users get the richer path — a plugin that also installs the skill + `/publish`, `/drive`, `/compile`:
+The **plugin** is the richer path — it wires the MCP *and* installs this skill + `/publish`, `/drive`, `/compile`. One command detects your agents (Claude Code, Codex, Cursor) and installs to each:
 
 ```bash
-claude plugin marketplace add Mnexa-AI/agentdrive-sdk
-claude plugin install agentdrive@agentdrive
+npx plugins add Mnexa-AI/agentdrive-sdk
 ```
+
+Per-agent commands + raw MCP config (ChatGPT, Gemini, etc.): [`docs/add-to-your-agent.md`](docs/add-to-your-agent.md).
 
 ## When to use which tool
 

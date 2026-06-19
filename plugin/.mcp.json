@@ -1,6 +1,8 @@
 {
-  "agentdrive": {
-    "type": "http",
-    "url": "https://api.agentdrive.run/mcp"
+  "mcpServers": {
+    "agentdrive": {
+      "type": "http",
+      "url": "https://api.agentdrive.run/mcp"
+    }
   }
 }

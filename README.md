@@ -6,7 +6,32 @@ AgentDrive is a **remote MCP server** with OAuth 2.1 (PKCE + dynamic client regi
 
 > Listed in the official MCP Registry as [`run.agentdrive/agentdrive`](https://registry.modelcontextprotocol.io/v0.1/servers?search=run.agentdrive/agentdrive).
 
-## Connect in 30 seconds
+## Install the plugin
+
+The plugin wires the AgentDrive MCP **and** installs the `agentdrive` skill + `/publish`, `/drive`, `/compile`. One command detects your agents (Claude Code, Codex, Cursor) and installs to each:
+
+```bash
+npx plugins add Mnexa-AI/agentdrive-sdk
+```
+
+Or per agent:
+
+```bash
+# Claude Code
+claude plugin marketplace add Mnexa-AI/agentdrive-sdk && claude plugin install agentdrive@agentdrive
+
+# Codex
+codex plugin marketplace add Mnexa-AI/agentdrive-sdk
+
+# Cursor
+/add-plugin agentdrive
+```
+
+First tool use opens the OAuth sign-in — no API key to paste.
+
+## Connect (MCP only — no plugin)
+
+For agents without a plugin system, add the remote MCP directly:
 
 | Agent | How |
 |---|---|
@@ -14,7 +39,7 @@ AgentDrive is a **remote MCP server** with OAuth 2.1 (PKCE + dynamic client regi
 | **ChatGPT** | Settings → Apps & Connectors → Developer Mode → Add connector → `https://api.agentdrive.run/mcp` (OAuth) |
 | **Codex** | `codex mcp add` (streamable HTTP) → `codex mcp login agentdrive` |
 | **Gemini CLI** | Add to `settings.json` under `mcpServers` |
-| **Claude Code** | **Plugin:** `claude plugin marketplace add Mnexa-AI/agentdrive-sdk` → `claude plugin install agentdrive@agentdrive` (MCP + skill + `/publish` `/drive` `/compile`). MCP only: `claude mcp add --transport http agentdrive https://api.agentdrive.run/mcp` |
+| **Claude Code** | `claude mcp add --transport http agentdrive https://api.agentdrive.run/mcp` |
 
 Full paste-ready blocks: [`docs/add-to-your-agent.md`](docs/add-to-your-agent.md). Cross-agent instructions: [`AGENTS.md`](AGENTS.md).
 

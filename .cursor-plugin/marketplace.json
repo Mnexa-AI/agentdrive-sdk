@@ -1,0 +1,18 @@
+{
+  "name": "agentdrive",
+  "owner": {
+    "name": "AgentDrive",
+    "url": "https://agentdrive.run"
+  },
+  "metadata": {
+    "description": "AgentDrive MCP + skill + commands — the drive your agent writes to.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "agentdrive",
+      "source": "./plugin",
+      "description": "AgentDrive MCP + skill + /publish, /drive, /compile."
+    }
+  ]
+}
