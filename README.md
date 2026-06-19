@@ -6,7 +6,32 @@ AgentDrive is a **remote MCP server** with OAuth 2.1 (PKCE + dynamic client regi
 
 > Listed in the official MCP Registry as [`run.agentdrive/agentdrive`](https://registry.modelcontextprotocol.io/v0.1/servers?search=run.agentdrive/agentdrive).
 
-## Connect in 30 seconds
+## Install the plugin
+
+The plugin wires the AgentDrive MCP **and** installs the `agentdrive` skill + `/publish`, `/drive`, `/compile`. One command detects your agents (Claude Code, Codex, Cursor) and installs to each:
+
+```bash
+npx plugins add Mnexa-AI/agentdrive-sdk
+```
+
+Or per agent:
+
+```bash
+# Claude Code
+claude plugin marketplace add Mnexa-AI/agentdrive-sdk && claude plugin install agentdrive@agentdrive
+
+# Codex
+codex plugin marketplace add Mnexa-AI/agentdrive-sdk
+
+# Cursor
+/add-plugin agentdrive
+```
+
+First tool use opens the OAuth sign-in — no API key to paste.
+
+## Connect (MCP only — no plugin)
+
+For agents without a plugin system, add the remote MCP directly:
 
 | Agent | How |
 |---|---|
@@ -16,16 +41,18 @@ AgentDrive is a **remote MCP server** with OAuth 2.1 (PKCE + dynamic client regi
 | **Gemini CLI** | Add to `settings.json` under `mcpServers` |
 | **Claude Code** | `claude mcp add --transport http agentdrive https://api.agentdrive.run/mcp` |
 
-Full paste-ready blocks: [`docs/add-to-your-agent.md`](docs/add-to-your-agent.md).
+Full paste-ready blocks: [`docs/add-to-your-agent.md`](docs/add-to-your-agent.md). Cross-agent instructions: [`AGENTS.md`](AGENTS.md).
 
 ## What's in this repo
 
 | Path | Contents |
 |---|---|
+| [`plugin/`](plugin/) | The **Claude Code plugin** — wires the MCP + bundles the skill + `/publish` `/drive` `/compile`. Installed via the `marketplace.json` at the repo root. |
 | [`sdk/`](sdk/) | REST SDKs for **Python**, **TypeScript**, and **Go**, generated from the live OpenAPI spec |
 | [`skills/`](skills/) | The `agentdrive` agent Skill (synced from the production service) |
 | [`connector/`](connector/) | `server.json` (MCP registry manifest), connector icon, `llms.txt` |
 | [`docs/`](docs/) | Connect-your-agent guide, plus mirrored `setup.md` / `auth.md` / `api.md` |
+| [`AGENTS.md`](AGENTS.md) | Cross-agent usage guide (Codex, Cursor, Copilot, Windsurf, Zed read this natively) |
 
 ## SDKs
 

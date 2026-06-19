@@ -19,11 +19,20 @@ On first connect you'll be sent through an OAuth sign-in; after that the agent h
 
 ## Claude Code (CLI)
 
+**Recommended — the plugin** (wires the MCP *and* installs the `agentdrive` skill + `/publish`, `/drive`, `/compile`):
+
+```bash
+claude plugin marketplace add Mnexa-AI/agentdrive-sdk
+claude plugin install agentdrive@agentdrive
+```
+
+**MCP only** (no skill/commands):
+
 ```bash
 claude mcp add --transport http agentdrive https://api.agentdrive.run/mcp
 ```
 
-Then run any AgentDrive tool; Claude Code will open the OAuth flow on first use.
+Either way, Claude Code opens the OAuth flow on first tool use — no API key to paste.
 
 ## ChatGPT
 
