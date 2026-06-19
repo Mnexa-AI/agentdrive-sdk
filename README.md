@@ -14,18 +14,20 @@ AgentDrive is a **remote MCP server** with OAuth 2.1 (PKCE + dynamic client regi
 | **ChatGPT** | Settings → Apps & Connectors → Developer Mode → Add connector → `https://api.agentdrive.run/mcp` (OAuth) |
 | **Codex** | `codex mcp add` (streamable HTTP) → `codex mcp login agentdrive` |
 | **Gemini CLI** | Add to `settings.json` under `mcpServers` |
-| **Claude Code** | `claude mcp add --transport http agentdrive https://api.agentdrive.run/mcp` |
+| **Claude Code** | **Plugin:** `claude plugin marketplace add Mnexa-AI/agentdrive-sdk` → `claude plugin install agentdrive@agentdrive` (MCP + skill + `/publish` `/drive` `/compile`). MCP only: `claude mcp add --transport http agentdrive https://api.agentdrive.run/mcp` |
 
-Full paste-ready blocks: [`docs/add-to-your-agent.md`](docs/add-to-your-agent.md).
+Full paste-ready blocks: [`docs/add-to-your-agent.md`](docs/add-to-your-agent.md). Cross-agent instructions: [`AGENTS.md`](AGENTS.md).
 
 ## What's in this repo
 
 | Path | Contents |
 |---|---|
+| [`plugin/`](plugin/) | The **Claude Code plugin** — wires the MCP + bundles the skill + `/publish` `/drive` `/compile`. Installed via the `marketplace.json` at the repo root. |
 | [`sdk/`](sdk/) | REST SDKs for **Python**, **TypeScript**, and **Go**, generated from the live OpenAPI spec |
 | [`skills/`](skills/) | The `agentdrive` agent Skill (synced from the production service) |
 | [`connector/`](connector/) | `server.json` (MCP registry manifest), connector icon, `llms.txt` |
 | [`docs/`](docs/) | Connect-your-agent guide, plus mirrored `setup.md` / `auth.md` / `api.md` |
+| [`AGENTS.md`](AGENTS.md) | Cross-agent usage guide (Codex, Cursor, Copilot, Windsurf, Zed read this natively) |
 
 ## SDKs
 
