@@ -5,7 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Description** | Pointer to **NullableString** |  | [optional] 
-**Visibility** | Pointer to **NullableString** |  | [optional] 
 
 ## Methods
 
@@ -61,41 +60,6 @@ HasDescription returns a boolean if a field has been set.
 `func (o *FolderCreateIn) UnsetDescription()`
 
 UnsetDescription ensures that no value is present for Description, not even an explicit nil
-### GetVisibility
-
-`func (o *FolderCreateIn) GetVisibility() string`
-
-GetVisibility returns the Visibility field if non-nil, zero value otherwise.
-
-### GetVisibilityOk
-
-`func (o *FolderCreateIn) GetVisibilityOk() (*string, bool)`
-
-GetVisibilityOk returns a tuple with the Visibility field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetVisibility
-
-`func (o *FolderCreateIn) SetVisibility(v string)`
-
-SetVisibility sets Visibility field to given value.
-
-### HasVisibility
-
-`func (o *FolderCreateIn) HasVisibility() bool`
-
-HasVisibility returns a boolean if a field has been set.
-
-### SetVisibilityNil
-
-`func (o *FolderCreateIn) SetVisibilityNil(b bool)`
-
- SetVisibilityNil sets the value for Visibility to be an explicit nil
-
-### UnsetVisibility
-`func (o *FolderCreateIn) UnsetVisibility()`
-
-UnsetVisibility ensures that no value is present for Visibility, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

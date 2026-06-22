@@ -35,8 +35,7 @@ class TestFolderCreateIn(unittest.TestCase):
         model = FolderCreateIn()
         if include_optional:
             return FolderCreateIn(
-                description = '',
-                visibility = 'public'
+                description = ''
             )
         else:
             return FolderCreateIn(

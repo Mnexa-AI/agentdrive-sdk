@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -26,29 +26,18 @@ from pydantic_core import to_jsonable_python
 
 class FolderOut(BaseModel):
     """
-    Folder resource (folders+permalinks design §13). `path` is the canonical leading+trailing-slash form; `share_key` is reserved metadata held now and wired by the render layer in v1.1.
+    Folder resource (folders+permalinks design §13). `path` is the canonical leading+trailing-slash form. Access is expressed through grants (permission-sharing-design §4.4), not a folder-level flag.
     """ # noqa: E501
     id: StrictStr
     drive_id: StrictStr
     path: StrictStr
     description: Optional[StrictStr] = None
-    visibility: Optional[StrictStr] = None
-    share_key: Optional[StrictStr] = None
+    inherit_grants: Optional[StrictBool] = True
     created_at: datetime
     updated_at: datetime
     deleted_at: Optional[datetime] = None
     purge_at: Optional[datetime] = None
-    __properties: ClassVar[List[str]] = ["id", "drive_id", "path", "description", "visibility", "share_key", "created_at", "updated_at", "deleted_at", "purge_at"]
-
-    @field_validator('visibility')
-    def visibility_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['public', 'private']):
-            raise ValueError("must be one of enum values ('public', 'private')")
-        return value
+    __properties: ClassVar[List[str]] = ["id", "drive_id", "path", "description", "inherit_grants", "created_at", "updated_at", "deleted_at", "purge_at"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -94,16 +83,6 @@ class FolderOut(BaseModel):
         if self.description is None and "description" in self.model_fields_set:
             _dict['description'] = None
 
-        # set to None if visibility (nullable) is None
-        # and model_fields_set contains the field
-        if self.visibility is None and "visibility" in self.model_fields_set:
-            _dict['visibility'] = None
-
-        # set to None if share_key (nullable) is None
-        # and model_fields_set contains the field
-        if self.share_key is None and "share_key" in self.model_fields_set:
-            _dict['share_key'] = None
-
         # set to None if deleted_at (nullable) is None
         # and model_fields_set contains the field
         if self.deleted_at is None and "deleted_at" in self.model_fields_set:
@@ -130,8 +109,7 @@ class FolderOut(BaseModel):
             "drive_id": obj.get("drive_id"),
             "path": obj.get("path"),
             "description": obj.get("description"),
-            "visibility": obj.get("visibility"),
-            "share_key": obj.get("share_key"),
+            "inherit_grants": obj.get("inherit_grants") if obj.get("inherit_grants") is not None else True,
             "created_at": obj.get("created_at"),
             "updated_at": obj.get("updated_at"),
             "deleted_at": obj.get("deleted_at"),

@@ -46,7 +46,6 @@ class TestPage(unittest.TestCase):
                         size_bytes = 56, 
                         hash = '', 
                         version_number = 56, 
-                        visibility = 'public', 
                         labels = [
                             ''
                             ], 
@@ -73,7 +72,6 @@ class TestPage(unittest.TestCase):
                         size_bytes = 56, 
                         hash = '', 
                         version_number = 56, 
-                        visibility = 'public', 
                         labels = [
                             ''
                             ], 

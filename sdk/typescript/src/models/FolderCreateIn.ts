@@ -15,8 +15,8 @@
 import { mapValues } from '../runtime';
 /**
  * POST /v0/folders/{path}? body for the optional metadata params.
- * Empty body is fine — `mkdir` with no description/visibility just
- * creates the folder row.
+ * Empty body is fine — `mkdir` with no description just creates the
+ * folder row.
  * @export
  * @interface FolderCreateIn
  */
@@ -27,24 +27,7 @@ export interface FolderCreateIn {
      * @memberof FolderCreateIn
      */
     description?: string | null;
-    /**
-     * 
-     * @type {FolderCreateInVisibilityEnum}
-     * @memberof FolderCreateIn
-     */
-    visibility?: FolderCreateInVisibilityEnum | null;
 }
-
-
-/**
- * @export
- */
-export const FolderCreateInVisibilityEnum = {
-    Public: 'public',
-    Private: 'private'
-} as const;
-export type FolderCreateInVisibilityEnum = typeof FolderCreateInVisibilityEnum[keyof typeof FolderCreateInVisibilityEnum];
-
 
 /**
  * Check if a given object implements the FolderCreateIn interface.
@@ -64,7 +47,6 @@ export function FolderCreateInFromJSONTyped(json: any, ignoreDiscriminator: bool
     return {
         
         'description': json['description'] == null ? undefined : json['description'],
-        'visibility': json['visibility'] == null ? undefined : json['visibility'],
     };
 }
 
@@ -80,7 +62,6 @@ export function FolderCreateInToJSONTyped(value?: FolderCreateIn | null, ignoreD
     return {
         
         'description': value['description'],
-        'visibility': value['visibility'],
     };
 }
 

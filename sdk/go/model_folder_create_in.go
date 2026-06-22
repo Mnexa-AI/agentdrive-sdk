@@ -17,10 +17,9 @@ import (
 // checks if the FolderCreateIn type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &FolderCreateIn{}
 
-// FolderCreateIn POST /v0/folders/{path}? body for the optional metadata params. Empty body is fine — `mkdir` with no description/visibility just creates the folder row.
+// FolderCreateIn POST /v0/folders/{path}? body for the optional metadata params. Empty body is fine — `mkdir` with no description just creates the folder row.
 type FolderCreateIn struct {
 	Description NullableString `json:"description,omitempty"`
-	Visibility NullableString `json:"visibility,omitempty"`
 }
 
 // NewFolderCreateIn instantiates a new FolderCreateIn object
@@ -82,48 +81,6 @@ func (o *FolderCreateIn) UnsetDescription() {
 	o.Description.Unset()
 }
 
-// GetVisibility returns the Visibility field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *FolderCreateIn) GetVisibility() string {
-	if o == nil || IsNil(o.Visibility.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.Visibility.Get()
-}
-
-// GetVisibilityOk returns a tuple with the Visibility field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *FolderCreateIn) GetVisibilityOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.Visibility.Get(), o.Visibility.IsSet()
-}
-
-// HasVisibility returns a boolean if a field has been set.
-func (o *FolderCreateIn) HasVisibility() bool {
-	if o != nil && o.Visibility.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetVisibility gets a reference to the given NullableString and assigns it to the Visibility field.
-func (o *FolderCreateIn) SetVisibility(v string) {
-	o.Visibility.Set(&v)
-}
-// SetVisibilityNil sets the value for Visibility to be an explicit nil
-func (o *FolderCreateIn) SetVisibilityNil() {
-	o.Visibility.Set(nil)
-}
-
-// UnsetVisibility ensures that no value is present for Visibility, not even an explicit nil
-func (o *FolderCreateIn) UnsetVisibility() {
-	o.Visibility.Unset()
-}
-
 func (o FolderCreateIn) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -136,9 +93,6 @@ func (o FolderCreateIn) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Description.IsSet() {
 		toSerialize["description"] = o.Description.Get()
-	}
-	if o.Visibility.IsSet() {
-		toSerialize["visibility"] = o.Visibility.Get()
 	}
 	return toSerialize, nil
 }

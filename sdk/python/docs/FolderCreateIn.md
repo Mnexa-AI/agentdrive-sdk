@@ -1,13 +1,12 @@
 # FolderCreateIn
 
-POST /v0/folders/{path}? body for the optional metadata params. Empty body is fine — `mkdir` with no description/visibility just creates the folder row.
+POST /v0/folders/{path}? body for the optional metadata params. Empty body is fine — `mkdir` with no description just creates the folder row.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **description** | **str** |  | [optional] 
-**visibility** | **str** |  | [optional] 
 
 ## Example
 

@@ -1,6 +1,6 @@
 # FolderOut
 
-Folder resource (folders+permalinks design §13). `path` is the canonical leading+trailing-slash form; `share_key` is reserved metadata held now and wired by the render layer in v1.1.
+Folder resource (folders+permalinks design §13). `path` is the canonical leading+trailing-slash form. Access is expressed through grants (permission-sharing-design §4.4), not a folder-level flag.
 
 ## Properties
 
@@ -10,8 +10,7 @@ Name | Type | Description | Notes
 **drive_id** | **str** |  | 
 **path** | **str** |  | 
 **description** | **str** |  | [optional] 
-**visibility** | **str** |  | [optional] 
-**share_key** | **str** |  | [optional] 
+**inherit_grants** | **bool** |  | [optional] [default to True]
 **created_at** | **datetime** |  | 
 **updated_at** | **datetime** |  | 
 **deleted_at** | **datetime** |  | [optional] 

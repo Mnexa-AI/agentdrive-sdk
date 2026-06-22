@@ -29,7 +29,6 @@ type FindHitOut struct {
 	ContentType string `json:"content_type"`
 	FileType string `json:"file_type"`
 	Labels []string `json:"labels,omitempty"`
-	Visibility string `json:"visibility"`
 	UpdatedAt time.Time `json:"updated_at"`
 	VersionNumber int32 `json:"version_number"`
 	Modality string `json:"modality"`
@@ -53,7 +52,7 @@ type _FindHitOut FindHitOut
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewFindHitOut(artId string, driveId string, path string, url string, contentType string, fileType string, visibility string, updatedAt time.Time, versionNumber int32, modality string, ord int32, text string, snippet string, score float32) *FindHitOut {
+func NewFindHitOut(artId string, driveId string, path string, url string, contentType string, fileType string, updatedAt time.Time, versionNumber int32, modality string, ord int32, text string, snippet string, score float32) *FindHitOut {
 	this := FindHitOut{}
 	this.ArtId = artId
 	this.DriveId = driveId
@@ -61,7 +60,6 @@ func NewFindHitOut(artId string, driveId string, path string, url string, conten
 	this.Url = url
 	this.ContentType = contentType
 	this.FileType = fileType
-	this.Visibility = visibility
 	this.UpdatedAt = updatedAt
 	this.VersionNumber = versionNumber
 	this.Modality = modality
@@ -254,30 +252,6 @@ func (o *FindHitOut) HasLabels() bool {
 // SetLabels gets a reference to the given []string and assigns it to the Labels field.
 func (o *FindHitOut) SetLabels(v []string) {
 	o.Labels = v
-}
-
-// GetVisibility returns the Visibility field value
-func (o *FindHitOut) GetVisibility() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Visibility
-}
-
-// GetVisibilityOk returns a tuple with the Visibility field value
-// and a boolean to check if the value has been set.
-func (o *FindHitOut) GetVisibilityOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Visibility, true
-}
-
-// SetVisibility sets field value
-func (o *FindHitOut) SetVisibility(v string) {
-	o.Visibility = v
 }
 
 // GetUpdatedAt returns the UpdatedAt field value
@@ -803,7 +777,6 @@ func (o FindHitOut) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Labels) {
 		toSerialize["labels"] = o.Labels
 	}
-	toSerialize["visibility"] = o.Visibility
 	toSerialize["updated_at"] = o.UpdatedAt
 	toSerialize["version_number"] = o.VersionNumber
 	toSerialize["modality"] = o.Modality
@@ -849,7 +822,6 @@ func (o *FindHitOut) UnmarshalJSON(data []byte) (err error) {
 		"url",
 		"content_type",
 		"file_type",
-		"visibility",
 		"updated_at",
 		"version_number",
 		"modality",

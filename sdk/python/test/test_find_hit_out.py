@@ -44,7 +44,6 @@ class TestFindHitOut(unittest.TestCase):
                 labels = [
                     ''
                     ],
-                visibility = 'public',
                 updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 version_number = 56,
                 modality = 'text',
@@ -69,7 +68,6 @@ class TestFindHitOut(unittest.TestCase):
                 url = '',
                 content_type = '',
                 file_type = '',
-                visibility = 'public',
                 updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 version_number = 56,
                 modality = 'text',

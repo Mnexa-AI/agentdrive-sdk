@@ -5,24 +5,36 @@ All URIs are relative to *https://api.agentdrive.run*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**activityFeedActivityGet**](DefaultApi.md#activityfeedactivityget) | **GET** /activity | Activity Feed |
+| [**addGrantWebShareRidGrantPost**](DefaultApi.md#addgrantwebshareridgrantpost) | **POST** /web/share/{rid}/grant | Add Grant |
 | [**artifactDetailPreviewPreviewArtifactDetailGet**](DefaultApi.md#artifactdetailpreviewpreviewartifactdetailget) | **GET** /preview/artifact-detail | Artifact Detail Preview |
+| [**beginUploadV0UploadsPost**](DefaultApi.md#beginuploadv0uploadspost) | **POST** /v0/uploads | Begin a large (direct-to-GCS) upload |
 | [**callbackAuthCallbackGet**](DefaultApi.md#callbackauthcallbackget) | **GET** /auth/callback | Callback |
 | [**cancelJobV0JobsJobIdCancelPost**](DefaultApi.md#canceljobv0jobsjobidcancelpost) | **POST** /v0/jobs/{job_id}/cancel | Cancel a queued/running job |
 | [**collectionDetailCollectionsSlugGet**](DefaultApi.md#collectiondetailcollectionsslugget) | **GET** /collections/{slug} | Collection Detail |
+| [**commitUploadV0UploadsUploadIdCommitPost**](DefaultApi.md#commituploadv0uploadsuploadidcommitpost) | **POST** /v0/uploads/{upload_id}/commit | Commit a large (direct-to-GCS) upload |
 | [**connectorsPageConnectorsGet**](DefaultApi.md#connectorspageconnectorsget) | **GET** /connectors | Connectors Page |
 | [**copyArtifactRouteV0ArtifactsArtIdCopyPost**](DefaultApi.md#copyartifactroutev0artifactsartidcopypost) | **POST** /v0/artifacts/{art_id}/copy | Duplicate an artifact to a new path (CAS-shared, new ID) |
 | [**createFolderByPathV0FoldersPathPost**](DefaultApi.md#createfolderbypathv0folderspathpost) | **POST** /v0/folders/{path} | Create a folder (idempotent) |
+| [**createGrantRouteV0GrantsPost**](DefaultApi.md#creategrantroutev0grantspost) | **POST** /v0/grants | Create (or fetch) a per-principal grant on a resource |
+| [**createLinkWebShareRidLinkPost**](DefaultApi.md#createlinkwebshareridlinkpost) | **POST** /web/share/{rid}/link | Create Link |
+| [**createShareRouteV0SharesPost**](DefaultApi.md#createshareroutev0sharespost) | **POST** /v0/shares | Mint a share link (returns the share_key once) |
 | [**dangerZoneOldDashboardDangerGet**](DefaultApi.md#dangerzoneolddashboarddangerget) | **GET** /dashboard/danger | Danger Zone Old |
 | [**dangerZoneSettingsDangerGet**](DefaultApi.md#dangerzonesettingsdangerget) | **GET** /settings/danger | Danger Zone |
 | [**dashboardDashboardGet**](DefaultApi.md#dashboarddashboardget) | **GET** /dashboard | Dashboard |
 | [**deleteAccountWebAccountDeletePost**](DefaultApi.md#deleteaccountwebaccountdeletepost) | **POST** /web/account/delete | Delete Account |
+| [**deleteArtifactByIdRouteV0ArtifactsArtIdDelete**](DefaultApi.md#deleteartifactbyidroutev0artifactsartiddelete) | **DELETE** /v0/artifacts/{art_id} | Soft-delete an artifact by its stable ID |
 | [**deleteArtifactV0ArtifactsPathDelete**](DefaultApi.md#deleteartifactv0artifactspathdelete) | **DELETE** /v0/artifacts/{path} | Delete Artifact |
 | [**deleteDriveRouteV0DrivesDriveIdDelete**](DefaultApi.md#deletedriveroutev0drivesdriveiddelete) | **DELETE** /v0/drives/{drive_id} | Soft-delete the authenticated drive |
 | [**deleteFolderByIdV0FoldersFldIdDelete**](DefaultApi.md#deletefolderbyidv0foldersfldiddelete) | **DELETE** /v0/folders/{fld_id} | Soft-delete a folder by stable ID (cascade with ?recursive&#x3D;true) |
 | [**deleteFolderByPathV0FoldersPathDelete**](DefaultApi.md#deletefolderbypathv0folderspathdelete) | **DELETE** /v0/folders/{path} | Soft-delete a folder (cascade with ?recursive&#x3D;true) |
+| [**deleteGrantRouteV0GrantsGrnIdDelete**](DefaultApi.md#deletegrantroutev0grantsgrniddelete) | **DELETE** /v0/grants/{grn_id} | Revoke a grant (can_manage, or self-revoke own grant) |
 | [**deleteKeyWebKeysDeletePost**](DefaultApi.md#deletekeywebkeysdeletepost) | **POST** /web/keys/delete | Delete Key |
+| [**deleteShareRouteV0SharesShrIdDelete**](DefaultApi.md#deleteshareroutev0sharesshriddelete) | **DELETE** /v0/shares/{shr_id} | Revoke a share link (requires can_manage) |
 | [**downloadArtifactByIdV0ArtifactsArtIdDownloadGet**](DefaultApi.md#downloadartifactbyidv0artifactsartiddownloadget) | **GET** /v0/artifacts/{art_id}/download | Stream the artifact bytes by stable ID (never rendered HTML) |
 | [**downloadArtifactVersionV0ArtifactsArtIdVersionsVersionNumberDownloadGet**](DefaultApi.md#downloadartifactversionv0artifactsartidversionsversionnumberdownloadget) | **GET** /v0/artifacts/{art_id}/versions/{version_number}/download | Stream bytes for a specific version (machine surface) |
+| [**downloadUrlByIdV0ArtifactsArtIdDownloadUrlGet**](DefaultApi.md#downloadurlbyidv0artifactsartiddownloadurlget) | **GET** /v0/artifacts/{art_id}/download-url | Signed direct-from-GCS download URL by stable ID |
+| [**downloadUrlByPathV0ArtifactsPathDownloadUrlGet**](DefaultApi.md#downloadurlbypathv0artifactspathdownloadurlget) | **GET** /v0/artifacts/{path}/download-url | Signed direct-from-GCS download URL by path |
+| [**downloadUrlVersionV0ArtifactsArtIdVersionsVersionNumberDownloadUrlGet**](DefaultApi.md#downloadurlversionv0artifactsartidversionsversionnumberdownloadurlget) | **GET** /v0/artifacts/{art_id}/versions/{version_number}/download-url | Signed direct-from-GCS download URL for a specific version |
 | [**editArtifactAArtIdEditGet**](DefaultApi.md#editartifactaartideditget) | **GET** /a/{art_id}/edit | Edit Artifact |
 | [**enqueueJobV0ProjectsFldIdJobsPost**](DefaultApi.md#enqueuejobv0projectsfldidjobspost) | **POST** /v0/projects/{fld_id}/jobs | Enqueue a compile job for a project (folder) |
 | [**extensionStartAuthExtensionStartGet**](DefaultApi.md#extensionstartauthextensionstartget) | **GET** /auth/extension/start | Extension Start |
@@ -36,15 +48,19 @@ All URIs are relative to *https://api.agentdrive.run*
 | [**getFeedbackStatusV0FeedbackFbkIdGet**](DefaultApi.md#getfeedbackstatusv0feedbackfbkidget) | **GET** /v0/feedback/{fbk_id} | Get Feedback Status |
 | [**getFolderByIdMetaV0FoldersFldIdMetaGet**](DefaultApi.md#getfolderbyidmetav0foldersfldidmetaget) | **GET** /v0/folders/{fld_id}/meta | Folder metadata by stable ID (same shape as the bare id route) |
 | [**getFolderByIdV0FoldersFldIdGet**](DefaultApi.md#getfolderbyidv0foldersfldidget) | **GET** /v0/folders/{fld_id} | Canonical lookup of a folder by its stable ID |
+| [**getFolderByPathMetaV0FoldersPathMetaGet**](DefaultApi.md#getfolderbypathmetav0folderspathmetaget) | **GET** /v0/folders/{path}/meta | Folder metadata by path (same shape as the bare path route) |
 | [**getFolderByPathV0FoldersPathGet**](DefaultApi.md#getfolderbypathv0folderspathget) | **GET** /v0/folders/{path} | Read folder metadata by path |
 | [**getJobLogsV0JobsJobIdLogsGet**](DefaultApi.md#getjoblogsv0jobsjobidlogsget) | **GET** /v0/jobs/{job_id}/logs | Raw compile log (text/plain) |
 | [**getJobV0JobsJobIdGet**](DefaultApi.md#getjobv0jobsjobidget) | **GET** /v0/jobs/{job_id} | Poll a job |
 | [**getProjectV0ProjectsFldIdGet**](DefaultApi.md#getprojectv0projectsfldidget) | **GET** /v0/projects/{fld_id} | Get a project\&#39;s compile config |
+| [**getShareStateWebShareRidGet**](DefaultApi.md#getsharestatewebshareridget) | **GET** /web/share/{rid} | Get Share State |
 | [**healthHealthGet**](DefaultApi.md#healthhealthget) | **GET** /health | Health |
 | [**listArtifactVersionsV0ArtifactsArtIdVersionsGet**](DefaultApi.md#listartifactversionsv0artifactsartidversionsget) | **GET** /v0/artifacts/{art_id}/versions | List versions of an artifact, newest first |
 | [**listArtifactsV0ArtifactsGet**](DefaultApi.md#listartifactsv0artifactsget) | **GET** /v0/artifacts | List artifacts in the drive |
 | [**listEventsRouteV0EventsGet**](DefaultApi.md#listeventsroutev0eventsget) | **GET** /v0/events | Read the append-only event log for the authenticated drive |
+| [**listGrantsRouteV0GrantsGet**](DefaultApi.md#listgrantsroutev0grantsget) | **GET** /v0/grants | List live grants on a resource (requires can_manage) |
 | [**listProjectJobsV0ProjectsFldIdJobsGet**](DefaultApi.md#listprojectjobsv0projectsfldidjobsget) | **GET** /v0/projects/{fld_id}/jobs | List a project\&#39;s jobs |
+| [**listSharesRouteV0SharesGet**](DefaultApi.md#listsharesroutev0sharesget) | **GET** /v0/shares | List live share links on a resource (requires can_manage) |
 | [**listTrashRouteV0DrivesDriveIdTrashGet**](DefaultApi.md#listtrashroutev0drivesdriveidtrashget) | **GET** /v0/drives/{drive_id}/trash | List the authenticated drive\&#39;s trash |
 | [**loginAuthLoginGet**](DefaultApi.md#loginauthloginget) | **GET** /auth/login | Login |
 | [**logoutAuthLogoutPost**](DefaultApi.md#logoutauthlogoutpost) | **POST** /auth/logout | Logout |
@@ -58,6 +74,7 @@ All URIs are relative to *https://api.agentdrive.run*
 | [**oauthDisconnectWebOauthDisconnectPost**](DefaultApi.md#oauthdisconnectweboauthdisconnectpost) | **POST** /web/oauth/disconnect | Oauth Disconnect |
 | [**patchFolderByIdV0FoldersFldIdPatch**](DefaultApi.md#patchfolderbyidv0foldersfldidpatch) | **PATCH** /v0/folders/{fld_id} | Update folder metadata by stable ID |
 | [**patchFolderByPathV0FoldersPathPatch**](DefaultApi.md#patchfolderbypathv0folderspathpatch) | **PATCH** /v0/folders/{path} | Update folder metadata by path |
+| [**patchGrantRouteV0GrantsGrnIdPatch**](DefaultApi.md#patchgrantroutev0grantsgrnidpatch) | **PATCH** /v0/grants/{grn_id} | Update a grant\&#39;s role and/or expiry (requires can_manage) |
 | [**postFeedbackV0FeedbackPost**](DefaultApi.md#postfeedbackv0feedbackpost) | **POST** /v0/feedback | Post Feedback |
 | [**privacyPagePrivacyGet**](DefaultApi.md#privacypageprivacyget) | **GET** /privacy | Privacy Page |
 | [**projectPreviewPageFFldIdPreviewGet**](DefaultApi.md#projectpreviewpageffldidpreviewget) | **GET** /f/{fld_id}/preview | Project Preview Page |
@@ -68,20 +85,29 @@ All URIs are relative to *https://api.agentdrive.run*
 | [**recoveryNewAccountExpiredAuthRecoveryNewAccountExpiredGet**](DefaultApi.md#recoverynewaccountexpiredauthrecoverynewaccountexpiredget) | **GET** /auth/recovery/new-account-expired | Recovery New Account Expired |
 | [**recoveryPageAuthRecoveryGet**](DefaultApi.md#recoverypageauthrecoveryget) | **GET** /auth/recovery | Recovery Page |
 | [**recoveryRestoreAuthRecoveryRestorePost**](DefaultApi.md#recoveryrestoreauthrecoveryrestorepost) | **POST** /auth/recovery/restore | Recovery Restore |
+| [**redeemShareSShareKeyGet**](DefaultApi.md#redeemsharessharekeyget) | **GET** /s/{share_key} | Redeem Share |
+| [**redeemShareWithPasswordSShareKeyPost**](DefaultApi.md#redeemsharewithpasswordssharekeypost) | **POST** /s/{share_key} | Redeem Share With Password |
 | [**renameArtifactRouteV0ArtifactsArtIdPatch**](DefaultApi.md#renameartifactroutev0artifactsartidpatch) | **PATCH** /v0/artifacts/{art_id} | Rename / move an artifact to a new path |
 | [**restoreArtifactV0ArtifactsArtIdRestorePost**](DefaultApi.md#restoreartifactv0artifactsartidrestorepost) | **POST** /v0/artifacts/{art_id}/restore | Restore a soft-deleted artifact |
 | [**restoreDriveRouteV0DrivesDriveIdRestorePost**](DefaultApi.md#restoredriveroutev0drivesdriveidrestorepost) | **POST** /v0/drives/{drive_id}/restore | Restore a soft-deleted drive |
+| [**revokeGrantWebShareRidGrantGrnIdRevokePost**](DefaultApi.md#revokegrantwebshareridgrantgrnidrevokepost) | **POST** /web/share/{rid}/grant/{grn_id}/revoke | Revoke Grant |
+| [**revokeLinkWebShareRidLinkShrIdRevokePost**](DefaultApi.md#revokelinkwebshareridlinkshridrevokepost) | **POST** /web/share/{rid}/link/{shr_id}/revoke | Revoke Link |
 | [**rotateKeyWebKeysRotatePost**](DefaultApi.md#rotatekeywebkeysrotatepost) | **POST** /web/keys/rotate | Rotate Key |
+| [**rotateShareRouteV0SharesShrIdRotatePost**](DefaultApi.md#rotateshareroutev0sharesshridrotatepost) | **POST** /v0/shares/{shr_id}/rotate | Revoke + reissue a share link\&#39;s key (requires can_share) |
 | [**searchV0SearchGet**](DefaultApi.md#searchv0searchget) | **GET** /v0/search | Full-text search over artifacts in the drive |
+| [**setPublicWebShareRidPublicPost**](DefaultApi.md#setpublicwebshareridpublicpost) | **POST** /web/share/{rid}/public | Set Public |
+| [**setSealWebShareRidSealPost**](DefaultApi.md#setsealwebshareridsealpost) | **POST** /web/share/{rid}/seal | Set Seal |
 | [**settingsAccountSettingsGet**](DefaultApi.md#settingsaccountsettingsget) | **GET** /settings | Settings Account |
 | [**settingsApiKeysSettingsApiKeysGet**](DefaultApi.md#settingsapikeyssettingsapikeysget) | **GET** /settings/api-keys | Settings Api Keys |
 | [**settingsQuickstartSettingsQuickstartGet**](DefaultApi.md#settingsquickstartsettingsquickstartget) | **GET** /settings/quickstart | Settings Quickstart |
 | [**settingsUsageSettingsUsageGet**](DefaultApi.md#settingsusagesettingsusageget) | **GET** /settings/usage | Settings Usage |
 | [**sharedFilesSharedGet**](DefaultApi.md#sharedfilessharedget) | **GET** /shared | Shared Files |
 | [**streamUploadV0UploadTokenPut**](DefaultApi.md#streamuploadv0uploadtokenput) | **PUT** /v0/upload/{token} | Proxied streaming upload (via an upload_url token) |
+| [**switchOrgWebSwitchOrgPost**](DefaultApi.md#switchorgwebswitchorgpost) | **POST** /web/switch-org | Switch Org |
 | [**termsPageTermsGet**](DefaultApi.md#termspagetermsget) | **GET** /terms | Terms Page |
 | [**toggleIndexingWebAccountIndexingPost**](DefaultApi.md#toggleindexingwebaccountindexingpost) | **POST** /web/account/indexing | Toggle Indexing |
 | [**trashWebTrashGet**](DefaultApi.md#trashwebtrashget) | **GET** /web/trash | Trash |
+| [**viewArtifactHeadAArtIdHeadGet**](DefaultApi.md#viewartifactheadaartidheadget) | **GET** /a/{art_id}/head | View Artifact Head |
 | [**viewFileDriveIdPathGet**](DefaultApi.md#viewfiledriveidpathget) | **GET** /{drive_id}/{path} | View File |
 | [**viewPermalinkArtifactAArtIdGet**](DefaultApi.md#viewpermalinkartifactaartidget) | **GET** /a/{art_id} | View Permalink Artifact |
 | [**viewPermalinkFolderFFldIdGet**](DefaultApi.md#viewpermalinkfolderffldidget) | **GET** /f/{fld_id} | View Permalink Folder |
@@ -163,6 +189,78 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## addGrantWebShareRidGrantPost
+
+> any addGrantWebShareRidGrantPost(rid, grantIn, xCsrfToken)
+
+Add Grant
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { AddGrantWebShareRidGrantPostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    rid: rid_example,
+    // GrantIn
+    grantIn: ...,
+    // string (optional)
+    xCsrfToken: xCsrfToken_example,
+  } satisfies AddGrantWebShareRidGrantPostRequest;
+
+  try {
+    const data = await api.addGrantWebShareRidGrantPost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **rid** | `string` |  | [Defaults to `undefined`] |
+| **grantIn** | [GrantIn](GrantIn.md) |  | |
+| **xCsrfToken** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## artifactDetailPreviewPreviewArtifactDetailGet
 
 > string artifactDetailPreviewPreviewArtifactDetailGet()
@@ -216,6 +314,82 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## beginUploadV0UploadsPost
+
+> UploadBeginOut beginUploadV0UploadsPost(uploadBeginIn, authorization)
+
+Begin a large (direct-to-GCS) upload
+
+Reserve quota and open a resumable upload session for a file larger than the buffered-upload limit. Returns a &#x60;upload_url&#x60; to PUT the raw bytes to DIRECTLY (no Authorization header — the URL is the credential), then call &#x60;/v0/uploads/{upload_id}/commit&#x60;. All artifact decisions (path, labels, metadata, source, if_match) are frozen here.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { BeginUploadV0UploadsPostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // UploadBeginIn
+    uploadBeginIn: ...,
+    // string (optional)
+    authorization: authorization_example,
+  } satisfies BeginUploadV0UploadsPostRequest;
+
+  try {
+    const data = await api.beginUploadV0UploadsPost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **uploadBeginIn** | [UploadBeginIn](UploadBeginIn.md) |  | |
+| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**UploadBeginOut**](UploadBeginOut.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **400** | Invalid path / labels / metadata / source |  -  |
+| **402** | Drive storage quota would be exceeded |  -  |
+| **403** | Path reserved for the system (WIKI_RESERVED) |  -  |
+| **413** | size_bytes exceeds the drive\&#39;s per-artifact cap |  -  |
+| **429** | Drive\&#39;s per-hour write budget exhausted |  -  |
+| **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -424,6 +598,82 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## commitUploadV0UploadsUploadIdCommitPost
+
+> ArtifactOut commitUploadV0UploadsUploadIdCommitPost(uploadId, authorization)
+
+Commit a large (direct-to-GCS) upload
+
+Finalize the upload begun at &#x60;/v0/uploads&#x60;: AgentDrive verifies the object that landed in GCS (size + checksum) and creates the artifact. Idempotent — a retry after a successful commit returns the same artifact. The write budget is charged here (begin is free metadata).
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { CommitUploadV0UploadsUploadIdCommitPostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    uploadId: uploadId_example,
+    // string (optional)
+    authorization: authorization_example,
+  } satisfies CommitUploadV0UploadsUploadIdCommitPostRequest;
+
+  try {
+    const data = await api.commitUploadV0UploadsUploadIdCommitPost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **uploadId** | `string` |  | [Defaults to `undefined`] |
+| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**ArtifactOut**](ArtifactOut.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **404** | No such upload for this drive |  -  |
+| **409** | Uploaded object size !&#x3D; declared size_bytes |  -  |
+| **410** | Upload session expired |  -  |
+| **412** | If-Match precondition failed |  -  |
+| **429** | Drive\&#39;s per-hour write budget exhausted |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -642,6 +892,224 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## createGrantRouteV0GrantsPost
+
+> GrantOut createGrantRouteV0GrantsPost(grantCreateIn, xAgentdriveActor, authorization)
+
+Create (or fetch) a per-principal grant on a resource
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { CreateGrantRouteV0GrantsPostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // GrantCreateIn
+    grantCreateIn: ...,
+    // string (optional)
+    xAgentdriveActor: xAgentdriveActor_example,
+    // string (optional)
+    authorization: authorization_example,
+  } satisfies CreateGrantRouteV0GrantsPostRequest;
+
+  try {
+    const data = await api.createGrantRouteV0GrantsPost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **grantCreateIn** | [GrantCreateIn](GrantCreateIn.md) |  | |
+| **xAgentdriveActor** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**GrantOut**](GrantOut.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## createLinkWebShareRidLinkPost
+
+> any createLinkWebShareRidLinkPost(rid, linkIn, xCsrfToken)
+
+Create Link
+
+Mint a viewer share link. Returns the fresh state PLUS &#x60;minted&#x60; with the raw &#x60;share_key&#x60; + url — the ONLY response that carries the key. Artifacts only (v1: folder share links are not supported).
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { CreateLinkWebShareRidLinkPostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    rid: rid_example,
+    // LinkIn
+    linkIn: ...,
+    // string (optional)
+    xCsrfToken: xCsrfToken_example,
+  } satisfies CreateLinkWebShareRidLinkPostRequest;
+
+  try {
+    const data = await api.createLinkWebShareRidLinkPost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **rid** | `string` |  | [Defaults to `undefined`] |
+| **linkIn** | [LinkIn](LinkIn.md) |  | |
+| **xCsrfToken** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## createShareRouteV0SharesPost
+
+> ShareMintOut createShareRouteV0SharesPost(shareCreateIn, xAgentdriveActor, authorization)
+
+Mint a share link (returns the share_key once)
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { CreateShareRouteV0SharesPostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // ShareCreateIn
+    shareCreateIn: ...,
+    // string (optional)
+    xAgentdriveActor: xAgentdriveActor_example,
+    // string (optional)
+    authorization: authorization_example,
+  } satisfies CreateShareRouteV0SharesPostRequest;
+
+  try {
+    const data = await api.createShareRouteV0SharesPost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **shareCreateIn** | [ShareCreateIn](ShareCreateIn.md) |  | |
+| **xAgentdriveActor** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**ShareMintOut**](ShareMintOut.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## dangerZoneOldDashboardDangerGet
 
 > any dangerZoneOldDashboardDangerGet()
@@ -758,7 +1226,7 @@ No authorization required
 
 ## dashboardDashboardGet
 
-> string dashboardDashboardGet(q, path, wiki, type, label, vis, after, before, view, sort, dir)
+> string dashboardDashboardGet(q, path, wiki, type, label, after, before, view, sort, dir)
 
 Dashboard
 
@@ -786,8 +1254,6 @@ async function example() {
     type: type_example,
     // Array<string> (optional)
     label: ...,
-    // string (optional)
-    vis: vis_example,
     // string (optional)
     after: after_example,
     // string (optional)
@@ -822,7 +1288,6 @@ example().catch(console.error);
 | **wiki** | `number` |  | [Optional] [Defaults to `0`] |
 | **type** | `string` |  | [Optional] [Defaults to `&#39;&#39;`] |
 | **label** | `Array<string>` |  | [Optional] |
-| **vis** | `string` |  | [Optional] [Defaults to `&#39;&#39;`] |
 | **after** | `string` |  | [Optional] [Defaults to `&#39;&#39;`] |
 | **before** | `string` |  | [Optional] [Defaults to `&#39;&#39;`] |
 | **view** | `string` |  | [Optional] [Defaults to `&#39;&#39;`] |
@@ -911,6 +1376,83 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: `application/x-www-form-urlencoded`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## deleteArtifactByIdRouteV0ArtifactsArtIdDelete
+
+> any deleteArtifactByIdRouteV0ArtifactsArtIdDelete(artId, ifMatch, xAgentdriveActor, authorization)
+
+Soft-delete an artifact by its stable ID
+
+Soft-delete the artifact with this &#x60;art_…&#x60; ID. Same semantics + response shape as the path-based &#x60;DELETE /v0/artifacts/{path}&#x60; (reversible until the GC cron hard-deletes at &#x60;purge_at&#x60;; &#x60;restore_url&#x60; points at the by-id restore), but keys on the immutable id so a concurrent rename can\&#39;t change the target.  Returns 404 ARTIFACT_NOT_FOUND if no live artifact has this id; 403 WIKI_RESERVED for &#x60;_wiki/&#x60; artifacts (system-managed); 412 if &#x60;If-Match&#x60; doesn\&#39;t match the current version. Declared before the &#x60;{path:path}&#x60; family so the id convertor wins for DELETEs.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { DeleteArtifactByIdRouteV0ArtifactsArtIdDeleteRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    artId: artId_example,
+    // string (optional)
+    ifMatch: ifMatch_example,
+    // string (optional)
+    xAgentdriveActor: xAgentdriveActor_example,
+    // string (optional)
+    authorization: authorization_example,
+  } satisfies DeleteArtifactByIdRouteV0ArtifactsArtIdDeleteRequest;
+
+  try {
+    const data = await api.deleteArtifactByIdRouteV0ArtifactsArtIdDelete(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **artId** | `string` |  | [Defaults to `undefined`] |
+| **ifMatch** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **xAgentdriveActor** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: `application/json`
 
 
@@ -1224,6 +1766,78 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## deleteGrantRouteV0GrantsGrnIdDelete
+
+> any deleteGrantRouteV0GrantsGrnIdDelete(grnId, xAgentdriveActor, authorization)
+
+Revoke a grant (can_manage, or self-revoke own grant)
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { DeleteGrantRouteV0GrantsGrnIdDeleteRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    grnId: grnId_example,
+    // string (optional)
+    xAgentdriveActor: xAgentdriveActor_example,
+    // string (optional)
+    authorization: authorization_example,
+  } satisfies DeleteGrantRouteV0GrantsGrnIdDeleteRequest;
+
+  try {
+    const data = await api.deleteGrantRouteV0GrantsGrnIdDelete(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **grnId** | `string` |  | [Defaults to `undefined`] |
+| **xAgentdriveActor** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## deleteKeyWebKeysDeletePost
 
 > any deleteKeyWebKeysDeletePost(csrf)
@@ -1278,6 +1892,78 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: `application/x-www-form-urlencoded`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## deleteShareRouteV0SharesShrIdDelete
+
+> any deleteShareRouteV0SharesShrIdDelete(shrId, xAgentdriveActor, authorization)
+
+Revoke a share link (requires can_manage)
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { DeleteShareRouteV0SharesShrIdDeleteRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    shrId: shrId_example,
+    // string (optional)
+    xAgentdriveActor: xAgentdriveActor_example,
+    // string (optional)
+    authorization: authorization_example,
+  } satisfies DeleteShareRouteV0SharesShrIdDeleteRequest;
+
+  try {
+    const data = await api.deleteShareRouteV0SharesShrIdDelete(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **shrId** | `string` |  | [Defaults to `undefined`] |
+| **xAgentdriveActor** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: `application/json`
 
 
@@ -1411,6 +2097,222 @@ example().catch(console.error);
 ### Return type
 
 **any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## downloadUrlByIdV0ArtifactsArtIdDownloadUrlGet
+
+> DownloadUrlOut downloadUrlByIdV0ArtifactsArtIdDownloadUrlGet(artId, authorization)
+
+Signed direct-from-GCS download URL by stable ID
+
+Returns a URL for the artifact\&#39;s bytes. For large artifacts (&gt;&#x3D; the signed-download threshold) when signing is available, it\&#39;s a short-lived **signed GCS URL** the client fetches directly (&#x60;direct:true&#x60;, &#x60;expires_at&#x60; set); otherwise the **proxy** &#x60;/download&#x60; URL (&#x60;direct:false&#x60;). Treat the URL as opaque. large-download-design.md §5.1.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { DownloadUrlByIdV0ArtifactsArtIdDownloadUrlGetRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    artId: artId_example,
+    // string (optional)
+    authorization: authorization_example,
+  } satisfies DownloadUrlByIdV0ArtifactsArtIdDownloadUrlGetRequest;
+
+  try {
+    const data = await api.downloadUrlByIdV0ArtifactsArtIdDownloadUrlGet(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **artId** | `string` |  | [Defaults to `undefined`] |
+| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**DownloadUrlOut**](DownloadUrlOut.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## downloadUrlByPathV0ArtifactsPathDownloadUrlGet
+
+> DownloadUrlOut downloadUrlByPathV0ArtifactsPathDownloadUrlGet(path, authorization)
+
+Signed direct-from-GCS download URL by path
+
+Same as &#x60;/{art_id}/download-url&#x60; but resolves the artifact by path. The returned proxy URL (when &#x60;direct:false&#x60;) still points at the by-id &#x60;/download&#x60; endpoint. large-download-design.md §5.1.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { DownloadUrlByPathV0ArtifactsPathDownloadUrlGetRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    path: path_example,
+    // string (optional)
+    authorization: authorization_example,
+  } satisfies DownloadUrlByPathV0ArtifactsPathDownloadUrlGetRequest;
+
+  try {
+    const data = await api.downloadUrlByPathV0ArtifactsPathDownloadUrlGet(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **path** | `string` |  | [Defaults to `undefined`] |
+| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**DownloadUrlOut**](DownloadUrlOut.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## downloadUrlVersionV0ArtifactsArtIdVersionsVersionNumberDownloadUrlGet
+
+> DownloadUrlOut downloadUrlVersionV0ArtifactsArtIdVersionsVersionNumberDownloadUrlGet(artId, versionNumber, authorization)
+
+Signed direct-from-GCS download URL for a specific version
+
+Same as &#x60;/{art_id}/download-url&#x60; but for a specific version\&#39;s bytes (&#x60;direct:true&#x60; signed GCS URL when large + signing available, else the proxy &#x60;/versions/{n}/download&#x60; URL). large-download-design.md §5.1.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { DownloadUrlVersionV0ArtifactsArtIdVersionsVersionNumberDownloadUrlGetRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    artId: artId_example,
+    // number
+    versionNumber: 56,
+    // string (optional)
+    authorization: authorization_example,
+  } satisfies DownloadUrlVersionV0ArtifactsArtIdVersionsVersionNumberDownloadUrlGetRequest;
+
+  try {
+    const data = await api.downloadUrlVersionV0ArtifactsArtIdVersionsVersionNumberDownloadUrlGet(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **artId** | `string` |  | [Defaults to `undefined`] |
+| **versionNumber** | `number` |  | [Defaults to `undefined`] |
+| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**DownloadUrlOut**](DownloadUrlOut.md)
 
 ### Authorization
 
@@ -1786,11 +2688,11 @@ No authorization required
 
 ## findV0FindGet
 
-> FindPage findV0FindGet(q, mode, label, fileType, prefix, visibility, modality, updatedAfter, updatedBefore, limit, authorization)
+> FindPage findV0FindGet(q, mode, label, fileType, prefix, modality, updatedAfter, updatedBefore, limit, authorization)
 
 Hybrid passage retrieval over the full file body
 
-Passage-level chunk RAG over &#x60;embed_chunks&#x60;. Lexical (&#x60;chunk_tsv&#x60;, GIN) + semantic (HNSW over &#x60;embedding&#x60;) are run in parallel and fused via Reciprocal Rank Fusion (k&#x3D;60). Unlike &#x60;/v0/search&#x60;, which only sees the first ~16 KB preview of each artifact, &#x60;/v0/find&#x60; reaches the full file body.  **Modes:** - &#x60;hybrid&#x60; (default) — lexical + semantic, RRF-fused. - &#x60;lexical&#x60; — &#x60;chunk_tsv&#x60; only. Best for exact tokens, identifiers, code snippets. - &#x60;semantic&#x60; — embedding only. Best for conceptual queries where the surface terms differ from the query phrasing.  **Granularity:** results are passages, not files. A long document with multiple matching regions returns multiple hits with distinct &#x60;ord&#x60; values; consecutive &#x60;ord&#x60;s overlap by ~400 tokens. Dedupe by &#x60;art_id&#x60; if you want one row per file.  **Span citations:** &#x60;char_start&#x60;/&#x60;char_end&#x60; for text &amp; code, &#x60;page_start&#x60;/&#x60;page_end&#x60; for PDFs, &#x60;time_start_ms&#x60;/&#x60;time_end_ms&#x60; for audio &amp; video. Only the modality-relevant pair is populated.  **Filters:** &#x60;label&#x60;, &#x60;file_type&#x60;, &#x60;prefix&#x60;, &#x60;visibility&#x60;, &#x60;modality&#x60; (repeatable), &#x60;updated_after&#x60; / &#x60;updated_before&#x60; (RFC 3339 timestamps, inclusive bounds on &#x60;updated_at&#x60;, applied to both legs).  **Wiki coverage:** &#x60;/v0/find&#x60; excludes &#x60;_wiki/&#x60; paths by default and — importantly — does NOT cover them even when the caller passes &#x60;prefix&#x3D;_wiki/...&#x60;. Wiki pages are not embedded by the pipeline (they\&#39;re system-generated output, not user input), so &#x60;embed_chunks&#x60; has no rows for them and the join returns empty. Use &#x60;wiki_search&#x60; (or &#x60;list&#x60;/&#x60;grep&#x60; with a &#x60;_wiki/&#x60; prefix) for the wiki layer.  **Embedding availability:** when &#x60;GEMINI_API_KEY&#x60; is not configured, &#x60;mode&#x3D;semantic&#x60; returns 500; &#x60;mode&#x3D;hybrid&#x60; logs a warning and falls back to lexical-only; &#x60;mode&#x3D;lexical&#x60; is unaffected.
+Passage-level chunk RAG over &#x60;embed_chunks&#x60;. Lexical (&#x60;chunk_tsv&#x60;, GIN) + semantic (HNSW over &#x60;embedding&#x60;) are run in parallel and fused via Reciprocal Rank Fusion (k&#x3D;60). Unlike &#x60;/v0/search&#x60;, which only sees the first ~16 KB preview of each artifact, &#x60;/v0/find&#x60; reaches the full file body.  **Modes:** - &#x60;hybrid&#x60; (default) — lexical + semantic, RRF-fused. - &#x60;lexical&#x60; — &#x60;chunk_tsv&#x60; only. Best for exact tokens, identifiers, code snippets. - &#x60;semantic&#x60; — embedding only. Best for conceptual queries where the surface terms differ from the query phrasing.  **Granularity:** results are passages, not files. A long document with multiple matching regions returns multiple hits with distinct &#x60;ord&#x60; values; consecutive &#x60;ord&#x60;s overlap by ~400 tokens. Dedupe by &#x60;art_id&#x60; if you want one row per file.  **Span citations:** &#x60;char_start&#x60;/&#x60;char_end&#x60; for text &amp; code, &#x60;page_start&#x60;/&#x60;page_end&#x60; for PDFs, &#x60;time_start_ms&#x60;/&#x60;time_end_ms&#x60; for audio &amp; video. Only the modality-relevant pair is populated.  **Filters:** &#x60;label&#x60;, &#x60;file_type&#x60;, &#x60;prefix&#x60;, &#x60;modality&#x60; (repeatable), &#x60;updated_after&#x60; / &#x60;updated_before&#x60; (RFC 3339 timestamps, inclusive bounds on &#x60;updated_at&#x60;, applied to both legs).  **Wiki coverage:** &#x60;/v0/find&#x60; excludes &#x60;_wiki/&#x60; paths by default and — importantly — does NOT cover them even when the caller passes &#x60;prefix&#x3D;_wiki/...&#x60;. Wiki pages are not embedded by the pipeline (they\&#39;re system-generated output, not user input), so &#x60;embed_chunks&#x60; has no rows for them and the join returns empty. Use &#x60;wiki_search&#x60; (or &#x60;list&#x60;/&#x60;grep&#x60; with a &#x60;_wiki/&#x60; prefix) for the wiki layer.  **Embedding availability:** when &#x60;GEMINI_API_KEY&#x60; is not configured, &#x60;mode&#x3D;semantic&#x60; returns 500; &#x60;mode&#x3D;hybrid&#x60; logs a warning and falls back to lexical-only; &#x60;mode&#x3D;lexical&#x60; is unaffected.
 
 ### Example
 
@@ -1816,8 +2718,6 @@ async function example() {
     fileType: fileType_example,
     // string (optional)
     prefix: prefix_example,
-    // 'public' | 'private' | 'all' (optional)
-    visibility: visibility_example,
     // Array<string> (optional)
     modality: ...,
     // Date (optional)
@@ -1852,7 +2752,6 @@ example().catch(console.error);
 | **label** | `Array<string>` |  | [Optional] |
 | **fileType** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **prefix** | `string` |  | [Optional] [Defaults to `undefined`] |
-| **visibility** | `public`, `private`, `all` |  | [Optional] [Defaults to `&#39;all&#39;`] [Enum: public, private, all] |
 | **modality** | `Array<string>` |  | [Optional] |
 | **updatedAfter** | `Date` |  | [Optional] [Defaults to `undefined`] |
 | **updatedBefore** | `Date` |  | [Optional] [Defaults to `undefined`] |
@@ -2370,6 +3269,75 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## getFolderByPathMetaV0FoldersPathMetaGet
+
+> FolderOut getFolderByPathMetaV0FoldersPathMetaGet(path, authorization)
+
+Folder metadata by path (same shape as the bare path route)
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { GetFolderByPathMetaV0FoldersPathMetaGetRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    path: path_example,
+    // string (optional)
+    authorization: authorization_example,
+  } satisfies GetFolderByPathMetaV0FoldersPathMetaGetRequest;
+
+  try {
+    const data = await api.getFolderByPathMetaV0FoldersPathMetaGet(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **path** | `string` |  | [Defaults to `undefined`] |
+| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**FolderOut**](FolderOut.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## getFolderByPathV0FoldersPathGet
 
 > FolderOut getFolderByPathV0FoldersPathGet(path, authorization)
@@ -2622,6 +3590,72 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **fldId** | `string` |  | [Defaults to `undefined`] |
 | **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getShareStateWebShareRidGet
+
+> any getShareStateWebShareRidGet(rid)
+
+Get Share State
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { GetShareStateWebShareRidGetRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    rid: rid_example,
+  } satisfies GetShareStateWebShareRidGetRequest;
+
+  try {
+    const data = await api.getShareStateWebShareRidGet(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **rid** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -2951,6 +3985,75 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## listGrantsRouteV0GrantsGet
+
+> GrantList listGrantsRouteV0GrantsGet(resource, authorization)
+
+List live grants on a resource (requires can_manage)
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ListGrantsRouteV0GrantsGetRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string | art_*_/fld_* id or a path
+    resource: resource_example,
+    // string (optional)
+    authorization: authorization_example,
+  } satisfies ListGrantsRouteV0GrantsGetRequest;
+
+  try {
+    const data = await api.listGrantsRouteV0GrantsGet(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **resource** | `string` | art_*_/fld_* id or a path | [Defaults to `undefined`] |
+| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**GrantList**](GrantList.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## listProjectJobsV0ProjectsFldIdJobsGet
 
 > any listProjectJobsV0ProjectsFldIdJobsGet(fldId, status, limit, authorization)
@@ -3006,6 +4109,75 @@ example().catch(console.error);
 ### Return type
 
 **any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## listSharesRouteV0SharesGet
+
+> ShareList listSharesRouteV0SharesGet(resource, authorization)
+
+List live share links on a resource (requires can_manage)
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ListSharesRouteV0SharesGetRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string | art_*_/fld_* id or a path
+    resource: resource_example,
+    // string (optional)
+    authorization: authorization_example,
+  } satisfies ListSharesRouteV0SharesGetRequest;
+
+  try {
+    const data = await api.listSharesRouteV0SharesGet(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **resource** | `string` | art_*_/fld_* id or a path | [Defaults to `undefined`] |
+| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**ShareList**](ShareList.md)
 
 ### Authorization
 
@@ -3924,6 +5096,81 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## patchGrantRouteV0GrantsGrnIdPatch
+
+> GrantOut patchGrantRouteV0GrantsGrnIdPatch(grnId, grantPatchIn, xAgentdriveActor, authorization)
+
+Update a grant\&#39;s role and/or expiry (requires can_manage)
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { PatchGrantRouteV0GrantsGrnIdPatchRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    grnId: grnId_example,
+    // GrantPatchIn
+    grantPatchIn: ...,
+    // string (optional)
+    xAgentdriveActor: xAgentdriveActor_example,
+    // string (optional)
+    authorization: authorization_example,
+  } satisfies PatchGrantRouteV0GrantsGrnIdPatchRequest;
+
+  try {
+    const data = await api.patchGrantRouteV0GrantsGrnIdPatch(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **grnId** | `string` |  | [Defaults to `undefined`] |
+| **grantPatchIn** | [GrantPatchIn](GrantPatchIn.md) |  | |
+| **xAgentdriveActor** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**GrantOut**](GrantOut.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## postFeedbackV0FeedbackPost
 
 > any postFeedbackV0FeedbackPost(authorization)
@@ -4187,11 +5434,11 @@ No authorization required
 
 ## putArtifactV0ArtifactsPathPut
 
-> ArtifactOut putArtifactV0ArtifactsPathPut(path, contentType, xAgentdriveVisibility, xAgentdriveLabels, xAgentdriveMetadata, xAgentdriveSource, xAgentdriveActor, xAgentdriveChangeSummary, ifMatch, authorization)
+> ArtifactOut putArtifactV0ArtifactsPathPut(path, contentType, xAgentdriveLabels, xAgentdriveMetadata, xAgentdriveSource, xAgentdriveActor, xAgentdriveChangeSummary, ifMatch, authorization)
 
 Upload (or overwrite) an artifact
 
-Upload an artifact at the given path. The path is treated as the artifact\&#39;s location in the drive — re-uploading the same path overwrites in place (idempotent).  **Limits:** request body must not exceed **50 MB**. Path must be non-empty, ≤256 chars, only &#x60;[A-Za-z0-9_./-]&#x60;, no &#x60;..&#x60; segments, no leading/trailing slash. Per-token write rate limit: 100/hour.  **Optional headers.** Each preserves the existing artifact\&#39;s value when omitted on an overwrite, and takes the create-default on a new path; send the header to replace it: - &#x60;X-AgentDrive-Visibility&#x60;: &#x60;public&#x60; or &#x60;private&#x60; (new-path default &#x60;private&#x60;). Private artifacts are readable only with your API key; &#x60;public&#x60; gives an anonymously shareable URL. - &#x60;X-AgentDrive-Labels&#x60;: comma-separated labels (e.g. &#x60;draft,report&#x60;); an empty value clears them. Each: lowercase &#x60;[a-z0-9_-]+&#x60;, ≤64 chars; ≤16 labels per artifact. - &#x60;X-AgentDrive-Metadata&#x60;: JSON object of agent-attached fields. - &#x60;X-AgentDrive-Source&#x60;: JSON &#x60;{\&quot;refs\&quot;: [...]}&#x60; source provenance (present, including &#x60;{\&quot;refs\&quot;: []}&#x60;, replaces). - &#x60;X-AgentDrive-Actor&#x60;: caller-supplied actor name (≤64 chars) for event-log attribution. Untrusted; never used for authz.
+Upload an artifact at the given path. The path is treated as the artifact\&#39;s location in the drive — re-uploading the same path overwrites in place (idempotent).  **Limits:** request body must not exceed **50 MB**. Path must be non-empty, ≤256 chars, only &#x60;[A-Za-z0-9_./-]&#x60;, no &#x60;..&#x60; segments, no leading/trailing slash. Per-token write rate limit: 100/hour.  **Optional headers.** Each preserves the existing artifact\&#39;s value when omitted on an overwrite, and takes the create-default on a new path; send the header to replace it: - &#x60;X-AgentDrive-Labels&#x60;: comma-separated labels (e.g. &#x60;draft,report&#x60;); an empty value clears them. Each: lowercase &#x60;[a-z0-9_-]+&#x60;, ≤64 chars; ≤16 labels per artifact. - &#x60;X-AgentDrive-Metadata&#x60;: JSON object of agent-attached fields. - &#x60;X-AgentDrive-Source&#x60;: JSON &#x60;{\&quot;refs\&quot;: [...]}&#x60; source provenance (present, including &#x60;{\&quot;refs\&quot;: []}&#x60;, replaces). - &#x60;X-AgentDrive-Actor&#x60;: caller-supplied actor name (≤64 chars) for event-log attribution. Untrusted; never used for authz.
 
 ### Example
 
@@ -4211,8 +5458,6 @@ async function example() {
     path: path_example,
     // string (optional)
     contentType: contentType_example,
-    // string (optional)
-    xAgentdriveVisibility: xAgentdriveVisibility_example,
     // string (optional)
     xAgentdriveLabels: xAgentdriveLabels_example,
     // string (optional)
@@ -4248,7 +5493,6 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **path** | `string` |  | [Defaults to `undefined`] |
 | **contentType** | `string` |  | [Optional] [Defaults to `&#39;application/octet-stream&#39;`] |
-| **xAgentdriveVisibility** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **xAgentdriveLabels** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **xAgentdriveMetadata** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **xAgentdriveSource** | `string` |  | [Optional] [Defaults to `undefined`] |
@@ -4609,6 +5853,141 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## redeemShareSShareKeyGet
+
+> any redeemShareSShareKeyGet(shareKey)
+
+Redeem Share
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { RedeemShareSShareKeyGetRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    shareKey: shareKey_example,
+  } satisfies RedeemShareSShareKeyGetRequest;
+
+  try {
+    const data = await api.redeemShareSShareKeyGet(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **shareKey** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## redeemShareWithPasswordSShareKeyPost
+
+> any redeemShareWithPasswordSShareKeyPost(shareKey, password)
+
+Redeem Share With Password
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { RedeemShareWithPasswordSShareKeyPostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    shareKey: shareKey_example,
+    // string (optional)
+    password: password_example,
+  } satisfies RedeemShareWithPasswordSShareKeyPostRequest;
+
+  try {
+    const data = await api.redeemShareWithPasswordSShareKeyPost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **shareKey** | `string` |  | [Defaults to `undefined`] |
+| **password** | `string` |  | [Optional] [Defaults to `&#39;&#39;`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/x-www-form-urlencoded`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## renameArtifactRouteV0ArtifactsArtIdPatch
 
 > ArtifactOut renameArtifactRouteV0ArtifactsArtIdPatch(artId, renameIn, xAgentdriveActor, ifMatch, authorization)
@@ -4843,6 +6222,150 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## revokeGrantWebShareRidGrantGrnIdRevokePost
+
+> any revokeGrantWebShareRidGrantGrnIdRevokePost(rid, grnId, xCsrfToken)
+
+Revoke Grant
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { RevokeGrantWebShareRidGrantGrnIdRevokePostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    rid: rid_example,
+    // string
+    grnId: grnId_example,
+    // string (optional)
+    xCsrfToken: xCsrfToken_example,
+  } satisfies RevokeGrantWebShareRidGrantGrnIdRevokePostRequest;
+
+  try {
+    const data = await api.revokeGrantWebShareRidGrantGrnIdRevokePost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **rid** | `string` |  | [Defaults to `undefined`] |
+| **grnId** | `string` |  | [Defaults to `undefined`] |
+| **xCsrfToken** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## revokeLinkWebShareRidLinkShrIdRevokePost
+
+> any revokeLinkWebShareRidLinkShrIdRevokePost(rid, shrId, xCsrfToken)
+
+Revoke Link
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { RevokeLinkWebShareRidLinkShrIdRevokePostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    rid: rid_example,
+    // string
+    shrId: shrId_example,
+    // string (optional)
+    xCsrfToken: xCsrfToken_example,
+  } satisfies RevokeLinkWebShareRidLinkShrIdRevokePostRequest;
+
+  try {
+    const data = await api.revokeLinkWebShareRidLinkShrIdRevokePost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **rid** | `string` |  | [Defaults to `undefined`] |
+| **shrId** | `string` |  | [Defaults to `undefined`] |
+| **xCsrfToken** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## rotateKeyWebKeysRotatePost
 
 > any rotateKeyWebKeysRotatePost(csrf)
@@ -4909,13 +6432,85 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## rotateShareRouteV0SharesShrIdRotatePost
+
+> ShareMintOut rotateShareRouteV0SharesShrIdRotatePost(shrId, xAgentdriveActor, authorization)
+
+Revoke + reissue a share link\&#39;s key (requires can_share)
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { RotateShareRouteV0SharesShrIdRotatePostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    shrId: shrId_example,
+    // string (optional)
+    xAgentdriveActor: xAgentdriveActor_example,
+    // string (optional)
+    authorization: authorization_example,
+  } satisfies RotateShareRouteV0SharesShrIdRotatePostRequest;
+
+  try {
+    const data = await api.rotateShareRouteV0SharesShrIdRotatePost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **shrId** | `string` |  | [Defaults to `undefined`] |
+| **xAgentdriveActor** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**ShareMintOut**](ShareMintOut.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## searchV0SearchGet
 
-> SearchPage searchV0SearchGet(q, label, fileType, prefix, visibility, updatedAfter, updatedBefore, limit, authorization)
+> SearchPage searchV0SearchGet(q, label, fileType, prefix, updatedAfter, updatedBefore, limit, authorization)
 
 Full-text search over artifacts in the drive
 
-Lexical (not semantic) full-text search powered by Postgres &#x60;websearch_to_tsquery&#x60;. Results are ranked by &#x60;ts_rank&#x60; over a weighted tsvector (path &gt; content &gt; metadata &gt; labels).  **Supported query syntax:** - Words: &#x60;kangaroo&#x60; (English stemming) - Phrases: &#x60;\&quot;exact phrase\&quot;&#x60; - Negation: &#x60;kangaroo -secret&#x60; - AND (implicit): &#x60;kangaroo secret&#x60; - OR: &#x60;kangaroo OR koala&#x60; - Paths &amp; filenames: &#x60;reports/q3-summary.md&#x60; or &#x60;q3-summary.md&#x60; match by their path words (&#x60;/ . _ -&#x60; are word boundaries)  **Not supported (v0):** - Semantic / embedding similarity - PDF and image content (only the path + metadata are searchable) - Non-English stemming - Fuzzy matching, regex - Boolean operator parentheses  **Filters:** &#x60;label&#x60; (repeatable, AND), &#x60;file_type&#x60; (enum), &#x60;prefix&#x60; (path prefix), &#x60;visibility&#x60; (&#x60;public&#x60;/&#x60;private&#x60;/&#x60;all&#x60; — default &#x60;all&#x60;), &#x60;updated_after&#x60; / &#x60;updated_before&#x60; (RFC 3339 timestamps, inclusive bounds on &#x60;updated_at&#x60;).
+Lexical (not semantic) full-text search powered by Postgres &#x60;websearch_to_tsquery&#x60;. Results are ranked by &#x60;ts_rank&#x60; over a weighted tsvector (path &gt; content &gt; metadata &gt; labels).  **Supported query syntax:** - Words: &#x60;kangaroo&#x60; (English stemming) - Phrases: &#x60;\&quot;exact phrase\&quot;&#x60; - Negation: &#x60;kangaroo -secret&#x60; - AND (implicit): &#x60;kangaroo secret&#x60; - OR: &#x60;kangaroo OR koala&#x60; - Paths &amp; filenames: &#x60;reports/q3-summary.md&#x60; or &#x60;q3-summary.md&#x60; match by their path words (&#x60;/ . _ -&#x60; are word boundaries)  **Not supported (v0):** - Semantic / embedding similarity - PDF and image content (only the path + metadata are searchable) - Non-English stemming - Fuzzy matching, regex - Boolean operator parentheses  **Filters:** &#x60;label&#x60; (repeatable, AND), &#x60;file_type&#x60; (enum), &#x60;prefix&#x60; (path prefix), &#x60;updated_after&#x60; / &#x60;updated_before&#x60; (RFC 3339 timestamps, inclusive bounds on &#x60;updated_at&#x60;).
 
 ### Example
 
@@ -4939,8 +6534,6 @@ async function example() {
     fileType: fileType_example,
     // string (optional)
     prefix: prefix_example,
-    // 'public' | 'private' | 'all' (optional)
-    visibility: visibility_example,
     // Date (optional)
     updatedAfter: 2013-10-20T19:20:30+01:00,
     // Date (optional)
@@ -4972,7 +6565,6 @@ example().catch(console.error);
 | **label** | `Array<string>` |  | [Optional] |
 | **fileType** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **prefix** | `string` |  | [Optional] [Defaults to `undefined`] |
-| **visibility** | `public`, `private`, `all` |  | [Optional] [Defaults to `&#39;all&#39;`] [Enum: public, private, all] |
 | **updatedAfter** | `Date` |  | [Optional] [Defaults to `undefined`] |
 | **updatedBefore** | `Date` |  | [Optional] [Defaults to `undefined`] |
 | **limit** | `number` |  | [Optional] [Defaults to `20`] |
@@ -4989,6 +6581,154 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## setPublicWebShareRidPublicPost
+
+> any setPublicWebShareRidPublicPost(rid, publicIn, xCsrfToken)
+
+Set Public
+
+Toggle world-readable: create (idempotent) or revoke the &#x60;anyone:viewer&#x60; grant. On a folder this cascades to the subtree (the response carries the blast-radius the UI confirmed).
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { SetPublicWebShareRidPublicPostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    rid: rid_example,
+    // PublicIn
+    publicIn: ...,
+    // string (optional)
+    xCsrfToken: xCsrfToken_example,
+  } satisfies SetPublicWebShareRidPublicPostRequest;
+
+  try {
+    const data = await api.setPublicWebShareRidPublicPost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **rid** | `string` |  | [Defaults to `undefined`] |
+| **publicIn** | [PublicIn](PublicIn.md) |  | |
+| **xCsrfToken** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## setSealWebShareRidSealPost
+
+> any setSealWebShareRidSealPost(rid, sealIn, xCsrfToken)
+
+Set Seal
+
+Set the limited-access seal (&#x60;inherit_grants&#x60;). &#x60;false&#x60; makes the resource ignore grants inherited from ancestor folders (§4.6/§4.11). Gated on &#x60;can_manage&#x60; (changing who can reach the resource).
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { SetSealWebShareRidSealPostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    rid: rid_example,
+    // SealIn
+    sealIn: ...,
+    // string (optional)
+    xCsrfToken: xCsrfToken_example,
+  } satisfies SetSealWebShareRidSealPostRequest;
+
+  try {
+    const data = await api.setSealWebShareRidSealPost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **rid** | `string` |  | [Defaults to `undefined`] |
+| **sealIn** | [SealIn](SealIn.md) |  | |
+| **xCsrfToken** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 
@@ -5300,7 +7040,7 @@ No authorization required
 
 Proxied streaming upload (via an upload_url token)
 
-Streams an artifact body into AgentDrive using a single-use token that was previously minted by the &#x60;upload_url&#x60; MCP tool. The token encodes the artifact path, content type, size cap, labels, metadata, visibility, source, actor, change summary, and &#x60;if_match&#x60; — all frozen at mint time. The request carries only the raw bytes + a &#x60;Content-Type&#x60; header that must match the signed value.  **Auth.** No Authorization header — the token in the path is the credential.  **Single-use.** Replay returns 409 TOKEN_REPLAYED. Expiry returns 401 TOKEN_EXPIRED. Bodies exceeding the signed cap return 413 BYTES_LIMIT.
+Streams an artifact body into AgentDrive using a single-use token that was previously minted by the &#x60;upload_url&#x60; MCP tool. The token encodes the artifact path, content type, size cap, labels, metadata, source, actor, change summary, and &#x60;if_match&#x60; — all frozen at mint time. The request carries only the raw bytes + a &#x60;Content-Type&#x60; header that must match the signed value.  **Auth.** No Authorization header — the token in the path is the credential.  **Single-use.** Replay returns 409 TOKEN_REPLAYED. Expiry returns 401 TOKEN_EXPIRED. Bodies exceeding the signed cap return 413 BYTES_LIMIT.
 
 ### Example
 
@@ -5365,6 +7105,77 @@ No authorization required
 | **413** | Body exceeded signed max_bytes or drive quota |  -  |
 | **429** | Drive\&#39;s per-hour write budget exhausted |  -  |
 | **503** | Storage backend unavailable (STORAGE_FAILURE) |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## switchOrgWebSwitchOrgPost
+
+> any switchOrgWebSwitchOrgPost(organizationId, csrf)
+
+Switch Org
+
+Switch the session\&#39;s active organization (and thus the active drive).  A user can belong to multiple orgs (e.g. a personal org + a shared/business org). v1 binds the active org at login with no way to change it; this lets a member flip it. Membership is re-verified server-side (the form value is attacker-controllable), then the session cookie is re-minted with the new active org — &#x60;current_drive&#x60;\&#39;s membership JOIN enforces access on the next request. Any &#x60;reveal_key&#x60; is dropped: it was scoped to the old drive.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { SwitchOrgWebSwitchOrgPostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    organizationId: organizationId_example,
+    // string
+    csrf: csrf_example,
+  } satisfies SwitchOrgWebSwitchOrgPostRequest;
+
+  try {
+    const data = await api.switchOrgWebSwitchOrgPost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **organizationId** | `string` |  | [Defaults to `undefined`] |
+| **csrf** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/x-www-form-urlencoded`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -5559,6 +7370,74 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## viewArtifactHeadAArtIdHeadGet
+
+> any viewArtifactHeadAArtIdHeadGet(artId)
+
+View Artifact Head
+
+Return &#x60;{\&quot;version\&quot;: &lt;head version_number&gt;}&#x60; for a readable artifact.  Auth mirrors the permalink/viewer: the owner, or an &#x60;anyone:viewer&#x60; grant (a published artifact), reads. Two deliberate differences from the HTML viewer:    * Never redirect to login. A poll is a background &#x60;fetch&#x60;, not a     navigation — an HTML login page would be a useless body and a     same-origin redirect the client can\&#39;t act on. Anonymous callers     on a private/absent artifact get a flat 404.   * \&quot;Doesn\&#39;t exist\&quot; and \&quot;exists but not readable\&quot; collapse to the     same 404, so an anonymous poller can\&#39;t use this as an existence     oracle (matches the permalink/viewer leak guard).
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ViewArtifactHeadAArtIdHeadGetRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    artId: artId_example,
+  } satisfies ViewArtifactHeadAArtIdHeadGetRequest;
+
+  try {
+    const data = await api.viewArtifactHeadAArtIdHeadGet(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **artId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## viewFileDriveIdPathGet
 
 > any viewFileDriveIdPathGet(driveId, path, raw, download)
@@ -5708,7 +7587,7 @@ No authorization required
 
 View Permalink Folder
 
-Resolve a stable folder ID to its current path-URL and 302.  Auth model mirrors the artifact permalink: public folder &#x3D; anon OK; private folder &#x3D; owner only, otherwise 404 (no existence leak). Folder visibility lives on the &#x60;folders.visibility&#x60; column once §13.x wires it; today we follow the conservative default (treat any non-&#x60;public&#x60; value, including NULL, as private).
+Resolve a stable folder ID to its current path-URL and 302.  Auth model mirrors the artifact permalink: public folder &#x3D; anon OK; private folder &#x3D; owner only, otherwise 404 (no existence leak). \&quot;Public\&quot; is an &#x60;anyone:viewer&#x60; grant on the &#x60;fld_*&#x60; id resolved through &#x60;can_read&#x60; (§4.4); folders carry no visibility flag of their own.
 
 ### Example
 
@@ -6498,7 +8377,7 @@ No authorization required
 
 Web Put Artifact
 
-Cookie-authed write of an image artifact. Used by the SnipIt web editor (&#x60;/a/{art_id}/edit&#x60;) for autosave; the bearer-authed &#x60;PUT /v0/artifacts/{path}&#x60; won\&#39;t accept a cookie-only session.  Owner-only; the path is checked against the signed-in user\&#39;s drive. v0 is image-only — refuses non-image content types so the editor can\&#39;t smuggle markdown or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved &#x60;_wiki/&#x60; namespace rejection, per-tier max-bytes cap (both &#x60;Content-Length&#x60; short-circuit and post-body length check) — so a logged-in user can\&#39;t bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the &#x60;X-CSRF-Token&#x60; header (see &#x60;csrf.require_csrf_header&#x60;); the editor reads the token from the &#x60;&lt;meta name&#x3D;\&quot;csrf-token\&quot;&gt;&#x60; tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor\&#39;s 1.5s autosave can sustain without flagging abuse.
+Cookie-authed write of an image artifact. Used by the SnipIt web editor (&#x60;/a/{art_id}/edit&#x60;) for autosave; the bearer-authed &#x60;PUT /v0/artifacts/{path}&#x60; won\&#39;t accept a cookie-only session.  Owner-only; the path is checked against the signed-in user\&#39;s drive. Accepts &#x60;image/_*&#x60; (SnipIt editor autosave) and &#x60;application/pdf&#x60; (the PDF viewer\&#39;s annotation save) only — refuses everything else so the editor can\&#39;t smuggle markdown/HTML or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved &#x60;_wiki/&#x60; namespace rejection, per-tier max-bytes cap (both &#x60;Content-Length&#x60; short-circuit and post-body length check) — so a logged-in user can\&#39;t bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the &#x60;X-CSRF-Token&#x60; header (see &#x60;csrf.require_csrf_header&#x60;); the editor reads the token from the &#x60;&lt;meta name&#x3D;\&quot;csrf-token\&quot;&gt;&#x60; tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor\&#39;s 1.5s autosave can sustain without flagging abuse.
 
 ### Example
 
@@ -6784,11 +8663,11 @@ No authorization required
 
 ## webSetMetadataWebSetPost
 
-> any webSetMetadataWebSetPost(target, csrf, visibility, description, returnTo)
+> any webSetMetadataWebSetPost(target, csrf, description, returnTo)
 
 Web Set Metadata
 
-Artifact visibility (target &#x3D; &#x60;art_&lt;id&gt;&#x60;) or folder description (target &#x3D; &#x60;fld_&lt;id&gt;&#x60;). Folder visibility is intentionally not exposed (design §8.2: it doesn\&#39;t cascade).
+Folder description edit (target &#x3D; &#x60;fld_&lt;id&gt;&#x60;).  \&quot;Public/private\&quot; is no longer a folder/artifact flag — access is expressed through grants (permission-sharing-design §4.4), so this endpoint only edits folder descriptions. Artifact targets are rejected; publishing an artifact is the dedicated grant/&#x60;publish&#x60; flow, not a metadata toggle.
 
 ### Example
 
@@ -6808,8 +8687,6 @@ async function example() {
     target: target_example,
     // string
     csrf: csrf_example,
-    // string (optional)
-    visibility: visibility_example,
     // string (optional)
     description: description_example,
     // string (optional)
@@ -6835,7 +8712,6 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **target** | `string` |  | [Defaults to `undefined`] |
 | **csrf** | `string` |  | [Defaults to `undefined`] |
-| **visibility** | `string` |  | [Optional] [Defaults to `&#39;&#39;`] |
 | **description** | `string` |  | [Optional] [Defaults to `&#39;&#39;`] |
 | **returnTo** | `string` |  | [Optional] [Defaults to `&#39;/dashboard&#39;`] |
 
@@ -6864,7 +8740,7 @@ No authorization required
 
 ## webUploadWebUploadPost
 
-> any webUploadWebUploadPost(file, csrf, destDir, visibility, returnTo)
+> any webUploadWebUploadPost(file, csrf, destDir, returnTo)
 
 Web Upload
 
@@ -6889,8 +8765,6 @@ async function example() {
     // string (optional)
     destDir: destDir_example,
     // string (optional)
-    visibility: visibility_example,
-    // string (optional)
     returnTo: returnTo_example,
   } satisfies WebUploadWebUploadPostRequest;
 
@@ -6914,7 +8788,6 @@ example().catch(console.error);
 | **file** | `Blob` |  | [Defaults to `undefined`] |
 | **csrf** | `string` |  | [Defaults to `undefined`] |
 | **destDir** | `string` |  | [Optional] [Defaults to `&#39;&#39;`] |
-| **visibility** | `string` |  | [Optional] [Defaults to `&#39;&#39;`] |
 | **returnTo** | `string` |  | [Optional] [Defaults to `&#39;/dashboard&#39;`] |
 
 ### Return type

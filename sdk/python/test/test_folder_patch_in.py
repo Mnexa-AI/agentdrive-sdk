@@ -36,7 +36,7 @@ class TestFolderPatchIn(unittest.TestCase):
         if include_optional:
             return FolderPatchIn(
                 description = '',
-                visibility = 'public'
+                inherit_grants = True
             )
         else:
             return FolderPatchIn(

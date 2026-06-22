@@ -14,7 +14,6 @@ Name | Type | Description | Notes
 **size_bytes** | **int** |  | 
 **hash** | **str** |  | 
 **version_number** | **int** |  | [optional] [default to 1]
-**visibility** | **str** |  | 
 **labels** | **List[str]** |  | [optional] 
 **metadata** | **Dict[str, object]** |  | [optional] 
 **source** | [**ArtifactSource**](ArtifactSource.md) |  | [optional] 

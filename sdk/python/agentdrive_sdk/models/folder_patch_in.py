@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -25,21 +25,11 @@ from pydantic_core import to_jsonable_python
 
 class FolderPatchIn(BaseModel):
     """
-    PATCH /v0/folders/{fld_id} body — partial update. Field absence = unchanged; explicit None = clear field.
+    PATCH /v0/folders/{fld_id} body — partial update. Field absence = unchanged. `description`: explicit null = clear. `inherit_grants`: non-nullable — null/absent = unchanged (it cannot be cleared, only flipped true/false).
     """ # noqa: E501
     description: Optional[StrictStr] = None
-    visibility: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["description", "visibility"]
-
-    @field_validator('visibility')
-    def visibility_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['public', 'private']):
-            raise ValueError("must be one of enum values ('public', 'private')")
-        return value
+    inherit_grants: Optional[StrictBool] = None
+    __properties: ClassVar[List[str]] = ["description", "inherit_grants"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -85,10 +75,10 @@ class FolderPatchIn(BaseModel):
         if self.description is None and "description" in self.model_fields_set:
             _dict['description'] = None
 
-        # set to None if visibility (nullable) is None
+        # set to None if inherit_grants (nullable) is None
         # and model_fields_set contains the field
-        if self.visibility is None and "visibility" in self.model_fields_set:
-            _dict['visibility'] = None
+        if self.inherit_grants is None and "inherit_grants" in self.model_fields_set:
+            _dict['inherit_grants'] = None
 
         return _dict
 
@@ -103,7 +93,7 @@ class FolderPatchIn(BaseModel):
 
         _obj = cls.model_validate({
             "description": obj.get("description"),
-            "visibility": obj.get("visibility")
+            "inherit_grants": obj.get("inherit_grants")
         })
         return _obj
 

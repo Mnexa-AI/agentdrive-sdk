@@ -15,7 +15,6 @@ Name | Type
 `sizeBytes` | number
 `hash` | string
 `versionNumber` | number
-`visibility` | string
 `labels` | Array&lt;string&gt;
 `metadata` | { [key: string]: any; }
 `source` | [ArtifactSource](ArtifactSource.md)
@@ -41,7 +40,6 @@ const example = {
   "sizeBytes": null,
   "hash": null,
   "versionNumber": null,
-  "visibility": null,
   "labels": null,
   "metadata": null,
   "source": null,

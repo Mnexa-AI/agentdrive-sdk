@@ -29,6 +29,11 @@ import {
     CopyInToJSON,
 } from '../models/CopyIn';
 import {
+    type DownloadUrlOut,
+    DownloadUrlOutFromJSON,
+    DownloadUrlOutToJSON,
+} from '../models/DownloadUrlOut';
+import {
     type EventPage,
     EventPageFromJSON,
     EventPageToJSON,
@@ -64,10 +69,40 @@ import {
     FolderPatchInToJSON,
 } from '../models/FolderPatchIn';
 import {
+    type GrantCreateIn,
+    GrantCreateInFromJSON,
+    GrantCreateInToJSON,
+} from '../models/GrantCreateIn';
+import {
+    type GrantIn,
+    GrantInFromJSON,
+    GrantInToJSON,
+} from '../models/GrantIn';
+import {
+    type GrantList,
+    GrantListFromJSON,
+    GrantListToJSON,
+} from '../models/GrantList';
+import {
+    type GrantOut,
+    GrantOutFromJSON,
+    GrantOutToJSON,
+} from '../models/GrantOut';
+import {
+    type GrantPatchIn,
+    GrantPatchInFromJSON,
+    GrantPatchInToJSON,
+} from '../models/GrantPatchIn';
+import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
 } from '../models/HTTPValidationError';
+import {
+    type LinkIn,
+    LinkInFromJSON,
+    LinkInToJSON,
+} from '../models/LinkIn';
 import {
     type Page,
     PageFromJSON,
@@ -79,15 +114,50 @@ import {
     ProjectConfigInToJSON,
 } from '../models/ProjectConfigIn';
 import {
+    type PublicIn,
+    PublicInFromJSON,
+    PublicInToJSON,
+} from '../models/PublicIn';
+import {
     type RenameIn,
     RenameInFromJSON,
     RenameInToJSON,
 } from '../models/RenameIn';
 import {
+    type SealIn,
+    SealInFromJSON,
+    SealInToJSON,
+} from '../models/SealIn';
+import {
     type SearchPage,
     SearchPageFromJSON,
     SearchPageToJSON,
 } from '../models/SearchPage';
+import {
+    type ShareCreateIn,
+    ShareCreateInFromJSON,
+    ShareCreateInToJSON,
+} from '../models/ShareCreateIn';
+import {
+    type ShareList,
+    ShareListFromJSON,
+    ShareListToJSON,
+} from '../models/ShareList';
+import {
+    type ShareMintOut,
+    ShareMintOutFromJSON,
+    ShareMintOutToJSON,
+} from '../models/ShareMintOut';
+import {
+    type UploadBeginIn,
+    UploadBeginInFromJSON,
+    UploadBeginInToJSON,
+} from '../models/UploadBeginIn';
+import {
+    type UploadBeginOut,
+    UploadBeginOutFromJSON,
+    UploadBeginOutToJSON,
+} from '../models/UploadBeginOut';
 import {
     type VersionOut,
     VersionOutFromJSON,
@@ -98,6 +168,17 @@ import {
     VersionPageFromJSON,
     VersionPageToJSON,
 } from '../models/VersionPage';
+
+export interface AddGrantWebShareRidGrantPostRequest {
+    rid: string;
+    grantIn: GrantIn;
+    xCsrfToken?: string | null;
+}
+
+export interface BeginUploadV0UploadsPostRequest {
+    uploadBeginIn: UploadBeginIn;
+    authorization?: string | null;
+}
 
 export interface CallbackAuthCallbackGetRequest {
     code?: string | null;
@@ -114,6 +195,11 @@ export interface CollectionDetailCollectionsSlugGetRequest {
     slug: string;
 }
 
+export interface CommitUploadV0UploadsUploadIdCommitPostRequest {
+    uploadId: string;
+    authorization?: string | null;
+}
+
 export interface CopyArtifactRouteV0ArtifactsArtIdCopyPostRequest {
     artId: string;
     copyIn: CopyIn;
@@ -128,13 +214,30 @@ export interface CreateFolderByPathV0FoldersPathPostRequest {
     folderCreateIn?: FolderCreateIn | null;
 }
 
+export interface CreateGrantRouteV0GrantsPostRequest {
+    grantCreateIn: GrantCreateIn;
+    xAgentdriveActor?: string | null;
+    authorization?: string | null;
+}
+
+export interface CreateLinkWebShareRidLinkPostRequest {
+    rid: string;
+    linkIn: LinkIn;
+    xCsrfToken?: string | null;
+}
+
+export interface CreateShareRouteV0SharesPostRequest {
+    shareCreateIn: ShareCreateIn;
+    xAgentdriveActor?: string | null;
+    authorization?: string | null;
+}
+
 export interface DashboardDashboardGetRequest {
     q?: string;
     path?: string;
     wiki?: number;
     type?: string;
     label?: Array<string>;
-    vis?: string;
     after?: string;
     before?: string;
     view?: string;
@@ -145,6 +248,13 @@ export interface DashboardDashboardGetRequest {
 export interface DeleteAccountWebAccountDeletePostRequest {
     confirm: string;
     csrf: string;
+}
+
+export interface DeleteArtifactByIdRouteV0ArtifactsArtIdDeleteRequest {
+    artId: string;
+    ifMatch?: string | null;
+    xAgentdriveActor?: string | null;
+    authorization?: string | null;
 }
 
 export interface DeleteArtifactV0ArtifactsPathDeleteRequest {
@@ -174,8 +284,20 @@ export interface DeleteFolderByPathV0FoldersPathDeleteRequest {
     authorization?: string | null;
 }
 
+export interface DeleteGrantRouteV0GrantsGrnIdDeleteRequest {
+    grnId: string;
+    xAgentdriveActor?: string | null;
+    authorization?: string | null;
+}
+
 export interface DeleteKeyWebKeysDeletePostRequest {
     csrf: string;
+}
+
+export interface DeleteShareRouteV0SharesShrIdDeleteRequest {
+    shrId: string;
+    xAgentdriveActor?: string | null;
+    authorization?: string | null;
 }
 
 export interface DownloadArtifactByIdV0ArtifactsArtIdDownloadGetRequest {
@@ -184,6 +306,22 @@ export interface DownloadArtifactByIdV0ArtifactsArtIdDownloadGetRequest {
 }
 
 export interface DownloadArtifactVersionV0ArtifactsArtIdVersionsVersionNumberDownloadGetRequest {
+    artId: string;
+    versionNumber: number;
+    authorization?: string | null;
+}
+
+export interface DownloadUrlByIdV0ArtifactsArtIdDownloadUrlGetRequest {
+    artId: string;
+    authorization?: string | null;
+}
+
+export interface DownloadUrlByPathV0ArtifactsPathDownloadUrlGetRequest {
+    path: string;
+    authorization?: string | null;
+}
+
+export interface DownloadUrlVersionV0ArtifactsArtIdVersionsVersionNumberDownloadUrlGetRequest {
     artId: string;
     versionNumber: number;
     authorization?: string | null;
@@ -219,7 +357,6 @@ export interface FindV0FindGetRequest {
     label?: Array<string>;
     fileType?: string | null;
     prefix?: string | null;
-    visibility?: FindV0FindGetVisibilityEnum;
     modality?: Array<string>;
     updatedAfter?: Date | null;
     updatedBefore?: Date | null;
@@ -263,6 +400,11 @@ export interface GetFolderByIdV0FoldersFldIdGetRequest {
     authorization?: string | null;
 }
 
+export interface GetFolderByPathMetaV0FoldersPathMetaGetRequest {
+    path: string;
+    authorization?: string | null;
+}
+
 export interface GetFolderByPathV0FoldersPathGetRequest {
     path: string;
     authorization?: string | null;
@@ -281,6 +423,10 @@ export interface GetJobV0JobsJobIdGetRequest {
 export interface GetProjectV0ProjectsFldIdGetRequest {
     fldId: string;
     authorization?: string | null;
+}
+
+export interface GetShareStateWebShareRidGetRequest {
+    rid: string;
 }
 
 export interface ListArtifactVersionsV0ArtifactsArtIdVersionsGetRequest {
@@ -309,10 +455,20 @@ export interface ListEventsRouteV0EventsGetRequest {
     authorization?: string | null;
 }
 
+export interface ListGrantsRouteV0GrantsGetRequest {
+    resource: string;
+    authorization?: string | null;
+}
+
 export interface ListProjectJobsV0ProjectsFldIdJobsGetRequest {
     fldId: string;
     status?: string | null;
     limit?: number;
+    authorization?: string | null;
+}
+
+export interface ListSharesRouteV0SharesGetRequest {
+    resource: string;
     authorization?: string | null;
 }
 
@@ -374,6 +530,13 @@ export interface PatchFolderByPathV0FoldersPathPatchRequest {
     authorization?: string | null;
 }
 
+export interface PatchGrantRouteV0GrantsGrnIdPatchRequest {
+    grnId: string;
+    grantPatchIn: GrantPatchIn;
+    xAgentdriveActor?: string | null;
+    authorization?: string | null;
+}
+
 export interface PostFeedbackV0FeedbackPostRequest {
     authorization?: string | null;
 }
@@ -389,7 +552,6 @@ export interface PublisherProfilePublishersHandleGetRequest {
 export interface PutArtifactV0ArtifactsPathPutRequest {
     path: string;
     contentType?: string;
-    xAgentdriveVisibility?: string | null;
     xAgentdriveLabels?: string | null;
     xAgentdriveMetadata?: string | null;
     xAgentdriveSource?: string | null;
@@ -414,6 +576,15 @@ export interface RecoveryRestoreAuthRecoveryRestorePostRequest {
     csrf: string;
 }
 
+export interface RedeemShareSShareKeyGetRequest {
+    shareKey: string;
+}
+
+export interface RedeemShareWithPasswordSShareKeyPostRequest {
+    shareKey: string;
+    password?: string;
+}
+
 export interface RenameArtifactRouteV0ArtifactsArtIdPatchRequest {
     artId: string;
     renameIn: RenameIn;
@@ -436,8 +607,26 @@ export interface RestoreDriveRouteV0DrivesDriveIdRestorePostRequest {
     authorization?: string | null;
 }
 
+export interface RevokeGrantWebShareRidGrantGrnIdRevokePostRequest {
+    rid: string;
+    grnId: string;
+    xCsrfToken?: string | null;
+}
+
+export interface RevokeLinkWebShareRidLinkShrIdRevokePostRequest {
+    rid: string;
+    shrId: string;
+    xCsrfToken?: string | null;
+}
+
 export interface RotateKeyWebKeysRotatePostRequest {
     csrf: string;
+}
+
+export interface RotateShareRouteV0SharesShrIdRotatePostRequest {
+    shrId: string;
+    xAgentdriveActor?: string | null;
+    authorization?: string | null;
 }
 
 export interface SearchV0SearchGetRequest {
@@ -445,20 +634,40 @@ export interface SearchV0SearchGetRequest {
     label?: Array<string>;
     fileType?: string | null;
     prefix?: string | null;
-    visibility?: SearchV0SearchGetVisibilityEnum;
     updatedAfter?: Date | null;
     updatedBefore?: Date | null;
     limit?: number;
     authorization?: string | null;
 }
 
+export interface SetPublicWebShareRidPublicPostRequest {
+    rid: string;
+    publicIn: PublicIn;
+    xCsrfToken?: string | null;
+}
+
+export interface SetSealWebShareRidSealPostRequest {
+    rid: string;
+    sealIn: SealIn;
+    xCsrfToken?: string | null;
+}
+
 export interface StreamUploadV0UploadTokenPutRequest {
     token: string;
+}
+
+export interface SwitchOrgWebSwitchOrgPostRequest {
+    organizationId: string;
+    csrf: string;
 }
 
 export interface ToggleIndexingWebAccountIndexingPostRequest {
     csrf: string;
     enabled?: string;
+}
+
+export interface ViewArtifactHeadAArtIdHeadGetRequest {
+    artId: string;
 }
 
 export interface ViewFileDriveIdPathGetRequest {
@@ -561,7 +770,6 @@ export interface WebRestoreFolderWebFoldersRestorePostRequest {
 export interface WebSetMetadataWebSetPostRequest {
     target: string;
     csrf: string;
-    visibility?: string;
     description?: string;
     returnTo?: string;
 }
@@ -570,7 +778,6 @@ export interface WebUploadWebUploadPostRequest {
     file: Blob;
     csrf: string;
     destDir?: string;
-    visibility?: string;
     returnTo?: string;
 }
 
@@ -621,6 +828,69 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for addGrantWebShareRidGrantPost without sending the request
+     */
+    async addGrantWebShareRidGrantPostRequestOpts(requestParameters: AddGrantWebShareRidGrantPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['rid'] == null) {
+            throw new runtime.RequiredError(
+                'rid',
+                'Required parameter "rid" was null or undefined when calling addGrantWebShareRidGrantPost().'
+            );
+        }
+
+        if (requestParameters['grantIn'] == null) {
+            throw new runtime.RequiredError(
+                'grantIn',
+                'Required parameter "grantIn" was null or undefined when calling addGrantWebShareRidGrantPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['xCsrfToken'] != null) {
+            headerParameters['x-csrf-token'] = String(requestParameters['xCsrfToken']);
+        }
+
+
+        let urlPath = `/web/share/{rid}/grant`;
+        urlPath = urlPath.replace('{rid}', encodeURIComponent(String(requestParameters['rid'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: GrantInToJSON(requestParameters['grantIn']),
+        };
+    }
+
+    /**
+     * Add Grant
+     */
+    async addGrantWebShareRidGrantPostRaw(requestParameters: AddGrantWebShareRidGrantPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.addGrantWebShareRidGrantPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Add Grant
+     */
+    async addGrantWebShareRidGrantPost(requestParameters: AddGrantWebShareRidGrantPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.addGrantWebShareRidGrantPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for artifactDetailPreviewPreviewArtifactDetailGet without sending the request
      */
     async artifactDetailPreviewPreviewArtifactDetailGetRequestOpts(): Promise<runtime.RequestOpts> {
@@ -658,6 +928,59 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async artifactDetailPreviewPreviewArtifactDetailGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
         const response = await this.artifactDetailPreviewPreviewArtifactDetailGetRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for beginUploadV0UploadsPost without sending the request
+     */
+    async beginUploadV0UploadsPostRequestOpts(requestParameters: BeginUploadV0UploadsPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['uploadBeginIn'] == null) {
+            throw new runtime.RequiredError(
+                'uploadBeginIn',
+                'Required parameter "uploadBeginIn" was null or undefined when calling beginUploadV0UploadsPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['authorization'] != null) {
+            headerParameters['authorization'] = String(requestParameters['authorization']);
+        }
+
+
+        let urlPath = `/v0/uploads`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UploadBeginInToJSON(requestParameters['uploadBeginIn']),
+        };
+    }
+
+    /**
+     * Reserve quota and open a resumable upload session for a file larger than the buffered-upload limit. Returns a `upload_url` to PUT the raw bytes to DIRECTLY (no Authorization header — the URL is the credential), then call `/v0/uploads/{upload_id}/commit`. All artifact decisions (path, labels, metadata, source, if_match) are frozen here.
+     * Begin a large (direct-to-GCS) upload
+     */
+    async beginUploadV0UploadsPostRaw(requestParameters: BeginUploadV0UploadsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UploadBeginOut>> {
+        const requestOptions = await this.beginUploadV0UploadsPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => UploadBeginOutFromJSON(jsonValue));
+    }
+
+    /**
+     * Reserve quota and open a resumable upload session for a file larger than the buffered-upload limit. Returns a `upload_url` to PUT the raw bytes to DIRECTLY (no Authorization header — the URL is the credential), then call `/v0/uploads/{upload_id}/commit`. All artifact decisions (path, labels, metadata, source, if_match) are frozen here.
+     * Begin a large (direct-to-GCS) upload
+     */
+    async beginUploadV0UploadsPost(requestParameters: BeginUploadV0UploadsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UploadBeginOut> {
+        const response = await this.beginUploadV0UploadsPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -815,6 +1138,57 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async collectionDetailCollectionsSlugGet(requestParameters: CollectionDetailCollectionsSlugGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
         const response = await this.collectionDetailCollectionsSlugGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for commitUploadV0UploadsUploadIdCommitPost without sending the request
+     */
+    async commitUploadV0UploadsUploadIdCommitPostRequestOpts(requestParameters: CommitUploadV0UploadsUploadIdCommitPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['uploadId'] == null) {
+            throw new runtime.RequiredError(
+                'uploadId',
+                'Required parameter "uploadId" was null or undefined when calling commitUploadV0UploadsUploadIdCommitPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['authorization'] != null) {
+            headerParameters['authorization'] = String(requestParameters['authorization']);
+        }
+
+
+        let urlPath = `/v0/uploads/{upload_id}/commit`;
+        urlPath = urlPath.replace('{upload_id}', encodeURIComponent(String(requestParameters['uploadId'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Finalize the upload begun at `/v0/uploads`: AgentDrive verifies the object that landed in GCS (size + checksum) and creates the artifact. Idempotent — a retry after a successful commit returns the same artifact. The write budget is charged here (begin is free metadata).
+     * Commit a large (direct-to-GCS) upload
+     */
+    async commitUploadV0UploadsUploadIdCommitPostRaw(requestParameters: CommitUploadV0UploadsUploadIdCommitPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ArtifactOut>> {
+        const requestOptions = await this.commitUploadV0UploadsUploadIdCommitPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ArtifactOutFromJSON(jsonValue));
+    }
+
+    /**
+     * Finalize the upload begun at `/v0/uploads`: AgentDrive verifies the object that landed in GCS (size + checksum) and creates the artifact. Idempotent — a retry after a successful commit returns the same artifact. The write budget is charged here (begin is free metadata).
+     * Commit a large (direct-to-GCS) upload
+     */
+    async commitUploadV0UploadsUploadIdCommitPost(requestParameters: CommitUploadV0UploadsUploadIdCommitPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ArtifactOut> {
+        const response = await this.commitUploadV0UploadsUploadIdCommitPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -985,6 +1359,181 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for createGrantRouteV0GrantsPost without sending the request
+     */
+    async createGrantRouteV0GrantsPostRequestOpts(requestParameters: CreateGrantRouteV0GrantsPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['grantCreateIn'] == null) {
+            throw new runtime.RequiredError(
+                'grantCreateIn',
+                'Required parameter "grantCreateIn" was null or undefined when calling createGrantRouteV0GrantsPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['xAgentdriveActor'] != null) {
+            headerParameters['x-agentdrive-actor'] = String(requestParameters['xAgentdriveActor']);
+        }
+
+        if (requestParameters['authorization'] != null) {
+            headerParameters['authorization'] = String(requestParameters['authorization']);
+        }
+
+
+        let urlPath = `/v0/grants`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: GrantCreateInToJSON(requestParameters['grantCreateIn']),
+        };
+    }
+
+    /**
+     * Create (or fetch) a per-principal grant on a resource
+     */
+    async createGrantRouteV0GrantsPostRaw(requestParameters: CreateGrantRouteV0GrantsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GrantOut>> {
+        const requestOptions = await this.createGrantRouteV0GrantsPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GrantOutFromJSON(jsonValue));
+    }
+
+    /**
+     * Create (or fetch) a per-principal grant on a resource
+     */
+    async createGrantRouteV0GrantsPost(requestParameters: CreateGrantRouteV0GrantsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GrantOut> {
+        const response = await this.createGrantRouteV0GrantsPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for createLinkWebShareRidLinkPost without sending the request
+     */
+    async createLinkWebShareRidLinkPostRequestOpts(requestParameters: CreateLinkWebShareRidLinkPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['rid'] == null) {
+            throw new runtime.RequiredError(
+                'rid',
+                'Required parameter "rid" was null or undefined when calling createLinkWebShareRidLinkPost().'
+            );
+        }
+
+        if (requestParameters['linkIn'] == null) {
+            throw new runtime.RequiredError(
+                'linkIn',
+                'Required parameter "linkIn" was null or undefined when calling createLinkWebShareRidLinkPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['xCsrfToken'] != null) {
+            headerParameters['x-csrf-token'] = String(requestParameters['xCsrfToken']);
+        }
+
+
+        let urlPath = `/web/share/{rid}/link`;
+        urlPath = urlPath.replace('{rid}', encodeURIComponent(String(requestParameters['rid'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: LinkInToJSON(requestParameters['linkIn']),
+        };
+    }
+
+    /**
+     * Mint a viewer share link. Returns the fresh state PLUS `minted` with the raw `share_key` + url — the ONLY response that carries the key. Artifacts only (v1: folder share links are not supported).
+     * Create Link
+     */
+    async createLinkWebShareRidLinkPostRaw(requestParameters: CreateLinkWebShareRidLinkPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.createLinkWebShareRidLinkPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Mint a viewer share link. Returns the fresh state PLUS `minted` with the raw `share_key` + url — the ONLY response that carries the key. Artifacts only (v1: folder share links are not supported).
+     * Create Link
+     */
+    async createLinkWebShareRidLinkPost(requestParameters: CreateLinkWebShareRidLinkPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.createLinkWebShareRidLinkPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for createShareRouteV0SharesPost without sending the request
+     */
+    async createShareRouteV0SharesPostRequestOpts(requestParameters: CreateShareRouteV0SharesPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['shareCreateIn'] == null) {
+            throw new runtime.RequiredError(
+                'shareCreateIn',
+                'Required parameter "shareCreateIn" was null or undefined when calling createShareRouteV0SharesPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['xAgentdriveActor'] != null) {
+            headerParameters['x-agentdrive-actor'] = String(requestParameters['xAgentdriveActor']);
+        }
+
+        if (requestParameters['authorization'] != null) {
+            headerParameters['authorization'] = String(requestParameters['authorization']);
+        }
+
+
+        let urlPath = `/v0/shares`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ShareCreateInToJSON(requestParameters['shareCreateIn']),
+        };
+    }
+
+    /**
+     * Mint a share link (returns the share_key once)
+     */
+    async createShareRouteV0SharesPostRaw(requestParameters: CreateShareRouteV0SharesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ShareMintOut>> {
+        const requestOptions = await this.createShareRouteV0SharesPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ShareMintOutFromJSON(jsonValue));
+    }
+
+    /**
+     * Mint a share link (returns the share_key once)
+     */
+    async createShareRouteV0SharesPost(requestParameters: CreateShareRouteV0SharesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ShareMintOut> {
+        const response = await this.createShareRouteV0SharesPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for dangerZoneOldDashboardDangerGet without sending the request
      */
     async dangerZoneOldDashboardDangerGetRequestOpts(): Promise<runtime.RequestOpts> {
@@ -1090,10 +1639,6 @@ export class DefaultApi extends runtime.BaseAPI {
 
         if (requestParameters['label'] != null) {
             queryParameters['label'] = requestParameters['label'];
-        }
-
-        if (requestParameters['vis'] != null) {
-            queryParameters['vis'] = requestParameters['vis'];
         }
 
         if (requestParameters['after'] != null) {
@@ -1228,6 +1773,69 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async deleteAccountWebAccountDeletePost(requestParameters: DeleteAccountWebAccountDeletePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
         const response = await this.deleteAccountWebAccountDeletePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for deleteArtifactByIdRouteV0ArtifactsArtIdDelete without sending the request
+     */
+    async deleteArtifactByIdRouteV0ArtifactsArtIdDeleteRequestOpts(requestParameters: DeleteArtifactByIdRouteV0ArtifactsArtIdDeleteRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['artId'] == null) {
+            throw new runtime.RequiredError(
+                'artId',
+                'Required parameter "artId" was null or undefined when calling deleteArtifactByIdRouteV0ArtifactsArtIdDelete().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['ifMatch'] != null) {
+            headerParameters['if-match'] = String(requestParameters['ifMatch']);
+        }
+
+        if (requestParameters['xAgentdriveActor'] != null) {
+            headerParameters['x-agentdrive-actor'] = String(requestParameters['xAgentdriveActor']);
+        }
+
+        if (requestParameters['authorization'] != null) {
+            headerParameters['authorization'] = String(requestParameters['authorization']);
+        }
+
+
+        let urlPath = `/v0/artifacts/{art_id}`;
+        urlPath = urlPath.replace('{art_id}', encodeURIComponent(String(requestParameters['artId'])));
+
+        return {
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Soft-delete the artifact with this `art_…` ID. Same semantics + response shape as the path-based `DELETE /v0/artifacts/{path}` (reversible until the GC cron hard-deletes at `purge_at`; `restore_url` points at the by-id restore), but keys on the immutable id so a concurrent rename can\'t change the target.  Returns 404 ARTIFACT_NOT_FOUND if no live artifact has this id; 403 WIKI_RESERVED for `_wiki/` artifacts (system-managed); 412 if `If-Match` doesn\'t match the current version. Declared before the `{path:path}` family so the id convertor wins for DELETEs.
+     * Soft-delete an artifact by its stable ID
+     */
+    async deleteArtifactByIdRouteV0ArtifactsArtIdDeleteRaw(requestParameters: DeleteArtifactByIdRouteV0ArtifactsArtIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.deleteArtifactByIdRouteV0ArtifactsArtIdDeleteRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Soft-delete the artifact with this `art_…` ID. Same semantics + response shape as the path-based `DELETE /v0/artifacts/{path}` (reversible until the GC cron hard-deletes at `purge_at`; `restore_url` points at the by-id restore), but keys on the immutable id so a concurrent rename can\'t change the target.  Returns 404 ARTIFACT_NOT_FOUND if no live artifact has this id; 403 WIKI_RESERVED for `_wiki/` artifacts (system-managed); 412 if `If-Match` doesn\'t match the current version. Declared before the `{path:path}` family so the id convertor wins for DELETEs.
+     * Soft-delete an artifact by its stable ID
+     */
+    async deleteArtifactByIdRouteV0ArtifactsArtIdDelete(requestParameters: DeleteArtifactByIdRouteV0ArtifactsArtIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.deleteArtifactByIdRouteV0ArtifactsArtIdDeleteRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -1468,6 +2076,63 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for deleteGrantRouteV0GrantsGrnIdDelete without sending the request
+     */
+    async deleteGrantRouteV0GrantsGrnIdDeleteRequestOpts(requestParameters: DeleteGrantRouteV0GrantsGrnIdDeleteRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['grnId'] == null) {
+            throw new runtime.RequiredError(
+                'grnId',
+                'Required parameter "grnId" was null or undefined when calling deleteGrantRouteV0GrantsGrnIdDelete().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['xAgentdriveActor'] != null) {
+            headerParameters['x-agentdrive-actor'] = String(requestParameters['xAgentdriveActor']);
+        }
+
+        if (requestParameters['authorization'] != null) {
+            headerParameters['authorization'] = String(requestParameters['authorization']);
+        }
+
+
+        let urlPath = `/v0/grants/{grn_id}`;
+        urlPath = urlPath.replace('{grn_id}', encodeURIComponent(String(requestParameters['grnId'])));
+
+        return {
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Revoke a grant (can_manage, or self-revoke own grant)
+     */
+    async deleteGrantRouteV0GrantsGrnIdDeleteRaw(requestParameters: DeleteGrantRouteV0GrantsGrnIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.deleteGrantRouteV0GrantsGrnIdDeleteRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Revoke a grant (can_manage, or self-revoke own grant)
+     */
+    async deleteGrantRouteV0GrantsGrnIdDelete(requestParameters: DeleteGrantRouteV0GrantsGrnIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.deleteGrantRouteV0GrantsGrnIdDeleteRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for deleteKeyWebKeysDeletePost without sending the request
      */
     async deleteKeyWebKeysDeletePostRequestOpts(requestParameters: DeleteKeyWebKeysDeletePostRequest): Promise<runtime.RequestOpts> {
@@ -1531,6 +2196,63 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async deleteKeyWebKeysDeletePost(requestParameters: DeleteKeyWebKeysDeletePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
         const response = await this.deleteKeyWebKeysDeletePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for deleteShareRouteV0SharesShrIdDelete without sending the request
+     */
+    async deleteShareRouteV0SharesShrIdDeleteRequestOpts(requestParameters: DeleteShareRouteV0SharesShrIdDeleteRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['shrId'] == null) {
+            throw new runtime.RequiredError(
+                'shrId',
+                'Required parameter "shrId" was null or undefined when calling deleteShareRouteV0SharesShrIdDelete().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['xAgentdriveActor'] != null) {
+            headerParameters['x-agentdrive-actor'] = String(requestParameters['xAgentdriveActor']);
+        }
+
+        if (requestParameters['authorization'] != null) {
+            headerParameters['authorization'] = String(requestParameters['authorization']);
+        }
+
+
+        let urlPath = `/v0/shares/{shr_id}`;
+        urlPath = urlPath.replace('{shr_id}', encodeURIComponent(String(requestParameters['shrId'])));
+
+        return {
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Revoke a share link (requires can_manage)
+     */
+    async deleteShareRouteV0SharesShrIdDeleteRaw(requestParameters: DeleteShareRouteV0SharesShrIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.deleteShareRouteV0SharesShrIdDeleteRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Revoke a share link (requires can_manage)
+     */
+    async deleteShareRouteV0SharesShrIdDelete(requestParameters: DeleteShareRouteV0SharesShrIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.deleteShareRouteV0SharesShrIdDeleteRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -1645,6 +2367,167 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async downloadArtifactVersionV0ArtifactsArtIdVersionsVersionNumberDownloadGet(requestParameters: DownloadArtifactVersionV0ArtifactsArtIdVersionsVersionNumberDownloadGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
         const response = await this.downloadArtifactVersionV0ArtifactsArtIdVersionsVersionNumberDownloadGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for downloadUrlByIdV0ArtifactsArtIdDownloadUrlGet without sending the request
+     */
+    async downloadUrlByIdV0ArtifactsArtIdDownloadUrlGetRequestOpts(requestParameters: DownloadUrlByIdV0ArtifactsArtIdDownloadUrlGetRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['artId'] == null) {
+            throw new runtime.RequiredError(
+                'artId',
+                'Required parameter "artId" was null or undefined when calling downloadUrlByIdV0ArtifactsArtIdDownloadUrlGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['authorization'] != null) {
+            headerParameters['authorization'] = String(requestParameters['authorization']);
+        }
+
+
+        let urlPath = `/v0/artifacts/{art_id}/download-url`;
+        urlPath = urlPath.replace('{art_id}', encodeURIComponent(String(requestParameters['artId'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Returns a URL for the artifact\'s bytes. For large artifacts (>= the signed-download threshold) when signing is available, it\'s a short-lived **signed GCS URL** the client fetches directly (`direct:true`, `expires_at` set); otherwise the **proxy** `/download` URL (`direct:false`). Treat the URL as opaque. large-download-design.md §5.1.
+     * Signed direct-from-GCS download URL by stable ID
+     */
+    async downloadUrlByIdV0ArtifactsArtIdDownloadUrlGetRaw(requestParameters: DownloadUrlByIdV0ArtifactsArtIdDownloadUrlGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DownloadUrlOut>> {
+        const requestOptions = await this.downloadUrlByIdV0ArtifactsArtIdDownloadUrlGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DownloadUrlOutFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a URL for the artifact\'s bytes. For large artifacts (>= the signed-download threshold) when signing is available, it\'s a short-lived **signed GCS URL** the client fetches directly (`direct:true`, `expires_at` set); otherwise the **proxy** `/download` URL (`direct:false`). Treat the URL as opaque. large-download-design.md §5.1.
+     * Signed direct-from-GCS download URL by stable ID
+     */
+    async downloadUrlByIdV0ArtifactsArtIdDownloadUrlGet(requestParameters: DownloadUrlByIdV0ArtifactsArtIdDownloadUrlGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DownloadUrlOut> {
+        const response = await this.downloadUrlByIdV0ArtifactsArtIdDownloadUrlGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for downloadUrlByPathV0ArtifactsPathDownloadUrlGet without sending the request
+     */
+    async downloadUrlByPathV0ArtifactsPathDownloadUrlGetRequestOpts(requestParameters: DownloadUrlByPathV0ArtifactsPathDownloadUrlGetRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['path'] == null) {
+            throw new runtime.RequiredError(
+                'path',
+                'Required parameter "path" was null or undefined when calling downloadUrlByPathV0ArtifactsPathDownloadUrlGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['authorization'] != null) {
+            headerParameters['authorization'] = String(requestParameters['authorization']);
+        }
+
+
+        let urlPath = `/v0/artifacts/{path}/download-url`;
+        urlPath = urlPath.replace('{path}', encodeURIComponent(String(requestParameters['path'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Same as `/{art_id}/download-url` but resolves the artifact by path. The returned proxy URL (when `direct:false`) still points at the by-id `/download` endpoint. large-download-design.md §5.1.
+     * Signed direct-from-GCS download URL by path
+     */
+    async downloadUrlByPathV0ArtifactsPathDownloadUrlGetRaw(requestParameters: DownloadUrlByPathV0ArtifactsPathDownloadUrlGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DownloadUrlOut>> {
+        const requestOptions = await this.downloadUrlByPathV0ArtifactsPathDownloadUrlGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DownloadUrlOutFromJSON(jsonValue));
+    }
+
+    /**
+     * Same as `/{art_id}/download-url` but resolves the artifact by path. The returned proxy URL (when `direct:false`) still points at the by-id `/download` endpoint. large-download-design.md §5.1.
+     * Signed direct-from-GCS download URL by path
+     */
+    async downloadUrlByPathV0ArtifactsPathDownloadUrlGet(requestParameters: DownloadUrlByPathV0ArtifactsPathDownloadUrlGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DownloadUrlOut> {
+        const response = await this.downloadUrlByPathV0ArtifactsPathDownloadUrlGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for downloadUrlVersionV0ArtifactsArtIdVersionsVersionNumberDownloadUrlGet without sending the request
+     */
+    async downloadUrlVersionV0ArtifactsArtIdVersionsVersionNumberDownloadUrlGetRequestOpts(requestParameters: DownloadUrlVersionV0ArtifactsArtIdVersionsVersionNumberDownloadUrlGetRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['artId'] == null) {
+            throw new runtime.RequiredError(
+                'artId',
+                'Required parameter "artId" was null or undefined when calling downloadUrlVersionV0ArtifactsArtIdVersionsVersionNumberDownloadUrlGet().'
+            );
+        }
+
+        if (requestParameters['versionNumber'] == null) {
+            throw new runtime.RequiredError(
+                'versionNumber',
+                'Required parameter "versionNumber" was null or undefined when calling downloadUrlVersionV0ArtifactsArtIdVersionsVersionNumberDownloadUrlGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['authorization'] != null) {
+            headerParameters['authorization'] = String(requestParameters['authorization']);
+        }
+
+
+        let urlPath = `/v0/artifacts/{art_id}/versions/{version_number}/download-url`;
+        urlPath = urlPath.replace('{art_id}', encodeURIComponent(String(requestParameters['artId'])));
+        urlPath = urlPath.replace('{version_number}', encodeURIComponent(String(requestParameters['versionNumber'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Same as `/{art_id}/download-url` but for a specific version\'s bytes (`direct:true` signed GCS URL when large + signing available, else the proxy `/versions/{n}/download` URL). large-download-design.md §5.1.
+     * Signed direct-from-GCS download URL for a specific version
+     */
+    async downloadUrlVersionV0ArtifactsArtIdVersionsVersionNumberDownloadUrlGetRaw(requestParameters: DownloadUrlVersionV0ArtifactsArtIdVersionsVersionNumberDownloadUrlGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DownloadUrlOut>> {
+        const requestOptions = await this.downloadUrlVersionV0ArtifactsArtIdVersionsVersionNumberDownloadUrlGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DownloadUrlOutFromJSON(jsonValue));
+    }
+
+    /**
+     * Same as `/{art_id}/download-url` but for a specific version\'s bytes (`direct:true` signed GCS URL when large + signing available, else the proxy `/versions/{n}/download` URL). large-download-design.md §5.1.
+     * Signed direct-from-GCS download URL for a specific version
+     */
+    async downloadUrlVersionV0ArtifactsArtIdVersionsVersionNumberDownloadUrlGet(requestParameters: DownloadUrlVersionV0ArtifactsArtIdVersionsVersionNumberDownloadUrlGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DownloadUrlOut> {
+        const response = await this.downloadUrlVersionV0ArtifactsArtIdVersionsVersionNumberDownloadUrlGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -1982,10 +2865,6 @@ export class DefaultApi extends runtime.BaseAPI {
             queryParameters['prefix'] = requestParameters['prefix'];
         }
 
-        if (requestParameters['visibility'] != null) {
-            queryParameters['visibility'] = requestParameters['visibility'];
-        }
-
         if (requestParameters['modality'] != null) {
             queryParameters['modality'] = requestParameters['modality'];
         }
@@ -2020,7 +2899,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Passage-level chunk RAG over `embed_chunks`. Lexical (`chunk_tsv`, GIN) + semantic (HNSW over `embedding`) are run in parallel and fused via Reciprocal Rank Fusion (k=60). Unlike `/v0/search`, which only sees the first ~16 KB preview of each artifact, `/v0/find` reaches the full file body.  **Modes:** - `hybrid` (default) — lexical + semantic, RRF-fused. - `lexical` — `chunk_tsv` only. Best for exact tokens, identifiers, code snippets. - `semantic` — embedding only. Best for conceptual queries where the surface terms differ from the query phrasing.  **Granularity:** results are passages, not files. A long document with multiple matching regions returns multiple hits with distinct `ord` values; consecutive `ord`s overlap by ~400 tokens. Dedupe by `art_id` if you want one row per file.  **Span citations:** `char_start`/`char_end` for text & code, `page_start`/`page_end` for PDFs, `time_start_ms`/`time_end_ms` for audio & video. Only the modality-relevant pair is populated.  **Filters:** `label`, `file_type`, `prefix`, `visibility`, `modality` (repeatable), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`, applied to both legs).  **Wiki coverage:** `/v0/find` excludes `_wiki/` paths by default and — importantly — does NOT cover them even when the caller passes `prefix=_wiki/...`. Wiki pages are not embedded by the pipeline (they\'re system-generated output, not user input), so `embed_chunks` has no rows for them and the join returns empty. Use `wiki_search` (or `list`/`grep` with a `_wiki/` prefix) for the wiki layer.  **Embedding availability:** when `GEMINI_API_KEY` is not configured, `mode=semantic` returns 500; `mode=hybrid` logs a warning and falls back to lexical-only; `mode=lexical` is unaffected.
+     * Passage-level chunk RAG over `embed_chunks`. Lexical (`chunk_tsv`, GIN) + semantic (HNSW over `embedding`) are run in parallel and fused via Reciprocal Rank Fusion (k=60). Unlike `/v0/search`, which only sees the first ~16 KB preview of each artifact, `/v0/find` reaches the full file body.  **Modes:** - `hybrid` (default) — lexical + semantic, RRF-fused. - `lexical` — `chunk_tsv` only. Best for exact tokens, identifiers, code snippets. - `semantic` — embedding only. Best for conceptual queries where the surface terms differ from the query phrasing.  **Granularity:** results are passages, not files. A long document with multiple matching regions returns multiple hits with distinct `ord` values; consecutive `ord`s overlap by ~400 tokens. Dedupe by `art_id` if you want one row per file.  **Span citations:** `char_start`/`char_end` for text & code, `page_start`/`page_end` for PDFs, `time_start_ms`/`time_end_ms` for audio & video. Only the modality-relevant pair is populated.  **Filters:** `label`, `file_type`, `prefix`, `modality` (repeatable), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`, applied to both legs).  **Wiki coverage:** `/v0/find` excludes `_wiki/` paths by default and — importantly — does NOT cover them even when the caller passes `prefix=_wiki/...`. Wiki pages are not embedded by the pipeline (they\'re system-generated output, not user input), so `embed_chunks` has no rows for them and the join returns empty. Use `wiki_search` (or `list`/`grep` with a `_wiki/` prefix) for the wiki layer.  **Embedding availability:** when `GEMINI_API_KEY` is not configured, `mode=semantic` returns 500; `mode=hybrid` logs a warning and falls back to lexical-only; `mode=lexical` is unaffected.
      * Hybrid passage retrieval over the full file body
      */
     async findV0FindGetRaw(requestParameters: FindV0FindGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindPage>> {
@@ -2031,7 +2910,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Passage-level chunk RAG over `embed_chunks`. Lexical (`chunk_tsv`, GIN) + semantic (HNSW over `embedding`) are run in parallel and fused via Reciprocal Rank Fusion (k=60). Unlike `/v0/search`, which only sees the first ~16 KB preview of each artifact, `/v0/find` reaches the full file body.  **Modes:** - `hybrid` (default) — lexical + semantic, RRF-fused. - `lexical` — `chunk_tsv` only. Best for exact tokens, identifiers, code snippets. - `semantic` — embedding only. Best for conceptual queries where the surface terms differ from the query phrasing.  **Granularity:** results are passages, not files. A long document with multiple matching regions returns multiple hits with distinct `ord` values; consecutive `ord`s overlap by ~400 tokens. Dedupe by `art_id` if you want one row per file.  **Span citations:** `char_start`/`char_end` for text & code, `page_start`/`page_end` for PDFs, `time_start_ms`/`time_end_ms` for audio & video. Only the modality-relevant pair is populated.  **Filters:** `label`, `file_type`, `prefix`, `visibility`, `modality` (repeatable), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`, applied to both legs).  **Wiki coverage:** `/v0/find` excludes `_wiki/` paths by default and — importantly — does NOT cover them even when the caller passes `prefix=_wiki/...`. Wiki pages are not embedded by the pipeline (they\'re system-generated output, not user input), so `embed_chunks` has no rows for them and the join returns empty. Use `wiki_search` (or `list`/`grep` with a `_wiki/` prefix) for the wiki layer.  **Embedding availability:** when `GEMINI_API_KEY` is not configured, `mode=semantic` returns 500; `mode=hybrid` logs a warning and falls back to lexical-only; `mode=lexical` is unaffected.
+     * Passage-level chunk RAG over `embed_chunks`. Lexical (`chunk_tsv`, GIN) + semantic (HNSW over `embedding`) are run in parallel and fused via Reciprocal Rank Fusion (k=60). Unlike `/v0/search`, which only sees the first ~16 KB preview of each artifact, `/v0/find` reaches the full file body.  **Modes:** - `hybrid` (default) — lexical + semantic, RRF-fused. - `lexical` — `chunk_tsv` only. Best for exact tokens, identifiers, code snippets. - `semantic` — embedding only. Best for conceptual queries where the surface terms differ from the query phrasing.  **Granularity:** results are passages, not files. A long document with multiple matching regions returns multiple hits with distinct `ord` values; consecutive `ord`s overlap by ~400 tokens. Dedupe by `art_id` if you want one row per file.  **Span citations:** `char_start`/`char_end` for text & code, `page_start`/`page_end` for PDFs, `time_start_ms`/`time_end_ms` for audio & video. Only the modality-relevant pair is populated.  **Filters:** `label`, `file_type`, `prefix`, `modality` (repeatable), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`, applied to both legs).  **Wiki coverage:** `/v0/find` excludes `_wiki/` paths by default and — importantly — does NOT cover them even when the caller passes `prefix=_wiki/...`. Wiki pages are not embedded by the pipeline (they\'re system-generated output, not user input), so `embed_chunks` has no rows for them and the join returns empty. Use `wiki_search` (or `list`/`grep` with a `_wiki/` prefix) for the wiki layer.  **Embedding availability:** when `GEMINI_API_KEY` is not configured, `mode=semantic` returns 500; `mode=hybrid` logs a warning and falls back to lexical-only; `mode=lexical` is unaffected.
      * Hybrid passage retrieval over the full file body
      */
     async findV0FindGet(requestParameters: FindV0FindGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<FindPage> {
@@ -2397,6 +3276,55 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for getFolderByPathMetaV0FoldersPathMetaGet without sending the request
+     */
+    async getFolderByPathMetaV0FoldersPathMetaGetRequestOpts(requestParameters: GetFolderByPathMetaV0FoldersPathMetaGetRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['path'] == null) {
+            throw new runtime.RequiredError(
+                'path',
+                'Required parameter "path" was null or undefined when calling getFolderByPathMetaV0FoldersPathMetaGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['authorization'] != null) {
+            headerParameters['authorization'] = String(requestParameters['authorization']);
+        }
+
+
+        let urlPath = `/v0/folders/{path}/meta`;
+        urlPath = urlPath.replace('{path}', encodeURIComponent(String(requestParameters['path'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Folder metadata by path (same shape as the bare path route)
+     */
+    async getFolderByPathMetaV0FoldersPathMetaGetRaw(requestParameters: GetFolderByPathMetaV0FoldersPathMetaGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FolderOut>> {
+        const requestOptions = await this.getFolderByPathMetaV0FoldersPathMetaGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => FolderOutFromJSON(jsonValue));
+    }
+
+    /**
+     * Folder metadata by path (same shape as the bare path route)
+     */
+    async getFolderByPathMetaV0FoldersPathMetaGet(requestParameters: GetFolderByPathMetaV0FoldersPathMetaGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<FolderOut> {
+        const response = await this.getFolderByPathMetaV0FoldersPathMetaGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for getFolderByPathV0FoldersPathGet without sending the request
      */
     async getFolderByPathV0FoldersPathGetRequestOpts(requestParameters: GetFolderByPathV0FoldersPathGetRequest): Promise<runtime.RequestOpts> {
@@ -2601,6 +3529,55 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async getProjectV0ProjectsFldIdGet(requestParameters: GetProjectV0ProjectsFldIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
         const response = await this.getProjectV0ProjectsFldIdGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for getShareStateWebShareRidGet without sending the request
+     */
+    async getShareStateWebShareRidGetRequestOpts(requestParameters: GetShareStateWebShareRidGetRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['rid'] == null) {
+            throw new runtime.RequiredError(
+                'rid',
+                'Required parameter "rid" was null or undefined when calling getShareStateWebShareRidGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/web/share/{rid}`;
+        urlPath = urlPath.replace('{rid}', encodeURIComponent(String(requestParameters['rid'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Get Share State
+     */
+    async getShareStateWebShareRidGetRaw(requestParameters: GetShareStateWebShareRidGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.getShareStateWebShareRidGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Get Share State
+     */
+    async getShareStateWebShareRidGet(requestParameters: GetShareStateWebShareRidGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.getShareStateWebShareRidGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -2837,6 +3814,58 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for listGrantsRouteV0GrantsGet without sending the request
+     */
+    async listGrantsRouteV0GrantsGetRequestOpts(requestParameters: ListGrantsRouteV0GrantsGetRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['resource'] == null) {
+            throw new runtime.RequiredError(
+                'resource',
+                'Required parameter "resource" was null or undefined when calling listGrantsRouteV0GrantsGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['resource'] != null) {
+            queryParameters['resource'] = requestParameters['resource'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['authorization'] != null) {
+            headerParameters['authorization'] = String(requestParameters['authorization']);
+        }
+
+
+        let urlPath = `/v0/grants`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * List live grants on a resource (requires can_manage)
+     */
+    async listGrantsRouteV0GrantsGetRaw(requestParameters: ListGrantsRouteV0GrantsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GrantList>> {
+        const requestOptions = await this.listGrantsRouteV0GrantsGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GrantListFromJSON(jsonValue));
+    }
+
+    /**
+     * List live grants on a resource (requires can_manage)
+     */
+    async listGrantsRouteV0GrantsGet(requestParameters: ListGrantsRouteV0GrantsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GrantList> {
+        const response = await this.listGrantsRouteV0GrantsGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for listProjectJobsV0ProjectsFldIdJobsGet without sending the request
      */
     async listProjectJobsV0ProjectsFldIdJobsGetRequestOpts(requestParameters: ListProjectJobsV0ProjectsFldIdJobsGetRequest): Promise<runtime.RequestOpts> {
@@ -2894,6 +3923,58 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async listProjectJobsV0ProjectsFldIdJobsGet(requestParameters: ListProjectJobsV0ProjectsFldIdJobsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
         const response = await this.listProjectJobsV0ProjectsFldIdJobsGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for listSharesRouteV0SharesGet without sending the request
+     */
+    async listSharesRouteV0SharesGetRequestOpts(requestParameters: ListSharesRouteV0SharesGetRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['resource'] == null) {
+            throw new runtime.RequiredError(
+                'resource',
+                'Required parameter "resource" was null or undefined when calling listSharesRouteV0SharesGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['resource'] != null) {
+            queryParameters['resource'] = requestParameters['resource'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['authorization'] != null) {
+            headerParameters['authorization'] = String(requestParameters['authorization']);
+        }
+
+
+        let urlPath = `/v0/shares`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * List live share links on a resource (requires can_manage)
+     */
+    async listSharesRouteV0SharesGetRaw(requestParameters: ListSharesRouteV0SharesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ShareList>> {
+        const requestOptions = await this.listSharesRouteV0SharesGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ShareListFromJSON(jsonValue));
+    }
+
+    /**
+     * List live share links on a resource (requires can_manage)
+     */
+    async listSharesRouteV0SharesGet(requestParameters: ListSharesRouteV0SharesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ShareList> {
+        const response = await this.listSharesRouteV0SharesGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -3630,6 +4711,69 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for patchGrantRouteV0GrantsGrnIdPatch without sending the request
+     */
+    async patchGrantRouteV0GrantsGrnIdPatchRequestOpts(requestParameters: PatchGrantRouteV0GrantsGrnIdPatchRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['grnId'] == null) {
+            throw new runtime.RequiredError(
+                'grnId',
+                'Required parameter "grnId" was null or undefined when calling patchGrantRouteV0GrantsGrnIdPatch().'
+            );
+        }
+
+        if (requestParameters['grantPatchIn'] == null) {
+            throw new runtime.RequiredError(
+                'grantPatchIn',
+                'Required parameter "grantPatchIn" was null or undefined when calling patchGrantRouteV0GrantsGrnIdPatch().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['xAgentdriveActor'] != null) {
+            headerParameters['x-agentdrive-actor'] = String(requestParameters['xAgentdriveActor']);
+        }
+
+        if (requestParameters['authorization'] != null) {
+            headerParameters['authorization'] = String(requestParameters['authorization']);
+        }
+
+
+        let urlPath = `/v0/grants/{grn_id}`;
+        urlPath = urlPath.replace('{grn_id}', encodeURIComponent(String(requestParameters['grnId'])));
+
+        return {
+            path: urlPath,
+            method: 'PATCH',
+            headers: headerParameters,
+            query: queryParameters,
+            body: GrantPatchInToJSON(requestParameters['grantPatchIn']),
+        };
+    }
+
+    /**
+     * Update a grant\'s role and/or expiry (requires can_manage)
+     */
+    async patchGrantRouteV0GrantsGrnIdPatchRaw(requestParameters: PatchGrantRouteV0GrantsGrnIdPatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GrantOut>> {
+        const requestOptions = await this.patchGrantRouteV0GrantsGrnIdPatchRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GrantOutFromJSON(jsonValue));
+    }
+
+    /**
+     * Update a grant\'s role and/or expiry (requires can_manage)
+     */
+    async patchGrantRouteV0GrantsGrnIdPatch(requestParameters: PatchGrantRouteV0GrantsGrnIdPatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GrantOut> {
+        const response = await this.patchGrantRouteV0GrantsGrnIdPatchRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for postFeedbackV0FeedbackPost without sending the request
      */
     async postFeedbackV0FeedbackPostRequestOpts(requestParameters: PostFeedbackV0FeedbackPostRequest): Promise<runtime.RequestOpts> {
@@ -3838,10 +4982,6 @@ export class DefaultApi extends runtime.BaseAPI {
             headerParameters['content-type'] = String(requestParameters['contentType']);
         }
 
-        if (requestParameters['xAgentdriveVisibility'] != null) {
-            headerParameters['x-agentdrive-visibility'] = String(requestParameters['xAgentdriveVisibility']);
-        }
-
         if (requestParameters['xAgentdriveLabels'] != null) {
             headerParameters['x-agentdrive-labels'] = String(requestParameters['xAgentdriveLabels']);
         }
@@ -3883,7 +5023,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Upload an artifact at the given path. The path is treated as the artifact\'s location in the drive — re-uploading the same path overwrites in place (idempotent).  **Limits:** request body must not exceed **50 MB**. Path must be non-empty, ≤256 chars, only `[A-Za-z0-9_./-]`, no `..` segments, no leading/trailing slash. Per-token write rate limit: 100/hour.  **Optional headers.** Each preserves the existing artifact\'s value when omitted on an overwrite, and takes the create-default on a new path; send the header to replace it: - `X-AgentDrive-Visibility`: `public` or `private` (new-path default `private`). Private artifacts are readable only with your API key; `public` gives an anonymously shareable URL. - `X-AgentDrive-Labels`: comma-separated labels (e.g. `draft,report`); an empty value clears them. Each: lowercase `[a-z0-9_-]+`, ≤64 chars; ≤16 labels per artifact. - `X-AgentDrive-Metadata`: JSON object of agent-attached fields. - `X-AgentDrive-Source`: JSON `{\"refs\": [...]}` source provenance (present, including `{\"refs\": []}`, replaces). - `X-AgentDrive-Actor`: caller-supplied actor name (≤64 chars) for event-log attribution. Untrusted; never used for authz.
+     * Upload an artifact at the given path. The path is treated as the artifact\'s location in the drive — re-uploading the same path overwrites in place (idempotent).  **Limits:** request body must not exceed **50 MB**. Path must be non-empty, ≤256 chars, only `[A-Za-z0-9_./-]`, no `..` segments, no leading/trailing slash. Per-token write rate limit: 100/hour.  **Optional headers.** Each preserves the existing artifact\'s value when omitted on an overwrite, and takes the create-default on a new path; send the header to replace it: - `X-AgentDrive-Labels`: comma-separated labels (e.g. `draft,report`); an empty value clears them. Each: lowercase `[a-z0-9_-]+`, ≤64 chars; ≤16 labels per artifact. - `X-AgentDrive-Metadata`: JSON object of agent-attached fields. - `X-AgentDrive-Source`: JSON `{\"refs\": [...]}` source provenance (present, including `{\"refs\": []}`, replaces). - `X-AgentDrive-Actor`: caller-supplied actor name (≤64 chars) for event-log attribution. Untrusted; never used for authz.
      * Upload (or overwrite) an artifact
      */
     async putArtifactV0ArtifactsPathPutRaw(requestParameters: PutArtifactV0ArtifactsPathPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ArtifactOut>> {
@@ -3894,7 +5034,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Upload an artifact at the given path. The path is treated as the artifact\'s location in the drive — re-uploading the same path overwrites in place (idempotent).  **Limits:** request body must not exceed **50 MB**. Path must be non-empty, ≤256 chars, only `[A-Za-z0-9_./-]`, no `..` segments, no leading/trailing slash. Per-token write rate limit: 100/hour.  **Optional headers.** Each preserves the existing artifact\'s value when omitted on an overwrite, and takes the create-default on a new path; send the header to replace it: - `X-AgentDrive-Visibility`: `public` or `private` (new-path default `private`). Private artifacts are readable only with your API key; `public` gives an anonymously shareable URL. - `X-AgentDrive-Labels`: comma-separated labels (e.g. `draft,report`); an empty value clears them. Each: lowercase `[a-z0-9_-]+`, ≤64 chars; ≤16 labels per artifact. - `X-AgentDrive-Metadata`: JSON object of agent-attached fields. - `X-AgentDrive-Source`: JSON `{\"refs\": [...]}` source provenance (present, including `{\"refs\": []}`, replaces). - `X-AgentDrive-Actor`: caller-supplied actor name (≤64 chars) for event-log attribution. Untrusted; never used for authz.
+     * Upload an artifact at the given path. The path is treated as the artifact\'s location in the drive — re-uploading the same path overwrites in place (idempotent).  **Limits:** request body must not exceed **50 MB**. Path must be non-empty, ≤256 chars, only `[A-Za-z0-9_./-]`, no `..` segments, no leading/trailing slash. Per-token write rate limit: 100/hour.  **Optional headers.** Each preserves the existing artifact\'s value when omitted on an overwrite, and takes the create-default on a new path; send the header to replace it: - `X-AgentDrive-Labels`: comma-separated labels (e.g. `draft,report`); an empty value clears them. Each: lowercase `[a-z0-9_-]+`, ≤64 chars; ≤16 labels per artifact. - `X-AgentDrive-Metadata`: JSON object of agent-attached fields. - `X-AgentDrive-Source`: JSON `{\"refs\": [...]}` source provenance (present, including `{\"refs\": []}`, replaces). - `X-AgentDrive-Actor`: caller-supplied actor name (≤64 chars) for event-log attribution. Untrusted; never used for authz.
      * Upload (or overwrite) an artifact
      */
     async putArtifactV0ArtifactsPathPut(requestParameters: PutArtifactV0ArtifactsPathPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ArtifactOut> {
@@ -4194,6 +5334,123 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for redeemShareSShareKeyGet without sending the request
+     */
+    async redeemShareSShareKeyGetRequestOpts(requestParameters: RedeemShareSShareKeyGetRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['shareKey'] == null) {
+            throw new runtime.RequiredError(
+                'shareKey',
+                'Required parameter "shareKey" was null or undefined when calling redeemShareSShareKeyGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/s/{share_key}`;
+        urlPath = urlPath.replace('{share_key}', encodeURIComponent(String(requestParameters['shareKey'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Redeem Share
+     */
+    async redeemShareSShareKeyGetRaw(requestParameters: RedeemShareSShareKeyGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.redeemShareSShareKeyGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Redeem Share
+     */
+    async redeemShareSShareKeyGet(requestParameters: RedeemShareSShareKeyGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.redeemShareSShareKeyGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for redeemShareWithPasswordSShareKeyPost without sending the request
+     */
+    async redeemShareWithPasswordSShareKeyPostRequestOpts(requestParameters: RedeemShareWithPasswordSShareKeyPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['shareKey'] == null) {
+            throw new runtime.RequiredError(
+                'shareKey',
+                'Required parameter "shareKey" was null or undefined when calling redeemShareWithPasswordSShareKeyPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const consumes: runtime.Consume[] = [
+            { contentType: 'application/x-www-form-urlencoded' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['password'] != null) {
+            formParams.append('password', requestParameters['password'] as any);
+        }
+
+
+        let urlPath = `/s/{share_key}`;
+        urlPath = urlPath.replace('{share_key}', encodeURIComponent(String(requestParameters['shareKey'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: formParams,
+        };
+    }
+
+    /**
+     * Redeem Share With Password
+     */
+    async redeemShareWithPasswordSShareKeyPostRaw(requestParameters: RedeemShareWithPasswordSShareKeyPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.redeemShareWithPasswordSShareKeyPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Redeem Share With Password
+     */
+    async redeemShareWithPasswordSShareKeyPost(requestParameters: RedeemShareWithPasswordSShareKeyPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.redeemShareWithPasswordSShareKeyPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for renameArtifactRouteV0ArtifactsArtIdPatch without sending the request
      */
     async renameArtifactRouteV0ArtifactsArtIdPatchRequestOpts(requestParameters: RenameArtifactRouteV0ArtifactsArtIdPatchRequest): Promise<runtime.RequestOpts> {
@@ -4385,6 +5642,128 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for revokeGrantWebShareRidGrantGrnIdRevokePost without sending the request
+     */
+    async revokeGrantWebShareRidGrantGrnIdRevokePostRequestOpts(requestParameters: RevokeGrantWebShareRidGrantGrnIdRevokePostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['rid'] == null) {
+            throw new runtime.RequiredError(
+                'rid',
+                'Required parameter "rid" was null or undefined when calling revokeGrantWebShareRidGrantGrnIdRevokePost().'
+            );
+        }
+
+        if (requestParameters['grnId'] == null) {
+            throw new runtime.RequiredError(
+                'grnId',
+                'Required parameter "grnId" was null or undefined when calling revokeGrantWebShareRidGrantGrnIdRevokePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['xCsrfToken'] != null) {
+            headerParameters['x-csrf-token'] = String(requestParameters['xCsrfToken']);
+        }
+
+
+        let urlPath = `/web/share/{rid}/grant/{grn_id}/revoke`;
+        urlPath = urlPath.replace('{rid}', encodeURIComponent(String(requestParameters['rid'])));
+        urlPath = urlPath.replace('{grn_id}', encodeURIComponent(String(requestParameters['grnId'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Revoke Grant
+     */
+    async revokeGrantWebShareRidGrantGrnIdRevokePostRaw(requestParameters: RevokeGrantWebShareRidGrantGrnIdRevokePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.revokeGrantWebShareRidGrantGrnIdRevokePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Revoke Grant
+     */
+    async revokeGrantWebShareRidGrantGrnIdRevokePost(requestParameters: RevokeGrantWebShareRidGrantGrnIdRevokePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.revokeGrantWebShareRidGrantGrnIdRevokePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for revokeLinkWebShareRidLinkShrIdRevokePost without sending the request
+     */
+    async revokeLinkWebShareRidLinkShrIdRevokePostRequestOpts(requestParameters: RevokeLinkWebShareRidLinkShrIdRevokePostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['rid'] == null) {
+            throw new runtime.RequiredError(
+                'rid',
+                'Required parameter "rid" was null or undefined when calling revokeLinkWebShareRidLinkShrIdRevokePost().'
+            );
+        }
+
+        if (requestParameters['shrId'] == null) {
+            throw new runtime.RequiredError(
+                'shrId',
+                'Required parameter "shrId" was null or undefined when calling revokeLinkWebShareRidLinkShrIdRevokePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['xCsrfToken'] != null) {
+            headerParameters['x-csrf-token'] = String(requestParameters['xCsrfToken']);
+        }
+
+
+        let urlPath = `/web/share/{rid}/link/{shr_id}/revoke`;
+        urlPath = urlPath.replace('{rid}', encodeURIComponent(String(requestParameters['rid'])));
+        urlPath = urlPath.replace('{shr_id}', encodeURIComponent(String(requestParameters['shrId'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Revoke Link
+     */
+    async revokeLinkWebShareRidLinkShrIdRevokePostRaw(requestParameters: RevokeLinkWebShareRidLinkShrIdRevokePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.revokeLinkWebShareRidLinkShrIdRevokePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Revoke Link
+     */
+    async revokeLinkWebShareRidLinkShrIdRevokePost(requestParameters: RevokeLinkWebShareRidLinkShrIdRevokePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.revokeLinkWebShareRidLinkShrIdRevokePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for rotateKeyWebKeysRotatePost without sending the request
      */
     async rotateKeyWebKeysRotatePostRequestOpts(requestParameters: RotateKeyWebKeysRotatePostRequest): Promise<runtime.RequestOpts> {
@@ -4452,6 +5831,59 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for rotateShareRouteV0SharesShrIdRotatePost without sending the request
+     */
+    async rotateShareRouteV0SharesShrIdRotatePostRequestOpts(requestParameters: RotateShareRouteV0SharesShrIdRotatePostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['shrId'] == null) {
+            throw new runtime.RequiredError(
+                'shrId',
+                'Required parameter "shrId" was null or undefined when calling rotateShareRouteV0SharesShrIdRotatePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['xAgentdriveActor'] != null) {
+            headerParameters['x-agentdrive-actor'] = String(requestParameters['xAgentdriveActor']);
+        }
+
+        if (requestParameters['authorization'] != null) {
+            headerParameters['authorization'] = String(requestParameters['authorization']);
+        }
+
+
+        let urlPath = `/v0/shares/{shr_id}/rotate`;
+        urlPath = urlPath.replace('{shr_id}', encodeURIComponent(String(requestParameters['shrId'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Revoke + reissue a share link\'s key (requires can_share)
+     */
+    async rotateShareRouteV0SharesShrIdRotatePostRaw(requestParameters: RotateShareRouteV0SharesShrIdRotatePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ShareMintOut>> {
+        const requestOptions = await this.rotateShareRouteV0SharesShrIdRotatePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ShareMintOutFromJSON(jsonValue));
+    }
+
+    /**
+     * Revoke + reissue a share link\'s key (requires can_share)
+     */
+    async rotateShareRouteV0SharesShrIdRotatePost(requestParameters: RotateShareRouteV0SharesShrIdRotatePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ShareMintOut> {
+        const response = await this.rotateShareRouteV0SharesShrIdRotatePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for searchV0SearchGet without sending the request
      */
     async searchV0SearchGetRequestOpts(requestParameters: SearchV0SearchGetRequest): Promise<runtime.RequestOpts> {
@@ -4478,10 +5910,6 @@ export class DefaultApi extends runtime.BaseAPI {
 
         if (requestParameters['prefix'] != null) {
             queryParameters['prefix'] = requestParameters['prefix'];
-        }
-
-        if (requestParameters['visibility'] != null) {
-            queryParameters['visibility'] = requestParameters['visibility'];
         }
 
         if (requestParameters['updatedAfter'] != null) {
@@ -4514,7 +5942,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Lexical (not semantic) full-text search powered by Postgres `websearch_to_tsquery`. Results are ranked by `ts_rank` over a weighted tsvector (path > content > metadata > labels).  **Supported query syntax:** - Words: `kangaroo` (English stemming) - Phrases: `\"exact phrase\"` - Negation: `kangaroo -secret` - AND (implicit): `kangaroo secret` - OR: `kangaroo OR koala` - Paths & filenames: `reports/q3-summary.md` or `q3-summary.md` match by their path words (`/ . _ -` are word boundaries)  **Not supported (v0):** - Semantic / embedding similarity - PDF and image content (only the path + metadata are searchable) - Non-English stemming - Fuzzy matching, regex - Boolean operator parentheses  **Filters:** `label` (repeatable, AND), `file_type` (enum), `prefix` (path prefix), `visibility` (`public`/`private`/`all` — default `all`), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`).
+     * Lexical (not semantic) full-text search powered by Postgres `websearch_to_tsquery`. Results are ranked by `ts_rank` over a weighted tsvector (path > content > metadata > labels).  **Supported query syntax:** - Words: `kangaroo` (English stemming) - Phrases: `\"exact phrase\"` - Negation: `kangaroo -secret` - AND (implicit): `kangaroo secret` - OR: `kangaroo OR koala` - Paths & filenames: `reports/q3-summary.md` or `q3-summary.md` match by their path words (`/ . _ -` are word boundaries)  **Not supported (v0):** - Semantic / embedding similarity - PDF and image content (only the path + metadata are searchable) - Non-English stemming - Fuzzy matching, regex - Boolean operator parentheses  **Filters:** `label` (repeatable, AND), `file_type` (enum), `prefix` (path prefix), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`).
      * Full-text search over artifacts in the drive
      */
     async searchV0SearchGetRaw(requestParameters: SearchV0SearchGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchPage>> {
@@ -4525,11 +5953,141 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Lexical (not semantic) full-text search powered by Postgres `websearch_to_tsquery`. Results are ranked by `ts_rank` over a weighted tsvector (path > content > metadata > labels).  **Supported query syntax:** - Words: `kangaroo` (English stemming) - Phrases: `\"exact phrase\"` - Negation: `kangaroo -secret` - AND (implicit): `kangaroo secret` - OR: `kangaroo OR koala` - Paths & filenames: `reports/q3-summary.md` or `q3-summary.md` match by their path words (`/ . _ -` are word boundaries)  **Not supported (v0):** - Semantic / embedding similarity - PDF and image content (only the path + metadata are searchable) - Non-English stemming - Fuzzy matching, regex - Boolean operator parentheses  **Filters:** `label` (repeatable, AND), `file_type` (enum), `prefix` (path prefix), `visibility` (`public`/`private`/`all` — default `all`), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`).
+     * Lexical (not semantic) full-text search powered by Postgres `websearch_to_tsquery`. Results are ranked by `ts_rank` over a weighted tsvector (path > content > metadata > labels).  **Supported query syntax:** - Words: `kangaroo` (English stemming) - Phrases: `\"exact phrase\"` - Negation: `kangaroo -secret` - AND (implicit): `kangaroo secret` - OR: `kangaroo OR koala` - Paths & filenames: `reports/q3-summary.md` or `q3-summary.md` match by their path words (`/ . _ -` are word boundaries)  **Not supported (v0):** - Semantic / embedding similarity - PDF and image content (only the path + metadata are searchable) - Non-English stemming - Fuzzy matching, regex - Boolean operator parentheses  **Filters:** `label` (repeatable, AND), `file_type` (enum), `prefix` (path prefix), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`).
      * Full-text search over artifacts in the drive
      */
     async searchV0SearchGet(requestParameters: SearchV0SearchGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SearchPage> {
         const response = await this.searchV0SearchGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for setPublicWebShareRidPublicPost without sending the request
+     */
+    async setPublicWebShareRidPublicPostRequestOpts(requestParameters: SetPublicWebShareRidPublicPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['rid'] == null) {
+            throw new runtime.RequiredError(
+                'rid',
+                'Required parameter "rid" was null or undefined when calling setPublicWebShareRidPublicPost().'
+            );
+        }
+
+        if (requestParameters['publicIn'] == null) {
+            throw new runtime.RequiredError(
+                'publicIn',
+                'Required parameter "publicIn" was null or undefined when calling setPublicWebShareRidPublicPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['xCsrfToken'] != null) {
+            headerParameters['x-csrf-token'] = String(requestParameters['xCsrfToken']);
+        }
+
+
+        let urlPath = `/web/share/{rid}/public`;
+        urlPath = urlPath.replace('{rid}', encodeURIComponent(String(requestParameters['rid'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PublicInToJSON(requestParameters['publicIn']),
+        };
+    }
+
+    /**
+     * Toggle world-readable: create (idempotent) or revoke the `anyone:viewer` grant. On a folder this cascades to the subtree (the response carries the blast-radius the UI confirmed).
+     * Set Public
+     */
+    async setPublicWebShareRidPublicPostRaw(requestParameters: SetPublicWebShareRidPublicPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.setPublicWebShareRidPublicPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Toggle world-readable: create (idempotent) or revoke the `anyone:viewer` grant. On a folder this cascades to the subtree (the response carries the blast-radius the UI confirmed).
+     * Set Public
+     */
+    async setPublicWebShareRidPublicPost(requestParameters: SetPublicWebShareRidPublicPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.setPublicWebShareRidPublicPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for setSealWebShareRidSealPost without sending the request
+     */
+    async setSealWebShareRidSealPostRequestOpts(requestParameters: SetSealWebShareRidSealPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['rid'] == null) {
+            throw new runtime.RequiredError(
+                'rid',
+                'Required parameter "rid" was null or undefined when calling setSealWebShareRidSealPost().'
+            );
+        }
+
+        if (requestParameters['sealIn'] == null) {
+            throw new runtime.RequiredError(
+                'sealIn',
+                'Required parameter "sealIn" was null or undefined when calling setSealWebShareRidSealPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['xCsrfToken'] != null) {
+            headerParameters['x-csrf-token'] = String(requestParameters['xCsrfToken']);
+        }
+
+
+        let urlPath = `/web/share/{rid}/seal`;
+        urlPath = urlPath.replace('{rid}', encodeURIComponent(String(requestParameters['rid'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: SealInToJSON(requestParameters['sealIn']),
+        };
+    }
+
+    /**
+     * Set the limited-access seal (`inherit_grants`). `false` makes the resource ignore grants inherited from ancestor folders (§4.6/§4.11). Gated on `can_manage` (changing who can reach the resource).
+     * Set Seal
+     */
+    async setSealWebShareRidSealPostRaw(requestParameters: SetSealWebShareRidSealPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.setSealWebShareRidSealPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Set the limited-access seal (`inherit_grants`). `false` makes the resource ignore grants inherited from ancestor folders (§4.6/§4.11). Gated on `can_manage` (changing who can reach the resource).
+     * Set Seal
+     */
+    async setSealWebShareRidSealPost(requestParameters: SetSealWebShareRidSealPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.setSealWebShareRidSealPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -4774,7 +6332,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Streams an artifact body into AgentDrive using a single-use token that was previously minted by the `upload_url` MCP tool. The token encodes the artifact path, content type, size cap, labels, metadata, visibility, source, actor, change summary, and `if_match` — all frozen at mint time. The request carries only the raw bytes + a `Content-Type` header that must match the signed value.  **Auth.** No Authorization header — the token in the path is the credential.  **Single-use.** Replay returns 409 TOKEN_REPLAYED. Expiry returns 401 TOKEN_EXPIRED. Bodies exceeding the signed cap return 413 BYTES_LIMIT.
+     * Streams an artifact body into AgentDrive using a single-use token that was previously minted by the `upload_url` MCP tool. The token encodes the artifact path, content type, size cap, labels, metadata, source, actor, change summary, and `if_match` — all frozen at mint time. The request carries only the raw bytes + a `Content-Type` header that must match the signed value.  **Auth.** No Authorization header — the token in the path is the credential.  **Single-use.** Replay returns 409 TOKEN_REPLAYED. Expiry returns 401 TOKEN_EXPIRED. Bodies exceeding the signed cap return 413 BYTES_LIMIT.
      * Proxied streaming upload (via an upload_url token)
      */
     async streamUploadV0UploadTokenPutRaw(requestParameters: StreamUploadV0UploadTokenPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ArtifactOut>> {
@@ -4785,11 +6343,91 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Streams an artifact body into AgentDrive using a single-use token that was previously minted by the `upload_url` MCP tool. The token encodes the artifact path, content type, size cap, labels, metadata, visibility, source, actor, change summary, and `if_match` — all frozen at mint time. The request carries only the raw bytes + a `Content-Type` header that must match the signed value.  **Auth.** No Authorization header — the token in the path is the credential.  **Single-use.** Replay returns 409 TOKEN_REPLAYED. Expiry returns 401 TOKEN_EXPIRED. Bodies exceeding the signed cap return 413 BYTES_LIMIT.
+     * Streams an artifact body into AgentDrive using a single-use token that was previously minted by the `upload_url` MCP tool. The token encodes the artifact path, content type, size cap, labels, metadata, source, actor, change summary, and `if_match` — all frozen at mint time. The request carries only the raw bytes + a `Content-Type` header that must match the signed value.  **Auth.** No Authorization header — the token in the path is the credential.  **Single-use.** Replay returns 409 TOKEN_REPLAYED. Expiry returns 401 TOKEN_EXPIRED. Bodies exceeding the signed cap return 413 BYTES_LIMIT.
      * Proxied streaming upload (via an upload_url token)
      */
     async streamUploadV0UploadTokenPut(requestParameters: StreamUploadV0UploadTokenPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ArtifactOut> {
         const response = await this.streamUploadV0UploadTokenPutRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for switchOrgWebSwitchOrgPost without sending the request
+     */
+    async switchOrgWebSwitchOrgPostRequestOpts(requestParameters: SwitchOrgWebSwitchOrgPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['organizationId'] == null) {
+            throw new runtime.RequiredError(
+                'organizationId',
+                'Required parameter "organizationId" was null or undefined when calling switchOrgWebSwitchOrgPost().'
+            );
+        }
+
+        if (requestParameters['csrf'] == null) {
+            throw new runtime.RequiredError(
+                'csrf',
+                'Required parameter "csrf" was null or undefined when calling switchOrgWebSwitchOrgPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const consumes: runtime.Consume[] = [
+            { contentType: 'application/x-www-form-urlencoded' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['organizationId'] != null) {
+            formParams.append('organization_id', requestParameters['organizationId'] as any);
+        }
+
+        if (requestParameters['csrf'] != null) {
+            formParams.append('csrf', requestParameters['csrf'] as any);
+        }
+
+
+        let urlPath = `/web/switch-org`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: formParams,
+        };
+    }
+
+    /**
+     * Switch the session\'s active organization (and thus the active drive).  A user can belong to multiple orgs (e.g. a personal org + a shared/business org). v1 binds the active org at login with no way to change it; this lets a member flip it. Membership is re-verified server-side (the form value is attacker-controllable), then the session cookie is re-minted with the new active org — `current_drive`\'s membership JOIN enforces access on the next request. Any `reveal_key` is dropped: it was scoped to the old drive.
+     * Switch Org
+     */
+    async switchOrgWebSwitchOrgPostRaw(requestParameters: SwitchOrgWebSwitchOrgPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.switchOrgWebSwitchOrgPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Switch the session\'s active organization (and thus the active drive).  A user can belong to multiple orgs (e.g. a personal org + a shared/business org). v1 binds the active org at login with no way to change it; this lets a member flip it. Membership is re-verified server-side (the form value is attacker-controllable), then the session cookie is re-minted with the new active org — `current_drive`\'s membership JOIN enforces access on the next request. Any `reveal_key` is dropped: it was scoped to the old drive.
+     * Switch Org
+     */
+    async switchOrgWebSwitchOrgPost(requestParameters: SwitchOrgWebSwitchOrgPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.switchOrgWebSwitchOrgPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -4953,6 +6591,57 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for viewArtifactHeadAArtIdHeadGet without sending the request
+     */
+    async viewArtifactHeadAArtIdHeadGetRequestOpts(requestParameters: ViewArtifactHeadAArtIdHeadGetRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['artId'] == null) {
+            throw new runtime.RequiredError(
+                'artId',
+                'Required parameter "artId" was null or undefined when calling viewArtifactHeadAArtIdHeadGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/a/{art_id}/head`;
+        urlPath = urlPath.replace('{art_id}', encodeURIComponent(String(requestParameters['artId'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Return `{\"version\": <head version_number>}` for a readable artifact.  Auth mirrors the permalink/viewer: the owner, or an `anyone:viewer` grant (a published artifact), reads. Two deliberate differences from the HTML viewer:    * Never redirect to login. A poll is a background `fetch`, not a     navigation — an HTML login page would be a useless body and a     same-origin redirect the client can\'t act on. Anonymous callers     on a private/absent artifact get a flat 404.   * \"Doesn\'t exist\" and \"exists but not readable\" collapse to the     same 404, so an anonymous poller can\'t use this as an existence     oracle (matches the permalink/viewer leak guard).
+     * View Artifact Head
+     */
+    async viewArtifactHeadAArtIdHeadGetRaw(requestParameters: ViewArtifactHeadAArtIdHeadGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.viewArtifactHeadAArtIdHeadGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Return `{\"version\": <head version_number>}` for a readable artifact.  Auth mirrors the permalink/viewer: the owner, or an `anyone:viewer` grant (a published artifact), reads. Two deliberate differences from the HTML viewer:    * Never redirect to login. A poll is a background `fetch`, not a     navigation — an HTML login page would be a useless body and a     same-origin redirect the client can\'t act on. Anonymous callers     on a private/absent artifact get a flat 404.   * \"Doesn\'t exist\" and \"exists but not readable\" collapse to the     same 404, so an anonymous poller can\'t use this as an existence     oracle (matches the permalink/viewer leak guard).
+     * View Artifact Head
+     */
+    async viewArtifactHeadAArtIdHeadGet(requestParameters: ViewArtifactHeadAArtIdHeadGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.viewArtifactHeadAArtIdHeadGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for viewFileDriveIdPathGet without sending the request
      */
     async viewFileDriveIdPathGetRequestOpts(requestParameters: ViewFileDriveIdPathGetRequest): Promise<runtime.RequestOpts> {
@@ -5096,7 +6785,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Resolve a stable folder ID to its current path-URL and 302.  Auth model mirrors the artifact permalink: public folder = anon OK; private folder = owner only, otherwise 404 (no existence leak). Folder visibility lives on the `folders.visibility` column once §13.x wires it; today we follow the conservative default (treat any non-`public` value, including NULL, as private).
+     * Resolve a stable folder ID to its current path-URL and 302.  Auth model mirrors the artifact permalink: public folder = anon OK; private folder = owner only, otherwise 404 (no existence leak). \"Public\" is an `anyone:viewer` grant on the `fld_*` id resolved through `can_read` (§4.4); folders carry no visibility flag of their own.
      * View Permalink Folder
      */
     async viewPermalinkFolderFFldIdGetRaw(requestParameters: ViewPermalinkFolderFFldIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
@@ -5111,7 +6800,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Resolve a stable folder ID to its current path-URL and 302.  Auth model mirrors the artifact permalink: public folder = anon OK; private folder = owner only, otherwise 404 (no existence leak). Folder visibility lives on the `folders.visibility` column once §13.x wires it; today we follow the conservative default (treat any non-`public` value, including NULL, as private).
+     * Resolve a stable folder ID to its current path-URL and 302.  Auth model mirrors the artifact permalink: public folder = anon OK; private folder = owner only, otherwise 404 (no existence leak). \"Public\" is an `anyone:viewer` grant on the `fld_*` id resolved through `can_read` (§4.4); folders carry no visibility flag of their own.
      * View Permalink Folder
      */
     async viewPermalinkFolderFFldIdGet(requestParameters: ViewPermalinkFolderFFldIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
@@ -5885,7 +7574,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Cookie-authed write of an image artifact. Used by the SnipIt web editor (`/a/{art_id}/edit`) for autosave; the bearer-authed `PUT /v0/artifacts/{path}` won\'t accept a cookie-only session.  Owner-only; the path is checked against the signed-in user\'s drive. v0 is image-only — refuses non-image content types so the editor can\'t smuggle markdown or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved `_wiki/` namespace rejection, per-tier max-bytes cap (both `Content-Length` short-circuit and post-body length check) — so a logged-in user can\'t bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the `X-CSRF-Token` header (see `csrf.require_csrf_header`); the editor reads the token from the `<meta name=\"csrf-token\">` tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor\'s 1.5s autosave can sustain without flagging abuse.
+     * Cookie-authed write of an image artifact. Used by the SnipIt web editor (`/a/{art_id}/edit`) for autosave; the bearer-authed `PUT /v0/artifacts/{path}` won\'t accept a cookie-only session.  Owner-only; the path is checked against the signed-in user\'s drive. Accepts `image/_*` (SnipIt editor autosave) and `application/pdf` (the PDF viewer\'s annotation save) only — refuses everything else so the editor can\'t smuggle markdown/HTML or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved `_wiki/` namespace rejection, per-tier max-bytes cap (both `Content-Length` short-circuit and post-body length check) — so a logged-in user can\'t bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the `X-CSRF-Token` header (see `csrf.require_csrf_header`); the editor reads the token from the `<meta name=\"csrf-token\">` tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor\'s 1.5s autosave can sustain without flagging abuse.
      * Web Put Artifact
      */
     async webPutArtifactWebArtifactsPathPutRaw(requestParameters: WebPutArtifactWebArtifactsPathPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
@@ -5900,7 +7589,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Cookie-authed write of an image artifact. Used by the SnipIt web editor (`/a/{art_id}/edit`) for autosave; the bearer-authed `PUT /v0/artifacts/{path}` won\'t accept a cookie-only session.  Owner-only; the path is checked against the signed-in user\'s drive. v0 is image-only — refuses non-image content types so the editor can\'t smuggle markdown or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved `_wiki/` namespace rejection, per-tier max-bytes cap (both `Content-Length` short-circuit and post-body length check) — so a logged-in user can\'t bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the `X-CSRF-Token` header (see `csrf.require_csrf_header`); the editor reads the token from the `<meta name=\"csrf-token\">` tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor\'s 1.5s autosave can sustain without flagging abuse.
+     * Cookie-authed write of an image artifact. Used by the SnipIt web editor (`/a/{art_id}/edit`) for autosave; the bearer-authed `PUT /v0/artifacts/{path}` won\'t accept a cookie-only session.  Owner-only; the path is checked against the signed-in user\'s drive. Accepts `image/_*` (SnipIt editor autosave) and `application/pdf` (the PDF viewer\'s annotation save) only — refuses everything else so the editor can\'t smuggle markdown/HTML or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved `_wiki/` namespace rejection, per-tier max-bytes cap (both `Content-Length` short-circuit and post-body length check) — so a logged-in user can\'t bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the `X-CSRF-Token` header (see `csrf.require_csrf_header`); the editor reads the token from the `<meta name=\"csrf-token\">` tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor\'s 1.5s autosave can sustain without flagging abuse.
      * Web Put Artifact
      */
     async webPutArtifactWebArtifactsPathPut(requestParameters: WebPutArtifactWebArtifactsPathPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
@@ -6205,10 +7894,6 @@ export class DefaultApi extends runtime.BaseAPI {
             formParams.append('target', requestParameters['target'] as any);
         }
 
-        if (requestParameters['visibility'] != null) {
-            formParams.append('visibility', requestParameters['visibility'] as any);
-        }
-
         if (requestParameters['description'] != null) {
             formParams.append('description', requestParameters['description'] as any);
         }
@@ -6234,7 +7919,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Artifact visibility (target = `art_<id>`) or folder description (target = `fld_<id>`). Folder visibility is intentionally not exposed (design §8.2: it doesn\'t cascade).
+     * Folder description edit (target = `fld_<id>`).  \"Public/private\" is no longer a folder/artifact flag — access is expressed through grants (permission-sharing-design §4.4), so this endpoint only edits folder descriptions. Artifact targets are rejected; publishing an artifact is the dedicated grant/`publish` flow, not a metadata toggle.
      * Web Set Metadata
      */
     async webSetMetadataWebSetPostRaw(requestParameters: WebSetMetadataWebSetPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
@@ -6249,7 +7934,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Artifact visibility (target = `art_<id>`) or folder description (target = `fld_<id>`). Folder visibility is intentionally not exposed (design §8.2: it doesn\'t cascade).
+     * Folder description edit (target = `fld_<id>`).  \"Public/private\" is no longer a folder/artifact flag — access is expressed through grants (permission-sharing-design §4.4), so this endpoint only edits folder descriptions. Artifact targets are rejected; publishing an artifact is the dedicated grant/`publish` flow, not a metadata toggle.
      * Web Set Metadata
      */
     async webSetMetadataWebSetPost(requestParameters: WebSetMetadataWebSetPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
@@ -6301,10 +7986,6 @@ export class DefaultApi extends runtime.BaseAPI {
 
         if (requestParameters['destDir'] != null) {
             formParams.append('dest_dir', requestParameters['destDir'] as any);
-        }
-
-        if (requestParameters['visibility'] != null) {
-            formParams.append('visibility', requestParameters['visibility'] as any);
         }
 
         if (requestParameters['returnTo'] != null) {
@@ -6444,21 +8125,3 @@ export const FindV0FindGetModeEnum = {
     Semantic: 'semantic'
 } as const;
 export type FindV0FindGetModeEnum = typeof FindV0FindGetModeEnum[keyof typeof FindV0FindGetModeEnum];
-/**
- * @export
- */
-export const FindV0FindGetVisibilityEnum = {
-    Public: 'public',
-    Private: 'private',
-    All: 'all'
-} as const;
-export type FindV0FindGetVisibilityEnum = typeof FindV0FindGetVisibilityEnum[keyof typeof FindV0FindGetVisibilityEnum];
-/**
- * @export
- */
-export const SearchV0SearchGetVisibilityEnum = {
-    Public: 'public',
-    Private: 'private',
-    All: 'all'
-} as const;
-export type SearchV0SearchGetVisibilityEnum = typeof SearchV0SearchGetVisibilityEnum[keyof typeof SearchV0SearchGetVisibilityEnum];

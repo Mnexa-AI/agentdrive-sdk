@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -25,21 +25,10 @@ from pydantic_core import to_jsonable_python
 
 class FolderCreateIn(BaseModel):
     """
-    POST /v0/folders/{path}? body for the optional metadata params. Empty body is fine — `mkdir` with no description/visibility just creates the folder row.
+    POST /v0/folders/{path}? body for the optional metadata params. Empty body is fine — `mkdir` with no description just creates the folder row.
     """ # noqa: E501
     description: Optional[StrictStr] = None
-    visibility: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["description", "visibility"]
-
-    @field_validator('visibility')
-    def visibility_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['public', 'private']):
-            raise ValueError("must be one of enum values ('public', 'private')")
-        return value
+    __properties: ClassVar[List[str]] = ["description"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -85,11 +74,6 @@ class FolderCreateIn(BaseModel):
         if self.description is None and "description" in self.model_fields_set:
             _dict['description'] = None
 
-        # set to None if visibility (nullable) is None
-        # and model_fields_set contains the field
-        if self.visibility is None and "visibility" in self.model_fields_set:
-            _dict['visibility'] = None
-
         return _dict
 
     @classmethod
@@ -102,8 +86,7 @@ class FolderCreateIn(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "description": obj.get("description"),
-            "visibility": obj.get("visibility")
+            "description": obj.get("description")
         })
         return _obj
 

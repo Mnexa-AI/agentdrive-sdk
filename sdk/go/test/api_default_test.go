@@ -34,11 +34,37 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService AddGrantWebShareRidGrantPost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var rid string
+
+		resp, httpRes, err := apiClient.DefaultAPI.AddGrantWebShareRidGrantPost(context.Background(), rid).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService ArtifactDetailPreviewPreviewArtifactDetailGet", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.ArtifactDetailPreviewPreviewArtifactDetailGet(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService BeginUploadV0UploadsPost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.BeginUploadV0UploadsPost(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -86,6 +112,20 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService CommitUploadV0UploadsUploadIdCommitPost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var uploadId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.CommitUploadV0UploadsUploadIdCommitPost(context.Background(), uploadId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService ConnectorsPageConnectorsGet", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -119,6 +159,44 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 		var path string
 
 		resp, httpRes, err := apiClient.DefaultAPI.CreateFolderByPathV0FoldersPathPost(context.Background(), path).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService CreateGrantRouteV0GrantsPost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.CreateGrantRouteV0GrantsPost(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService CreateLinkWebShareRidLinkPost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var rid string
+
+		resp, httpRes, err := apiClient.DefaultAPI.CreateLinkWebShareRidLinkPost(context.Background(), rid).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService CreateShareRouteV0SharesPost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.CreateShareRouteV0SharesPost(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -167,6 +245,20 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.DeleteAccountWebAccountDeletePost(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService DeleteArtifactByIdRouteV0ArtifactsArtIdDelete", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var artId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.DeleteArtifactByIdRouteV0ArtifactsArtIdDelete(context.Background(), artId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -230,11 +322,39 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService DeleteGrantRouteV0GrantsGrnIdDelete", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var grnId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.DeleteGrantRouteV0GrantsGrnIdDelete(context.Background(), grnId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService DeleteKeyWebKeysDeletePost", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.DeleteKeyWebKeysDeletePost(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService DeleteShareRouteV0SharesShrIdDelete", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var shrId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.DeleteShareRouteV0SharesShrIdDelete(context.Background(), shrId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -264,6 +384,49 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 		var versionNumber int32
 
 		resp, httpRes, err := apiClient.DefaultAPI.DownloadArtifactVersionV0ArtifactsArtIdVersionsVersionNumberDownloadGet(context.Background(), artId, versionNumber).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService DownloadUrlByIdV0ArtifactsArtIdDownloadUrlGet", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var artId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.DownloadUrlByIdV0ArtifactsArtIdDownloadUrlGet(context.Background(), artId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService DownloadUrlByPathV0ArtifactsPathDownloadUrlGet", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var path string
+
+		resp, httpRes, err := apiClient.DefaultAPI.DownloadUrlByPathV0ArtifactsPathDownloadUrlGet(context.Background(), path).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService DownloadUrlVersionV0ArtifactsArtIdVersionsVersionNumberDownloadUrlGet", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var artId string
+		var versionNumber int32
+
+		resp, httpRes, err := apiClient.DefaultAPI.DownloadUrlVersionV0ArtifactsArtIdVersionsVersionNumberDownloadUrlGet(context.Background(), artId, versionNumber).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -446,6 +609,20 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService GetFolderByPathMetaV0FoldersPathMetaGet", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var path string
+
+		resp, httpRes, err := apiClient.DefaultAPI.GetFolderByPathMetaV0FoldersPathMetaGet(context.Background(), path).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService GetFolderByPathV0FoldersPathGet", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -495,6 +672,20 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 		var fldId string
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetProjectV0ProjectsFldIdGet(context.Background(), fldId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetShareStateWebShareRidGet", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var rid string
+
+		resp, httpRes, err := apiClient.DefaultAPI.GetShareStateWebShareRidGet(context.Background(), rid).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -552,6 +743,18 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService ListGrantsRouteV0GrantsGet", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.ListGrantsRouteV0GrantsGet(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService ListProjectJobsV0ProjectsFldIdJobsGet", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -559,6 +762,18 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 		var fldId string
 
 		resp, httpRes, err := apiClient.DefaultAPI.ListProjectJobsV0ProjectsFldIdJobsGet(context.Background(), fldId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ListSharesRouteV0SharesGet", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.ListSharesRouteV0SharesGet(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -734,6 +949,20 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService PatchGrantRouteV0GrantsGrnIdPatch", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var grnId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.PatchGrantRouteV0GrantsGrnIdPatch(context.Background(), grnId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService PostFeedbackV0FeedbackPost", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -862,6 +1091,34 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService RedeemShareSShareKeyGet", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var shareKey string
+
+		resp, httpRes, err := apiClient.DefaultAPI.RedeemShareSShareKeyGet(context.Background(), shareKey).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService RedeemShareWithPasswordSShareKeyPost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var shareKey string
+
+		resp, httpRes, err := apiClient.DefaultAPI.RedeemShareWithPasswordSShareKeyPost(context.Background(), shareKey).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService RenameArtifactRouteV0ArtifactsArtIdPatch", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -904,6 +1161,36 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService RevokeGrantWebShareRidGrantGrnIdRevokePost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var rid string
+		var grnId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.RevokeGrantWebShareRidGrantGrnIdRevokePost(context.Background(), rid, grnId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService RevokeLinkWebShareRidLinkShrIdRevokePost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var rid string
+		var shrId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.RevokeLinkWebShareRidLinkShrIdRevokePost(context.Background(), rid, shrId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService RotateKeyWebKeysRotatePost", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -916,11 +1203,53 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService RotateShareRouteV0SharesShrIdRotatePost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var shrId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.RotateShareRouteV0SharesShrIdRotatePost(context.Background(), shrId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService SearchV0SearchGet", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.SearchV0SearchGet(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService SetPublicWebShareRidPublicPost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var rid string
+
+		resp, httpRes, err := apiClient.DefaultAPI.SetPublicWebShareRidPublicPost(context.Background(), rid).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService SetSealWebShareRidSealPost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var rid string
+
+		resp, httpRes, err := apiClient.DefaultAPI.SetSealWebShareRidSealPost(context.Background(), rid).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1002,6 +1331,18 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService SwitchOrgWebSwitchOrgPost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.SwitchOrgWebSwitchOrgPost(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService TermsPageTermsGet", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -1031,6 +1372,20 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.TrashWebTrashGet(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ViewArtifactHeadAArtIdHeadGet", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var artId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.ViewArtifactHeadAArtIdHeadGet(context.Background(), artId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

@@ -8,8 +8,7 @@ Name | Type | Description | Notes
 **DriveId** | **string** |  | 
 **Path** | **string** |  | 
 **Description** | Pointer to **NullableString** |  | [optional] 
-**Visibility** | Pointer to **NullableString** |  | [optional] 
-**ShareKey** | Pointer to **NullableString** |  | [optional] 
+**InheritGrants** | Pointer to **bool** |  | [optional] [default to true]
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 **DeletedAt** | Pointer to **NullableTime** |  | [optional] 
@@ -129,76 +128,31 @@ HasDescription returns a boolean if a field has been set.
 `func (o *FolderOut) UnsetDescription()`
 
 UnsetDescription ensures that no value is present for Description, not even an explicit nil
-### GetVisibility
+### GetInheritGrants
 
-`func (o *FolderOut) GetVisibility() string`
+`func (o *FolderOut) GetInheritGrants() bool`
 
-GetVisibility returns the Visibility field if non-nil, zero value otherwise.
+GetInheritGrants returns the InheritGrants field if non-nil, zero value otherwise.
 
-### GetVisibilityOk
+### GetInheritGrantsOk
 
-`func (o *FolderOut) GetVisibilityOk() (*string, bool)`
+`func (o *FolderOut) GetInheritGrantsOk() (*bool, bool)`
 
-GetVisibilityOk returns a tuple with the Visibility field if it's non-nil, zero value otherwise
+GetInheritGrantsOk returns a tuple with the InheritGrants field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetVisibility
+### SetInheritGrants
 
-`func (o *FolderOut) SetVisibility(v string)`
+`func (o *FolderOut) SetInheritGrants(v bool)`
 
-SetVisibility sets Visibility field to given value.
+SetInheritGrants sets InheritGrants field to given value.
 
-### HasVisibility
+### HasInheritGrants
 
-`func (o *FolderOut) HasVisibility() bool`
+`func (o *FolderOut) HasInheritGrants() bool`
 
-HasVisibility returns a boolean if a field has been set.
+HasInheritGrants returns a boolean if a field has been set.
 
-### SetVisibilityNil
-
-`func (o *FolderOut) SetVisibilityNil(b bool)`
-
- SetVisibilityNil sets the value for Visibility to be an explicit nil
-
-### UnsetVisibility
-`func (o *FolderOut) UnsetVisibility()`
-
-UnsetVisibility ensures that no value is present for Visibility, not even an explicit nil
-### GetShareKey
-
-`func (o *FolderOut) GetShareKey() string`
-
-GetShareKey returns the ShareKey field if non-nil, zero value otherwise.
-
-### GetShareKeyOk
-
-`func (o *FolderOut) GetShareKeyOk() (*string, bool)`
-
-GetShareKeyOk returns a tuple with the ShareKey field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetShareKey
-
-`func (o *FolderOut) SetShareKey(v string)`
-
-SetShareKey sets ShareKey field to given value.
-
-### HasShareKey
-
-`func (o *FolderOut) HasShareKey() bool`
-
-HasShareKey returns a boolean if a field has been set.
-
-### SetShareKeyNil
-
-`func (o *FolderOut) SetShareKeyNil(b bool)`
-
- SetShareKeyNil sets the value for ShareKey to be an explicit nil
-
-### UnsetShareKey
-`func (o *FolderOut) UnsetShareKey()`
-
-UnsetShareKey ensures that no value is present for ShareKey, not even an explicit nil
 ### GetCreatedAt
 
 `func (o *FolderOut) GetCreatedAt() time.Time`

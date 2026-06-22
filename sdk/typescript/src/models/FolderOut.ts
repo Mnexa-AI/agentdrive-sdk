@@ -15,8 +15,8 @@
 import { mapValues } from '../runtime';
 /**
  * Folder resource (folders+permalinks design §13). `path` is the
- * canonical leading+trailing-slash form; `share_key` is reserved
- * metadata held now and wired by the render layer in v1.1.
+ * canonical leading+trailing-slash form. Access is expressed through
+ * grants (permission-sharing-design §4.4), not a folder-level flag.
  * @export
  * @interface FolderOut
  */
@@ -47,16 +47,10 @@ export interface FolderOut {
     description?: string | null;
     /**
      * 
-     * @type {FolderOutVisibilityEnum}
+     * @type {boolean}
      * @memberof FolderOut
      */
-    visibility?: FolderOutVisibilityEnum | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FolderOut
-     */
-    shareKey?: string | null;
+    inheritGrants?: boolean;
     /**
      * 
      * @type {Date}
@@ -82,17 +76,6 @@ export interface FolderOut {
      */
     purgeAt?: Date | null;
 }
-
-
-/**
- * @export
- */
-export const FolderOutVisibilityEnum = {
-    Public: 'public',
-    Private: 'private'
-} as const;
-export type FolderOutVisibilityEnum = typeof FolderOutVisibilityEnum[keyof typeof FolderOutVisibilityEnum];
-
 
 /**
  * Check if a given object implements the FolderOut interface.
@@ -120,8 +103,7 @@ export function FolderOutFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'driveId': json['drive_id'],
         'path': json['path'],
         'description': json['description'] == null ? undefined : json['description'],
-        'visibility': json['visibility'] == null ? undefined : json['visibility'],
-        'shareKey': json['share_key'] == null ? undefined : json['share_key'],
+        'inheritGrants': json['inherit_grants'] == null ? undefined : json['inherit_grants'],
         'createdAt': (new Date(json['created_at'])),
         'updatedAt': (new Date(json['updated_at'])),
         'deletedAt': json['deleted_at'] == null ? undefined : (new Date(json['deleted_at'])),
@@ -144,8 +126,7 @@ export function FolderOutToJSONTyped(value?: FolderOut | null, ignoreDiscriminat
         'drive_id': value['driveId'],
         'path': value['path'],
         'description': value['description'],
-        'visibility': value['visibility'],
-        'share_key': value['shareKey'],
+        'inherit_grants': value['inheritGrants'],
         'created_at': value['createdAt'].toISOString(),
         'updated_at': value['updatedAt'].toISOString(),
         'deleted_at': value['deletedAt'] == null ? value['deletedAt'] : value['deletedAt'].toISOString(),

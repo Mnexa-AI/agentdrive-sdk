@@ -22,6 +22,7 @@ from typing_extensions import Annotated
 from agentdrive_sdk.models.artifact_out import ArtifactOut
 from agentdrive_sdk.models.compile_job_in import CompileJobIn
 from agentdrive_sdk.models.copy_in import CopyIn
+from agentdrive_sdk.models.download_url_out import DownloadUrlOut
 from agentdrive_sdk.models.event_page import EventPage
 from agentdrive_sdk.models.find_page import FindPage
 from agentdrive_sdk.models.folder_create_in import FolderCreateIn
@@ -29,10 +30,23 @@ from agentdrive_sdk.models.folder_delete_out import FolderDeleteOut
 from agentdrive_sdk.models.folder_move_in import FolderMoveIn
 from agentdrive_sdk.models.folder_out import FolderOut
 from agentdrive_sdk.models.folder_patch_in import FolderPatchIn
+from agentdrive_sdk.models.grant_create_in import GrantCreateIn
+from agentdrive_sdk.models.grant_in import GrantIn
+from agentdrive_sdk.models.grant_list import GrantList
+from agentdrive_sdk.models.grant_out import GrantOut
+from agentdrive_sdk.models.grant_patch_in import GrantPatchIn
+from agentdrive_sdk.models.link_in import LinkIn
 from agentdrive_sdk.models.page import Page
 from agentdrive_sdk.models.project_config_in import ProjectConfigIn
+from agentdrive_sdk.models.public_in import PublicIn
 from agentdrive_sdk.models.rename_in import RenameIn
+from agentdrive_sdk.models.seal_in import SealIn
 from agentdrive_sdk.models.search_page import SearchPage
+from agentdrive_sdk.models.share_create_in import ShareCreateIn
+from agentdrive_sdk.models.share_list import ShareList
+from agentdrive_sdk.models.share_mint_out import ShareMintOut
+from agentdrive_sdk.models.upload_begin_in import UploadBeginIn
+from agentdrive_sdk.models.upload_begin_out import UploadBeginOut
 from agentdrive_sdk.models.version_out import VersionOut
 from agentdrive_sdk.models.version_page import VersionPage
 
@@ -297,6 +311,309 @@ class DefaultApi:
 
 
     @validate_call
+    def add_grant_web_share_rid_grant_post(
+        self,
+        rid: StrictStr,
+        grant_in: GrantIn,
+        x_csrf_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Add Grant
+
+
+        :param rid: (required)
+        :type rid: str
+        :param grant_in: (required)
+        :type grant_in: GrantIn
+        :param x_csrf_token:
+        :type x_csrf_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._add_grant_web_share_rid_grant_post_serialize(
+            rid=rid,
+            grant_in=grant_in,
+            x_csrf_token=x_csrf_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def add_grant_web_share_rid_grant_post_with_http_info(
+        self,
+        rid: StrictStr,
+        grant_in: GrantIn,
+        x_csrf_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Add Grant
+
+
+        :param rid: (required)
+        :type rid: str
+        :param grant_in: (required)
+        :type grant_in: GrantIn
+        :param x_csrf_token:
+        :type x_csrf_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._add_grant_web_share_rid_grant_post_serialize(
+            rid=rid,
+            grant_in=grant_in,
+            x_csrf_token=x_csrf_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def add_grant_web_share_rid_grant_post_without_preload_content(
+        self,
+        rid: StrictStr,
+        grant_in: GrantIn,
+        x_csrf_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Add Grant
+
+
+        :param rid: (required)
+        :type rid: str
+        :param grant_in: (required)
+        :type grant_in: GrantIn
+        :param x_csrf_token:
+        :type x_csrf_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._add_grant_web_share_rid_grant_post_serialize(
+            rid=rid,
+            grant_in=grant_in,
+            x_csrf_token=x_csrf_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _add_grant_web_share_rid_grant_post_serialize(
+        self,
+        rid,
+        grant_in,
+        x_csrf_token,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if rid is not None:
+            _path_params['rid'] = rid
+        # process the query parameters
+        # process the header parameters
+        if x_csrf_token is not None:
+            _header_params['x-csrf-token'] = x_csrf_token
+        # process the form parameters
+        # process the body parameter
+        if grant_in is not None:
+            _body_params = grant_in
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/web/share/{rid}/grant',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def artifact_detail_preview_preview_artifact_detail_get(
         self,
         _request_timeout: Union[
@@ -523,6 +840,312 @@ class DefaultApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/preview/artifact-detail',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def begin_upload_v0_uploads_post(
+        self,
+        upload_begin_in: UploadBeginIn,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> UploadBeginOut:
+        """Begin a large (direct-to-GCS) upload
+
+        Reserve quota and open a resumable upload session for a file larger than the buffered-upload limit. Returns a `upload_url` to PUT the raw bytes to DIRECTLY (no Authorization header — the URL is the credential), then call `/v0/uploads/{upload_id}/commit`. All artifact decisions (path, labels, metadata, source, if_match) are frozen here.
+
+        :param upload_begin_in: (required)
+        :type upload_begin_in: UploadBeginIn
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._begin_upload_v0_uploads_post_serialize(
+            upload_begin_in=upload_begin_in,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UploadBeginOut",
+            '400': None,
+            '402': None,
+            '403': None,
+            '413': None,
+            '429': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def begin_upload_v0_uploads_post_with_http_info(
+        self,
+        upload_begin_in: UploadBeginIn,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[UploadBeginOut]:
+        """Begin a large (direct-to-GCS) upload
+
+        Reserve quota and open a resumable upload session for a file larger than the buffered-upload limit. Returns a `upload_url` to PUT the raw bytes to DIRECTLY (no Authorization header — the URL is the credential), then call `/v0/uploads/{upload_id}/commit`. All artifact decisions (path, labels, metadata, source, if_match) are frozen here.
+
+        :param upload_begin_in: (required)
+        :type upload_begin_in: UploadBeginIn
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._begin_upload_v0_uploads_post_serialize(
+            upload_begin_in=upload_begin_in,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UploadBeginOut",
+            '400': None,
+            '402': None,
+            '403': None,
+            '413': None,
+            '429': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def begin_upload_v0_uploads_post_without_preload_content(
+        self,
+        upload_begin_in: UploadBeginIn,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Begin a large (direct-to-GCS) upload
+
+        Reserve quota and open a resumable upload session for a file larger than the buffered-upload limit. Returns a `upload_url` to PUT the raw bytes to DIRECTLY (no Authorization header — the URL is the credential), then call `/v0/uploads/{upload_id}/commit`. All artifact decisions (path, labels, metadata, source, if_match) are frozen here.
+
+        :param upload_begin_in: (required)
+        :type upload_begin_in: UploadBeginIn
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._begin_upload_v0_uploads_post_serialize(
+            upload_begin_in=upload_begin_in,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UploadBeginOut",
+            '400': None,
+            '402': None,
+            '403': None,
+            '413': None,
+            '429': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _begin_upload_v0_uploads_post_serialize(
+        self,
+        upload_begin_in,
+        authorization,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        if authorization is not None:
+            _header_params['authorization'] = authorization
+        # process the form parameters
+        # process the body parameter
+        if upload_begin_in is not None:
+            _body_params = upload_begin_in
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/v0/uploads',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1358,6 +1981,299 @@ class DefaultApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/collections/{slug}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def commit_upload_v0_uploads_upload_id_commit_post(
+        self,
+        upload_id: StrictStr,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ArtifactOut:
+        """Commit a large (direct-to-GCS) upload
+
+        Finalize the upload begun at `/v0/uploads`: AgentDrive verifies the object that landed in GCS (size + checksum) and creates the artifact. Idempotent — a retry after a successful commit returns the same artifact. The write budget is charged here (begin is free metadata).
+
+        :param upload_id: (required)
+        :type upload_id: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._commit_upload_v0_uploads_upload_id_commit_post_serialize(
+            upload_id=upload_id,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ArtifactOut",
+            '404': None,
+            '409': None,
+            '410': None,
+            '412': None,
+            '429': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def commit_upload_v0_uploads_upload_id_commit_post_with_http_info(
+        self,
+        upload_id: StrictStr,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ArtifactOut]:
+        """Commit a large (direct-to-GCS) upload
+
+        Finalize the upload begun at `/v0/uploads`: AgentDrive verifies the object that landed in GCS (size + checksum) and creates the artifact. Idempotent — a retry after a successful commit returns the same artifact. The write budget is charged here (begin is free metadata).
+
+        :param upload_id: (required)
+        :type upload_id: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._commit_upload_v0_uploads_upload_id_commit_post_serialize(
+            upload_id=upload_id,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ArtifactOut",
+            '404': None,
+            '409': None,
+            '410': None,
+            '412': None,
+            '429': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def commit_upload_v0_uploads_upload_id_commit_post_without_preload_content(
+        self,
+        upload_id: StrictStr,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Commit a large (direct-to-GCS) upload
+
+        Finalize the upload begun at `/v0/uploads`: AgentDrive verifies the object that landed in GCS (size + checksum) and creates the artifact. Idempotent — a retry after a successful commit returns the same artifact. The write budget is charged here (begin is free metadata).
+
+        :param upload_id: (required)
+        :type upload_id: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._commit_upload_v0_uploads_upload_id_commit_post_serialize(
+            upload_id=upload_id,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ArtifactOut",
+            '404': None,
+            '409': None,
+            '410': None,
+            '412': None,
+            '429': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _commit_upload_v0_uploads_upload_id_commit_post_serialize(
+        self,
+        upload_id,
+        authorization,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if upload_id is not None:
+            _path_params['upload_id'] = upload_id
+        # process the query parameters
+        # process the header parameters
+        if authorization is not None:
+            _header_params['authorization'] = authorization
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/v0/uploads/{upload_id}/commit',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -2261,6 +3177,918 @@ class DefaultApi:
 
 
     @validate_call
+    def create_grant_route_v0_grants_post(
+        self,
+        grant_create_in: GrantCreateIn,
+        x_agentdrive_actor: Optional[StrictStr] = None,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> GrantOut:
+        """Create (or fetch) a per-principal grant on a resource
+
+
+        :param grant_create_in: (required)
+        :type grant_create_in: GrantCreateIn
+        :param x_agentdrive_actor:
+        :type x_agentdrive_actor: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_grant_route_v0_grants_post_serialize(
+            grant_create_in=grant_create_in,
+            x_agentdrive_actor=x_agentdrive_actor,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "GrantOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def create_grant_route_v0_grants_post_with_http_info(
+        self,
+        grant_create_in: GrantCreateIn,
+        x_agentdrive_actor: Optional[StrictStr] = None,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[GrantOut]:
+        """Create (or fetch) a per-principal grant on a resource
+
+
+        :param grant_create_in: (required)
+        :type grant_create_in: GrantCreateIn
+        :param x_agentdrive_actor:
+        :type x_agentdrive_actor: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_grant_route_v0_grants_post_serialize(
+            grant_create_in=grant_create_in,
+            x_agentdrive_actor=x_agentdrive_actor,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "GrantOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def create_grant_route_v0_grants_post_without_preload_content(
+        self,
+        grant_create_in: GrantCreateIn,
+        x_agentdrive_actor: Optional[StrictStr] = None,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Create (or fetch) a per-principal grant on a resource
+
+
+        :param grant_create_in: (required)
+        :type grant_create_in: GrantCreateIn
+        :param x_agentdrive_actor:
+        :type x_agentdrive_actor: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_grant_route_v0_grants_post_serialize(
+            grant_create_in=grant_create_in,
+            x_agentdrive_actor=x_agentdrive_actor,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "GrantOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _create_grant_route_v0_grants_post_serialize(
+        self,
+        grant_create_in,
+        x_agentdrive_actor,
+        authorization,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        if x_agentdrive_actor is not None:
+            _header_params['x-agentdrive-actor'] = x_agentdrive_actor
+        if authorization is not None:
+            _header_params['authorization'] = authorization
+        # process the form parameters
+        # process the body parameter
+        if grant_create_in is not None:
+            _body_params = grant_create_in
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/v0/grants',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def create_link_web_share_rid_link_post(
+        self,
+        rid: StrictStr,
+        link_in: LinkIn,
+        x_csrf_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Create Link
+
+        Mint a viewer share link. Returns the fresh state PLUS `minted` with the raw `share_key` + url — the ONLY response that carries the key. Artifacts only (v1: folder share links are not supported).
+
+        :param rid: (required)
+        :type rid: str
+        :param link_in: (required)
+        :type link_in: LinkIn
+        :param x_csrf_token:
+        :type x_csrf_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_link_web_share_rid_link_post_serialize(
+            rid=rid,
+            link_in=link_in,
+            x_csrf_token=x_csrf_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def create_link_web_share_rid_link_post_with_http_info(
+        self,
+        rid: StrictStr,
+        link_in: LinkIn,
+        x_csrf_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Create Link
+
+        Mint a viewer share link. Returns the fresh state PLUS `minted` with the raw `share_key` + url — the ONLY response that carries the key. Artifacts only (v1: folder share links are not supported).
+
+        :param rid: (required)
+        :type rid: str
+        :param link_in: (required)
+        :type link_in: LinkIn
+        :param x_csrf_token:
+        :type x_csrf_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_link_web_share_rid_link_post_serialize(
+            rid=rid,
+            link_in=link_in,
+            x_csrf_token=x_csrf_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def create_link_web_share_rid_link_post_without_preload_content(
+        self,
+        rid: StrictStr,
+        link_in: LinkIn,
+        x_csrf_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Create Link
+
+        Mint a viewer share link. Returns the fresh state PLUS `minted` with the raw `share_key` + url — the ONLY response that carries the key. Artifacts only (v1: folder share links are not supported).
+
+        :param rid: (required)
+        :type rid: str
+        :param link_in: (required)
+        :type link_in: LinkIn
+        :param x_csrf_token:
+        :type x_csrf_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_link_web_share_rid_link_post_serialize(
+            rid=rid,
+            link_in=link_in,
+            x_csrf_token=x_csrf_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _create_link_web_share_rid_link_post_serialize(
+        self,
+        rid,
+        link_in,
+        x_csrf_token,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if rid is not None:
+            _path_params['rid'] = rid
+        # process the query parameters
+        # process the header parameters
+        if x_csrf_token is not None:
+            _header_params['x-csrf-token'] = x_csrf_token
+        # process the form parameters
+        # process the body parameter
+        if link_in is not None:
+            _body_params = link_in
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/web/share/{rid}/link',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def create_share_route_v0_shares_post(
+        self,
+        share_create_in: ShareCreateIn,
+        x_agentdrive_actor: Optional[StrictStr] = None,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ShareMintOut:
+        """Mint a share link (returns the share_key once)
+
+
+        :param share_create_in: (required)
+        :type share_create_in: ShareCreateIn
+        :param x_agentdrive_actor:
+        :type x_agentdrive_actor: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_share_route_v0_shares_post_serialize(
+            share_create_in=share_create_in,
+            x_agentdrive_actor=x_agentdrive_actor,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "ShareMintOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def create_share_route_v0_shares_post_with_http_info(
+        self,
+        share_create_in: ShareCreateIn,
+        x_agentdrive_actor: Optional[StrictStr] = None,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ShareMintOut]:
+        """Mint a share link (returns the share_key once)
+
+
+        :param share_create_in: (required)
+        :type share_create_in: ShareCreateIn
+        :param x_agentdrive_actor:
+        :type x_agentdrive_actor: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_share_route_v0_shares_post_serialize(
+            share_create_in=share_create_in,
+            x_agentdrive_actor=x_agentdrive_actor,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "ShareMintOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def create_share_route_v0_shares_post_without_preload_content(
+        self,
+        share_create_in: ShareCreateIn,
+        x_agentdrive_actor: Optional[StrictStr] = None,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Mint a share link (returns the share_key once)
+
+
+        :param share_create_in: (required)
+        :type share_create_in: ShareCreateIn
+        :param x_agentdrive_actor:
+        :type x_agentdrive_actor: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_share_route_v0_shares_post_serialize(
+            share_create_in=share_create_in,
+            x_agentdrive_actor=x_agentdrive_actor,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "ShareMintOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _create_share_route_v0_shares_post_serialize(
+        self,
+        share_create_in,
+        x_agentdrive_actor,
+        authorization,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        if x_agentdrive_actor is not None:
+            _header_params['x-agentdrive-actor'] = x_agentdrive_actor
+        if authorization is not None:
+            _header_params['authorization'] = authorization
+        # process the form parameters
+        # process the body parameter
+        if share_create_in is not None:
+            _body_params = share_create_in
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/v0/shares',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def danger_zone_old_dashboard_danger_get(
         self,
         _request_timeout: Union[
@@ -2752,7 +4580,6 @@ class DefaultApi:
         wiki: Optional[StrictInt] = None,
         type: Optional[Annotated[str, Field(strict=True, max_length=32)]] = None,
         label: Optional[List[StrictStr]] = None,
-        vis: Optional[Annotated[str, Field(strict=True, max_length=16)]] = None,
         after: Optional[Annotated[str, Field(strict=True, max_length=64)]] = None,
         before: Optional[Annotated[str, Field(strict=True, max_length=64)]] = None,
         view: Optional[Annotated[str, Field(strict=True, max_length=16)]] = None,
@@ -2784,8 +4611,6 @@ class DefaultApi:
         :type type: str
         :param label:
         :type label: List[str]
-        :param vis:
-        :type vis: str
         :param after:
         :type after: str
         :param before:
@@ -2824,7 +4649,6 @@ class DefaultApi:
             wiki=wiki,
             type=type,
             label=label,
-            vis=vis,
             after=after,
             before=before,
             view=view,
@@ -2859,7 +4683,6 @@ class DefaultApi:
         wiki: Optional[StrictInt] = None,
         type: Optional[Annotated[str, Field(strict=True, max_length=32)]] = None,
         label: Optional[List[StrictStr]] = None,
-        vis: Optional[Annotated[str, Field(strict=True, max_length=16)]] = None,
         after: Optional[Annotated[str, Field(strict=True, max_length=64)]] = None,
         before: Optional[Annotated[str, Field(strict=True, max_length=64)]] = None,
         view: Optional[Annotated[str, Field(strict=True, max_length=16)]] = None,
@@ -2891,8 +4714,6 @@ class DefaultApi:
         :type type: str
         :param label:
         :type label: List[str]
-        :param vis:
-        :type vis: str
         :param after:
         :type after: str
         :param before:
@@ -2931,7 +4752,6 @@ class DefaultApi:
             wiki=wiki,
             type=type,
             label=label,
-            vis=vis,
             after=after,
             before=before,
             view=view,
@@ -2966,7 +4786,6 @@ class DefaultApi:
         wiki: Optional[StrictInt] = None,
         type: Optional[Annotated[str, Field(strict=True, max_length=32)]] = None,
         label: Optional[List[StrictStr]] = None,
-        vis: Optional[Annotated[str, Field(strict=True, max_length=16)]] = None,
         after: Optional[Annotated[str, Field(strict=True, max_length=64)]] = None,
         before: Optional[Annotated[str, Field(strict=True, max_length=64)]] = None,
         view: Optional[Annotated[str, Field(strict=True, max_length=16)]] = None,
@@ -2998,8 +4817,6 @@ class DefaultApi:
         :type type: str
         :param label:
         :type label: List[str]
-        :param vis:
-        :type vis: str
         :param after:
         :type after: str
         :param before:
@@ -3038,7 +4855,6 @@ class DefaultApi:
             wiki=wiki,
             type=type,
             label=label,
-            vis=vis,
             after=after,
             before=before,
             view=view,
@@ -3068,7 +4884,6 @@ class DefaultApi:
         wiki,
         type,
         label,
-        vis,
         after,
         before,
         view,
@@ -3116,10 +4931,6 @@ class DefaultApi:
         if label is not None:
             
             _query_params.append(('label', label))
-            
-        if vis is not None:
-            
-            _query_params.append(('vis', vis))
             
         if after is not None:
             
@@ -3454,6 +5265,314 @@ class DefaultApi:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/web/account/delete',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def delete_artifact_by_id_route_v0_artifacts_art_id_delete(
+        self,
+        art_id: StrictStr,
+        if_match: Optional[StrictStr] = None,
+        x_agentdrive_actor: Optional[StrictStr] = None,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Soft-delete an artifact by its stable ID
+
+        Soft-delete the artifact with this `art_…` ID. Same semantics + response shape as the path-based `DELETE /v0/artifacts/{path}` (reversible until the GC cron hard-deletes at `purge_at`; `restore_url` points at the by-id restore), but keys on the immutable id so a concurrent rename can't change the target.  Returns 404 ARTIFACT_NOT_FOUND if no live artifact has this id; 403 WIKI_RESERVED for `_wiki/` artifacts (system-managed); 412 if `If-Match` doesn't match the current version. Declared before the `{path:path}` family so the id convertor wins for DELETEs.
+
+        :param art_id: (required)
+        :type art_id: str
+        :param if_match:
+        :type if_match: str
+        :param x_agentdrive_actor:
+        :type x_agentdrive_actor: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_artifact_by_id_route_v0_artifacts_art_id_delete_serialize(
+            art_id=art_id,
+            if_match=if_match,
+            x_agentdrive_actor=x_agentdrive_actor,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def delete_artifact_by_id_route_v0_artifacts_art_id_delete_with_http_info(
+        self,
+        art_id: StrictStr,
+        if_match: Optional[StrictStr] = None,
+        x_agentdrive_actor: Optional[StrictStr] = None,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Soft-delete an artifact by its stable ID
+
+        Soft-delete the artifact with this `art_…` ID. Same semantics + response shape as the path-based `DELETE /v0/artifacts/{path}` (reversible until the GC cron hard-deletes at `purge_at`; `restore_url` points at the by-id restore), but keys on the immutable id so a concurrent rename can't change the target.  Returns 404 ARTIFACT_NOT_FOUND if no live artifact has this id; 403 WIKI_RESERVED for `_wiki/` artifacts (system-managed); 412 if `If-Match` doesn't match the current version. Declared before the `{path:path}` family so the id convertor wins for DELETEs.
+
+        :param art_id: (required)
+        :type art_id: str
+        :param if_match:
+        :type if_match: str
+        :param x_agentdrive_actor:
+        :type x_agentdrive_actor: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_artifact_by_id_route_v0_artifacts_art_id_delete_serialize(
+            art_id=art_id,
+            if_match=if_match,
+            x_agentdrive_actor=x_agentdrive_actor,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def delete_artifact_by_id_route_v0_artifacts_art_id_delete_without_preload_content(
+        self,
+        art_id: StrictStr,
+        if_match: Optional[StrictStr] = None,
+        x_agentdrive_actor: Optional[StrictStr] = None,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Soft-delete an artifact by its stable ID
+
+        Soft-delete the artifact with this `art_…` ID. Same semantics + response shape as the path-based `DELETE /v0/artifacts/{path}` (reversible until the GC cron hard-deletes at `purge_at`; `restore_url` points at the by-id restore), but keys on the immutable id so a concurrent rename can't change the target.  Returns 404 ARTIFACT_NOT_FOUND if no live artifact has this id; 403 WIKI_RESERVED for `_wiki/` artifacts (system-managed); 412 if `If-Match` doesn't match the current version. Declared before the `{path:path}` family so the id convertor wins for DELETEs.
+
+        :param art_id: (required)
+        :type art_id: str
+        :param if_match:
+        :type if_match: str
+        :param x_agentdrive_actor:
+        :type x_agentdrive_actor: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_artifact_by_id_route_v0_artifacts_art_id_delete_serialize(
+            art_id=art_id,
+            if_match=if_match,
+            x_agentdrive_actor=x_agentdrive_actor,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _delete_artifact_by_id_route_v0_artifacts_art_id_delete_serialize(
+        self,
+        art_id,
+        if_match,
+        x_agentdrive_actor,
+        authorization,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if art_id is not None:
+            _path_params['art_id'] = art_id
+        # process the query parameters
+        # process the header parameters
+        if if_match is not None:
+            _header_params['if-match'] = if_match
+        if x_agentdrive_actor is not None:
+            _header_params['x-agentdrive-actor'] = x_agentdrive_actor
+        if authorization is not None:
+            _header_params['authorization'] = authorization
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='DELETE',
+            resource_path='/v0/artifacts/{art_id}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -4685,6 +6804,296 @@ class DefaultApi:
 
 
     @validate_call
+    def delete_grant_route_v0_grants_grn_id_delete(
+        self,
+        grn_id: StrictStr,
+        x_agentdrive_actor: Optional[StrictStr] = None,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Revoke a grant (can_manage, or self-revoke own grant)
+
+
+        :param grn_id: (required)
+        :type grn_id: str
+        :param x_agentdrive_actor:
+        :type x_agentdrive_actor: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_grant_route_v0_grants_grn_id_delete_serialize(
+            grn_id=grn_id,
+            x_agentdrive_actor=x_agentdrive_actor,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def delete_grant_route_v0_grants_grn_id_delete_with_http_info(
+        self,
+        grn_id: StrictStr,
+        x_agentdrive_actor: Optional[StrictStr] = None,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Revoke a grant (can_manage, or self-revoke own grant)
+
+
+        :param grn_id: (required)
+        :type grn_id: str
+        :param x_agentdrive_actor:
+        :type x_agentdrive_actor: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_grant_route_v0_grants_grn_id_delete_serialize(
+            grn_id=grn_id,
+            x_agentdrive_actor=x_agentdrive_actor,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def delete_grant_route_v0_grants_grn_id_delete_without_preload_content(
+        self,
+        grn_id: StrictStr,
+        x_agentdrive_actor: Optional[StrictStr] = None,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Revoke a grant (can_manage, or self-revoke own grant)
+
+
+        :param grn_id: (required)
+        :type grn_id: str
+        :param x_agentdrive_actor:
+        :type x_agentdrive_actor: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_grant_route_v0_grants_grn_id_delete_serialize(
+            grn_id=grn_id,
+            x_agentdrive_actor=x_agentdrive_actor,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _delete_grant_route_v0_grants_grn_id_delete_serialize(
+        self,
+        grn_id,
+        x_agentdrive_actor,
+        authorization,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if grn_id is not None:
+            _path_params['grn_id'] = grn_id
+        # process the query parameters
+        # process the header parameters
+        if x_agentdrive_actor is not None:
+            _header_params['x-agentdrive-actor'] = x_agentdrive_actor
+        if authorization is not None:
+            _header_params['authorization'] = authorization
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='DELETE',
+            resource_path='/v0/grants/{grn_id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def delete_key_web_keys_delete_post(
         self,
         csrf: StrictStr,
@@ -4942,6 +7351,296 @@ class DefaultApi:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/web/keys/delete',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def delete_share_route_v0_shares_shr_id_delete(
+        self,
+        shr_id: StrictStr,
+        x_agentdrive_actor: Optional[StrictStr] = None,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Revoke a share link (requires can_manage)
+
+
+        :param shr_id: (required)
+        :type shr_id: str
+        :param x_agentdrive_actor:
+        :type x_agentdrive_actor: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_share_route_v0_shares_shr_id_delete_serialize(
+            shr_id=shr_id,
+            x_agentdrive_actor=x_agentdrive_actor,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def delete_share_route_v0_shares_shr_id_delete_with_http_info(
+        self,
+        shr_id: StrictStr,
+        x_agentdrive_actor: Optional[StrictStr] = None,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Revoke a share link (requires can_manage)
+
+
+        :param shr_id: (required)
+        :type shr_id: str
+        :param x_agentdrive_actor:
+        :type x_agentdrive_actor: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_share_route_v0_shares_shr_id_delete_serialize(
+            shr_id=shr_id,
+            x_agentdrive_actor=x_agentdrive_actor,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def delete_share_route_v0_shares_shr_id_delete_without_preload_content(
+        self,
+        shr_id: StrictStr,
+        x_agentdrive_actor: Optional[StrictStr] = None,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Revoke a share link (requires can_manage)
+
+
+        :param shr_id: (required)
+        :type shr_id: str
+        :param x_agentdrive_actor:
+        :type x_agentdrive_actor: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_share_route_v0_shares_shr_id_delete_serialize(
+            shr_id=shr_id,
+            x_agentdrive_actor=x_agentdrive_actor,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _delete_share_route_v0_shares_shr_id_delete_serialize(
+        self,
+        shr_id,
+        x_agentdrive_actor,
+        authorization,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if shr_id is not None:
+            _path_params['shr_id'] = shr_id
+        # process the query parameters
+        # process the header parameters
+        if x_agentdrive_actor is not None:
+            _header_params['x-agentdrive-actor'] = x_agentdrive_actor
+        if authorization is not None:
+            _header_params['authorization'] = authorization
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='DELETE',
+            resource_path='/v0/shares/{shr_id}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -5507,6 +8206,855 @@ class DefaultApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/v0/artifacts/{art_id}/versions/{version_number}/download',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def download_url_by_id_v0_artifacts_art_id_download_url_get(
+        self,
+        art_id: StrictStr,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> DownloadUrlOut:
+        """Signed direct-from-GCS download URL by stable ID
+
+        Returns a URL for the artifact's bytes. For large artifacts (>= the signed-download threshold) when signing is available, it's a short-lived **signed GCS URL** the client fetches directly (`direct:true`, `expires_at` set); otherwise the **proxy** `/download` URL (`direct:false`). Treat the URL as opaque. large-download-design.md §5.1.
+
+        :param art_id: (required)
+        :type art_id: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._download_url_by_id_v0_artifacts_art_id_download_url_get_serialize(
+            art_id=art_id,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DownloadUrlOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def download_url_by_id_v0_artifacts_art_id_download_url_get_with_http_info(
+        self,
+        art_id: StrictStr,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[DownloadUrlOut]:
+        """Signed direct-from-GCS download URL by stable ID
+
+        Returns a URL for the artifact's bytes. For large artifacts (>= the signed-download threshold) when signing is available, it's a short-lived **signed GCS URL** the client fetches directly (`direct:true`, `expires_at` set); otherwise the **proxy** `/download` URL (`direct:false`). Treat the URL as opaque. large-download-design.md §5.1.
+
+        :param art_id: (required)
+        :type art_id: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._download_url_by_id_v0_artifacts_art_id_download_url_get_serialize(
+            art_id=art_id,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DownloadUrlOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def download_url_by_id_v0_artifacts_art_id_download_url_get_without_preload_content(
+        self,
+        art_id: StrictStr,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Signed direct-from-GCS download URL by stable ID
+
+        Returns a URL for the artifact's bytes. For large artifacts (>= the signed-download threshold) when signing is available, it's a short-lived **signed GCS URL** the client fetches directly (`direct:true`, `expires_at` set); otherwise the **proxy** `/download` URL (`direct:false`). Treat the URL as opaque. large-download-design.md §5.1.
+
+        :param art_id: (required)
+        :type art_id: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._download_url_by_id_v0_artifacts_art_id_download_url_get_serialize(
+            art_id=art_id,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DownloadUrlOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _download_url_by_id_v0_artifacts_art_id_download_url_get_serialize(
+        self,
+        art_id,
+        authorization,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if art_id is not None:
+            _path_params['art_id'] = art_id
+        # process the query parameters
+        # process the header parameters
+        if authorization is not None:
+            _header_params['authorization'] = authorization
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/v0/artifacts/{art_id}/download-url',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def download_url_by_path_v0_artifacts_path_download_url_get(
+        self,
+        path: StrictStr,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> DownloadUrlOut:
+        """Signed direct-from-GCS download URL by path
+
+        Same as `/{art_id}/download-url` but resolves the artifact by path. The returned proxy URL (when `direct:false`) still points at the by-id `/download` endpoint. large-download-design.md §5.1.
+
+        :param path: (required)
+        :type path: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._download_url_by_path_v0_artifacts_path_download_url_get_serialize(
+            path=path,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DownloadUrlOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def download_url_by_path_v0_artifacts_path_download_url_get_with_http_info(
+        self,
+        path: StrictStr,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[DownloadUrlOut]:
+        """Signed direct-from-GCS download URL by path
+
+        Same as `/{art_id}/download-url` but resolves the artifact by path. The returned proxy URL (when `direct:false`) still points at the by-id `/download` endpoint. large-download-design.md §5.1.
+
+        :param path: (required)
+        :type path: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._download_url_by_path_v0_artifacts_path_download_url_get_serialize(
+            path=path,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DownloadUrlOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def download_url_by_path_v0_artifacts_path_download_url_get_without_preload_content(
+        self,
+        path: StrictStr,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Signed direct-from-GCS download URL by path
+
+        Same as `/{art_id}/download-url` but resolves the artifact by path. The returned proxy URL (when `direct:false`) still points at the by-id `/download` endpoint. large-download-design.md §5.1.
+
+        :param path: (required)
+        :type path: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._download_url_by_path_v0_artifacts_path_download_url_get_serialize(
+            path=path,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DownloadUrlOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _download_url_by_path_v0_artifacts_path_download_url_get_serialize(
+        self,
+        path,
+        authorization,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if path is not None:
+            _path_params['path'] = path
+        # process the query parameters
+        # process the header parameters
+        if authorization is not None:
+            _header_params['authorization'] = authorization
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/v0/artifacts/{path}/download-url',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def download_url_version_v0_artifacts_art_id_versions_version_number_download_url_get(
+        self,
+        art_id: StrictStr,
+        version_number: StrictInt,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> DownloadUrlOut:
+        """Signed direct-from-GCS download URL for a specific version
+
+        Same as `/{art_id}/download-url` but for a specific version's bytes (`direct:true` signed GCS URL when large + signing available, else the proxy `/versions/{n}/download` URL). large-download-design.md §5.1.
+
+        :param art_id: (required)
+        :type art_id: str
+        :param version_number: (required)
+        :type version_number: int
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._download_url_version_v0_artifacts_art_id_versions_version_number_download_url_get_serialize(
+            art_id=art_id,
+            version_number=version_number,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DownloadUrlOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def download_url_version_v0_artifacts_art_id_versions_version_number_download_url_get_with_http_info(
+        self,
+        art_id: StrictStr,
+        version_number: StrictInt,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[DownloadUrlOut]:
+        """Signed direct-from-GCS download URL for a specific version
+
+        Same as `/{art_id}/download-url` but for a specific version's bytes (`direct:true` signed GCS URL when large + signing available, else the proxy `/versions/{n}/download` URL). large-download-design.md §5.1.
+
+        :param art_id: (required)
+        :type art_id: str
+        :param version_number: (required)
+        :type version_number: int
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._download_url_version_v0_artifacts_art_id_versions_version_number_download_url_get_serialize(
+            art_id=art_id,
+            version_number=version_number,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DownloadUrlOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def download_url_version_v0_artifacts_art_id_versions_version_number_download_url_get_without_preload_content(
+        self,
+        art_id: StrictStr,
+        version_number: StrictInt,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Signed direct-from-GCS download URL for a specific version
+
+        Same as `/{art_id}/download-url` but for a specific version's bytes (`direct:true` signed GCS URL when large + signing available, else the proxy `/versions/{n}/download` URL). large-download-design.md §5.1.
+
+        :param art_id: (required)
+        :type art_id: str
+        :param version_number: (required)
+        :type version_number: int
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._download_url_version_v0_artifacts_art_id_versions_version_number_download_url_get_serialize(
+            art_id=art_id,
+            version_number=version_number,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DownloadUrlOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _download_url_version_v0_artifacts_art_id_versions_version_number_download_url_get_serialize(
+        self,
+        art_id,
+        version_number,
+        authorization,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if art_id is not None:
+            _path_params['art_id'] = art_id
+        if version_number is not None:
+            _path_params['version_number'] = version_number
+        # process the query parameters
+        # process the header parameters
+        if authorization is not None:
+            _header_params['authorization'] = authorization
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/v0/artifacts/{art_id}/versions/{version_number}/download-url',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -6974,7 +10522,6 @@ class DefaultApi:
         label: Optional[List[StrictStr]] = None,
         file_type: Optional[StrictStr] = None,
         prefix: Optional[StrictStr] = None,
-        visibility: Optional[StrictStr] = None,
         modality: Optional[List[Optional[StrictStr]]] = None,
         updated_after: Optional[datetime] = None,
         updated_before: Optional[datetime] = None,
@@ -6995,7 +10542,7 @@ class DefaultApi:
     ) -> FindPage:
         """Hybrid passage retrieval over the full file body
 
-        Passage-level chunk RAG over `embed_chunks`. Lexical (`chunk_tsv`, GIN) + semantic (HNSW over `embedding`) are run in parallel and fused via Reciprocal Rank Fusion (k=60). Unlike `/v0/search`, which only sees the first ~16 KB preview of each artifact, `/v0/find` reaches the full file body.  **Modes:** - `hybrid` (default) — lexical + semantic, RRF-fused. - `lexical` — `chunk_tsv` only. Best for exact tokens, identifiers, code snippets. - `semantic` — embedding only. Best for conceptual queries where the surface terms differ from the query phrasing.  **Granularity:** results are passages, not files. A long document with multiple matching regions returns multiple hits with distinct `ord` values; consecutive `ord`s overlap by ~400 tokens. Dedupe by `art_id` if you want one row per file.  **Span citations:** `char_start`/`char_end` for text & code, `page_start`/`page_end` for PDFs, `time_start_ms`/`time_end_ms` for audio & video. Only the modality-relevant pair is populated.  **Filters:** `label`, `file_type`, `prefix`, `visibility`, `modality` (repeatable), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`, applied to both legs).  **Wiki coverage:** `/v0/find` excludes `_wiki/` paths by default and — importantly — does NOT cover them even when the caller passes `prefix=_wiki/...`. Wiki pages are not embedded by the pipeline (they're system-generated output, not user input), so `embed_chunks` has no rows for them and the join returns empty. Use `wiki_search` (or `list`/`grep` with a `_wiki/` prefix) for the wiki layer.  **Embedding availability:** when `GEMINI_API_KEY` is not configured, `mode=semantic` returns 500; `mode=hybrid` logs a warning and falls back to lexical-only; `mode=lexical` is unaffected.
+        Passage-level chunk RAG over `embed_chunks`. Lexical (`chunk_tsv`, GIN) + semantic (HNSW over `embedding`) are run in parallel and fused via Reciprocal Rank Fusion (k=60). Unlike `/v0/search`, which only sees the first ~16 KB preview of each artifact, `/v0/find` reaches the full file body.  **Modes:** - `hybrid` (default) — lexical + semantic, RRF-fused. - `lexical` — `chunk_tsv` only. Best for exact tokens, identifiers, code snippets. - `semantic` — embedding only. Best for conceptual queries where the surface terms differ from the query phrasing.  **Granularity:** results are passages, not files. A long document with multiple matching regions returns multiple hits with distinct `ord` values; consecutive `ord`s overlap by ~400 tokens. Dedupe by `art_id` if you want one row per file.  **Span citations:** `char_start`/`char_end` for text & code, `page_start`/`page_end` for PDFs, `time_start_ms`/`time_end_ms` for audio & video. Only the modality-relevant pair is populated.  **Filters:** `label`, `file_type`, `prefix`, `modality` (repeatable), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`, applied to both legs).  **Wiki coverage:** `/v0/find` excludes `_wiki/` paths by default and — importantly — does NOT cover them even when the caller passes `prefix=_wiki/...`. Wiki pages are not embedded by the pipeline (they're system-generated output, not user input), so `embed_chunks` has no rows for them and the join returns empty. Use `wiki_search` (or `list`/`grep` with a `_wiki/` prefix) for the wiki layer.  **Embedding availability:** when `GEMINI_API_KEY` is not configured, `mode=semantic` returns 500; `mode=hybrid` logs a warning and falls back to lexical-only; `mode=lexical` is unaffected.
 
         :param q: (required)
         :type q: str
@@ -7007,8 +10554,6 @@ class DefaultApi:
         :type file_type: str
         :param prefix:
         :type prefix: str
-        :param visibility:
-        :type visibility: str
         :param modality:
         :type modality: List[Optional[str]]
         :param updated_after:
@@ -7047,7 +10592,6 @@ class DefaultApi:
             label=label,
             file_type=file_type,
             prefix=prefix,
-            visibility=visibility,
             modality=modality,
             updated_after=updated_after,
             updated_before=updated_before,
@@ -7082,7 +10626,6 @@ class DefaultApi:
         label: Optional[List[StrictStr]] = None,
         file_type: Optional[StrictStr] = None,
         prefix: Optional[StrictStr] = None,
-        visibility: Optional[StrictStr] = None,
         modality: Optional[List[Optional[StrictStr]]] = None,
         updated_after: Optional[datetime] = None,
         updated_before: Optional[datetime] = None,
@@ -7103,7 +10646,7 @@ class DefaultApi:
     ) -> ApiResponse[FindPage]:
         """Hybrid passage retrieval over the full file body
 
-        Passage-level chunk RAG over `embed_chunks`. Lexical (`chunk_tsv`, GIN) + semantic (HNSW over `embedding`) are run in parallel and fused via Reciprocal Rank Fusion (k=60). Unlike `/v0/search`, which only sees the first ~16 KB preview of each artifact, `/v0/find` reaches the full file body.  **Modes:** - `hybrid` (default) — lexical + semantic, RRF-fused. - `lexical` — `chunk_tsv` only. Best for exact tokens, identifiers, code snippets. - `semantic` — embedding only. Best for conceptual queries where the surface terms differ from the query phrasing.  **Granularity:** results are passages, not files. A long document with multiple matching regions returns multiple hits with distinct `ord` values; consecutive `ord`s overlap by ~400 tokens. Dedupe by `art_id` if you want one row per file.  **Span citations:** `char_start`/`char_end` for text & code, `page_start`/`page_end` for PDFs, `time_start_ms`/`time_end_ms` for audio & video. Only the modality-relevant pair is populated.  **Filters:** `label`, `file_type`, `prefix`, `visibility`, `modality` (repeatable), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`, applied to both legs).  **Wiki coverage:** `/v0/find` excludes `_wiki/` paths by default and — importantly — does NOT cover them even when the caller passes `prefix=_wiki/...`. Wiki pages are not embedded by the pipeline (they're system-generated output, not user input), so `embed_chunks` has no rows for them and the join returns empty. Use `wiki_search` (or `list`/`grep` with a `_wiki/` prefix) for the wiki layer.  **Embedding availability:** when `GEMINI_API_KEY` is not configured, `mode=semantic` returns 500; `mode=hybrid` logs a warning and falls back to lexical-only; `mode=lexical` is unaffected.
+        Passage-level chunk RAG over `embed_chunks`. Lexical (`chunk_tsv`, GIN) + semantic (HNSW over `embedding`) are run in parallel and fused via Reciprocal Rank Fusion (k=60). Unlike `/v0/search`, which only sees the first ~16 KB preview of each artifact, `/v0/find` reaches the full file body.  **Modes:** - `hybrid` (default) — lexical + semantic, RRF-fused. - `lexical` — `chunk_tsv` only. Best for exact tokens, identifiers, code snippets. - `semantic` — embedding only. Best for conceptual queries where the surface terms differ from the query phrasing.  **Granularity:** results are passages, not files. A long document with multiple matching regions returns multiple hits with distinct `ord` values; consecutive `ord`s overlap by ~400 tokens. Dedupe by `art_id` if you want one row per file.  **Span citations:** `char_start`/`char_end` for text & code, `page_start`/`page_end` for PDFs, `time_start_ms`/`time_end_ms` for audio & video. Only the modality-relevant pair is populated.  **Filters:** `label`, `file_type`, `prefix`, `modality` (repeatable), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`, applied to both legs).  **Wiki coverage:** `/v0/find` excludes `_wiki/` paths by default and — importantly — does NOT cover them even when the caller passes `prefix=_wiki/...`. Wiki pages are not embedded by the pipeline (they're system-generated output, not user input), so `embed_chunks` has no rows for them and the join returns empty. Use `wiki_search` (or `list`/`grep` with a `_wiki/` prefix) for the wiki layer.  **Embedding availability:** when `GEMINI_API_KEY` is not configured, `mode=semantic` returns 500; `mode=hybrid` logs a warning and falls back to lexical-only; `mode=lexical` is unaffected.
 
         :param q: (required)
         :type q: str
@@ -7115,8 +10658,6 @@ class DefaultApi:
         :type file_type: str
         :param prefix:
         :type prefix: str
-        :param visibility:
-        :type visibility: str
         :param modality:
         :type modality: List[Optional[str]]
         :param updated_after:
@@ -7155,7 +10696,6 @@ class DefaultApi:
             label=label,
             file_type=file_type,
             prefix=prefix,
-            visibility=visibility,
             modality=modality,
             updated_after=updated_after,
             updated_before=updated_before,
@@ -7190,7 +10730,6 @@ class DefaultApi:
         label: Optional[List[StrictStr]] = None,
         file_type: Optional[StrictStr] = None,
         prefix: Optional[StrictStr] = None,
-        visibility: Optional[StrictStr] = None,
         modality: Optional[List[Optional[StrictStr]]] = None,
         updated_after: Optional[datetime] = None,
         updated_before: Optional[datetime] = None,
@@ -7211,7 +10750,7 @@ class DefaultApi:
     ) -> RESTResponseType:
         """Hybrid passage retrieval over the full file body
 
-        Passage-level chunk RAG over `embed_chunks`. Lexical (`chunk_tsv`, GIN) + semantic (HNSW over `embedding`) are run in parallel and fused via Reciprocal Rank Fusion (k=60). Unlike `/v0/search`, which only sees the first ~16 KB preview of each artifact, `/v0/find` reaches the full file body.  **Modes:** - `hybrid` (default) — lexical + semantic, RRF-fused. - `lexical` — `chunk_tsv` only. Best for exact tokens, identifiers, code snippets. - `semantic` — embedding only. Best for conceptual queries where the surface terms differ from the query phrasing.  **Granularity:** results are passages, not files. A long document with multiple matching regions returns multiple hits with distinct `ord` values; consecutive `ord`s overlap by ~400 tokens. Dedupe by `art_id` if you want one row per file.  **Span citations:** `char_start`/`char_end` for text & code, `page_start`/`page_end` for PDFs, `time_start_ms`/`time_end_ms` for audio & video. Only the modality-relevant pair is populated.  **Filters:** `label`, `file_type`, `prefix`, `visibility`, `modality` (repeatable), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`, applied to both legs).  **Wiki coverage:** `/v0/find` excludes `_wiki/` paths by default and — importantly — does NOT cover them even when the caller passes `prefix=_wiki/...`. Wiki pages are not embedded by the pipeline (they're system-generated output, not user input), so `embed_chunks` has no rows for them and the join returns empty. Use `wiki_search` (or `list`/`grep` with a `_wiki/` prefix) for the wiki layer.  **Embedding availability:** when `GEMINI_API_KEY` is not configured, `mode=semantic` returns 500; `mode=hybrid` logs a warning and falls back to lexical-only; `mode=lexical` is unaffected.
+        Passage-level chunk RAG over `embed_chunks`. Lexical (`chunk_tsv`, GIN) + semantic (HNSW over `embedding`) are run in parallel and fused via Reciprocal Rank Fusion (k=60). Unlike `/v0/search`, which only sees the first ~16 KB preview of each artifact, `/v0/find` reaches the full file body.  **Modes:** - `hybrid` (default) — lexical + semantic, RRF-fused. - `lexical` — `chunk_tsv` only. Best for exact tokens, identifiers, code snippets. - `semantic` — embedding only. Best for conceptual queries where the surface terms differ from the query phrasing.  **Granularity:** results are passages, not files. A long document with multiple matching regions returns multiple hits with distinct `ord` values; consecutive `ord`s overlap by ~400 tokens. Dedupe by `art_id` if you want one row per file.  **Span citations:** `char_start`/`char_end` for text & code, `page_start`/`page_end` for PDFs, `time_start_ms`/`time_end_ms` for audio & video. Only the modality-relevant pair is populated.  **Filters:** `label`, `file_type`, `prefix`, `modality` (repeatable), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`, applied to both legs).  **Wiki coverage:** `/v0/find` excludes `_wiki/` paths by default and — importantly — does NOT cover them even when the caller passes `prefix=_wiki/...`. Wiki pages are not embedded by the pipeline (they're system-generated output, not user input), so `embed_chunks` has no rows for them and the join returns empty. Use `wiki_search` (or `list`/`grep` with a `_wiki/` prefix) for the wiki layer.  **Embedding availability:** when `GEMINI_API_KEY` is not configured, `mode=semantic` returns 500; `mode=hybrid` logs a warning and falls back to lexical-only; `mode=lexical` is unaffected.
 
         :param q: (required)
         :type q: str
@@ -7223,8 +10762,6 @@ class DefaultApi:
         :type file_type: str
         :param prefix:
         :type prefix: str
-        :param visibility:
-        :type visibility: str
         :param modality:
         :type modality: List[Optional[str]]
         :param updated_after:
@@ -7263,7 +10800,6 @@ class DefaultApi:
             label=label,
             file_type=file_type,
             prefix=prefix,
-            visibility=visibility,
             modality=modality,
             updated_after=updated_after,
             updated_before=updated_before,
@@ -7293,7 +10829,6 @@ class DefaultApi:
         label,
         file_type,
         prefix,
-        visibility,
         modality,
         updated_after,
         updated_before,
@@ -7342,10 +10877,6 @@ class DefaultApi:
         if prefix is not None:
             
             _query_params.append(('prefix', prefix))
-            
-        if visibility is not None:
-            
-            _query_params.append(('visibility', visibility))
             
         if modality is not None:
             
@@ -9363,6 +12894,281 @@ class DefaultApi:
 
 
     @validate_call
+    def get_folder_by_path_meta_v0_folders_path_meta_get(
+        self,
+        path: StrictStr,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> FolderOut:
+        """Folder metadata by path (same shape as the bare path route)
+
+
+        :param path: (required)
+        :type path: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_folder_by_path_meta_v0_folders_path_meta_get_serialize(
+            path=path,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "FolderOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_folder_by_path_meta_v0_folders_path_meta_get_with_http_info(
+        self,
+        path: StrictStr,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[FolderOut]:
+        """Folder metadata by path (same shape as the bare path route)
+
+
+        :param path: (required)
+        :type path: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_folder_by_path_meta_v0_folders_path_meta_get_serialize(
+            path=path,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "FolderOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_folder_by_path_meta_v0_folders_path_meta_get_without_preload_content(
+        self,
+        path: StrictStr,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Folder metadata by path (same shape as the bare path route)
+
+
+        :param path: (required)
+        :type path: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_folder_by_path_meta_v0_folders_path_meta_get_serialize(
+            path=path,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "FolderOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_folder_by_path_meta_v0_folders_path_meta_get_serialize(
+        self,
+        path,
+        authorization,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if path is not None:
+            _path_params['path'] = path
+        # process the query parameters
+        # process the header parameters
+        if authorization is not None:
+            _header_params['authorization'] = authorization
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/v0/folders/{path}/meta',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def get_folder_by_path_v0_folders_path_get(
         self,
         path: StrictStr,
@@ -10447,6 +14253,266 @@ class DefaultApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/v0/projects/{fld_id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def get_share_state_web_share_rid_get(
+        self,
+        rid: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Get Share State
+
+
+        :param rid: (required)
+        :type rid: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_share_state_web_share_rid_get_serialize(
+            rid=rid,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_share_state_web_share_rid_get_with_http_info(
+        self,
+        rid: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Get Share State
+
+
+        :param rid: (required)
+        :type rid: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_share_state_web_share_rid_get_serialize(
+            rid=rid,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_share_state_web_share_rid_get_without_preload_content(
+        self,
+        rid: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Share State
+
+
+        :param rid: (required)
+        :type rid: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_share_state_web_share_rid_get_serialize(
+            rid=rid,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_share_state_web_share_rid_get_serialize(
+        self,
+        rid,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if rid is not None:
+            _path_params['rid'] = rid
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/web/share/{rid}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -11752,6 +15818,283 @@ class DefaultApi:
 
 
     @validate_call
+    def list_grants_route_v0_grants_get(
+        self,
+        resource: Annotated[StrictStr, Field(description="art_*/fld_* id or a path")],
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> GrantList:
+        """List live grants on a resource (requires can_manage)
+
+
+        :param resource: art_*/fld_* id or a path (required)
+        :type resource: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_grants_route_v0_grants_get_serialize(
+            resource=resource,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GrantList",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def list_grants_route_v0_grants_get_with_http_info(
+        self,
+        resource: Annotated[StrictStr, Field(description="art_*/fld_* id or a path")],
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[GrantList]:
+        """List live grants on a resource (requires can_manage)
+
+
+        :param resource: art_*/fld_* id or a path (required)
+        :type resource: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_grants_route_v0_grants_get_serialize(
+            resource=resource,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GrantList",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def list_grants_route_v0_grants_get_without_preload_content(
+        self,
+        resource: Annotated[StrictStr, Field(description="art_*/fld_* id or a path")],
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List live grants on a resource (requires can_manage)
+
+
+        :param resource: art_*/fld_* id or a path (required)
+        :type resource: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_grants_route_v0_grants_get_serialize(
+            resource=resource,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GrantList",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _list_grants_route_v0_grants_get_serialize(
+        self,
+        resource,
+        authorization,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if resource is not None:
+            
+            _query_params.append(('resource', resource))
+            
+        # process the header parameters
+        if authorization is not None:
+            _header_params['authorization'] = authorization
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/v0/grants',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def list_project_jobs_v0_projects_fld_id_jobs_get(
         self,
         fld_id: StrictStr,
@@ -12045,6 +16388,283 @@ class DefaultApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/v0/projects/{fld_id}/jobs',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def list_shares_route_v0_shares_get(
+        self,
+        resource: Annotated[StrictStr, Field(description="art_*/fld_* id or a path")],
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ShareList:
+        """List live share links on a resource (requires can_manage)
+
+
+        :param resource: art_*/fld_* id or a path (required)
+        :type resource: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_shares_route_v0_shares_get_serialize(
+            resource=resource,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ShareList",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def list_shares_route_v0_shares_get_with_http_info(
+        self,
+        resource: Annotated[StrictStr, Field(description="art_*/fld_* id or a path")],
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ShareList]:
+        """List live share links on a resource (requires can_manage)
+
+
+        :param resource: art_*/fld_* id or a path (required)
+        :type resource: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_shares_route_v0_shares_get_serialize(
+            resource=resource,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ShareList",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def list_shares_route_v0_shares_get_without_preload_content(
+        self,
+        resource: Annotated[StrictStr, Field(description="art_*/fld_* id or a path")],
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List live share links on a resource (requires can_manage)
+
+
+        :param resource: art_*/fld_* id or a path (required)
+        :type resource: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_shares_route_v0_shares_get_serialize(
+            resource=resource,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ShareList",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _list_shares_route_v0_shares_get_serialize(
+        self,
+        resource,
+        authorization,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if resource is not None:
+            
+            _query_params.append(('resource', resource))
+            
+        # process the header parameters
+        if authorization is not None:
+            _header_params['authorization'] = authorization
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/v0/shares',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -15720,6 +20340,324 @@ class DefaultApi:
 
 
     @validate_call
+    def patch_grant_route_v0_grants_grn_id_patch(
+        self,
+        grn_id: StrictStr,
+        grant_patch_in: GrantPatchIn,
+        x_agentdrive_actor: Optional[StrictStr] = None,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> GrantOut:
+        """Update a grant's role and/or expiry (requires can_manage)
+
+
+        :param grn_id: (required)
+        :type grn_id: str
+        :param grant_patch_in: (required)
+        :type grant_patch_in: GrantPatchIn
+        :param x_agentdrive_actor:
+        :type x_agentdrive_actor: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._patch_grant_route_v0_grants_grn_id_patch_serialize(
+            grn_id=grn_id,
+            grant_patch_in=grant_patch_in,
+            x_agentdrive_actor=x_agentdrive_actor,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GrantOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def patch_grant_route_v0_grants_grn_id_patch_with_http_info(
+        self,
+        grn_id: StrictStr,
+        grant_patch_in: GrantPatchIn,
+        x_agentdrive_actor: Optional[StrictStr] = None,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[GrantOut]:
+        """Update a grant's role and/or expiry (requires can_manage)
+
+
+        :param grn_id: (required)
+        :type grn_id: str
+        :param grant_patch_in: (required)
+        :type grant_patch_in: GrantPatchIn
+        :param x_agentdrive_actor:
+        :type x_agentdrive_actor: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._patch_grant_route_v0_grants_grn_id_patch_serialize(
+            grn_id=grn_id,
+            grant_patch_in=grant_patch_in,
+            x_agentdrive_actor=x_agentdrive_actor,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GrantOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def patch_grant_route_v0_grants_grn_id_patch_without_preload_content(
+        self,
+        grn_id: StrictStr,
+        grant_patch_in: GrantPatchIn,
+        x_agentdrive_actor: Optional[StrictStr] = None,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Update a grant's role and/or expiry (requires can_manage)
+
+
+        :param grn_id: (required)
+        :type grn_id: str
+        :param grant_patch_in: (required)
+        :type grant_patch_in: GrantPatchIn
+        :param x_agentdrive_actor:
+        :type x_agentdrive_actor: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._patch_grant_route_v0_grants_grn_id_patch_serialize(
+            grn_id=grn_id,
+            grant_patch_in=grant_patch_in,
+            x_agentdrive_actor=x_agentdrive_actor,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GrantOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _patch_grant_route_v0_grants_grn_id_patch_serialize(
+        self,
+        grn_id,
+        grant_patch_in,
+        x_agentdrive_actor,
+        authorization,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if grn_id is not None:
+            _path_params['grn_id'] = grn_id
+        # process the query parameters
+        # process the header parameters
+        if x_agentdrive_actor is not None:
+            _header_params['x-agentdrive-actor'] = x_agentdrive_actor
+        if authorization is not None:
+            _header_params['authorization'] = authorization
+        # process the form parameters
+        # process the body parameter
+        if grant_patch_in is not None:
+            _body_params = grant_patch_in
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='PATCH',
+            resource_path='/v0/grants/{grn_id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def post_feedback_v0_feedback_post(
         self,
         authorization: Optional[StrictStr] = None,
@@ -16757,7 +21695,6 @@ class DefaultApi:
         self,
         path: StrictStr,
         content_type: Optional[StrictStr] = None,
-        x_agentdrive_visibility: Optional[StrictStr] = None,
         x_agentdrive_labels: Optional[StrictStr] = None,
         x_agentdrive_metadata: Optional[StrictStr] = None,
         x_agentdrive_source: Optional[StrictStr] = None,
@@ -16780,14 +21717,12 @@ class DefaultApi:
     ) -> ArtifactOut:
         """Upload (or overwrite) an artifact
 
-        Upload an artifact at the given path. The path is treated as the artifact's location in the drive — re-uploading the same path overwrites in place (idempotent).  **Limits:** request body must not exceed **50 MB**. Path must be non-empty, ≤256 chars, only `[A-Za-z0-9_./-]`, no `..` segments, no leading/trailing slash. Per-token write rate limit: 100/hour.  **Optional headers.** Each preserves the existing artifact's value when omitted on an overwrite, and takes the create-default on a new path; send the header to replace it: - `X-AgentDrive-Visibility`: `public` or `private` (new-path default `private`). Private artifacts are readable only with your API key; `public` gives an anonymously shareable URL. - `X-AgentDrive-Labels`: comma-separated labels (e.g. `draft,report`); an empty value clears them. Each: lowercase `[a-z0-9_-]+`, ≤64 chars; ≤16 labels per artifact. - `X-AgentDrive-Metadata`: JSON object of agent-attached fields. - `X-AgentDrive-Source`: JSON `{\"refs\": [...]}` source provenance (present, including `{\"refs\": []}`, replaces). - `X-AgentDrive-Actor`: caller-supplied actor name (≤64 chars) for event-log attribution. Untrusted; never used for authz.
+        Upload an artifact at the given path. The path is treated as the artifact's location in the drive — re-uploading the same path overwrites in place (idempotent).  **Limits:** request body must not exceed **50 MB**. Path must be non-empty, ≤256 chars, only `[A-Za-z0-9_./-]`, no `..` segments, no leading/trailing slash. Per-token write rate limit: 100/hour.  **Optional headers.** Each preserves the existing artifact's value when omitted on an overwrite, and takes the create-default on a new path; send the header to replace it: - `X-AgentDrive-Labels`: comma-separated labels (e.g. `draft,report`); an empty value clears them. Each: lowercase `[a-z0-9_-]+`, ≤64 chars; ≤16 labels per artifact. - `X-AgentDrive-Metadata`: JSON object of agent-attached fields. - `X-AgentDrive-Source`: JSON `{\"refs\": [...]}` source provenance (present, including `{\"refs\": []}`, replaces). - `X-AgentDrive-Actor`: caller-supplied actor name (≤64 chars) for event-log attribution. Untrusted; never used for authz.
 
         :param path: (required)
         :type path: str
         :param content_type:
         :type content_type: str
-        :param x_agentdrive_visibility:
-        :type x_agentdrive_visibility: str
         :param x_agentdrive_labels:
         :type x_agentdrive_labels: str
         :param x_agentdrive_metadata:
@@ -16827,7 +21762,6 @@ class DefaultApi:
         _param = self._put_artifact_v0_artifacts_path_put_serialize(
             path=path,
             content_type=content_type,
-            x_agentdrive_visibility=x_agentdrive_visibility,
             x_agentdrive_labels=x_agentdrive_labels,
             x_agentdrive_metadata=x_agentdrive_metadata,
             x_agentdrive_source=x_agentdrive_source,
@@ -16861,7 +21795,6 @@ class DefaultApi:
         self,
         path: StrictStr,
         content_type: Optional[StrictStr] = None,
-        x_agentdrive_visibility: Optional[StrictStr] = None,
         x_agentdrive_labels: Optional[StrictStr] = None,
         x_agentdrive_metadata: Optional[StrictStr] = None,
         x_agentdrive_source: Optional[StrictStr] = None,
@@ -16884,14 +21817,12 @@ class DefaultApi:
     ) -> ApiResponse[ArtifactOut]:
         """Upload (or overwrite) an artifact
 
-        Upload an artifact at the given path. The path is treated as the artifact's location in the drive — re-uploading the same path overwrites in place (idempotent).  **Limits:** request body must not exceed **50 MB**. Path must be non-empty, ≤256 chars, only `[A-Za-z0-9_./-]`, no `..` segments, no leading/trailing slash. Per-token write rate limit: 100/hour.  **Optional headers.** Each preserves the existing artifact's value when omitted on an overwrite, and takes the create-default on a new path; send the header to replace it: - `X-AgentDrive-Visibility`: `public` or `private` (new-path default `private`). Private artifacts are readable only with your API key; `public` gives an anonymously shareable URL. - `X-AgentDrive-Labels`: comma-separated labels (e.g. `draft,report`); an empty value clears them. Each: lowercase `[a-z0-9_-]+`, ≤64 chars; ≤16 labels per artifact. - `X-AgentDrive-Metadata`: JSON object of agent-attached fields. - `X-AgentDrive-Source`: JSON `{\"refs\": [...]}` source provenance (present, including `{\"refs\": []}`, replaces). - `X-AgentDrive-Actor`: caller-supplied actor name (≤64 chars) for event-log attribution. Untrusted; never used for authz.
+        Upload an artifact at the given path. The path is treated as the artifact's location in the drive — re-uploading the same path overwrites in place (idempotent).  **Limits:** request body must not exceed **50 MB**. Path must be non-empty, ≤256 chars, only `[A-Za-z0-9_./-]`, no `..` segments, no leading/trailing slash. Per-token write rate limit: 100/hour.  **Optional headers.** Each preserves the existing artifact's value when omitted on an overwrite, and takes the create-default on a new path; send the header to replace it: - `X-AgentDrive-Labels`: comma-separated labels (e.g. `draft,report`); an empty value clears them. Each: lowercase `[a-z0-9_-]+`, ≤64 chars; ≤16 labels per artifact. - `X-AgentDrive-Metadata`: JSON object of agent-attached fields. - `X-AgentDrive-Source`: JSON `{\"refs\": [...]}` source provenance (present, including `{\"refs\": []}`, replaces). - `X-AgentDrive-Actor`: caller-supplied actor name (≤64 chars) for event-log attribution. Untrusted; never used for authz.
 
         :param path: (required)
         :type path: str
         :param content_type:
         :type content_type: str
-        :param x_agentdrive_visibility:
-        :type x_agentdrive_visibility: str
         :param x_agentdrive_labels:
         :type x_agentdrive_labels: str
         :param x_agentdrive_metadata:
@@ -16931,7 +21862,6 @@ class DefaultApi:
         _param = self._put_artifact_v0_artifacts_path_put_serialize(
             path=path,
             content_type=content_type,
-            x_agentdrive_visibility=x_agentdrive_visibility,
             x_agentdrive_labels=x_agentdrive_labels,
             x_agentdrive_metadata=x_agentdrive_metadata,
             x_agentdrive_source=x_agentdrive_source,
@@ -16965,7 +21895,6 @@ class DefaultApi:
         self,
         path: StrictStr,
         content_type: Optional[StrictStr] = None,
-        x_agentdrive_visibility: Optional[StrictStr] = None,
         x_agentdrive_labels: Optional[StrictStr] = None,
         x_agentdrive_metadata: Optional[StrictStr] = None,
         x_agentdrive_source: Optional[StrictStr] = None,
@@ -16988,14 +21917,12 @@ class DefaultApi:
     ) -> RESTResponseType:
         """Upload (or overwrite) an artifact
 
-        Upload an artifact at the given path. The path is treated as the artifact's location in the drive — re-uploading the same path overwrites in place (idempotent).  **Limits:** request body must not exceed **50 MB**. Path must be non-empty, ≤256 chars, only `[A-Za-z0-9_./-]`, no `..` segments, no leading/trailing slash. Per-token write rate limit: 100/hour.  **Optional headers.** Each preserves the existing artifact's value when omitted on an overwrite, and takes the create-default on a new path; send the header to replace it: - `X-AgentDrive-Visibility`: `public` or `private` (new-path default `private`). Private artifacts are readable only with your API key; `public` gives an anonymously shareable URL. - `X-AgentDrive-Labels`: comma-separated labels (e.g. `draft,report`); an empty value clears them. Each: lowercase `[a-z0-9_-]+`, ≤64 chars; ≤16 labels per artifact. - `X-AgentDrive-Metadata`: JSON object of agent-attached fields. - `X-AgentDrive-Source`: JSON `{\"refs\": [...]}` source provenance (present, including `{\"refs\": []}`, replaces). - `X-AgentDrive-Actor`: caller-supplied actor name (≤64 chars) for event-log attribution. Untrusted; never used for authz.
+        Upload an artifact at the given path. The path is treated as the artifact's location in the drive — re-uploading the same path overwrites in place (idempotent).  **Limits:** request body must not exceed **50 MB**. Path must be non-empty, ≤256 chars, only `[A-Za-z0-9_./-]`, no `..` segments, no leading/trailing slash. Per-token write rate limit: 100/hour.  **Optional headers.** Each preserves the existing artifact's value when omitted on an overwrite, and takes the create-default on a new path; send the header to replace it: - `X-AgentDrive-Labels`: comma-separated labels (e.g. `draft,report`); an empty value clears them. Each: lowercase `[a-z0-9_-]+`, ≤64 chars; ≤16 labels per artifact. - `X-AgentDrive-Metadata`: JSON object of agent-attached fields. - `X-AgentDrive-Source`: JSON `{\"refs\": [...]}` source provenance (present, including `{\"refs\": []}`, replaces). - `X-AgentDrive-Actor`: caller-supplied actor name (≤64 chars) for event-log attribution. Untrusted; never used for authz.
 
         :param path: (required)
         :type path: str
         :param content_type:
         :type content_type: str
-        :param x_agentdrive_visibility:
-        :type x_agentdrive_visibility: str
         :param x_agentdrive_labels:
         :type x_agentdrive_labels: str
         :param x_agentdrive_metadata:
@@ -17035,7 +21962,6 @@ class DefaultApi:
         _param = self._put_artifact_v0_artifacts_path_put_serialize(
             path=path,
             content_type=content_type,
-            x_agentdrive_visibility=x_agentdrive_visibility,
             x_agentdrive_labels=x_agentdrive_labels,
             x_agentdrive_metadata=x_agentdrive_metadata,
             x_agentdrive_source=x_agentdrive_source,
@@ -17064,7 +21990,6 @@ class DefaultApi:
         self,
         path,
         content_type,
-        x_agentdrive_visibility,
         x_agentdrive_labels,
         x_agentdrive_metadata,
         x_agentdrive_source,
@@ -17099,8 +22024,6 @@ class DefaultApi:
         # process the header parameters
         if content_type is not None:
             _header_params['content-type'] = content_type
-        if x_agentdrive_visibility is not None:
-            _header_params['x-agentdrive-visibility'] = x_agentdrive_visibility
         if x_agentdrive_labels is not None:
             _header_params['x-agentdrive-labels'] = x_agentdrive_labels
         if x_agentdrive_metadata is not None:
@@ -18511,6 +23434,554 @@ class DefaultApi:
 
 
     @validate_call
+    def redeem_share_s_share_key_get(
+        self,
+        share_key: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Redeem Share
+
+
+        :param share_key: (required)
+        :type share_key: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._redeem_share_s_share_key_get_serialize(
+            share_key=share_key,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def redeem_share_s_share_key_get_with_http_info(
+        self,
+        share_key: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Redeem Share
+
+
+        :param share_key: (required)
+        :type share_key: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._redeem_share_s_share_key_get_serialize(
+            share_key=share_key,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def redeem_share_s_share_key_get_without_preload_content(
+        self,
+        share_key: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Redeem Share
+
+
+        :param share_key: (required)
+        :type share_key: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._redeem_share_s_share_key_get_serialize(
+            share_key=share_key,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _redeem_share_s_share_key_get_serialize(
+        self,
+        share_key,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if share_key is not None:
+            _path_params['share_key'] = share_key
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/s/{share_key}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def redeem_share_with_password_s_share_key_post(
+        self,
+        share_key: StrictStr,
+        password: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Redeem Share With Password
+
+
+        :param share_key: (required)
+        :type share_key: str
+        :param password:
+        :type password: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._redeem_share_with_password_s_share_key_post_serialize(
+            share_key=share_key,
+            password=password,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def redeem_share_with_password_s_share_key_post_with_http_info(
+        self,
+        share_key: StrictStr,
+        password: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Redeem Share With Password
+
+
+        :param share_key: (required)
+        :type share_key: str
+        :param password:
+        :type password: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._redeem_share_with_password_s_share_key_post_serialize(
+            share_key=share_key,
+            password=password,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def redeem_share_with_password_s_share_key_post_without_preload_content(
+        self,
+        share_key: StrictStr,
+        password: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Redeem Share With Password
+
+
+        :param share_key: (required)
+        :type share_key: str
+        :param password:
+        :type password: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._redeem_share_with_password_s_share_key_post_serialize(
+            share_key=share_key,
+            password=password,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _redeem_share_with_password_s_share_key_post_serialize(
+        self,
+        share_key,
+        password,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if share_key is not None:
+            _path_params['share_key'] = share_key
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        if password is not None:
+            _form_params.append(('password', password))
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/x-www-form-urlencoded'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/s/{share_key}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def rename_artifact_route_v0_artifacts_art_id_patch(
         self,
         art_id: StrictStr,
@@ -19467,6 +24938,586 @@ class DefaultApi:
 
 
     @validate_call
+    def revoke_grant_web_share_rid_grant_grn_id_revoke_post(
+        self,
+        rid: StrictStr,
+        grn_id: StrictStr,
+        x_csrf_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Revoke Grant
+
+
+        :param rid: (required)
+        :type rid: str
+        :param grn_id: (required)
+        :type grn_id: str
+        :param x_csrf_token:
+        :type x_csrf_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._revoke_grant_web_share_rid_grant_grn_id_revoke_post_serialize(
+            rid=rid,
+            grn_id=grn_id,
+            x_csrf_token=x_csrf_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def revoke_grant_web_share_rid_grant_grn_id_revoke_post_with_http_info(
+        self,
+        rid: StrictStr,
+        grn_id: StrictStr,
+        x_csrf_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Revoke Grant
+
+
+        :param rid: (required)
+        :type rid: str
+        :param grn_id: (required)
+        :type grn_id: str
+        :param x_csrf_token:
+        :type x_csrf_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._revoke_grant_web_share_rid_grant_grn_id_revoke_post_serialize(
+            rid=rid,
+            grn_id=grn_id,
+            x_csrf_token=x_csrf_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def revoke_grant_web_share_rid_grant_grn_id_revoke_post_without_preload_content(
+        self,
+        rid: StrictStr,
+        grn_id: StrictStr,
+        x_csrf_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Revoke Grant
+
+
+        :param rid: (required)
+        :type rid: str
+        :param grn_id: (required)
+        :type grn_id: str
+        :param x_csrf_token:
+        :type x_csrf_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._revoke_grant_web_share_rid_grant_grn_id_revoke_post_serialize(
+            rid=rid,
+            grn_id=grn_id,
+            x_csrf_token=x_csrf_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _revoke_grant_web_share_rid_grant_grn_id_revoke_post_serialize(
+        self,
+        rid,
+        grn_id,
+        x_csrf_token,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if rid is not None:
+            _path_params['rid'] = rid
+        if grn_id is not None:
+            _path_params['grn_id'] = grn_id
+        # process the query parameters
+        # process the header parameters
+        if x_csrf_token is not None:
+            _header_params['x-csrf-token'] = x_csrf_token
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/web/share/{rid}/grant/{grn_id}/revoke',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def revoke_link_web_share_rid_link_shr_id_revoke_post(
+        self,
+        rid: StrictStr,
+        shr_id: StrictStr,
+        x_csrf_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Revoke Link
+
+
+        :param rid: (required)
+        :type rid: str
+        :param shr_id: (required)
+        :type shr_id: str
+        :param x_csrf_token:
+        :type x_csrf_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._revoke_link_web_share_rid_link_shr_id_revoke_post_serialize(
+            rid=rid,
+            shr_id=shr_id,
+            x_csrf_token=x_csrf_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def revoke_link_web_share_rid_link_shr_id_revoke_post_with_http_info(
+        self,
+        rid: StrictStr,
+        shr_id: StrictStr,
+        x_csrf_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Revoke Link
+
+
+        :param rid: (required)
+        :type rid: str
+        :param shr_id: (required)
+        :type shr_id: str
+        :param x_csrf_token:
+        :type x_csrf_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._revoke_link_web_share_rid_link_shr_id_revoke_post_serialize(
+            rid=rid,
+            shr_id=shr_id,
+            x_csrf_token=x_csrf_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def revoke_link_web_share_rid_link_shr_id_revoke_post_without_preload_content(
+        self,
+        rid: StrictStr,
+        shr_id: StrictStr,
+        x_csrf_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Revoke Link
+
+
+        :param rid: (required)
+        :type rid: str
+        :param shr_id: (required)
+        :type shr_id: str
+        :param x_csrf_token:
+        :type x_csrf_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._revoke_link_web_share_rid_link_shr_id_revoke_post_serialize(
+            rid=rid,
+            shr_id=shr_id,
+            x_csrf_token=x_csrf_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _revoke_link_web_share_rid_link_shr_id_revoke_post_serialize(
+        self,
+        rid,
+        shr_id,
+        x_csrf_token,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if rid is not None:
+            _path_params['rid'] = rid
+        if shr_id is not None:
+            _path_params['shr_id'] = shr_id
+        # process the query parameters
+        # process the header parameters
+        if x_csrf_token is not None:
+            _header_params['x-csrf-token'] = x_csrf_token
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/web/share/{rid}/link/{shr_id}/revoke',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def rotate_key_web_keys_rotate_post(
         self,
         csrf: StrictStr,
@@ -19740,13 +25791,302 @@ class DefaultApi:
 
 
     @validate_call
+    def rotate_share_route_v0_shares_shr_id_rotate_post(
+        self,
+        shr_id: StrictStr,
+        x_agentdrive_actor: Optional[StrictStr] = None,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ShareMintOut:
+        """Revoke + reissue a share link's key (requires can_share)
+
+
+        :param shr_id: (required)
+        :type shr_id: str
+        :param x_agentdrive_actor:
+        :type x_agentdrive_actor: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._rotate_share_route_v0_shares_shr_id_rotate_post_serialize(
+            shr_id=shr_id,
+            x_agentdrive_actor=x_agentdrive_actor,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ShareMintOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def rotate_share_route_v0_shares_shr_id_rotate_post_with_http_info(
+        self,
+        shr_id: StrictStr,
+        x_agentdrive_actor: Optional[StrictStr] = None,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ShareMintOut]:
+        """Revoke + reissue a share link's key (requires can_share)
+
+
+        :param shr_id: (required)
+        :type shr_id: str
+        :param x_agentdrive_actor:
+        :type x_agentdrive_actor: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._rotate_share_route_v0_shares_shr_id_rotate_post_serialize(
+            shr_id=shr_id,
+            x_agentdrive_actor=x_agentdrive_actor,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ShareMintOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def rotate_share_route_v0_shares_shr_id_rotate_post_without_preload_content(
+        self,
+        shr_id: StrictStr,
+        x_agentdrive_actor: Optional[StrictStr] = None,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Revoke + reissue a share link's key (requires can_share)
+
+
+        :param shr_id: (required)
+        :type shr_id: str
+        :param x_agentdrive_actor:
+        :type x_agentdrive_actor: str
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._rotate_share_route_v0_shares_shr_id_rotate_post_serialize(
+            shr_id=shr_id,
+            x_agentdrive_actor=x_agentdrive_actor,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ShareMintOut",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _rotate_share_route_v0_shares_shr_id_rotate_post_serialize(
+        self,
+        shr_id,
+        x_agentdrive_actor,
+        authorization,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if shr_id is not None:
+            _path_params['shr_id'] = shr_id
+        # process the query parameters
+        # process the header parameters
+        if x_agentdrive_actor is not None:
+            _header_params['x-agentdrive-actor'] = x_agentdrive_actor
+        if authorization is not None:
+            _header_params['authorization'] = authorization
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/v0/shares/{shr_id}/rotate',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def search_v0_search_get(
         self,
         q: Annotated[str, Field(min_length=1, strict=True, max_length=200)],
         label: Optional[List[StrictStr]] = None,
         file_type: Optional[StrictStr] = None,
         prefix: Optional[StrictStr] = None,
-        visibility: Optional[StrictStr] = None,
         updated_after: Optional[datetime] = None,
         updated_before: Optional[datetime] = None,
         limit: Optional[Annotated[int, Field(le=100, strict=True, ge=1)]] = None,
@@ -19766,7 +26106,7 @@ class DefaultApi:
     ) -> SearchPage:
         """Full-text search over artifacts in the drive
 
-        Lexical (not semantic) full-text search powered by Postgres `websearch_to_tsquery`. Results are ranked by `ts_rank` over a weighted tsvector (path > content > metadata > labels).  **Supported query syntax:** - Words: `kangaroo` (English stemming) - Phrases: `\"exact phrase\"` - Negation: `kangaroo -secret` - AND (implicit): `kangaroo secret` - OR: `kangaroo OR koala` - Paths & filenames: `reports/q3-summary.md` or `q3-summary.md` match by their path words (`/ . _ -` are word boundaries)  **Not supported (v0):** - Semantic / embedding similarity - PDF and image content (only the path + metadata are searchable) - Non-English stemming - Fuzzy matching, regex - Boolean operator parentheses  **Filters:** `label` (repeatable, AND), `file_type` (enum), `prefix` (path prefix), `visibility` (`public`/`private`/`all` — default `all`), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`).
+        Lexical (not semantic) full-text search powered by Postgres `websearch_to_tsquery`. Results are ranked by `ts_rank` over a weighted tsvector (path > content > metadata > labels).  **Supported query syntax:** - Words: `kangaroo` (English stemming) - Phrases: `\"exact phrase\"` - Negation: `kangaroo -secret` - AND (implicit): `kangaroo secret` - OR: `kangaroo OR koala` - Paths & filenames: `reports/q3-summary.md` or `q3-summary.md` match by their path words (`/ . _ -` are word boundaries)  **Not supported (v0):** - Semantic / embedding similarity - PDF and image content (only the path + metadata are searchable) - Non-English stemming - Fuzzy matching, regex - Boolean operator parentheses  **Filters:** `label` (repeatable, AND), `file_type` (enum), `prefix` (path prefix), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`).
 
         :param q: (required)
         :type q: str
@@ -19776,8 +26116,6 @@ class DefaultApi:
         :type file_type: str
         :param prefix:
         :type prefix: str
-        :param visibility:
-        :type visibility: str
         :param updated_after:
         :type updated_after: datetime
         :param updated_before:
@@ -19813,7 +26151,6 @@ class DefaultApi:
             label=label,
             file_type=file_type,
             prefix=prefix,
-            visibility=visibility,
             updated_after=updated_after,
             updated_before=updated_before,
             limit=limit,
@@ -19846,7 +26183,6 @@ class DefaultApi:
         label: Optional[List[StrictStr]] = None,
         file_type: Optional[StrictStr] = None,
         prefix: Optional[StrictStr] = None,
-        visibility: Optional[StrictStr] = None,
         updated_after: Optional[datetime] = None,
         updated_before: Optional[datetime] = None,
         limit: Optional[Annotated[int, Field(le=100, strict=True, ge=1)]] = None,
@@ -19866,7 +26202,7 @@ class DefaultApi:
     ) -> ApiResponse[SearchPage]:
         """Full-text search over artifacts in the drive
 
-        Lexical (not semantic) full-text search powered by Postgres `websearch_to_tsquery`. Results are ranked by `ts_rank` over a weighted tsvector (path > content > metadata > labels).  **Supported query syntax:** - Words: `kangaroo` (English stemming) - Phrases: `\"exact phrase\"` - Negation: `kangaroo -secret` - AND (implicit): `kangaroo secret` - OR: `kangaroo OR koala` - Paths & filenames: `reports/q3-summary.md` or `q3-summary.md` match by their path words (`/ . _ -` are word boundaries)  **Not supported (v0):** - Semantic / embedding similarity - PDF and image content (only the path + metadata are searchable) - Non-English stemming - Fuzzy matching, regex - Boolean operator parentheses  **Filters:** `label` (repeatable, AND), `file_type` (enum), `prefix` (path prefix), `visibility` (`public`/`private`/`all` — default `all`), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`).
+        Lexical (not semantic) full-text search powered by Postgres `websearch_to_tsquery`. Results are ranked by `ts_rank` over a weighted tsvector (path > content > metadata > labels).  **Supported query syntax:** - Words: `kangaroo` (English stemming) - Phrases: `\"exact phrase\"` - Negation: `kangaroo -secret` - AND (implicit): `kangaroo secret` - OR: `kangaroo OR koala` - Paths & filenames: `reports/q3-summary.md` or `q3-summary.md` match by their path words (`/ . _ -` are word boundaries)  **Not supported (v0):** - Semantic / embedding similarity - PDF and image content (only the path + metadata are searchable) - Non-English stemming - Fuzzy matching, regex - Boolean operator parentheses  **Filters:** `label` (repeatable, AND), `file_type` (enum), `prefix` (path prefix), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`).
 
         :param q: (required)
         :type q: str
@@ -19876,8 +26212,6 @@ class DefaultApi:
         :type file_type: str
         :param prefix:
         :type prefix: str
-        :param visibility:
-        :type visibility: str
         :param updated_after:
         :type updated_after: datetime
         :param updated_before:
@@ -19913,7 +26247,6 @@ class DefaultApi:
             label=label,
             file_type=file_type,
             prefix=prefix,
-            visibility=visibility,
             updated_after=updated_after,
             updated_before=updated_before,
             limit=limit,
@@ -19946,7 +26279,6 @@ class DefaultApi:
         label: Optional[List[StrictStr]] = None,
         file_type: Optional[StrictStr] = None,
         prefix: Optional[StrictStr] = None,
-        visibility: Optional[StrictStr] = None,
         updated_after: Optional[datetime] = None,
         updated_before: Optional[datetime] = None,
         limit: Optional[Annotated[int, Field(le=100, strict=True, ge=1)]] = None,
@@ -19966,7 +26298,7 @@ class DefaultApi:
     ) -> RESTResponseType:
         """Full-text search over artifacts in the drive
 
-        Lexical (not semantic) full-text search powered by Postgres `websearch_to_tsquery`. Results are ranked by `ts_rank` over a weighted tsvector (path > content > metadata > labels).  **Supported query syntax:** - Words: `kangaroo` (English stemming) - Phrases: `\"exact phrase\"` - Negation: `kangaroo -secret` - AND (implicit): `kangaroo secret` - OR: `kangaroo OR koala` - Paths & filenames: `reports/q3-summary.md` or `q3-summary.md` match by their path words (`/ . _ -` are word boundaries)  **Not supported (v0):** - Semantic / embedding similarity - PDF and image content (only the path + metadata are searchable) - Non-English stemming - Fuzzy matching, regex - Boolean operator parentheses  **Filters:** `label` (repeatable, AND), `file_type` (enum), `prefix` (path prefix), `visibility` (`public`/`private`/`all` — default `all`), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`).
+        Lexical (not semantic) full-text search powered by Postgres `websearch_to_tsquery`. Results are ranked by `ts_rank` over a weighted tsvector (path > content > metadata > labels).  **Supported query syntax:** - Words: `kangaroo` (English stemming) - Phrases: `\"exact phrase\"` - Negation: `kangaroo -secret` - AND (implicit): `kangaroo secret` - OR: `kangaroo OR koala` - Paths & filenames: `reports/q3-summary.md` or `q3-summary.md` match by their path words (`/ . _ -` are word boundaries)  **Not supported (v0):** - Semantic / embedding similarity - PDF and image content (only the path + metadata are searchable) - Non-English stemming - Fuzzy matching, regex - Boolean operator parentheses  **Filters:** `label` (repeatable, AND), `file_type` (enum), `prefix` (path prefix), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`).
 
         :param q: (required)
         :type q: str
@@ -19976,8 +26308,6 @@ class DefaultApi:
         :type file_type: str
         :param prefix:
         :type prefix: str
-        :param visibility:
-        :type visibility: str
         :param updated_after:
         :type updated_after: datetime
         :param updated_before:
@@ -20013,7 +26343,6 @@ class DefaultApi:
             label=label,
             file_type=file_type,
             prefix=prefix,
-            visibility=visibility,
             updated_after=updated_after,
             updated_before=updated_before,
             limit=limit,
@@ -20041,7 +26370,6 @@ class DefaultApi:
         label,
         file_type,
         prefix,
-        visibility,
         updated_after,
         updated_before,
         limit,
@@ -20084,10 +26412,6 @@ class DefaultApi:
         if prefix is not None:
             
             _query_params.append(('prefix', prefix))
-            
-        if visibility is not None:
-            
-            _query_params.append(('visibility', visibility))
             
         if updated_after is not None:
             if isinstance(updated_after, datetime):
@@ -20142,6 +26466,618 @@ class DefaultApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/v0/search',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def set_public_web_share_rid_public_post(
+        self,
+        rid: StrictStr,
+        public_in: PublicIn,
+        x_csrf_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Set Public
+
+        Toggle world-readable: create (idempotent) or revoke the `anyone:viewer` grant. On a folder this cascades to the subtree (the response carries the blast-radius the UI confirmed).
+
+        :param rid: (required)
+        :type rid: str
+        :param public_in: (required)
+        :type public_in: PublicIn
+        :param x_csrf_token:
+        :type x_csrf_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._set_public_web_share_rid_public_post_serialize(
+            rid=rid,
+            public_in=public_in,
+            x_csrf_token=x_csrf_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def set_public_web_share_rid_public_post_with_http_info(
+        self,
+        rid: StrictStr,
+        public_in: PublicIn,
+        x_csrf_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Set Public
+
+        Toggle world-readable: create (idempotent) or revoke the `anyone:viewer` grant. On a folder this cascades to the subtree (the response carries the blast-radius the UI confirmed).
+
+        :param rid: (required)
+        :type rid: str
+        :param public_in: (required)
+        :type public_in: PublicIn
+        :param x_csrf_token:
+        :type x_csrf_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._set_public_web_share_rid_public_post_serialize(
+            rid=rid,
+            public_in=public_in,
+            x_csrf_token=x_csrf_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def set_public_web_share_rid_public_post_without_preload_content(
+        self,
+        rid: StrictStr,
+        public_in: PublicIn,
+        x_csrf_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Set Public
+
+        Toggle world-readable: create (idempotent) or revoke the `anyone:viewer` grant. On a folder this cascades to the subtree (the response carries the blast-radius the UI confirmed).
+
+        :param rid: (required)
+        :type rid: str
+        :param public_in: (required)
+        :type public_in: PublicIn
+        :param x_csrf_token:
+        :type x_csrf_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._set_public_web_share_rid_public_post_serialize(
+            rid=rid,
+            public_in=public_in,
+            x_csrf_token=x_csrf_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _set_public_web_share_rid_public_post_serialize(
+        self,
+        rid,
+        public_in,
+        x_csrf_token,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if rid is not None:
+            _path_params['rid'] = rid
+        # process the query parameters
+        # process the header parameters
+        if x_csrf_token is not None:
+            _header_params['x-csrf-token'] = x_csrf_token
+        # process the form parameters
+        # process the body parameter
+        if public_in is not None:
+            _body_params = public_in
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/web/share/{rid}/public',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def set_seal_web_share_rid_seal_post(
+        self,
+        rid: StrictStr,
+        seal_in: SealIn,
+        x_csrf_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Set Seal
+
+        Set the limited-access seal (`inherit_grants`). `false` makes the resource ignore grants inherited from ancestor folders (§4.6/§4.11). Gated on `can_manage` (changing who can reach the resource).
+
+        :param rid: (required)
+        :type rid: str
+        :param seal_in: (required)
+        :type seal_in: SealIn
+        :param x_csrf_token:
+        :type x_csrf_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._set_seal_web_share_rid_seal_post_serialize(
+            rid=rid,
+            seal_in=seal_in,
+            x_csrf_token=x_csrf_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def set_seal_web_share_rid_seal_post_with_http_info(
+        self,
+        rid: StrictStr,
+        seal_in: SealIn,
+        x_csrf_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Set Seal
+
+        Set the limited-access seal (`inherit_grants`). `false` makes the resource ignore grants inherited from ancestor folders (§4.6/§4.11). Gated on `can_manage` (changing who can reach the resource).
+
+        :param rid: (required)
+        :type rid: str
+        :param seal_in: (required)
+        :type seal_in: SealIn
+        :param x_csrf_token:
+        :type x_csrf_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._set_seal_web_share_rid_seal_post_serialize(
+            rid=rid,
+            seal_in=seal_in,
+            x_csrf_token=x_csrf_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def set_seal_web_share_rid_seal_post_without_preload_content(
+        self,
+        rid: StrictStr,
+        seal_in: SealIn,
+        x_csrf_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Set Seal
+
+        Set the limited-access seal (`inherit_grants`). `false` makes the resource ignore grants inherited from ancestor folders (§4.6/§4.11). Gated on `can_manage` (changing who can reach the resource).
+
+        :param rid: (required)
+        :type rid: str
+        :param seal_in: (required)
+        :type seal_in: SealIn
+        :param x_csrf_token:
+        :type x_csrf_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._set_seal_web_share_rid_seal_post_serialize(
+            rid=rid,
+            seal_in=seal_in,
+            x_csrf_token=x_csrf_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _set_seal_web_share_rid_seal_post_serialize(
+        self,
+        rid,
+        seal_in,
+        x_csrf_token,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if rid is not None:
+            _path_params['rid'] = rid
+        # process the query parameters
+        # process the header parameters
+        if x_csrf_token is not None:
+            _header_params['x-csrf-token'] = x_csrf_token
+        # process the form parameters
+        # process the body parameter
+        if seal_in is not None:
+            _body_params = seal_in
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/web/share/{rid}/seal',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -21398,7 +28334,7 @@ class DefaultApi:
     ) -> ArtifactOut:
         """Proxied streaming upload (via an upload_url token)
 
-        Streams an artifact body into AgentDrive using a single-use token that was previously minted by the `upload_url` MCP tool. The token encodes the artifact path, content type, size cap, labels, metadata, visibility, source, actor, change summary, and `if_match` — all frozen at mint time. The request carries only the raw bytes + a `Content-Type` header that must match the signed value.  **Auth.** No Authorization header — the token in the path is the credential.  **Single-use.** Replay returns 409 TOKEN_REPLAYED. Expiry returns 401 TOKEN_EXPIRED. Bodies exceeding the signed cap return 413 BYTES_LIMIT.
+        Streams an artifact body into AgentDrive using a single-use token that was previously minted by the `upload_url` MCP tool. The token encodes the artifact path, content type, size cap, labels, metadata, source, actor, change summary, and `if_match` — all frozen at mint time. The request carries only the raw bytes + a `Content-Type` header that must match the signed value.  **Auth.** No Authorization header — the token in the path is the credential.  **Single-use.** Replay returns 409 TOKEN_REPLAYED. Expiry returns 401 TOKEN_EXPIRED. Bodies exceeding the signed cap return 413 BYTES_LIMIT.
 
         :param token: (required)
         :type token: str
@@ -21474,7 +28410,7 @@ class DefaultApi:
     ) -> ApiResponse[ArtifactOut]:
         """Proxied streaming upload (via an upload_url token)
 
-        Streams an artifact body into AgentDrive using a single-use token that was previously minted by the `upload_url` MCP tool. The token encodes the artifact path, content type, size cap, labels, metadata, visibility, source, actor, change summary, and `if_match` — all frozen at mint time. The request carries only the raw bytes + a `Content-Type` header that must match the signed value.  **Auth.** No Authorization header — the token in the path is the credential.  **Single-use.** Replay returns 409 TOKEN_REPLAYED. Expiry returns 401 TOKEN_EXPIRED. Bodies exceeding the signed cap return 413 BYTES_LIMIT.
+        Streams an artifact body into AgentDrive using a single-use token that was previously minted by the `upload_url` MCP tool. The token encodes the artifact path, content type, size cap, labels, metadata, source, actor, change summary, and `if_match` — all frozen at mint time. The request carries only the raw bytes + a `Content-Type` header that must match the signed value.  **Auth.** No Authorization header — the token in the path is the credential.  **Single-use.** Replay returns 409 TOKEN_REPLAYED. Expiry returns 401 TOKEN_EXPIRED. Bodies exceeding the signed cap return 413 BYTES_LIMIT.
 
         :param token: (required)
         :type token: str
@@ -21550,7 +28486,7 @@ class DefaultApi:
     ) -> RESTResponseType:
         """Proxied streaming upload (via an upload_url token)
 
-        Streams an artifact body into AgentDrive using a single-use token that was previously minted by the `upload_url` MCP tool. The token encodes the artifact path, content type, size cap, labels, metadata, visibility, source, actor, change summary, and `if_match` — all frozen at mint time. The request carries only the raw bytes + a `Content-Type` header that must match the signed value.  **Auth.** No Authorization header — the token in the path is the credential.  **Single-use.** Replay returns 409 TOKEN_REPLAYED. Expiry returns 401 TOKEN_EXPIRED. Bodies exceeding the signed cap return 413 BYTES_LIMIT.
+        Streams an artifact body into AgentDrive using a single-use token that was previously minted by the `upload_url` MCP tool. The token encodes the artifact path, content type, size cap, labels, metadata, source, actor, change summary, and `if_match` — all frozen at mint time. The request carries only the raw bytes + a `Content-Type` header that must match the signed value.  **Auth.** No Authorization header — the token in the path is the credential.  **Single-use.** Replay returns 409 TOKEN_REPLAYED. Expiry returns 401 TOKEN_EXPIRED. Bodies exceeding the signed cap return 413 BYTES_LIMIT.
 
         :param token: (required)
         :type token: str
@@ -21651,6 +28587,297 @@ class DefaultApi:
         return self.api_client.param_serialize(
             method='PUT',
             resource_path='/v0/upload/{token}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def switch_org_web_switch_org_post(
+        self,
+        organization_id: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Switch Org
+
+        Switch the session's active organization (and thus the active drive).  A user can belong to multiple orgs (e.g. a personal org + a shared/business org). v1 binds the active org at login with no way to change it; this lets a member flip it. Membership is re-verified server-side (the form value is attacker-controllable), then the session cookie is re-minted with the new active org — `current_drive`'s membership JOIN enforces access on the next request. Any `reveal_key` is dropped: it was scoped to the old drive.
+
+        :param organization_id: (required)
+        :type organization_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._switch_org_web_switch_org_post_serialize(
+            organization_id=organization_id,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def switch_org_web_switch_org_post_with_http_info(
+        self,
+        organization_id: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Switch Org
+
+        Switch the session's active organization (and thus the active drive).  A user can belong to multiple orgs (e.g. a personal org + a shared/business org). v1 binds the active org at login with no way to change it; this lets a member flip it. Membership is re-verified server-side (the form value is attacker-controllable), then the session cookie is re-minted with the new active org — `current_drive`'s membership JOIN enforces access on the next request. Any `reveal_key` is dropped: it was scoped to the old drive.
+
+        :param organization_id: (required)
+        :type organization_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._switch_org_web_switch_org_post_serialize(
+            organization_id=organization_id,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def switch_org_web_switch_org_post_without_preload_content(
+        self,
+        organization_id: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Switch Org
+
+        Switch the session's active organization (and thus the active drive).  A user can belong to multiple orgs (e.g. a personal org + a shared/business org). v1 binds the active org at login with no way to change it; this lets a member flip it. Membership is re-verified server-side (the form value is attacker-controllable), then the session cookie is re-minted with the new active org — `current_drive`'s membership JOIN enforces access on the next request. Any `reveal_key` is dropped: it was scoped to the old drive.
+
+        :param organization_id: (required)
+        :type organization_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._switch_org_web_switch_org_post_serialize(
+            organization_id=organization_id,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _switch_org_web_switch_org_post_serialize(
+        self,
+        organization_id,
+        csrf,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        if organization_id is not None:
+            _form_params.append(('organization_id', organization_id))
+        if csrf is not None:
+            _form_params.append(('csrf', csrf))
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/x-www-form-urlencoded'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/web/switch-org',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -22448,6 +29675,269 @@ class DefaultApi:
 
 
     @validate_call
+    def view_artifact_head_a_art_id_head_get(
+        self,
+        art_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """View Artifact Head
+
+        Return `{\"version\": <head version_number>}` for a readable artifact.  Auth mirrors the permalink/viewer: the owner, or an `anyone:viewer` grant (a published artifact), reads. Two deliberate differences from the HTML viewer:    * Never redirect to login. A poll is a background `fetch`, not a     navigation — an HTML login page would be a useless body and a     same-origin redirect the client can't act on. Anonymous callers     on a private/absent artifact get a flat 404.   * \"Doesn't exist\" and \"exists but not readable\" collapse to the     same 404, so an anonymous poller can't use this as an existence     oracle (matches the permalink/viewer leak guard).
+
+        :param art_id: (required)
+        :type art_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._view_artifact_head_a_art_id_head_get_serialize(
+            art_id=art_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def view_artifact_head_a_art_id_head_get_with_http_info(
+        self,
+        art_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """View Artifact Head
+
+        Return `{\"version\": <head version_number>}` for a readable artifact.  Auth mirrors the permalink/viewer: the owner, or an `anyone:viewer` grant (a published artifact), reads. Two deliberate differences from the HTML viewer:    * Never redirect to login. A poll is a background `fetch`, not a     navigation — an HTML login page would be a useless body and a     same-origin redirect the client can't act on. Anonymous callers     on a private/absent artifact get a flat 404.   * \"Doesn't exist\" and \"exists but not readable\" collapse to the     same 404, so an anonymous poller can't use this as an existence     oracle (matches the permalink/viewer leak guard).
+
+        :param art_id: (required)
+        :type art_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._view_artifact_head_a_art_id_head_get_serialize(
+            art_id=art_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def view_artifact_head_a_art_id_head_get_without_preload_content(
+        self,
+        art_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """View Artifact Head
+
+        Return `{\"version\": <head version_number>}` for a readable artifact.  Auth mirrors the permalink/viewer: the owner, or an `anyone:viewer` grant (a published artifact), reads. Two deliberate differences from the HTML viewer:    * Never redirect to login. A poll is a background `fetch`, not a     navigation — an HTML login page would be a useless body and a     same-origin redirect the client can't act on. Anonymous callers     on a private/absent artifact get a flat 404.   * \"Doesn't exist\" and \"exists but not readable\" collapse to the     same 404, so an anonymous poller can't use this as an existence     oracle (matches the permalink/viewer leak guard).
+
+        :param art_id: (required)
+        :type art_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._view_artifact_head_a_art_id_head_get_serialize(
+            art_id=art_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _view_artifact_head_a_art_id_head_get_serialize(
+        self,
+        art_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if art_id is not None:
+            _path_params['art_id'] = art_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/a/{art_id}/head',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def view_file_drive_id_path_get(
         self,
         drive_id: StrictStr,
@@ -23038,7 +30528,7 @@ class DefaultApi:
     ) -> object:
         """View Permalink Folder
 
-        Resolve a stable folder ID to its current path-URL and 302.  Auth model mirrors the artifact permalink: public folder = anon OK; private folder = owner only, otherwise 404 (no existence leak). Folder visibility lives on the `folders.visibility` column once §13.x wires it; today we follow the conservative default (treat any non-`public` value, including NULL, as private).
+        Resolve a stable folder ID to its current path-URL and 302.  Auth model mirrors the artifact permalink: public folder = anon OK; private folder = owner only, otherwise 404 (no existence leak). \"Public\" is an `anyone:viewer` grant on the `fld_*` id resolved through `can_read` (§4.4); folders carry no visibility flag of their own.
 
         :param fld_id: (required)
         :type fld_id: str
@@ -23106,7 +30596,7 @@ class DefaultApi:
     ) -> ApiResponse[object]:
         """View Permalink Folder
 
-        Resolve a stable folder ID to its current path-URL and 302.  Auth model mirrors the artifact permalink: public folder = anon OK; private folder = owner only, otherwise 404 (no existence leak). Folder visibility lives on the `folders.visibility` column once §13.x wires it; today we follow the conservative default (treat any non-`public` value, including NULL, as private).
+        Resolve a stable folder ID to its current path-URL and 302.  Auth model mirrors the artifact permalink: public folder = anon OK; private folder = owner only, otherwise 404 (no existence leak). \"Public\" is an `anyone:viewer` grant on the `fld_*` id resolved through `can_read` (§4.4); folders carry no visibility flag of their own.
 
         :param fld_id: (required)
         :type fld_id: str
@@ -23174,7 +30664,7 @@ class DefaultApi:
     ) -> RESTResponseType:
         """View Permalink Folder
 
-        Resolve a stable folder ID to its current path-URL and 302.  Auth model mirrors the artifact permalink: public folder = anon OK; private folder = owner only, otherwise 404 (no existence leak). Folder visibility lives on the `folders.visibility` column once §13.x wires it; today we follow the conservative default (treat any non-`public` value, including NULL, as private).
+        Resolve a stable folder ID to its current path-URL and 302.  Auth model mirrors the artifact permalink: public folder = anon OK; private folder = owner only, otherwise 404 (no existence leak). \"Public\" is an `anyone:viewer` grant on the `fld_*` id resolved through `can_read` (§4.4); folders carry no visibility flag of their own.
 
         :param fld_id: (required)
         :type fld_id: str
@@ -26264,7 +33754,7 @@ class DefaultApi:
     ) -> object:
         """Web Put Artifact
 
-        Cookie-authed write of an image artifact. Used by the SnipIt web editor (`/a/{art_id}/edit`) for autosave; the bearer-authed `PUT /v0/artifacts/{path}` won't accept a cookie-only session.  Owner-only; the path is checked against the signed-in user's drive. v0 is image-only — refuses non-image content types so the editor can't smuggle markdown or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved `_wiki/` namespace rejection, per-tier max-bytes cap (both `Content-Length` short-circuit and post-body length check) — so a logged-in user can't bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the `X-CSRF-Token` header (see `csrf.require_csrf_header`); the editor reads the token from the `<meta name=\"csrf-token\">` tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor's 1.5s autosave can sustain without flagging abuse.
+        Cookie-authed write of an image artifact. Used by the SnipIt web editor (`/a/{art_id}/edit`) for autosave; the bearer-authed `PUT /v0/artifacts/{path}` won't accept a cookie-only session.  Owner-only; the path is checked against the signed-in user's drive. Accepts `image/*` (SnipIt editor autosave) and `application/pdf` (the PDF viewer's annotation save) only — refuses everything else so the editor can't smuggle markdown/HTML or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved `_wiki/` namespace rejection, per-tier max-bytes cap (both `Content-Length` short-circuit and post-body length check) — so a logged-in user can't bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the `X-CSRF-Token` header (see `csrf.require_csrf_header`); the editor reads the token from the `<meta name=\"csrf-token\">` tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor's 1.5s autosave can sustain without flagging abuse.
 
         :param path: (required)
         :type path: str
@@ -26336,7 +33826,7 @@ class DefaultApi:
     ) -> ApiResponse[object]:
         """Web Put Artifact
 
-        Cookie-authed write of an image artifact. Used by the SnipIt web editor (`/a/{art_id}/edit`) for autosave; the bearer-authed `PUT /v0/artifacts/{path}` won't accept a cookie-only session.  Owner-only; the path is checked against the signed-in user's drive. v0 is image-only — refuses non-image content types so the editor can't smuggle markdown or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved `_wiki/` namespace rejection, per-tier max-bytes cap (both `Content-Length` short-circuit and post-body length check) — so a logged-in user can't bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the `X-CSRF-Token` header (see `csrf.require_csrf_header`); the editor reads the token from the `<meta name=\"csrf-token\">` tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor's 1.5s autosave can sustain without flagging abuse.
+        Cookie-authed write of an image artifact. Used by the SnipIt web editor (`/a/{art_id}/edit`) for autosave; the bearer-authed `PUT /v0/artifacts/{path}` won't accept a cookie-only session.  Owner-only; the path is checked against the signed-in user's drive. Accepts `image/*` (SnipIt editor autosave) and `application/pdf` (the PDF viewer's annotation save) only — refuses everything else so the editor can't smuggle markdown/HTML or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved `_wiki/` namespace rejection, per-tier max-bytes cap (both `Content-Length` short-circuit and post-body length check) — so a logged-in user can't bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the `X-CSRF-Token` header (see `csrf.require_csrf_header`); the editor reads the token from the `<meta name=\"csrf-token\">` tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor's 1.5s autosave can sustain without flagging abuse.
 
         :param path: (required)
         :type path: str
@@ -26408,7 +33898,7 @@ class DefaultApi:
     ) -> RESTResponseType:
         """Web Put Artifact
 
-        Cookie-authed write of an image artifact. Used by the SnipIt web editor (`/a/{art_id}/edit`) for autosave; the bearer-authed `PUT /v0/artifacts/{path}` won't accept a cookie-only session.  Owner-only; the path is checked against the signed-in user's drive. v0 is image-only — refuses non-image content types so the editor can't smuggle markdown or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved `_wiki/` namespace rejection, per-tier max-bytes cap (both `Content-Length` short-circuit and post-body length check) — so a logged-in user can't bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the `X-CSRF-Token` header (see `csrf.require_csrf_header`); the editor reads the token from the `<meta name=\"csrf-token\">` tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor's 1.5s autosave can sustain without flagging abuse.
+        Cookie-authed write of an image artifact. Used by the SnipIt web editor (`/a/{art_id}/edit`) for autosave; the bearer-authed `PUT /v0/artifacts/{path}` won't accept a cookie-only session.  Owner-only; the path is checked against the signed-in user's drive. Accepts `image/*` (SnipIt editor autosave) and `application/pdf` (the PDF viewer's annotation save) only — refuses everything else so the editor can't smuggle markdown/HTML or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved `_wiki/` namespace rejection, per-tier max-bytes cap (both `Content-Length` short-circuit and post-body length check) — so a logged-in user can't bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the `X-CSRF-Token` header (see `csrf.require_csrf_header`); the editor reads the token from the `<meta name=\"csrf-token\">` tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor's 1.5s autosave can sustain without flagging abuse.
 
         :param path: (required)
         :type path: str
@@ -27451,7 +34941,6 @@ class DefaultApi:
         self,
         target: StrictStr,
         csrf: StrictStr,
-        visibility: Optional[StrictStr] = None,
         description: Optional[StrictStr] = None,
         return_to: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -27469,14 +34958,12 @@ class DefaultApi:
     ) -> object:
         """Web Set Metadata
 
-        Artifact visibility (target = `art_<id>`) or folder description (target = `fld_<id>`). Folder visibility is intentionally not exposed (design §8.2: it doesn't cascade).
+        Folder description edit (target = `fld_<id>`).  \"Public/private\" is no longer a folder/artifact flag — access is expressed through grants (permission-sharing-design §4.4), so this endpoint only edits folder descriptions. Artifact targets are rejected; publishing an artifact is the dedicated grant/`publish` flow, not a metadata toggle.
 
         :param target: (required)
         :type target: str
         :param csrf: (required)
         :type csrf: str
-        :param visibility:
-        :type visibility: str
         :param description:
         :type description: str
         :param return_to:
@@ -27506,7 +34993,6 @@ class DefaultApi:
         _param = self._web_set_metadata_web_set_post_serialize(
             target=target,
             csrf=csrf,
-            visibility=visibility,
             description=description,
             return_to=return_to,
             _request_auth=_request_auth,
@@ -27535,7 +35021,6 @@ class DefaultApi:
         self,
         target: StrictStr,
         csrf: StrictStr,
-        visibility: Optional[StrictStr] = None,
         description: Optional[StrictStr] = None,
         return_to: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -27553,14 +35038,12 @@ class DefaultApi:
     ) -> ApiResponse[object]:
         """Web Set Metadata
 
-        Artifact visibility (target = `art_<id>`) or folder description (target = `fld_<id>`). Folder visibility is intentionally not exposed (design §8.2: it doesn't cascade).
+        Folder description edit (target = `fld_<id>`).  \"Public/private\" is no longer a folder/artifact flag — access is expressed through grants (permission-sharing-design §4.4), so this endpoint only edits folder descriptions. Artifact targets are rejected; publishing an artifact is the dedicated grant/`publish` flow, not a metadata toggle.
 
         :param target: (required)
         :type target: str
         :param csrf: (required)
         :type csrf: str
-        :param visibility:
-        :type visibility: str
         :param description:
         :type description: str
         :param return_to:
@@ -27590,7 +35073,6 @@ class DefaultApi:
         _param = self._web_set_metadata_web_set_post_serialize(
             target=target,
             csrf=csrf,
-            visibility=visibility,
             description=description,
             return_to=return_to,
             _request_auth=_request_auth,
@@ -27619,7 +35101,6 @@ class DefaultApi:
         self,
         target: StrictStr,
         csrf: StrictStr,
-        visibility: Optional[StrictStr] = None,
         description: Optional[StrictStr] = None,
         return_to: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -27637,14 +35118,12 @@ class DefaultApi:
     ) -> RESTResponseType:
         """Web Set Metadata
 
-        Artifact visibility (target = `art_<id>`) or folder description (target = `fld_<id>`). Folder visibility is intentionally not exposed (design §8.2: it doesn't cascade).
+        Folder description edit (target = `fld_<id>`).  \"Public/private\" is no longer a folder/artifact flag — access is expressed through grants (permission-sharing-design §4.4), so this endpoint only edits folder descriptions. Artifact targets are rejected; publishing an artifact is the dedicated grant/`publish` flow, not a metadata toggle.
 
         :param target: (required)
         :type target: str
         :param csrf: (required)
         :type csrf: str
-        :param visibility:
-        :type visibility: str
         :param description:
         :type description: str
         :param return_to:
@@ -27674,7 +35153,6 @@ class DefaultApi:
         _param = self._web_set_metadata_web_set_post_serialize(
             target=target,
             csrf=csrf,
-            visibility=visibility,
             description=description,
             return_to=return_to,
             _request_auth=_request_auth,
@@ -27698,7 +35176,6 @@ class DefaultApi:
         self,
         target,
         csrf,
-        visibility,
         description,
         return_to,
         _request_auth,
@@ -27727,8 +35204,6 @@ class DefaultApi:
         # process the form parameters
         if target is not None:
             _form_params.append(('target', target))
-        if visibility is not None:
-            _form_params.append(('visibility', visibility))
         if description is not None:
             _form_params.append(('description', description))
         if return_to is not None:
@@ -27788,7 +35263,6 @@ class DefaultApi:
         file: Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]],
         csrf: StrictStr,
         dest_dir: Optional[StrictStr] = None,
-        visibility: Optional[StrictStr] = None,
         return_to: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -27812,8 +35286,6 @@ class DefaultApi:
         :type csrf: str
         :param dest_dir:
         :type dest_dir: str
-        :param visibility:
-        :type visibility: str
         :param return_to:
         :type return_to: str
         :param _request_timeout: timeout setting for this request. If one
@@ -27842,7 +35314,6 @@ class DefaultApi:
             file=file,
             csrf=csrf,
             dest_dir=dest_dir,
-            visibility=visibility,
             return_to=return_to,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -27871,7 +35342,6 @@ class DefaultApi:
         file: Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]],
         csrf: StrictStr,
         dest_dir: Optional[StrictStr] = None,
-        visibility: Optional[StrictStr] = None,
         return_to: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -27895,8 +35365,6 @@ class DefaultApi:
         :type csrf: str
         :param dest_dir:
         :type dest_dir: str
-        :param visibility:
-        :type visibility: str
         :param return_to:
         :type return_to: str
         :param _request_timeout: timeout setting for this request. If one
@@ -27925,7 +35393,6 @@ class DefaultApi:
             file=file,
             csrf=csrf,
             dest_dir=dest_dir,
-            visibility=visibility,
             return_to=return_to,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -27954,7 +35421,6 @@ class DefaultApi:
         file: Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]],
         csrf: StrictStr,
         dest_dir: Optional[StrictStr] = None,
-        visibility: Optional[StrictStr] = None,
         return_to: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -27978,8 +35444,6 @@ class DefaultApi:
         :type csrf: str
         :param dest_dir:
         :type dest_dir: str
-        :param visibility:
-        :type visibility: str
         :param return_to:
         :type return_to: str
         :param _request_timeout: timeout setting for this request. If one
@@ -28008,7 +35472,6 @@ class DefaultApi:
             file=file,
             csrf=csrf,
             dest_dir=dest_dir,
-            visibility=visibility,
             return_to=return_to,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -28032,7 +35495,6 @@ class DefaultApi:
         file,
         csrf,
         dest_dir,
-        visibility,
         return_to,
         _request_auth,
         _content_type,
@@ -28062,8 +35524,6 @@ class DefaultApi:
             _files['file'] = file
         if dest_dir is not None:
             _form_params.append(('dest_dir', dest_dir))
-        if visibility is not None:
-            _form_params.append(('visibility', visibility))
         if return_to is not None:
             _form_params.append(('return_to', return_to))
         if csrf is not None:

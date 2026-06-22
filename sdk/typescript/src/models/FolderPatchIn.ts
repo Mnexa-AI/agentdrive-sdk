@@ -14,8 +14,10 @@
 
 import { mapValues } from '../runtime';
 /**
- * PATCH /v0/folders/{fld_id} body — partial update.
- * Field absence = unchanged; explicit None = clear field.
+ * PATCH /v0/folders/{fld_id} body — partial update. Field absence =
+ * unchanged. `description`: explicit null = clear. `inherit_grants`:
+ * non-nullable — null/absent = unchanged (it cannot be cleared, only
+ * flipped true/false).
  * @export
  * @interface FolderPatchIn
  */
@@ -28,22 +30,11 @@ export interface FolderPatchIn {
     description?: string | null;
     /**
      * 
-     * @type {FolderPatchInVisibilityEnum}
+     * @type {boolean}
      * @memberof FolderPatchIn
      */
-    visibility?: FolderPatchInVisibilityEnum | null;
+    inheritGrants?: boolean | null;
 }
-
-
-/**
- * @export
- */
-export const FolderPatchInVisibilityEnum = {
-    Public: 'public',
-    Private: 'private'
-} as const;
-export type FolderPatchInVisibilityEnum = typeof FolderPatchInVisibilityEnum[keyof typeof FolderPatchInVisibilityEnum];
-
 
 /**
  * Check if a given object implements the FolderPatchIn interface.
@@ -63,7 +54,7 @@ export function FolderPatchInFromJSONTyped(json: any, ignoreDiscriminator: boole
     return {
         
         'description': json['description'] == null ? undefined : json['description'],
-        'visibility': json['visibility'] == null ? undefined : json['visibility'],
+        'inheritGrants': json['inherit_grants'] == null ? undefined : json['inherit_grants'],
     };
 }
 
@@ -79,7 +70,7 @@ export function FolderPatchInToJSONTyped(value?: FolderPatchIn | null, ignoreDis
     return {
         
         'description': value['description'],
-        'visibility': value['visibility'],
+        'inherit_grants': value['inheritGrants'],
     };
 }
 

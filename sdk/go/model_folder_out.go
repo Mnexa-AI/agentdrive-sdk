@@ -20,14 +20,13 @@ import (
 // checks if the FolderOut type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &FolderOut{}
 
-// FolderOut Folder resource (folders+permalinks design §13). `path` is the canonical leading+trailing-slash form; `share_key` is reserved metadata held now and wired by the render layer in v1.1.
+// FolderOut Folder resource (folders+permalinks design §13). `path` is the canonical leading+trailing-slash form. Access is expressed through grants (permission-sharing-design §4.4), not a folder-level flag.
 type FolderOut struct {
 	Id string `json:"id"`
 	DriveId string `json:"drive_id"`
 	Path string `json:"path"`
 	Description NullableString `json:"description,omitempty"`
-	Visibility NullableString `json:"visibility,omitempty"`
-	ShareKey NullableString `json:"share_key,omitempty"`
+	InheritGrants *bool `json:"inherit_grants,omitempty"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 	DeletedAt NullableTime `json:"deleted_at,omitempty"`
@@ -45,6 +44,8 @@ func NewFolderOut(id string, driveId string, path string, createdAt time.Time, u
 	this.Id = id
 	this.DriveId = driveId
 	this.Path = path
+	var inheritGrants bool = true
+	this.InheritGrants = &inheritGrants
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	return &this
@@ -55,6 +56,8 @@ func NewFolderOut(id string, driveId string, path string, createdAt time.Time, u
 // but it doesn't guarantee that properties required by API are set
 func NewFolderOutWithDefaults() *FolderOut {
 	this := FolderOut{}
+	var inheritGrants bool = true
+	this.InheritGrants = &inheritGrants
 	return &this
 }
 
@@ -172,88 +175,36 @@ func (o *FolderOut) UnsetDescription() {
 	o.Description.Unset()
 }
 
-// GetVisibility returns the Visibility field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *FolderOut) GetVisibility() string {
-	if o == nil || IsNil(o.Visibility.Get()) {
-		var ret string
+// GetInheritGrants returns the InheritGrants field value if set, zero value otherwise.
+func (o *FolderOut) GetInheritGrants() bool {
+	if o == nil || IsNil(o.InheritGrants) {
+		var ret bool
 		return ret
 	}
-	return *o.Visibility.Get()
+	return *o.InheritGrants
 }
 
-// GetVisibilityOk returns a tuple with the Visibility field value if set, nil otherwise
+// GetInheritGrantsOk returns a tuple with the InheritGrants field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *FolderOut) GetVisibilityOk() (*string, bool) {
-	if o == nil {
+func (o *FolderOut) GetInheritGrantsOk() (*bool, bool) {
+	if o == nil || IsNil(o.InheritGrants) {
 		return nil, false
 	}
-	return o.Visibility.Get(), o.Visibility.IsSet()
+	return o.InheritGrants, true
 }
 
-// HasVisibility returns a boolean if a field has been set.
-func (o *FolderOut) HasVisibility() bool {
-	if o != nil && o.Visibility.IsSet() {
+// HasInheritGrants returns a boolean if a field has been set.
+func (o *FolderOut) HasInheritGrants() bool {
+	if o != nil && !IsNil(o.InheritGrants) {
 		return true
 	}
 
 	return false
 }
 
-// SetVisibility gets a reference to the given NullableString and assigns it to the Visibility field.
-func (o *FolderOut) SetVisibility(v string) {
-	o.Visibility.Set(&v)
-}
-// SetVisibilityNil sets the value for Visibility to be an explicit nil
-func (o *FolderOut) SetVisibilityNil() {
-	o.Visibility.Set(nil)
-}
-
-// UnsetVisibility ensures that no value is present for Visibility, not even an explicit nil
-func (o *FolderOut) UnsetVisibility() {
-	o.Visibility.Unset()
-}
-
-// GetShareKey returns the ShareKey field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *FolderOut) GetShareKey() string {
-	if o == nil || IsNil(o.ShareKey.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.ShareKey.Get()
-}
-
-// GetShareKeyOk returns a tuple with the ShareKey field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *FolderOut) GetShareKeyOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.ShareKey.Get(), o.ShareKey.IsSet()
-}
-
-// HasShareKey returns a boolean if a field has been set.
-func (o *FolderOut) HasShareKey() bool {
-	if o != nil && o.ShareKey.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetShareKey gets a reference to the given NullableString and assigns it to the ShareKey field.
-func (o *FolderOut) SetShareKey(v string) {
-	o.ShareKey.Set(&v)
-}
-// SetShareKeyNil sets the value for ShareKey to be an explicit nil
-func (o *FolderOut) SetShareKeyNil() {
-	o.ShareKey.Set(nil)
-}
-
-// UnsetShareKey ensures that no value is present for ShareKey, not even an explicit nil
-func (o *FolderOut) UnsetShareKey() {
-	o.ShareKey.Unset()
+// SetInheritGrants gets a reference to the given bool and assigns it to the InheritGrants field.
+func (o *FolderOut) SetInheritGrants(v bool) {
+	o.InheritGrants = &v
 }
 
 // GetCreatedAt returns the CreatedAt field value
@@ -404,11 +355,8 @@ func (o FolderOut) ToMap() (map[string]interface{}, error) {
 	if o.Description.IsSet() {
 		toSerialize["description"] = o.Description.Get()
 	}
-	if o.Visibility.IsSet() {
-		toSerialize["visibility"] = o.Visibility.Get()
-	}
-	if o.ShareKey.IsSet() {
-		toSerialize["share_key"] = o.ShareKey.Get()
+	if !IsNil(o.InheritGrants) {
+		toSerialize["inherit_grants"] = o.InheritGrants
 	}
 	toSerialize["created_at"] = o.CreatedAt
 	toSerialize["updated_at"] = o.UpdatedAt

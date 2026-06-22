@@ -82,24 +82,36 @@ Class | Method | HTTP request | Description
 *ClaimUiAPI* | [**ClaimCompleteAgentIdentityClaimCompletePost**](docs/ClaimUiAPI.md#claimcompleteagentidentityclaimcompletepost) | **Post** /agent/identity/claim/complete | Claim Complete
 *ClaimUiAPI* | [**ClaimPageClaimGet**](docs/ClaimUiAPI.md#claimpageclaimget) | **Get** /claim | Claim Page
 *DefaultAPI* | [**ActivityFeedActivityGet**](docs/DefaultAPI.md#activityfeedactivityget) | **Get** /activity | Activity Feed
+*DefaultAPI* | [**AddGrantWebShareRidGrantPost**](docs/DefaultAPI.md#addgrantwebshareridgrantpost) | **Post** /web/share/{rid}/grant | Add Grant
 *DefaultAPI* | [**ArtifactDetailPreviewPreviewArtifactDetailGet**](docs/DefaultAPI.md#artifactdetailpreviewpreviewartifactdetailget) | **Get** /preview/artifact-detail | Artifact Detail Preview
+*DefaultAPI* | [**BeginUploadV0UploadsPost**](docs/DefaultAPI.md#beginuploadv0uploadspost) | **Post** /v0/uploads | Begin a large (direct-to-GCS) upload
 *DefaultAPI* | [**CallbackAuthCallbackGet**](docs/DefaultAPI.md#callbackauthcallbackget) | **Get** /auth/callback | Callback
 *DefaultAPI* | [**CancelJobV0JobsJobIdCancelPost**](docs/DefaultAPI.md#canceljobv0jobsjobidcancelpost) | **Post** /v0/jobs/{job_id}/cancel | Cancel a queued/running job
 *DefaultAPI* | [**CollectionDetailCollectionsSlugGet**](docs/DefaultAPI.md#collectiondetailcollectionsslugget) | **Get** /collections/{slug} | Collection Detail
+*DefaultAPI* | [**CommitUploadV0UploadsUploadIdCommitPost**](docs/DefaultAPI.md#commituploadv0uploadsuploadidcommitpost) | **Post** /v0/uploads/{upload_id}/commit | Commit a large (direct-to-GCS) upload
 *DefaultAPI* | [**ConnectorsPageConnectorsGet**](docs/DefaultAPI.md#connectorspageconnectorsget) | **Get** /connectors | Connectors Page
 *DefaultAPI* | [**CopyArtifactRouteV0ArtifactsArtIdCopyPost**](docs/DefaultAPI.md#copyartifactroutev0artifactsartidcopypost) | **Post** /v0/artifacts/{art_id}/copy | Duplicate an artifact to a new path (CAS-shared, new ID)
 *DefaultAPI* | [**CreateFolderByPathV0FoldersPathPost**](docs/DefaultAPI.md#createfolderbypathv0folderspathpost) | **Post** /v0/folders/{path} | Create a folder (idempotent)
+*DefaultAPI* | [**CreateGrantRouteV0GrantsPost**](docs/DefaultAPI.md#creategrantroutev0grantspost) | **Post** /v0/grants | Create (or fetch) a per-principal grant on a resource
+*DefaultAPI* | [**CreateLinkWebShareRidLinkPost**](docs/DefaultAPI.md#createlinkwebshareridlinkpost) | **Post** /web/share/{rid}/link | Create Link
+*DefaultAPI* | [**CreateShareRouteV0SharesPost**](docs/DefaultAPI.md#createshareroutev0sharespost) | **Post** /v0/shares | Mint a share link (returns the share_key once)
 *DefaultAPI* | [**DangerZoneOldDashboardDangerGet**](docs/DefaultAPI.md#dangerzoneolddashboarddangerget) | **Get** /dashboard/danger | Danger Zone Old
 *DefaultAPI* | [**DangerZoneSettingsDangerGet**](docs/DefaultAPI.md#dangerzonesettingsdangerget) | **Get** /settings/danger | Danger Zone
 *DefaultAPI* | [**DashboardDashboardGet**](docs/DefaultAPI.md#dashboarddashboardget) | **Get** /dashboard | Dashboard
 *DefaultAPI* | [**DeleteAccountWebAccountDeletePost**](docs/DefaultAPI.md#deleteaccountwebaccountdeletepost) | **Post** /web/account/delete | Delete Account
+*DefaultAPI* | [**DeleteArtifactByIdRouteV0ArtifactsArtIdDelete**](docs/DefaultAPI.md#deleteartifactbyidroutev0artifactsartiddelete) | **Delete** /v0/artifacts/{art_id} | Soft-delete an artifact by its stable ID
 *DefaultAPI* | [**DeleteArtifactV0ArtifactsPathDelete**](docs/DefaultAPI.md#deleteartifactv0artifactspathdelete) | **Delete** /v0/artifacts/{path} | Delete Artifact
 *DefaultAPI* | [**DeleteDriveRouteV0DrivesDriveIdDelete**](docs/DefaultAPI.md#deletedriveroutev0drivesdriveiddelete) | **Delete** /v0/drives/{drive_id} | Soft-delete the authenticated drive
 *DefaultAPI* | [**DeleteFolderByIdV0FoldersFldIdDelete**](docs/DefaultAPI.md#deletefolderbyidv0foldersfldiddelete) | **Delete** /v0/folders/{fld_id} | Soft-delete a folder by stable ID (cascade with ?recursive&#x3D;true)
 *DefaultAPI* | [**DeleteFolderByPathV0FoldersPathDelete**](docs/DefaultAPI.md#deletefolderbypathv0folderspathdelete) | **Delete** /v0/folders/{path} | Soft-delete a folder (cascade with ?recursive&#x3D;true)
+*DefaultAPI* | [**DeleteGrantRouteV0GrantsGrnIdDelete**](docs/DefaultAPI.md#deletegrantroutev0grantsgrniddelete) | **Delete** /v0/grants/{grn_id} | Revoke a grant (can_manage, or self-revoke own grant)
 *DefaultAPI* | [**DeleteKeyWebKeysDeletePost**](docs/DefaultAPI.md#deletekeywebkeysdeletepost) | **Post** /web/keys/delete | Delete Key
+*DefaultAPI* | [**DeleteShareRouteV0SharesShrIdDelete**](docs/DefaultAPI.md#deleteshareroutev0sharesshriddelete) | **Delete** /v0/shares/{shr_id} | Revoke a share link (requires can_manage)
 *DefaultAPI* | [**DownloadArtifactByIdV0ArtifactsArtIdDownloadGet**](docs/DefaultAPI.md#downloadartifactbyidv0artifactsartiddownloadget) | **Get** /v0/artifacts/{art_id}/download | Stream the artifact bytes by stable ID (never rendered HTML)
 *DefaultAPI* | [**DownloadArtifactVersionV0ArtifactsArtIdVersionsVersionNumberDownloadGet**](docs/DefaultAPI.md#downloadartifactversionv0artifactsartidversionsversionnumberdownloadget) | **Get** /v0/artifacts/{art_id}/versions/{version_number}/download | Stream bytes for a specific version (machine surface)
+*DefaultAPI* | [**DownloadUrlByIdV0ArtifactsArtIdDownloadUrlGet**](docs/DefaultAPI.md#downloadurlbyidv0artifactsartiddownloadurlget) | **Get** /v0/artifacts/{art_id}/download-url | Signed direct-from-GCS download URL by stable ID
+*DefaultAPI* | [**DownloadUrlByPathV0ArtifactsPathDownloadUrlGet**](docs/DefaultAPI.md#downloadurlbypathv0artifactspathdownloadurlget) | **Get** /v0/artifacts/{path}/download-url | Signed direct-from-GCS download URL by path
+*DefaultAPI* | [**DownloadUrlVersionV0ArtifactsArtIdVersionsVersionNumberDownloadUrlGet**](docs/DefaultAPI.md#downloadurlversionv0artifactsartidversionsversionnumberdownloadurlget) | **Get** /v0/artifacts/{art_id}/versions/{version_number}/download-url | Signed direct-from-GCS download URL for a specific version
 *DefaultAPI* | [**EditArtifactAArtIdEditGet**](docs/DefaultAPI.md#editartifactaartideditget) | **Get** /a/{art_id}/edit | Edit Artifact
 *DefaultAPI* | [**EnqueueJobV0ProjectsFldIdJobsPost**](docs/DefaultAPI.md#enqueuejobv0projectsfldidjobspost) | **Post** /v0/projects/{fld_id}/jobs | Enqueue a compile job for a project (folder)
 *DefaultAPI* | [**ExtensionStartAuthExtensionStartGet**](docs/DefaultAPI.md#extensionstartauthextensionstartget) | **Get** /auth/extension/start | Extension Start
@@ -113,15 +125,19 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetFeedbackStatusV0FeedbackFbkIdGet**](docs/DefaultAPI.md#getfeedbackstatusv0feedbackfbkidget) | **Get** /v0/feedback/{fbk_id} | Get Feedback Status
 *DefaultAPI* | [**GetFolderByIdMetaV0FoldersFldIdMetaGet**](docs/DefaultAPI.md#getfolderbyidmetav0foldersfldidmetaget) | **Get** /v0/folders/{fld_id}/meta | Folder metadata by stable ID (same shape as the bare id route)
 *DefaultAPI* | [**GetFolderByIdV0FoldersFldIdGet**](docs/DefaultAPI.md#getfolderbyidv0foldersfldidget) | **Get** /v0/folders/{fld_id} | Canonical lookup of a folder by its stable ID
+*DefaultAPI* | [**GetFolderByPathMetaV0FoldersPathMetaGet**](docs/DefaultAPI.md#getfolderbypathmetav0folderspathmetaget) | **Get** /v0/folders/{path}/meta | Folder metadata by path (same shape as the bare path route)
 *DefaultAPI* | [**GetFolderByPathV0FoldersPathGet**](docs/DefaultAPI.md#getfolderbypathv0folderspathget) | **Get** /v0/folders/{path} | Read folder metadata by path
 *DefaultAPI* | [**GetJobLogsV0JobsJobIdLogsGet**](docs/DefaultAPI.md#getjoblogsv0jobsjobidlogsget) | **Get** /v0/jobs/{job_id}/logs | Raw compile log (text/plain)
 *DefaultAPI* | [**GetJobV0JobsJobIdGet**](docs/DefaultAPI.md#getjobv0jobsjobidget) | **Get** /v0/jobs/{job_id} | Poll a job
 *DefaultAPI* | [**GetProjectV0ProjectsFldIdGet**](docs/DefaultAPI.md#getprojectv0projectsfldidget) | **Get** /v0/projects/{fld_id} | Get a project&#39;s compile config
+*DefaultAPI* | [**GetShareStateWebShareRidGet**](docs/DefaultAPI.md#getsharestatewebshareridget) | **Get** /web/share/{rid} | Get Share State
 *DefaultAPI* | [**HealthHealthGet**](docs/DefaultAPI.md#healthhealthget) | **Get** /health | Health
 *DefaultAPI* | [**ListArtifactVersionsV0ArtifactsArtIdVersionsGet**](docs/DefaultAPI.md#listartifactversionsv0artifactsartidversionsget) | **Get** /v0/artifacts/{art_id}/versions | List versions of an artifact, newest first
 *DefaultAPI* | [**ListArtifactsV0ArtifactsGet**](docs/DefaultAPI.md#listartifactsv0artifactsget) | **Get** /v0/artifacts | List artifacts in the drive
 *DefaultAPI* | [**ListEventsRouteV0EventsGet**](docs/DefaultAPI.md#listeventsroutev0eventsget) | **Get** /v0/events | Read the append-only event log for the authenticated drive
+*DefaultAPI* | [**ListGrantsRouteV0GrantsGet**](docs/DefaultAPI.md#listgrantsroutev0grantsget) | **Get** /v0/grants | List live grants on a resource (requires can_manage)
 *DefaultAPI* | [**ListProjectJobsV0ProjectsFldIdJobsGet**](docs/DefaultAPI.md#listprojectjobsv0projectsfldidjobsget) | **Get** /v0/projects/{fld_id}/jobs | List a project&#39;s jobs
+*DefaultAPI* | [**ListSharesRouteV0SharesGet**](docs/DefaultAPI.md#listsharesroutev0sharesget) | **Get** /v0/shares | List live share links on a resource (requires can_manage)
 *DefaultAPI* | [**ListTrashRouteV0DrivesDriveIdTrashGet**](docs/DefaultAPI.md#listtrashroutev0drivesdriveidtrashget) | **Get** /v0/drives/{drive_id}/trash | List the authenticated drive&#39;s trash
 *DefaultAPI* | [**LoginAuthLoginGet**](docs/DefaultAPI.md#loginauthloginget) | **Get** /auth/login | Login
 *DefaultAPI* | [**LogoutAuthLogoutPost**](docs/DefaultAPI.md#logoutauthlogoutpost) | **Post** /auth/logout | Logout
@@ -135,6 +151,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**OauthDisconnectWebOauthDisconnectPost**](docs/DefaultAPI.md#oauthdisconnectweboauthdisconnectpost) | **Post** /web/oauth/disconnect | Oauth Disconnect
 *DefaultAPI* | [**PatchFolderByIdV0FoldersFldIdPatch**](docs/DefaultAPI.md#patchfolderbyidv0foldersfldidpatch) | **Patch** /v0/folders/{fld_id} | Update folder metadata by stable ID
 *DefaultAPI* | [**PatchFolderByPathV0FoldersPathPatch**](docs/DefaultAPI.md#patchfolderbypathv0folderspathpatch) | **Patch** /v0/folders/{path} | Update folder metadata by path
+*DefaultAPI* | [**PatchGrantRouteV0GrantsGrnIdPatch**](docs/DefaultAPI.md#patchgrantroutev0grantsgrnidpatch) | **Patch** /v0/grants/{grn_id} | Update a grant&#39;s role and/or expiry (requires can_manage)
 *DefaultAPI* | [**PostFeedbackV0FeedbackPost**](docs/DefaultAPI.md#postfeedbackv0feedbackpost) | **Post** /v0/feedback | Post Feedback
 *DefaultAPI* | [**PrivacyPagePrivacyGet**](docs/DefaultAPI.md#privacypageprivacyget) | **Get** /privacy | Privacy Page
 *DefaultAPI* | [**ProjectPreviewPageFFldIdPreviewGet**](docs/DefaultAPI.md#projectpreviewpageffldidpreviewget) | **Get** /f/{fld_id}/preview | Project Preview Page
@@ -145,20 +162,29 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**RecoveryNewAccountExpiredAuthRecoveryNewAccountExpiredGet**](docs/DefaultAPI.md#recoverynewaccountexpiredauthrecoverynewaccountexpiredget) | **Get** /auth/recovery/new-account-expired | Recovery New Account Expired
 *DefaultAPI* | [**RecoveryPageAuthRecoveryGet**](docs/DefaultAPI.md#recoverypageauthrecoveryget) | **Get** /auth/recovery | Recovery Page
 *DefaultAPI* | [**RecoveryRestoreAuthRecoveryRestorePost**](docs/DefaultAPI.md#recoveryrestoreauthrecoveryrestorepost) | **Post** /auth/recovery/restore | Recovery Restore
+*DefaultAPI* | [**RedeemShareSShareKeyGet**](docs/DefaultAPI.md#redeemsharessharekeyget) | **Get** /s/{share_key} | Redeem Share
+*DefaultAPI* | [**RedeemShareWithPasswordSShareKeyPost**](docs/DefaultAPI.md#redeemsharewithpasswordssharekeypost) | **Post** /s/{share_key} | Redeem Share With Password
 *DefaultAPI* | [**RenameArtifactRouteV0ArtifactsArtIdPatch**](docs/DefaultAPI.md#renameartifactroutev0artifactsartidpatch) | **Patch** /v0/artifacts/{art_id} | Rename / move an artifact to a new path
 *DefaultAPI* | [**RestoreArtifactV0ArtifactsArtIdRestorePost**](docs/DefaultAPI.md#restoreartifactv0artifactsartidrestorepost) | **Post** /v0/artifacts/{art_id}/restore | Restore a soft-deleted artifact
 *DefaultAPI* | [**RestoreDriveRouteV0DrivesDriveIdRestorePost**](docs/DefaultAPI.md#restoredriveroutev0drivesdriveidrestorepost) | **Post** /v0/drives/{drive_id}/restore | Restore a soft-deleted drive
+*DefaultAPI* | [**RevokeGrantWebShareRidGrantGrnIdRevokePost**](docs/DefaultAPI.md#revokegrantwebshareridgrantgrnidrevokepost) | **Post** /web/share/{rid}/grant/{grn_id}/revoke | Revoke Grant
+*DefaultAPI* | [**RevokeLinkWebShareRidLinkShrIdRevokePost**](docs/DefaultAPI.md#revokelinkwebshareridlinkshridrevokepost) | **Post** /web/share/{rid}/link/{shr_id}/revoke | Revoke Link
 *DefaultAPI* | [**RotateKeyWebKeysRotatePost**](docs/DefaultAPI.md#rotatekeywebkeysrotatepost) | **Post** /web/keys/rotate | Rotate Key
+*DefaultAPI* | [**RotateShareRouteV0SharesShrIdRotatePost**](docs/DefaultAPI.md#rotateshareroutev0sharesshridrotatepost) | **Post** /v0/shares/{shr_id}/rotate | Revoke + reissue a share link&#39;s key (requires can_share)
 *DefaultAPI* | [**SearchV0SearchGet**](docs/DefaultAPI.md#searchv0searchget) | **Get** /v0/search | Full-text search over artifacts in the drive
+*DefaultAPI* | [**SetPublicWebShareRidPublicPost**](docs/DefaultAPI.md#setpublicwebshareridpublicpost) | **Post** /web/share/{rid}/public | Set Public
+*DefaultAPI* | [**SetSealWebShareRidSealPost**](docs/DefaultAPI.md#setsealwebshareridsealpost) | **Post** /web/share/{rid}/seal | Set Seal
 *DefaultAPI* | [**SettingsAccountSettingsGet**](docs/DefaultAPI.md#settingsaccountsettingsget) | **Get** /settings | Settings Account
 *DefaultAPI* | [**SettingsApiKeysSettingsApiKeysGet**](docs/DefaultAPI.md#settingsapikeyssettingsapikeysget) | **Get** /settings/api-keys | Settings Api Keys
 *DefaultAPI* | [**SettingsQuickstartSettingsQuickstartGet**](docs/DefaultAPI.md#settingsquickstartsettingsquickstartget) | **Get** /settings/quickstart | Settings Quickstart
 *DefaultAPI* | [**SettingsUsageSettingsUsageGet**](docs/DefaultAPI.md#settingsusagesettingsusageget) | **Get** /settings/usage | Settings Usage
 *DefaultAPI* | [**SharedFilesSharedGet**](docs/DefaultAPI.md#sharedfilessharedget) | **Get** /shared | Shared Files
 *DefaultAPI* | [**StreamUploadV0UploadTokenPut**](docs/DefaultAPI.md#streamuploadv0uploadtokenput) | **Put** /v0/upload/{token} | Proxied streaming upload (via an upload_url token)
+*DefaultAPI* | [**SwitchOrgWebSwitchOrgPost**](docs/DefaultAPI.md#switchorgwebswitchorgpost) | **Post** /web/switch-org | Switch Org
 *DefaultAPI* | [**TermsPageTermsGet**](docs/DefaultAPI.md#termspagetermsget) | **Get** /terms | Terms Page
 *DefaultAPI* | [**ToggleIndexingWebAccountIndexingPost**](docs/DefaultAPI.md#toggleindexingwebaccountindexingpost) | **Post** /web/account/indexing | Toggle Indexing
 *DefaultAPI* | [**TrashWebTrashGet**](docs/DefaultAPI.md#trashwebtrashget) | **Get** /web/trash | Trash
+*DefaultAPI* | [**ViewArtifactHeadAArtIdHeadGet**](docs/DefaultAPI.md#viewartifactheadaartidheadget) | **Get** /a/{art_id}/head | View Artifact Head
 *DefaultAPI* | [**ViewFileDriveIdPathGet**](docs/DefaultAPI.md#viewfiledriveidpathget) | **Get** /{drive_id}/{path} | View File
 *DefaultAPI* | [**ViewPermalinkArtifactAArtIdGet**](docs/DefaultAPI.md#viewpermalinkartifactaartidget) | **Get** /a/{art_id} | View Permalink Artifact
 *DefaultAPI* | [**ViewPermalinkFolderFFldIdGet**](docs/DefaultAPI.md#viewpermalinkfolderffldidget) | **Get** /f/{fld_id} | View Permalink Folder
@@ -197,6 +223,7 @@ Class | Method | HTTP request | Description
  - [CompileJobIn](docs/CompileJobIn.md)
  - [CompileOptions](docs/CompileOptions.md)
  - [CopyIn](docs/CopyIn.md)
+ - [DownloadUrlOut](docs/DownloadUrlOut.md)
  - [EventOut](docs/EventOut.md)
  - [EventPage](docs/EventPage.md)
  - [ExtensionExchangeRequest](docs/ExtensionExchangeRequest.md)
@@ -208,15 +235,30 @@ Class | Method | HTTP request | Description
  - [FolderMoveIn](docs/FolderMoveIn.md)
  - [FolderOut](docs/FolderOut.md)
  - [FolderPatchIn](docs/FolderPatchIn.md)
+ - [GrantCreateIn](docs/GrantCreateIn.md)
+ - [GrantIn](docs/GrantIn.md)
+ - [GrantList](docs/GrantList.md)
+ - [GrantOut](docs/GrantOut.md)
+ - [GrantPatchIn](docs/GrantPatchIn.md)
+ - [GrantPrincipalIn](docs/GrantPrincipalIn.md)
  - [HTTPValidationError](docs/HTTPValidationError.md)
+ - [LinkIn](docs/LinkIn.md)
  - [LocationInner](docs/LocationInner.md)
  - [Page](docs/Page.md)
  - [ProjectConfigIn](docs/ProjectConfigIn.md)
+ - [PublicIn](docs/PublicIn.md)
  - [RenameIn](docs/RenameIn.md)
+ - [SealIn](docs/SealIn.md)
  - [SearchHitOut](docs/SearchHitOut.md)
  - [SearchPage](docs/SearchPage.md)
+ - [ShareCreateIn](docs/ShareCreateIn.md)
+ - [ShareList](docs/ShareList.md)
+ - [ShareMintOut](docs/ShareMintOut.md)
+ - [ShareOut](docs/ShareOut.md)
  - [SourceRef](docs/SourceRef.md)
  - [TokenResponse](docs/TokenResponse.md)
+ - [UploadBeginIn](docs/UploadBeginIn.md)
+ - [UploadBeginOut](docs/UploadBeginOut.md)
  - [ValidationError](docs/ValidationError.md)
  - [VersionOut](docs/VersionOut.md)
  - [VersionPage](docs/VersionPage.md)

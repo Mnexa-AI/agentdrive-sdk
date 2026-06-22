@@ -11,7 +11,6 @@ Name | Type | Description | Notes
 **ContentType** | **string** |  | 
 **FileType** | **string** |  | 
 **Labels** | Pointer to **[]string** |  | [optional] 
-**Visibility** | **string** |  | 
 **UpdatedAt** | **time.Time** |  | 
 **VersionNumber** | **int32** |  | 
 **Modality** | **string** |  | 
@@ -32,7 +31,7 @@ Name | Type | Description | Notes
 
 ### NewFindHitOut
 
-`func NewFindHitOut(artId string, driveId string, path string, url string, contentType string, fileType string, visibility string, updatedAt time.Time, versionNumber int32, modality string, ord int32, text string, snippet string, score float32, ) *FindHitOut`
+`func NewFindHitOut(artId string, driveId string, path string, url string, contentType string, fileType string, updatedAt time.Time, versionNumber int32, modality string, ord int32, text string, snippet string, score float32, ) *FindHitOut`
 
 NewFindHitOut instantiates a new FindHitOut object
 This constructor will assign default values to properties that have it defined,
@@ -191,26 +190,6 @@ SetLabels sets Labels field to given value.
 `func (o *FindHitOut) HasLabels() bool`
 
 HasLabels returns a boolean if a field has been set.
-
-### GetVisibility
-
-`func (o *FindHitOut) GetVisibility() string`
-
-GetVisibility returns the Visibility field if non-nil, zero value otherwise.
-
-### GetVisibilityOk
-
-`func (o *FindHitOut) GetVisibilityOk() (*string, bool)`
-
-GetVisibilityOk returns a tuple with the Visibility field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetVisibility
-
-`func (o *FindHitOut) SetVisibility(v string)`
-
-SetVisibility sets Visibility field to given value.
-
 
 ### GetUpdatedAt
 

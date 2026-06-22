@@ -67,12 +67,6 @@ export interface FindHitOut {
     labels?: Array<string>;
     /**
      * 
-     * @type {FindHitOutVisibilityEnum}
-     * @memberof FindHitOut
-     */
-    visibility: FindHitOutVisibilityEnum;
-    /**
-     * 
      * @type {Date}
      * @memberof FindHitOut
      */
@@ -167,15 +161,6 @@ export interface FindHitOut {
 /**
  * @export
  */
-export const FindHitOutVisibilityEnum = {
-    Public: 'public',
-    Private: 'private'
-} as const;
-export type FindHitOutVisibilityEnum = typeof FindHitOutVisibilityEnum[keyof typeof FindHitOutVisibilityEnum];
-
-/**
- * @export
- */
 export const FindHitOutModalityEnum = {
     Text: 'text',
     Code: 'code',
@@ -197,7 +182,6 @@ export function instanceOfFindHitOut(value: object): value is FindHitOut {
     if (!('url' in value) || value['url'] === undefined) return false;
     if ((!('contentType' in value) && !('content_type' in value)) || (value['contentType'] === undefined && value['content_type'] === undefined)) return false;
     if ((!('fileType' in value) && !('file_type' in value)) || (value['fileType'] === undefined && value['file_type'] === undefined)) return false;
-    if (!('visibility' in value) || value['visibility'] === undefined) return false;
     if ((!('updatedAt' in value) && !('updated_at' in value)) || (value['updatedAt'] === undefined && value['updated_at'] === undefined)) return false;
     if ((!('versionNumber' in value) && !('version_number' in value)) || (value['versionNumber'] === undefined && value['version_number'] === undefined)) return false;
     if (!('modality' in value) || value['modality'] === undefined) return false;
@@ -225,7 +209,6 @@ export function FindHitOutFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'contentType': json['content_type'],
         'fileType': json['file_type'],
         'labels': json['labels'] == null ? undefined : json['labels'],
-        'visibility': json['visibility'],
         'updatedAt': (new Date(json['updated_at'])),
         'versionNumber': json['version_number'],
         'modality': json['modality'],
@@ -262,7 +245,6 @@ export function FindHitOutToJSONTyped(value?: FindHitOut | null, ignoreDiscrimin
         'content_type': value['contentType'],
         'file_type': value['fileType'],
         'labels': value['labels'],
-        'visibility': value['visibility'],
         'updated_at': value['updatedAt'].toISOString(),
         'version_number': value['versionNumber'],
         'modality': value['modality'],

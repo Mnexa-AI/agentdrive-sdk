@@ -33,10 +33,24 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_add_grant_web_share_rid_grant_post(self) -> None:
+        """Test case for add_grant_web_share_rid_grant_post
+
+        Add Grant
+        """
+        pass
+
     def test_artifact_detail_preview_preview_artifact_detail_get(self) -> None:
         """Test case for artifact_detail_preview_preview_artifact_detail_get
 
         Artifact Detail Preview
+        """
+        pass
+
+    def test_begin_upload_v0_uploads_post(self) -> None:
+        """Test case for begin_upload_v0_uploads_post
+
+        Begin a large (direct-to-GCS) upload
         """
         pass
 
@@ -61,6 +75,13 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_commit_upload_v0_uploads_upload_id_commit_post(self) -> None:
+        """Test case for commit_upload_v0_uploads_upload_id_commit_post
+
+        Commit a large (direct-to-GCS) upload
+        """
+        pass
+
     def test_connectors_page_connectors_get(self) -> None:
         """Test case for connectors_page_connectors_get
 
@@ -79,6 +100,27 @@ class TestDefaultApi(unittest.TestCase):
         """Test case for create_folder_by_path_v0_folders_path_post
 
         Create a folder (idempotent)
+        """
+        pass
+
+    def test_create_grant_route_v0_grants_post(self) -> None:
+        """Test case for create_grant_route_v0_grants_post
+
+        Create (or fetch) a per-principal grant on a resource
+        """
+        pass
+
+    def test_create_link_web_share_rid_link_post(self) -> None:
+        """Test case for create_link_web_share_rid_link_post
+
+        Create Link
+        """
+        pass
+
+    def test_create_share_route_v0_shares_post(self) -> None:
+        """Test case for create_share_route_v0_shares_post
+
+        Mint a share link (returns the share_key once)
         """
         pass
 
@@ -110,6 +152,13 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_delete_artifact_by_id_route_v0_artifacts_art_id_delete(self) -> None:
+        """Test case for delete_artifact_by_id_route_v0_artifacts_art_id_delete
+
+        Soft-delete an artifact by its stable ID
+        """
+        pass
+
     def test_delete_artifact_v0_artifacts_path_delete(self) -> None:
         """Test case for delete_artifact_v0_artifacts_path_delete
 
@@ -138,10 +187,24 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_delete_grant_route_v0_grants_grn_id_delete(self) -> None:
+        """Test case for delete_grant_route_v0_grants_grn_id_delete
+
+        Revoke a grant (can_manage, or self-revoke own grant)
+        """
+        pass
+
     def test_delete_key_web_keys_delete_post(self) -> None:
         """Test case for delete_key_web_keys_delete_post
 
         Delete Key
+        """
+        pass
+
+    def test_delete_share_route_v0_shares_shr_id_delete(self) -> None:
+        """Test case for delete_share_route_v0_shares_shr_id_delete
+
+        Revoke a share link (requires can_manage)
         """
         pass
 
@@ -156,6 +219,27 @@ class TestDefaultApi(unittest.TestCase):
         """Test case for download_artifact_version_v0_artifacts_art_id_versions_version_number_download_get
 
         Stream bytes for a specific version (machine surface)
+        """
+        pass
+
+    def test_download_url_by_id_v0_artifacts_art_id_download_url_get(self) -> None:
+        """Test case for download_url_by_id_v0_artifacts_art_id_download_url_get
+
+        Signed direct-from-GCS download URL by stable ID
+        """
+        pass
+
+    def test_download_url_by_path_v0_artifacts_path_download_url_get(self) -> None:
+        """Test case for download_url_by_path_v0_artifacts_path_download_url_get
+
+        Signed direct-from-GCS download URL by path
+        """
+        pass
+
+    def test_download_url_version_v0_artifacts_art_id_versions_version_number_download_url_get(self) -> None:
+        """Test case for download_url_version_v0_artifacts_art_id_versions_version_number_download_url_get
+
+        Signed direct-from-GCS download URL for a specific version
         """
         pass
 
@@ -250,6 +334,13 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_get_folder_by_path_meta_v0_folders_path_meta_get(self) -> None:
+        """Test case for get_folder_by_path_meta_v0_folders_path_meta_get
+
+        Folder metadata by path (same shape as the bare path route)
+        """
+        pass
+
     def test_get_folder_by_path_v0_folders_path_get(self) -> None:
         """Test case for get_folder_by_path_v0_folders_path_get
 
@@ -275,6 +366,13 @@ class TestDefaultApi(unittest.TestCase):
         """Test case for get_project_v0_projects_fld_id_get
 
         Get a project's compile config
+        """
+        pass
+
+    def test_get_share_state_web_share_rid_get(self) -> None:
+        """Test case for get_share_state_web_share_rid_get
+
+        Get Share State
         """
         pass
 
@@ -306,10 +404,24 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_list_grants_route_v0_grants_get(self) -> None:
+        """Test case for list_grants_route_v0_grants_get
+
+        List live grants on a resource (requires can_manage)
+        """
+        pass
+
     def test_list_project_jobs_v0_projects_fld_id_jobs_get(self) -> None:
         """Test case for list_project_jobs_v0_projects_fld_id_jobs_get
 
         List a project's jobs
+        """
+        pass
+
+    def test_list_shares_route_v0_shares_get(self) -> None:
+        """Test case for list_shares_route_v0_shares_get
+
+        List live share links on a resource (requires can_manage)
         """
         pass
 
@@ -404,6 +516,13 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_patch_grant_route_v0_grants_grn_id_patch(self) -> None:
+        """Test case for patch_grant_route_v0_grants_grn_id_patch
+
+        Update a grant's role and/or expiry (requires can_manage)
+        """
+        pass
+
     def test_post_feedback_v0_feedback_post(self) -> None:
         """Test case for post_feedback_v0_feedback_post
 
@@ -474,6 +593,20 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_redeem_share_s_share_key_get(self) -> None:
+        """Test case for redeem_share_s_share_key_get
+
+        Redeem Share
+        """
+        pass
+
+    def test_redeem_share_with_password_s_share_key_post(self) -> None:
+        """Test case for redeem_share_with_password_s_share_key_post
+
+        Redeem Share With Password
+        """
+        pass
+
     def test_rename_artifact_route_v0_artifacts_art_id_patch(self) -> None:
         """Test case for rename_artifact_route_v0_artifacts_art_id_patch
 
@@ -495,6 +628,20 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_revoke_grant_web_share_rid_grant_grn_id_revoke_post(self) -> None:
+        """Test case for revoke_grant_web_share_rid_grant_grn_id_revoke_post
+
+        Revoke Grant
+        """
+        pass
+
+    def test_revoke_link_web_share_rid_link_shr_id_revoke_post(self) -> None:
+        """Test case for revoke_link_web_share_rid_link_shr_id_revoke_post
+
+        Revoke Link
+        """
+        pass
+
     def test_rotate_key_web_keys_rotate_post(self) -> None:
         """Test case for rotate_key_web_keys_rotate_post
 
@@ -502,10 +649,31 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_rotate_share_route_v0_shares_shr_id_rotate_post(self) -> None:
+        """Test case for rotate_share_route_v0_shares_shr_id_rotate_post
+
+        Revoke + reissue a share link's key (requires can_share)
+        """
+        pass
+
     def test_search_v0_search_get(self) -> None:
         """Test case for search_v0_search_get
 
         Full-text search over artifacts in the drive
+        """
+        pass
+
+    def test_set_public_web_share_rid_public_post(self) -> None:
+        """Test case for set_public_web_share_rid_public_post
+
+        Set Public
+        """
+        pass
+
+    def test_set_seal_web_share_rid_seal_post(self) -> None:
+        """Test case for set_seal_web_share_rid_seal_post
+
+        Set Seal
         """
         pass
 
@@ -551,6 +719,13 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_switch_org_web_switch_org_post(self) -> None:
+        """Test case for switch_org_web_switch_org_post
+
+        Switch Org
+        """
+        pass
+
     def test_terms_page_terms_get(self) -> None:
         """Test case for terms_page_terms_get
 
@@ -569,6 +744,13 @@ class TestDefaultApi(unittest.TestCase):
         """Test case for trash_web_trash_get
 
         Trash
+        """
+        pass
+
+    def test_view_artifact_head_a_art_id_head_get(self) -> None:
+        """Test case for view_artifact_head_a_art_id_head_get
+
+        View Artifact Head
         """
         pass
 

@@ -17,10 +17,10 @@ import (
 // checks if the FolderPatchIn type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &FolderPatchIn{}
 
-// FolderPatchIn PATCH /v0/folders/{fld_id} body — partial update. Field absence = unchanged; explicit None = clear field.
+// FolderPatchIn PATCH /v0/folders/{fld_id} body — partial update. Field absence = unchanged. `description`: explicit null = clear. `inherit_grants`: non-nullable — null/absent = unchanged (it cannot be cleared, only flipped true/false).
 type FolderPatchIn struct {
 	Description NullableString `json:"description,omitempty"`
-	Visibility NullableString `json:"visibility,omitempty"`
+	InheritGrants NullableBool `json:"inherit_grants,omitempty"`
 }
 
 // NewFolderPatchIn instantiates a new FolderPatchIn object
@@ -82,46 +82,46 @@ func (o *FolderPatchIn) UnsetDescription() {
 	o.Description.Unset()
 }
 
-// GetVisibility returns the Visibility field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *FolderPatchIn) GetVisibility() string {
-	if o == nil || IsNil(o.Visibility.Get()) {
-		var ret string
+// GetInheritGrants returns the InheritGrants field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *FolderPatchIn) GetInheritGrants() bool {
+	if o == nil || IsNil(o.InheritGrants.Get()) {
+		var ret bool
 		return ret
 	}
-	return *o.Visibility.Get()
+	return *o.InheritGrants.Get()
 }
 
-// GetVisibilityOk returns a tuple with the Visibility field value if set, nil otherwise
+// GetInheritGrantsOk returns a tuple with the InheritGrants field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *FolderPatchIn) GetVisibilityOk() (*string, bool) {
+func (o *FolderPatchIn) GetInheritGrantsOk() (*bool, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.Visibility.Get(), o.Visibility.IsSet()
+	return o.InheritGrants.Get(), o.InheritGrants.IsSet()
 }
 
-// HasVisibility returns a boolean if a field has been set.
-func (o *FolderPatchIn) HasVisibility() bool {
-	if o != nil && o.Visibility.IsSet() {
+// HasInheritGrants returns a boolean if a field has been set.
+func (o *FolderPatchIn) HasInheritGrants() bool {
+	if o != nil && o.InheritGrants.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetVisibility gets a reference to the given NullableString and assigns it to the Visibility field.
-func (o *FolderPatchIn) SetVisibility(v string) {
-	o.Visibility.Set(&v)
+// SetInheritGrants gets a reference to the given NullableBool and assigns it to the InheritGrants field.
+func (o *FolderPatchIn) SetInheritGrants(v bool) {
+	o.InheritGrants.Set(&v)
 }
-// SetVisibilityNil sets the value for Visibility to be an explicit nil
-func (o *FolderPatchIn) SetVisibilityNil() {
-	o.Visibility.Set(nil)
+// SetInheritGrantsNil sets the value for InheritGrants to be an explicit nil
+func (o *FolderPatchIn) SetInheritGrantsNil() {
+	o.InheritGrants.Set(nil)
 }
 
-// UnsetVisibility ensures that no value is present for Visibility, not even an explicit nil
-func (o *FolderPatchIn) UnsetVisibility() {
-	o.Visibility.Unset()
+// UnsetInheritGrants ensures that no value is present for InheritGrants, not even an explicit nil
+func (o *FolderPatchIn) UnsetInheritGrants() {
+	o.InheritGrants.Unset()
 }
 
 func (o FolderPatchIn) MarshalJSON() ([]byte, error) {
@@ -137,8 +137,8 @@ func (o FolderPatchIn) ToMap() (map[string]interface{}, error) {
 	if o.Description.IsSet() {
 		toSerialize["description"] = o.Description.Get()
 	}
-	if o.Visibility.IsSet() {
-		toSerialize["visibility"] = o.Visibility.Get()
+	if o.InheritGrants.IsSet() {
+		toSerialize["inherit_grants"] = o.InheritGrants.Get()
 	}
 	return toSerialize, nil
 }

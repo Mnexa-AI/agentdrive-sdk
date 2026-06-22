@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from agentdrive_sdk.models.artifact_source import ArtifactSource
 from typing import Optional, Set
@@ -38,7 +38,6 @@ class ArtifactOut(BaseModel):
     size_bytes: StrictInt
     hash: StrictStr
     version_number: Optional[StrictInt] = 1
-    visibility: StrictStr
     labels: Optional[List[StrictStr]] = None
     metadata: Optional[Dict[str, Any]] = None
     source: Optional[ArtifactSource] = None
@@ -47,14 +46,7 @@ class ArtifactOut(BaseModel):
     created_at: datetime
     updated_at: datetime
     llm_index: Optional[Dict[str, Any]] = None
-    __properties: ClassVar[List[str]] = ["id", "drive_id", "path", "url", "content_type", "file_type", "size_bytes", "hash", "version_number", "visibility", "labels", "metadata", "source", "indexed_at", "embedded_at", "created_at", "updated_at", "llm_index"]
-
-    @field_validator('visibility')
-    def visibility_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['public', 'private']):
-            raise ValueError("must be one of enum values ('public', 'private')")
-        return value
+    __properties: ClassVar[List[str]] = ["id", "drive_id", "path", "url", "content_type", "file_type", "size_bytes", "hash", "version_number", "labels", "metadata", "source", "indexed_at", "embedded_at", "created_at", "updated_at", "llm_index"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -139,7 +131,6 @@ class ArtifactOut(BaseModel):
             "size_bytes": obj.get("size_bytes"),
             "hash": obj.get("hash"),
             "version_number": obj.get("version_number") if obj.get("version_number") is not None else 1,
-            "visibility": obj.get("visibility"),
             "labels": obj.get("labels"),
             "metadata": obj.get("metadata"),
             "source": ArtifactSource.from_dict(obj["source"]) if obj.get("source") is not None else None,

@@ -14,7 +14,6 @@ Name | Type
 `contentType` | string
 `fileType` | string
 `labels` | Array&lt;string&gt;
-`visibility` | string
 `updatedAt` | Date
 `versionNumber` | number
 `modality` | string
@@ -45,7 +44,6 @@ const example = {
   "contentType": null,
   "fileType": null,
   "labels": null,
-  "visibility": null,
   "updatedAt": null,
   "versionNumber": null,
   "modality": null,

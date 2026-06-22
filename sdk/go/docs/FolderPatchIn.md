@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Description** | Pointer to **NullableString** |  | [optional] 
-**Visibility** | Pointer to **NullableString** |  | [optional] 
+**InheritGrants** | Pointer to **NullableBool** |  | [optional] 
 
 ## Methods
 
@@ -61,41 +61,41 @@ HasDescription returns a boolean if a field has been set.
 `func (o *FolderPatchIn) UnsetDescription()`
 
 UnsetDescription ensures that no value is present for Description, not even an explicit nil
-### GetVisibility
+### GetInheritGrants
 
-`func (o *FolderPatchIn) GetVisibility() string`
+`func (o *FolderPatchIn) GetInheritGrants() bool`
 
-GetVisibility returns the Visibility field if non-nil, zero value otherwise.
+GetInheritGrants returns the InheritGrants field if non-nil, zero value otherwise.
 
-### GetVisibilityOk
+### GetInheritGrantsOk
 
-`func (o *FolderPatchIn) GetVisibilityOk() (*string, bool)`
+`func (o *FolderPatchIn) GetInheritGrantsOk() (*bool, bool)`
 
-GetVisibilityOk returns a tuple with the Visibility field if it's non-nil, zero value otherwise
+GetInheritGrantsOk returns a tuple with the InheritGrants field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetVisibility
+### SetInheritGrants
 
-`func (o *FolderPatchIn) SetVisibility(v string)`
+`func (o *FolderPatchIn) SetInheritGrants(v bool)`
 
-SetVisibility sets Visibility field to given value.
+SetInheritGrants sets InheritGrants field to given value.
 
-### HasVisibility
+### HasInheritGrants
 
-`func (o *FolderPatchIn) HasVisibility() bool`
+`func (o *FolderPatchIn) HasInheritGrants() bool`
 
-HasVisibility returns a boolean if a field has been set.
+HasInheritGrants returns a boolean if a field has been set.
 
-### SetVisibilityNil
+### SetInheritGrantsNil
 
-`func (o *FolderPatchIn) SetVisibilityNil(b bool)`
+`func (o *FolderPatchIn) SetInheritGrantsNil(b bool)`
 
- SetVisibilityNil sets the value for Visibility to be an explicit nil
+ SetInheritGrantsNil sets the value for InheritGrants to be an explicit nil
 
-### UnsetVisibility
-`func (o *FolderPatchIn) UnsetVisibility()`
+### UnsetInheritGrants
+`func (o *FolderPatchIn) UnsetInheritGrants()`
 
-UnsetVisibility ensures that no value is present for Visibility, not even an explicit nil
+UnsetInheritGrants ensures that no value is present for InheritGrants, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

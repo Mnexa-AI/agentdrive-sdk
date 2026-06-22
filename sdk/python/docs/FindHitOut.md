@@ -13,7 +13,6 @@ Name | Type | Description | Notes
 **content_type** | **str** |  | 
 **file_type** | **str** |  | 
 **labels** | **List[str]** |  | [optional] 
-**visibility** | **str** |  | 
 **updated_at** | **datetime** |  | 
 **version_number** | **int** |  | 
 **modality** | **str** |  | 

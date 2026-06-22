@@ -67,7 +67,6 @@ paths:
         **Limits:** request body must not exceed **50 MB**. Path must be non-empty, ≤256 chars, only `[A-Za-z0-9_./-]`, no `..` segments, no leading/trailing slash. Per-token write rate limit: 100/hour.
 
         **Optional headers.** Each preserves the existing artifact's value when omitted on an overwrite, and takes the create-default on a new path; send the header to replace it:
-        - `X-AgentDrive-Visibility`: `public` or `private` (new-path default `private`). Private artifacts are readable only with your API key; `public` gives an anonymously shareable URL.
         - `X-AgentDrive-Labels`: comma-separated labels (e.g. `draft,report`); an empty value clears them. Each: lowercase `[a-z0-9_-]+`, ≤64 chars; ≤16 labels per artifact.
         - `X-AgentDrive-Metadata`: JSON object of agent-attached fields.
         - `X-AgentDrive-Source`: JSON `{"refs": [...]}` source provenance (present, including `{"refs": []}`, replaces).
@@ -89,14 +88,6 @@ paths:
         schema:
           default: application/octet-stream
           title: Content-Type
-          type: string
-        style: simple
-      - explode: false
-        in: header
-        name: x-agentdrive-visibility
-        required: false
-        schema:
-          nullable: true
           type: string
         style: simple
       - explode: false
@@ -170,6 +161,58 @@ paths:
           description: Validation Error
       summary: Upload (or overwrite) an artifact
   /v0/artifacts/{art_id}:
+    delete:
+      description: |-
+        Soft-delete the artifact with this `art_…` ID. Same semantics + response shape as the path-based `DELETE /v0/artifacts/{path}` (reversible until the GC cron hard-deletes at `purge_at`; `restore_url` points at the by-id restore), but keys on the immutable id so a concurrent rename can't change the target.
+
+        Returns 404 ARTIFACT_NOT_FOUND if no live artifact has this id; 403 WIKI_RESERVED for `_wiki/` artifacts (system-managed); 412 if `If-Match` doesn't match the current version. Declared before the `{path:path}` family so the id convertor wins for DELETEs.
+      operationId: delete_artifact_by_id_route_v0_artifacts__art_id__delete
+      parameters:
+      - explode: false
+        in: path
+        name: art_id
+        required: true
+        schema:
+          title: Art Id
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: if-match
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: x-agentdrive-actor
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Soft-delete an artifact by its stable ID
     get:
       operationId: get_artifact_by_id_v0_artifacts__art_id__get
       parameters:
@@ -525,6 +568,127 @@ paths:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
       summary: Stream bytes for a specific version (machine surface)
+  /v0/artifacts/{art_id}/download-url:
+    get:
+      description: "Returns a URL for the artifact's bytes. For large artifacts (>=\
+        \ the signed-download threshold) when signing is available, it's a short-lived\
+        \ **signed GCS URL** the client fetches directly (`direct:true`, `expires_at`\
+        \ set); otherwise the **proxy** `/download` URL (`direct:false`). Treat the\
+        \ URL as opaque. large-download-design.md §5.1."
+      operationId: download_url_by_id_v0_artifacts__art_id__download_url_get
+      parameters:
+      - explode: false
+        in: path
+        name: art_id
+        required: true
+        schema:
+          title: Art Id
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DownloadUrlOut"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Signed direct-from-GCS download URL by stable ID
+  /v0/artifacts/{art_id}/versions/{version_number}/download-url:
+    get:
+      description: "Same as `/{art_id}/download-url` but for a specific version's\
+        \ bytes (`direct:true` signed GCS URL when large + signing available, else\
+        \ the proxy `/versions/{n}/download` URL). large-download-design.md §5.1."
+      operationId: download_url_version_v0_artifacts__art_id__versions__version_number__download_url_get
+      parameters:
+      - explode: false
+        in: path
+        name: art_id
+        required: true
+        schema:
+          title: Art Id
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: version_number
+        required: true
+        schema:
+          title: Version Number
+          type: integer
+        style: simple
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DownloadUrlOut"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Signed direct-from-GCS download URL for a specific version
+  /v0/artifacts/{path}/download-url:
+    get:
+      description: "Same as `/{art_id}/download-url` but resolves the artifact by\
+        \ path. The returned proxy URL (when `direct:false`) still points at the by-id\
+        \ `/download` endpoint. large-download-design.md §5.1."
+      operationId: download_url_by_path_v0_artifacts__path__download_url_get
+      parameters:
+      - explode: false
+        in: path
+        name: path
+        required: true
+        schema:
+          title: Path
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DownloadUrlOut"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Signed direct-from-GCS download URL by path
   /v0/artifacts/{path}/meta:
     get:
       operationId: get_artifact_meta_v0_artifacts__path__meta_get
@@ -867,7 +1031,7 @@ paths:
         - Fuzzy matching, regex
         - Boolean operator parentheses
 
-        **Filters:** `label` (repeatable, AND), `file_type` (enum), `prefix` (path prefix), `visibility` (`public`/`private`/`all` — default `all`), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`).
+        **Filters:** `label` (repeatable, AND), `file_type` (enum), `prefix` (path prefix), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`).
       operationId: search_v0_search_get
       parameters:
       - explode: true
@@ -908,19 +1072,6 @@ paths:
             the live occupant at the original path with audit `metadata.cause='restore_conflict_rename'`.
             Mutually exclusive with `overwrite`.
           nullable: true
-          type: string
-        style: form
-      - explode: true
-        in: query
-        name: visibility
-        required: false
-        schema:
-          default: all
-          enum:
-          - public
-          - private
-          - all
-          title: Visibility
           type: string
         style: form
       - explode: true
@@ -988,7 +1139,7 @@ paths:
 
         **Span citations:** `char_start`/`char_end` for text & code, `page_start`/`page_end` for PDFs, `time_start_ms`/`time_end_ms` for audio & video. Only the modality-relevant pair is populated.
 
-        **Filters:** `label`, `file_type`, `prefix`, `visibility`, `modality` (repeatable), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`, applied to both legs).
+        **Filters:** `label`, `file_type`, `prefix`, `modality` (repeatable), `updated_after` / `updated_before` (RFC 3339 timestamps, inclusive bounds on `updated_at`, applied to both legs).
 
         **Wiki coverage:** `/v0/find` excludes `_wiki/` paths by default and — importantly — does NOT cover them even when the caller passes `prefix=_wiki/...`. Wiki pages are not embedded by the pipeline (they're system-generated output, not user input), so `embed_chunks` has no rows for them and the join returns empty. Use `wiki_search` (or `list`/`grep` with a `_wiki/` prefix) for the wiki layer.
 
@@ -1043,19 +1194,6 @@ paths:
         required: false
         schema:
           nullable: true
-          type: string
-        style: form
-      - explode: true
-        in: query
-        name: visibility
-        required: false
-        schema:
-          default: all
-          enum:
-          - public
-          - private
-          - all
-          title: Visibility
           type: string
         style: form
       - explode: true
@@ -1579,6 +1717,40 @@ paths:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
       summary: Create a folder (idempotent)
+  /v0/folders/{path}/meta:
+    get:
+      operationId: get_folder_by_path_meta_v0_folders__path__meta_get
+      parameters:
+      - explode: false
+        in: path
+        name: path
+        required: true
+        schema:
+          title: Path
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FolderOut"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Folder metadata by path (same shape as the bare path route)
   /v0/events:
     get:
       description: |-
@@ -1797,10 +1969,331 @@ paths:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
       summary: Get Feedback Status
+  /v0/grants:
+    get:
+      operationId: list_grants_route_v0_grants_get
+      parameters:
+      - description: art_*/fld_* id or a path
+        explode: true
+        in: query
+        name: resource
+        required: true
+        schema:
+          description: art_*/fld_* id or a path
+          title: Resource
+          type: string
+        style: form
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GrantList"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: List live grants on a resource (requires can_manage)
+    post:
+      operationId: create_grant_route_v0_grants_post
+      parameters:
+      - explode: false
+        in: header
+        name: x-agentdrive-actor
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GrantCreateIn"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GrantOut"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Create (or fetch) a per-principal grant on a resource
+  /v0/grants/{grn_id}:
+    delete:
+      operationId: delete_grant_route_v0_grants__grn_id__delete
+      parameters:
+      - explode: false
+        in: path
+        name: grn_id
+        required: true
+        schema:
+          title: Grn Id
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: x-agentdrive-actor
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: "Revoke a grant (can_manage, or self-revoke own grant)"
+    patch:
+      operationId: patch_grant_route_v0_grants__grn_id__patch
+      parameters:
+      - explode: false
+        in: path
+        name: grn_id
+        required: true
+        schema:
+          title: Grn Id
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: x-agentdrive-actor
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GrantPatchIn"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GrantOut"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Update a grant's role and/or expiry (requires can_manage)
+  /v0/shares:
+    get:
+      operationId: list_shares_route_v0_shares_get
+      parameters:
+      - description: art_*/fld_* id or a path
+        explode: true
+        in: query
+        name: resource
+        required: true
+        schema:
+          description: art_*/fld_* id or a path
+          title: Resource
+          type: string
+        style: form
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShareList"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: List live share links on a resource (requires can_manage)
+    post:
+      operationId: create_share_route_v0_shares_post
+      parameters:
+      - explode: false
+        in: header
+        name: x-agentdrive-actor
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ShareCreateIn"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShareMintOut"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Mint a share link (returns the share_key once)
+  /v0/shares/{shr_id}:
+    delete:
+      operationId: delete_share_route_v0_shares__shr_id__delete
+      parameters:
+      - explode: false
+        in: path
+        name: shr_id
+        required: true
+        schema:
+          title: Shr Id
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: x-agentdrive-actor
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Revoke a share link (requires can_manage)
+  /v0/shares/{shr_id}/rotate:
+    post:
+      operationId: rotate_share_route_v0_shares__shr_id__rotate_post
+      parameters:
+      - explode: false
+        in: path
+        name: shr_id
+        required: true
+        schema:
+          title: Shr Id
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: x-agentdrive-actor
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShareMintOut"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Revoke + reissue a share link's key (requires can_share)
   /v0/upload/{token}:
     put:
       description: |-
-        Streams an artifact body into AgentDrive using a single-use token that was previously minted by the `upload_url` MCP tool. The token encodes the artifact path, content type, size cap, labels, metadata, visibility, source, actor, change summary, and `if_match` — all frozen at mint time. The request carries only the raw bytes + a `Content-Type` header that must match the signed value.
+        Streams an artifact body into AgentDrive using a single-use token that was previously minted by the `upload_url` MCP tool. The token encodes the artifact path, content type, size cap, labels, metadata, source, actor, change summary, and `if_match` — all frozen at mint time. The request carries only the raw bytes + a `Content-Type` header that must match the signed value.
 
         **Auth.** No Authorization header — the token in the path is the credential.
 
@@ -1845,6 +2338,101 @@ paths:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
       summary: Proxied streaming upload (via an upload_url token)
+  /v0/uploads:
+    post:
+      description: "Reserve quota and open a resumable upload session for a file larger\
+        \ than the buffered-upload limit. Returns a `upload_url` to PUT the raw bytes\
+        \ to DIRECTLY (no Authorization header — the URL is the credential), then\
+        \ call `/v0/uploads/{upload_id}/commit`. All artifact decisions (path, labels,\
+        \ metadata, source, if_match) are frozen here."
+      operationId: begin_upload_v0_uploads_post
+      parameters:
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UploadBeginIn"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadBeginOut"
+          description: Successful Response
+        "400":
+          description: Invalid path / labels / metadata / source
+        "402":
+          description: Drive storage quota would be exceeded
+        "403":
+          description: Path reserved for the system (WIKI_RESERVED)
+        "413":
+          description: size_bytes exceeds the drive's per-artifact cap
+        "429":
+          description: Drive's per-hour write budget exhausted
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Begin a large (direct-to-GCS) upload
+  /v0/uploads/{upload_id}/commit:
+    post:
+      description: "Finalize the upload begun at `/v0/uploads`: AgentDrive verifies\
+        \ the object that landed in GCS (size + checksum) and creates the artifact.\
+        \ Idempotent — a retry after a successful commit returns the same artifact.\
+        \ The write budget is charged here (begin is free metadata)."
+      operationId: commit_upload_v0_uploads__upload_id__commit_post
+      parameters:
+      - explode: false
+        in: path
+        name: upload_id
+        required: true
+        schema:
+          title: Upload Id
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArtifactOut"
+          description: Successful Response
+        "404":
+          description: No such upload for this drive
+        "409":
+          description: Uploaded object size != declared size_bytes
+        "410":
+          description: Upload session expired
+        "412":
+          description: If-Match precondition failed
+        "429":
+          description: Drive's per-hour write budget exhausted
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Commit a large (direct-to-GCS) upload
   /v0/projects/{fld_id}/jobs:
     get:
       operationId: list_project_jobs_v0_projects__fld_id__jobs_get
@@ -2924,8 +3512,9 @@ paths:
         `PUT /v0/artifacts/{path}` won't accept a cookie-only session.
 
         Owner-only; the path is checked against the signed-in user's drive.
-        v0 is image-only — refuses non-image content types so the editor
-        can't smuggle markdown or anything else through this surface.
+        Accepts `image/*` (SnipIt editor autosave) and `application/pdf` (the
+        PDF viewer's annotation save) only — refuses everything else so the
+        editor can't smuggle markdown/HTML or anything else through this surface.
         Mirrors every guard the v0 PUT enforces — write quota, reserved
         `_wiki/` namespace rejection, per-tier max-bytes cap (both
         `Content-Length` short-circuit and post-body length check) — so
@@ -3091,16 +3680,6 @@ paths:
           title: Label
           type: array
           default: null
-        style: form
-      - explode: true
-        in: query
-        name: vis
-        required: false
-        schema:
-          default: ""
-          maxLength: 16
-          title: Vis
-          type: string
         style: form
       - explode: true
         in: query
@@ -3327,9 +3906,13 @@ paths:
   /web/set:
     post:
       description: |-
-        Artifact visibility (target = `art_<id>`) or folder description
-        (target = `fld_<id>`). Folder visibility is intentionally not exposed
-        (design §8.2: it doesn't cascade).
+        Folder description edit (target = `fld_<id>`).
+
+        "Public/private" is no longer a folder/artifact flag — access is
+        expressed through grants (permission-sharing-design §4.4), so this
+        endpoint only edits folder descriptions. Artifact targets are
+        rejected; publishing an artifact is the dedicated grant/`publish`
+        flow, not a metadata toggle.
       operationId: web_set_metadata_web_set_post
       requestBody:
         content:
@@ -3425,6 +4008,281 @@ paths:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
       summary: Web Restore Folder
+  /web/share/{rid}:
+    get:
+      operationId: get_share_state_web_share__rid__get
+      parameters:
+      - explode: false
+        in: path
+        name: rid
+        required: true
+        schema:
+          title: Rid
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Get Share State
+  /web/share/{rid}/public:
+    post:
+      description: |-
+        Toggle world-readable: create (idempotent) or revoke the `anyone:viewer`
+        grant. On a folder this cascades to the subtree (the response carries the
+        blast-radius the UI confirmed).
+      operationId: set_public_web_share__rid__public_post
+      parameters:
+      - explode: false
+        in: path
+        name: rid
+        required: true
+        schema:
+          title: Rid
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: x-csrf-token
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PublicIn"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Set Public
+  /web/share/{rid}/grant:
+    post:
+      operationId: add_grant_web_share__rid__grant_post
+      parameters:
+      - explode: false
+        in: path
+        name: rid
+        required: true
+        schema:
+          title: Rid
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: x-csrf-token
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GrantIn"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Add Grant
+  /web/share/{rid}/grant/{grn_id}/revoke:
+    post:
+      operationId: revoke_grant_web_share__rid__grant__grn_id__revoke_post
+      parameters:
+      - explode: false
+        in: path
+        name: rid
+        required: true
+        schema:
+          title: Rid
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: grn_id
+        required: true
+        schema:
+          title: Grn Id
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: x-csrf-token
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Revoke Grant
+  /web/share/{rid}/seal:
+    post:
+      description: |-
+        Set the limited-access seal (`inherit_grants`). `false` makes the
+        resource ignore grants inherited from ancestor folders (§4.6/§4.11).
+        Gated on `can_manage` (changing who can reach the resource).
+      operationId: set_seal_web_share__rid__seal_post
+      parameters:
+      - explode: false
+        in: path
+        name: rid
+        required: true
+        schema:
+          title: Rid
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: x-csrf-token
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SealIn"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Set Seal
+  /web/share/{rid}/link:
+    post:
+      description: |-
+        Mint a viewer share link. Returns the fresh state PLUS `minted` with the
+        raw `share_key` + url — the ONLY response that carries the key. Artifacts
+        only (v1: folder share links are not supported).
+      operationId: create_link_web_share__rid__link_post
+      parameters:
+      - explode: false
+        in: path
+        name: rid
+        required: true
+        schema:
+          title: Rid
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: x-csrf-token
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LinkIn"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Create Link
+  /web/share/{rid}/link/{shr_id}/revoke:
+    post:
+      operationId: revoke_link_web_share__rid__link__shr_id__revoke_post
+      parameters:
+      - explode: false
+        in: path
+        name: rid
+        required: true
+        schema:
+          title: Rid
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: shr_id
+        required: true
+        schema:
+          title: Shr Id
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: x-csrf-token
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Revoke Link
   /settings:
     get:
       description: Default settings landing — Account info + Danger zone.
@@ -3451,6 +4309,37 @@ paths:
                 type: string
           description: Successful Response
       summary: Settings Api Keys
+  /web/switch-org:
+    post:
+      description: |-
+        Switch the session's active organization (and thus the active drive).
+
+        A user can belong to multiple orgs (e.g. a personal org + a shared/business
+        org). v1 binds the active org at login with no way to change it; this lets a
+        member flip it. Membership is re-verified server-side (the form value is
+        attacker-controllable), then the session cookie is re-minted with the new
+        active org — `current_drive`'s membership JOIN enforces access on the next
+        request. Any `reveal_key` is dropped: it was scoped to the old drive.
+      operationId: switch_org_web_switch_org_post
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Body_switch_org_web_switch_org_post"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Switch Org
   /settings/quickstart:
     get:
       description: |-
@@ -3901,6 +4790,60 @@ paths:
                 type: string
           description: Successful Response
       summary: Artifact Detail Preview
+  /s/{share_key}:
+    get:
+      operationId: redeem_share_s__share_key__get
+      parameters:
+      - explode: false
+        in: path
+        name: share_key
+        required: true
+        schema:
+          title: Share Key
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Redeem Share
+    post:
+      operationId: redeem_share_with_password_s__share_key__post
+      parameters:
+      - explode: false
+        in: path
+        name: share_key
+        required: true
+        schema:
+          title: Share Key
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Body_redeem_share_with_password_s__share_key__post"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Redeem Share With Password
   /a/{art_id}:
     get:
       description: |-
@@ -3934,6 +4877,45 @@ paths:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
       summary: View Permalink Artifact
+  /a/{art_id}/head:
+    get:
+      description: |-
+        Return `{"version": <head version_number>}` for a readable artifact.
+
+        Auth mirrors the permalink/viewer: the owner, or an `anyone:viewer`
+        grant (a published artifact), reads. Two deliberate differences from
+        the HTML viewer:
+
+          * Never redirect to login. A poll is a background `fetch`, not a
+            navigation — an HTML login page would be a useless body and a
+            same-origin redirect the client can't act on. Anonymous callers
+            on a private/absent artifact get a flat 404.
+          * "Doesn't exist" and "exists but not readable" collapse to the
+            same 404, so an anonymous poller can't use this as an existence
+            oracle (matches the permalink/viewer leak guard).
+      operationId: view_artifact_head_a__art_id__head_get
+      parameters:
+      - explode: false
+        in: path
+        name: art_id
+        required: true
+        schema:
+          title: Art Id
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: View Artifact Head
   /f/{fld_id}:
     get:
       description: |-
@@ -3941,9 +4923,9 @@ paths:
 
         Auth model mirrors the artifact permalink: public folder = anon
         OK; private folder = owner only, otherwise 404 (no existence
-        leak). Folder visibility lives on the `folders.visibility` column
-        once §13.x wires it; today we follow the conservative default
-        (treat any non-`public` value, including NULL, as private).
+        leak). "Public" is an `anyone:viewer` grant on the `fld_*` id
+        resolved through `can_read` (§4.4); folders carry no visibility
+        flag of their own.
       operationId: view_permalink_folder_f__fld_id__get
       parameters:
       - explode: false
@@ -4097,7 +5079,6 @@ components:
         size_bytes: 0
         hash: hash
         version_number: 6
-        visibility: public
         labels:
         - labels
         - labels
@@ -4139,12 +5120,6 @@ components:
           default: 1
           title: Version Number
           type: integer
-        visibility:
-          enum:
-          - public
-          - private
-          title: Visibility
-          type: string
         labels:
           items:
             type: string
@@ -4190,7 +5165,6 @@ components:
       - size_bytes
       - updated_at
       - url
-      - visibility
       title: ArtifactOut
     ArtifactSource:
       description: |-
@@ -4345,6 +5319,13 @@ components:
       required:
       - csrf
       title: Body_recovery_restore_auth_recovery_restore_post
+    Body_redeem_share_with_password_s__share_key__post:
+      properties:
+        password:
+          default: ""
+          title: Password
+          type: string
+      title: Body_redeem_share_with_password_s__share_key__post
     Body_rotate_key_web_keys_rotate_post:
       properties:
         csrf:
@@ -4353,6 +5334,18 @@ components:
       required:
       - csrf
       title: Body_rotate_key_web_keys_rotate_post
+    Body_switch_org_web_switch_org_post:
+      properties:
+        organization_id:
+          title: Organization Id
+          type: string
+        csrf:
+          title: Csrf
+          type: string
+      required:
+      - csrf
+      - organization_id
+      title: Body_switch_org_web_switch_org_post
     Body_toggle_indexing_web_account_indexing_post:
       properties:
         enabled:
@@ -4534,10 +5527,6 @@ components:
         target:
           title: Target
           type: string
-        visibility:
-          default: ""
-          title: Visibility
-          type: string
         description:
           default: ""
           title: Description
@@ -4562,10 +5551,6 @@ components:
         dest_dir:
           default: ""
           title: Dest Dir
-          type: string
-        visibility:
-          default: ""
-          title: Visibility
           type: string
         return_to:
           default: /dashboard
@@ -4701,6 +5686,49 @@ components:
       required:
       - path
       title: CopyIn
+    DownloadUrlOut:
+      description: |-
+        A URL the caller can GET to fetch the artifact's bytes.
+
+        `direct=True` ⇒ a short-lived signed GCS URL on `storage.googleapis.com`
+        (client downloads straight from GCS; `expires_at` is set). `direct=False`
+        ⇒ the proxy `/download` endpoint on the API host (no expiry) — returned for
+        sub-threshold artifacts or when signing is unavailable. The URL is opaque:
+        callers should not parse it. See large-download-design.md §5.1.
+      example:
+        download_url: download_url
+        direct: true
+        expires_at: 2000-01-23T04:56:07.000+00:00
+        size_bytes: 0
+        content_type: content_type
+        filename: filename
+      properties:
+        download_url:
+          title: Download Url
+          type: string
+        direct:
+          title: Direct
+          type: boolean
+        expires_at:
+          format: date-time
+          nullable: true
+          type: string
+        size_bytes:
+          title: Size Bytes
+          type: integer
+        content_type:
+          title: Content Type
+          type: string
+        filename:
+          title: Filename
+          type: string
+      required:
+      - content_type
+      - direct
+      - download_url
+      - filename
+      - size_bytes
+      title: DownloadUrlOut
     EventOut:
       example:
         id: id
@@ -4853,7 +5881,6 @@ components:
         labels:
         - labels
         - labels
-        visibility: public
         updated_at: 2000-01-23T04:56:07.000+00:00
         version_number: 0
         modality: text
@@ -4894,12 +5921,6 @@ components:
           title: Labels
           type: array
           default: null
-        visibility:
-          enum:
-          - public
-          - private
-          title: Visibility
-          type: string
         updated_at:
           format: date-time
           title: Updated At
@@ -4967,7 +5988,6 @@ components:
       - updated_at
       - url
       - version_number
-      - visibility
       title: FindHitOut
     FindPage:
       example:
@@ -4981,7 +6001,6 @@ components:
           labels:
           - labels
           - labels
-          visibility: public
           updated_at: 2000-01-23T04:56:07.000+00:00
           version_number: 0
           modality: text
@@ -5006,7 +6025,6 @@ components:
           labels:
           - labels
           - labels
-          visibility: public
           updated_at: 2000-01-23T04:56:07.000+00:00
           version_number: 0
           modality: text
@@ -5039,19 +6057,12 @@ components:
     FolderCreateIn:
       description: |-
         POST /v0/folders/{path}? body for the optional metadata params.
-        Empty body is fine — `mkdir` with no description/visibility just
-        creates the folder row.
+        Empty body is fine — `mkdir` with no description just creates the
+        folder row.
       example:
         description: description
-        visibility: public
       properties:
         description:
-          nullable: true
-          type: string
-        visibility:
-          enum:
-          - public
-          - private
           nullable: true
           type: string
       title: FolderCreateIn
@@ -5120,15 +6131,14 @@ components:
     FolderOut:
       description: |-
         Folder resource (folders+permalinks design §13). `path` is the
-        canonical leading+trailing-slash form; `share_key` is reserved
-        metadata held now and wired by the render layer in v1.1.
+        canonical leading+trailing-slash form. Access is expressed through
+        grants (permission-sharing-design §4.4), not a folder-level flag.
       example:
         id: id
         drive_id: drive_id
         path: path
         description: description
-        visibility: public
-        share_key: share_key
+        inherit_grants: true
         created_at: 2000-01-23T04:56:07.000+00:00
         updated_at: 2000-01-23T04:56:07.000+00:00
         deleted_at: 2000-01-23T04:56:07.000+00:00
@@ -5146,15 +6156,10 @@ components:
         description:
           nullable: true
           type: string
-        visibility:
-          enum:
-          - public
-          - private
-          nullable: true
-          type: string
-        share_key:
-          nullable: true
-          type: string
+        inherit_grants:
+          default: true
+          title: Inherit Grants
+          type: boolean
         created_at:
           format: date-time
           title: Created At
@@ -5180,22 +6185,237 @@ components:
       title: FolderOut
     FolderPatchIn:
       description: |-
-        PATCH /v0/folders/{fld_id} body — partial update.
-        Field absence = unchanged; explicit None = clear field.
+        PATCH /v0/folders/{fld_id} body — partial update. Field absence =
+        unchanged. `description`: explicit null = clear. `inherit_grants`:
+        non-nullable — null/absent = unchanged (it cannot be cleared, only
+        flipped true/false).
       example:
         description: description
-        visibility: public
+        inherit_grants: true
       properties:
         description:
           nullable: true
           type: string
-        visibility:
+        inherit_grants:
+          nullable: true
+          type: boolean
+      title: FolderPatchIn
+    GrantCreateIn:
+      description: |-
+        POST /v0/grants body. `resource` is an `art_*`/`fld_*` id or a path
+        (resolved within the caller's drive). `expires_in` is seconds from now
+        (omit for a permanent grant).
+      example:
+        resource: resource
+        principal:
+          type: user
+          id: id
+          email: email
+        role: viewer
+        expires_in: 0
+      properties:
+        resource:
+          title: Resource
+          type: string
+        principal:
+          $ref: "#/components/schemas/GrantPrincipalIn"
+        role:
           enum:
-          - public
-          - private
+          - viewer
+          - commenter
+          - editor
+          - manager
+          title: Role
+          type: string
+        expires_in:
+          nullable: true
+          type: integer
+      required:
+      - principal
+      - resource
+      - role
+      title: GrantCreateIn
+    GrantIn:
+      example:
+        principal: principal
+        role: viewer
+      properties:
+        principal:
+          title: Principal
+          type: string
+        role:
+          default: viewer
+          title: Role
+          type: string
+      required:
+      - principal
+      title: GrantIn
+    GrantList:
+      example:
+        items:
+        - id: id
+          resource_type: artifact
+          resource_id: resource_id
+          principal_type: user
+          principal_id: principal_id
+          principal_email: principal_email
+          role: role
+          granted_by_type: granted_by_type
+          granted_by_id: granted_by_id
+          on_behalf_of: on_behalf_of
+          created_at: 2000-01-23T04:56:07.000+00:00
+          expires_at: 2000-01-23T04:56:07.000+00:00
+          artifacts_affected: 0
+        - id: id
+          resource_type: artifact
+          resource_id: resource_id
+          principal_type: user
+          principal_id: principal_id
+          principal_email: principal_email
+          role: role
+          granted_by_type: granted_by_type
+          granted_by_id: granted_by_id
+          on_behalf_of: on_behalf_of
+          created_at: 2000-01-23T04:56:07.000+00:00
+          expires_at: 2000-01-23T04:56:07.000+00:00
+          artifacts_affected: 0
+      properties:
+        items:
+          items:
+            $ref: "#/components/schemas/GrantOut"
+          title: Items
+          type: array
+          default: null
+      required:
+      - items
+      title: GrantList
+    GrantOut:
+      description: |-
+        A live grant. Audit fields (`granted_by_*`, `on_behalf_of`) are
+        surfaced so a manager can see who shared what.
+      example:
+        id: id
+        resource_type: artifact
+        resource_id: resource_id
+        principal_type: user
+        principal_id: principal_id
+        principal_email: principal_email
+        role: role
+        granted_by_type: granted_by_type
+        granted_by_id: granted_by_id
+        on_behalf_of: on_behalf_of
+        created_at: 2000-01-23T04:56:07.000+00:00
+        expires_at: 2000-01-23T04:56:07.000+00:00
+        artifacts_affected: 0
+      properties:
+        id:
+          title: Id
+          type: string
+        resource_type:
+          enum:
+          - artifact
+          - folder
+          title: Resource Type
+          type: string
+        resource_id:
+          title: Resource Id
+          type: string
+        principal_type:
+          enum:
+          - user
+          - agent
+          - org
+          - anyone
+          title: Principal Type
+          type: string
+        principal_id:
           nullable: true
           type: string
-      title: FolderPatchIn
+        principal_email:
+          nullable: true
+          type: string
+        role:
+          title: Role
+          type: string
+        granted_by_type:
+          title: Granted By Type
+          type: string
+        granted_by_id:
+          title: Granted By Id
+          type: string
+        on_behalf_of:
+          nullable: true
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        expires_at:
+          format: date-time
+          nullable: true
+          type: string
+        artifacts_affected:
+          nullable: true
+          type: integer
+      required:
+      - created_at
+      - granted_by_id
+      - granted_by_type
+      - id
+      - principal_type
+      - resource_id
+      - resource_type
+      - role
+      title: GrantOut
+    GrantPatchIn:
+      description: |-
+        PATCH /v0/grants/{grn_id} body. Field absence = unchanged; explicit
+        `expires_in: null` clears the expiry (makes the grant permanent).
+      example:
+        role: viewer
+        expires_in: 0
+      properties:
+        role:
+          enum:
+          - viewer
+          - commenter
+          - editor
+          - manager
+          nullable: true
+          type: string
+        expires_in:
+          nullable: true
+          type: integer
+      title: GrantPatchIn
+    GrantPrincipalIn:
+      description: |-
+        Who a grant is for. `anyone` carries no id/email; `org`/`agent`
+        require `id`; `user` requires exactly one of `id` / `email` (an email
+        with no account becomes a pending-email invite resolved on sign-in).
+      example:
+        type: user
+        id: id
+        email: email
+      properties:
+        type:
+          enum:
+          - user
+          - agent
+          - org
+          - anyone
+          title: Type
+          type: string
+        id:
+          maxLength: 128
+          nullable: true
+          type: string
+        email:
+          maxLength: 320
+          nullable: true
+          type: string
+      required:
+      - type
+      title: GrantPrincipalIn
     HTTPValidationError:
       example:
         detail:
@@ -5221,6 +6441,19 @@ components:
           type: array
           default: null
       title: HTTPValidationError
+    LinkIn:
+      example:
+        password: password
+        expires_in: 0
+      properties:
+        password:
+          maxLength: 1024
+          nullable: true
+          type: string
+        expires_in:
+          nullable: true
+          type: integer
+      title: LinkIn
     Page:
       example:
         items:
@@ -5233,7 +6466,6 @@ components:
           size_bytes: 0
           hash: hash
           version_number: 6
-          visibility: public
           labels:
           - labels
           - labels
@@ -5255,7 +6487,6 @@ components:
           size_bytes: 0
           hash: hash
           version_number: 6
-          visibility: public
           labels:
           - labels
           - labels
@@ -5301,6 +6532,16 @@ components:
       required:
       - entrypoint
       title: ProjectConfigIn
+    PublicIn:
+      example:
+        public: true
+      properties:
+        public:
+          title: Public
+          type: boolean
+      required:
+      - public
+      title: PublicIn
     RenameIn:
       description: "PATCH /v0/artifacts/{art_id} body — rename / move."
       example:
@@ -5312,6 +6553,16 @@ components:
       required:
       - path
       title: RenameIn
+    SealIn:
+      example:
+        inherit_grants: true
+      properties:
+        inherit_grants:
+          title: Inherit Grants
+          type: boolean
+      required:
+      - inherit_grants
+      title: SealIn
     SearchHitOut:
       example:
         drive_id: drive_id
@@ -5406,6 +6657,205 @@ components:
       required:
       - items
       title: SearchPage
+    ShareCreateIn:
+      description: |-
+        POST /v0/shares body. `resource` is an `art_*`/`fld_*` id or a path.
+        `expires_in` is seconds from now (omit for the default: none for a human
+        creator, a short TTL for an agent). `password` (optional) gates redemption.
+      example:
+        resource: resource
+        role: viewer
+        expires_in: 0
+        password: password
+      properties:
+        resource:
+          title: Resource
+          type: string
+        role:
+          default: viewer
+          enum:
+          - viewer
+          - commenter
+          - editor
+          title: Role
+          type: string
+        expires_in:
+          nullable: true
+          type: integer
+        password:
+          maxLength: 1024
+          nullable: true
+          type: string
+      required:
+      - resource
+      title: ShareCreateIn
+    ShareList:
+      example:
+        items:
+        - id: id
+          resource_type: artifact
+          resource_id: resource_id
+          role: role
+          audience: audience
+          has_password: true
+          created_at: 2000-01-23T04:56:07.000+00:00
+          expires_at: 2000-01-23T04:56:07.000+00:00
+          last_accessed_at: 2000-01-23T04:56:07.000+00:00
+          access_count: 0
+        - id: id
+          resource_type: artifact
+          resource_id: resource_id
+          role: role
+          audience: audience
+          has_password: true
+          created_at: 2000-01-23T04:56:07.000+00:00
+          expires_at: 2000-01-23T04:56:07.000+00:00
+          last_accessed_at: 2000-01-23T04:56:07.000+00:00
+          access_count: 0
+      properties:
+        items:
+          items:
+            $ref: "#/components/schemas/ShareOut"
+          title: Items
+          type: array
+          default: null
+      required:
+      - items
+      title: ShareList
+    ShareMintOut:
+      description: |-
+        The create/rotate response — the ONLY place the `share_key` and its
+        redemption `url` are exposed.
+      example:
+        id: id
+        resource_type: artifact
+        resource_id: resource_id
+        role: role
+        audience: audience
+        has_password: true
+        created_at: 2000-01-23T04:56:07.000+00:00
+        expires_at: 2000-01-23T04:56:07.000+00:00
+        last_accessed_at: 2000-01-23T04:56:07.000+00:00
+        access_count: 0
+        share_key: share_key
+        url: url
+      properties:
+        id:
+          title: Id
+          type: string
+        resource_type:
+          enum:
+          - artifact
+          - folder
+          title: Resource Type
+          type: string
+        resource_id:
+          title: Resource Id
+          type: string
+        role:
+          title: Role
+          type: string
+        audience:
+          title: Audience
+          type: string
+        has_password:
+          title: Has Password
+          type: boolean
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        expires_at:
+          format: date-time
+          nullable: true
+          type: string
+        last_accessed_at:
+          format: date-time
+          nullable: true
+          type: string
+        access_count:
+          default: 0
+          title: Access Count
+          type: integer
+        share_key:
+          title: Share Key
+          type: string
+        url:
+          title: Url
+          type: string
+      required:
+      - audience
+      - created_at
+      - has_password
+      - id
+      - resource_id
+      - resource_type
+      - role
+      - share_key
+      - url
+      title: ShareMintOut
+    ShareOut:
+      description: |-
+        A live share link as seen on list/management — NEVER carries the
+        `share_key` (that is the credential, returned only at mint/rotate).
+      example:
+        id: id
+        resource_type: artifact
+        resource_id: resource_id
+        role: role
+        audience: audience
+        has_password: true
+        created_at: 2000-01-23T04:56:07.000+00:00
+        expires_at: 2000-01-23T04:56:07.000+00:00
+        last_accessed_at: 2000-01-23T04:56:07.000+00:00
+        access_count: 0
+      properties:
+        id:
+          title: Id
+          type: string
+        resource_type:
+          enum:
+          - artifact
+          - folder
+          title: Resource Type
+          type: string
+        resource_id:
+          title: Resource Id
+          type: string
+        role:
+          title: Role
+          type: string
+        audience:
+          title: Audience
+          type: string
+        has_password:
+          title: Has Password
+          type: boolean
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        expires_at:
+          format: date-time
+          nullable: true
+          type: string
+        last_accessed_at:
+          format: date-time
+          nullable: true
+          type: string
+        access_count:
+          default: 0
+          title: Access Count
+          type: integer
+      required:
+      - audience
+      - created_at
+      - has_password
+      - id
+      - resource_id
+      - resource_type
+      - role
+      title: ShareOut
     SourceRef:
       description: |-
         One typed provenance ref. `type` is open-vocabulary (server
@@ -5462,6 +6912,113 @@ components:
       - expires_in
       - scope
       title: TokenResponse
+    UploadBeginIn:
+      description: |-
+        Body of `POST /v0/uploads` — the large-upload begin call (large-upload-
+        design.md §5.1). All artifact decisions are frozen here; the subsequent
+        GCS PUT carries only bytes, and `commit` carries only the `upload_id`.
+
+        `labels`/`metadata`/`source` omitted (null) ⇒ preserve the existing
+        artifact's value at commit; present (incl. empty) ⇒ replace.
+      example:
+        path: path
+        content_type: application/octet-stream
+        size_bytes: 1
+        crc32c: crc32c
+        labels:
+        - labels
+        - labels
+        metadata:
+          key: ""
+        source: ""
+        actor_name: actor_name
+        change_summary: change_summary
+        if_match: 6
+      properties:
+        path:
+          title: Path
+          type: string
+        content_type:
+          default: application/octet-stream
+          title: Content Type
+          type: string
+        size_bytes:
+          minimum: 1.0
+          title: Size Bytes
+          type: integer
+        crc32c:
+          nullable: true
+          type: string
+        labels:
+          items:
+            type: string
+          nullable: true
+          type: array
+          default: null
+        metadata:
+          additionalProperties: true
+          nullable: true
+          type: object
+        source:
+          allOf:
+          - $ref: "#/components/schemas/ArtifactSource"
+          nullable: true
+        actor_name:
+          nullable: true
+          type: string
+        change_summary:
+          nullable: true
+          type: string
+        if_match:
+          nullable: true
+          type: integer
+      required:
+      - path
+      - size_bytes
+      title: UploadBeginIn
+    UploadBeginOut:
+      description: |-
+        Response of `POST /v0/uploads`. PUT the bytes to `upload_url` (no auth
+        header — the URL is the credential), then `POST .../commit`.
+      example:
+        upload_id: upload_id
+        upload_url: upload_url
+        method: PUT
+        headers:
+          key: headers
+        expires_at: 2000-01-23T04:56:07.000+00:00
+        max_bytes: 0
+      properties:
+        upload_id:
+          title: Upload Id
+          type: string
+        upload_url:
+          title: Upload Url
+          type: string
+        method:
+          default: PUT
+          enum:
+          - PUT
+          title: Method
+          type: string
+        headers:
+          additionalProperties:
+            type: string
+          title: Headers
+        expires_at:
+          format: date-time
+          title: Expires At
+          type: string
+        max_bytes:
+          title: Max Bytes
+          type: integer
+      required:
+      - expires_at
+      - headers
+      - max_bytes
+      - upload_id
+      - upload_url
+      title: UploadBeginOut
     ValidationError:
       example:
         loc:

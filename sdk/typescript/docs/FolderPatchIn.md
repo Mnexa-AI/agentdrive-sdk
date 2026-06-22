@@ -1,14 +1,14 @@
 
 # FolderPatchIn
 
-PATCH /v0/folders/{fld_id} body — partial update. Field absence = unchanged; explicit None = clear field.
+PATCH /v0/folders/{fld_id} body — partial update. Field absence = unchanged. `description`: explicit null = clear. `inherit_grants`: non-nullable — null/absent = unchanged (it cannot be cleared, only flipped true/false).
 
 ## Properties
 
 Name | Type
 ------------ | -------------
 `description` | string
-`visibility` | string
+`inheritGrants` | boolean
 
 ## Example
 
@@ -18,7 +18,7 @@ import type { FolderPatchIn } from '@mnexa-ai/agentdrive-sdk'
 // TODO: Update the object below with actual values
 const example = {
   "description": null,
-  "visibility": null,
+  "inheritGrants": null,
 } satisfies FolderPatchIn
 
 console.log(example)

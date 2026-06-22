@@ -13,7 +13,6 @@ Name | Type | Description | Notes
 **SizeBytes** | **int32** |  | 
 **Hash** | **string** |  | 
 **VersionNumber** | Pointer to **int32** |  | [optional] [default to 1]
-**Visibility** | **string** |  | 
 **Labels** | Pointer to **[]string** |  | [optional] 
 **Metadata** | Pointer to **map[string]interface{}** |  | [optional] 
 **Source** | Pointer to [**NullableArtifactSource**](ArtifactSource.md) |  | [optional] 
@@ -27,7 +26,7 @@ Name | Type | Description | Notes
 
 ### NewArtifactOut
 
-`func NewArtifactOut(id string, driveId string, path string, url string, contentType string, fileType string, sizeBytes int32, hash string, visibility string, createdAt time.Time, updatedAt time.Time, ) *ArtifactOut`
+`func NewArtifactOut(id string, driveId string, path string, url string, contentType string, fileType string, sizeBytes int32, hash string, createdAt time.Time, updatedAt time.Time, ) *ArtifactOut`
 
 NewArtifactOut instantiates a new ArtifactOut object
 This constructor will assign default values to properties that have it defined,
@@ -226,26 +225,6 @@ SetVersionNumber sets VersionNumber field to given value.
 `func (o *ArtifactOut) HasVersionNumber() bool`
 
 HasVersionNumber returns a boolean if a field has been set.
-
-### GetVisibility
-
-`func (o *ArtifactOut) GetVisibility() string`
-
-GetVisibility returns the Visibility field if non-nil, zero value otherwise.
-
-### GetVisibilityOk
-
-`func (o *ArtifactOut) GetVisibilityOk() (*string, bool)`
-
-GetVisibilityOk returns a tuple with the Visibility field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetVisibility
-
-`func (o *ArtifactOut) SetVisibility(v string)`
-
-SetVisibility sets Visibility field to given value.
-
 
 ### GetLabels
 

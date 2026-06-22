@@ -35,7 +35,6 @@ class FindHitOut(BaseModel):
     content_type: StrictStr
     file_type: StrictStr
     labels: Optional[List[StrictStr]] = None
-    visibility: StrictStr
     updated_at: datetime
     version_number: StrictInt
     modality: StrictStr
@@ -51,14 +50,7 @@ class FindHitOut(BaseModel):
     page_end: Optional[StrictInt] = None
     time_start_ms: Optional[StrictInt] = None
     time_end_ms: Optional[StrictInt] = None
-    __properties: ClassVar[List[str]] = ["art_id", "drive_id", "path", "url", "content_type", "file_type", "labels", "visibility", "updated_at", "version_number", "modality", "ord", "text", "snippet", "score", "rank_lexical", "rank_semantic", "char_start", "char_end", "page_start", "page_end", "time_start_ms", "time_end_ms"]
-
-    @field_validator('visibility')
-    def visibility_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['public', 'private']):
-            raise ValueError("must be one of enum values ('public', 'private')")
-        return value
+    __properties: ClassVar[List[str]] = ["art_id", "drive_id", "path", "url", "content_type", "file_type", "labels", "updated_at", "version_number", "modality", "ord", "text", "snippet", "score", "rank_lexical", "rank_semantic", "char_start", "char_end", "page_start", "page_end", "time_start_ms", "time_end_ms"]
 
     @field_validator('modality')
     def modality_validate_enum(cls, value):
@@ -165,7 +157,6 @@ class FindHitOut(BaseModel):
             "content_type": obj.get("content_type"),
             "file_type": obj.get("file_type"),
             "labels": obj.get("labels"),
-            "visibility": obj.get("visibility"),
             "updated_at": obj.get("updated_at"),
             "version_number": obj.get("version_number"),
             "modality": obj.get("modality"),

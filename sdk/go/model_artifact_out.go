@@ -31,7 +31,6 @@ type ArtifactOut struct {
 	SizeBytes int32 `json:"size_bytes"`
 	Hash string `json:"hash"`
 	VersionNumber *int32 `json:"version_number,omitempty"`
-	Visibility string `json:"visibility"`
 	Labels []string `json:"labels,omitempty"`
 	Metadata map[string]interface{} `json:"metadata,omitempty"`
 	Source NullableArtifactSource `json:"source,omitempty"`
@@ -48,7 +47,7 @@ type _ArtifactOut ArtifactOut
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewArtifactOut(id string, driveId string, path string, url string, contentType string, fileType string, sizeBytes int32, hash string, visibility string, createdAt time.Time, updatedAt time.Time) *ArtifactOut {
+func NewArtifactOut(id string, driveId string, path string, url string, contentType string, fileType string, sizeBytes int32, hash string, createdAt time.Time, updatedAt time.Time) *ArtifactOut {
 	this := ArtifactOut{}
 	this.Id = id
 	this.DriveId = driveId
@@ -60,7 +59,6 @@ func NewArtifactOut(id string, driveId string, path string, url string, contentT
 	this.Hash = hash
 	var versionNumber int32 = 1
 	this.VersionNumber = &versionNumber
-	this.Visibility = visibility
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	return &this
@@ -298,30 +296,6 @@ func (o *ArtifactOut) HasVersionNumber() bool {
 // SetVersionNumber gets a reference to the given int32 and assigns it to the VersionNumber field.
 func (o *ArtifactOut) SetVersionNumber(v int32) {
 	o.VersionNumber = &v
-}
-
-// GetVisibility returns the Visibility field value
-func (o *ArtifactOut) GetVisibility() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Visibility
-}
-
-// GetVisibilityOk returns a tuple with the Visibility field value
-// and a boolean to check if the value has been set.
-func (o *ArtifactOut) GetVisibilityOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Visibility, true
-}
-
-// SetVisibility sets field value
-func (o *ArtifactOut) SetVisibility(v string) {
-	o.Visibility = v
 }
 
 // GetLabels returns the Labels field value if set, zero value otherwise.
@@ -616,7 +590,6 @@ func (o ArtifactOut) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.VersionNumber) {
 		toSerialize["version_number"] = o.VersionNumber
 	}
-	toSerialize["visibility"] = o.Visibility
 	if !IsNil(o.Labels) {
 		toSerialize["labels"] = o.Labels
 	}
@@ -653,7 +626,6 @@ func (o *ArtifactOut) UnmarshalJSON(data []byte) (err error) {
 		"file_type",
 		"size_bytes",
 		"hash",
-		"visibility",
 		"created_at",
 		"updated_at",
 	}

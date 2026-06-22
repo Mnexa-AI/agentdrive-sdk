@@ -44,7 +44,6 @@ class TestArtifactOut(unittest.TestCase):
                 size_bytes = 56,
                 hash = '',
                 version_number = 56,
-                visibility = 'public',
                 labels = [
                     ''
                     ],
@@ -72,7 +71,6 @@ class TestArtifactOut(unittest.TestCase):
                 file_type = '',
                 size_bytes = 56,
                 hash = '',
-                visibility = 'public',
                 created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
         )

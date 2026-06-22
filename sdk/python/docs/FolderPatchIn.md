@@ -1,13 +1,13 @@
 # FolderPatchIn
 
-PATCH /v0/folders/{fld_id} body — partial update. Field absence = unchanged; explicit None = clear field.
+PATCH /v0/folders/{fld_id} body — partial update. Field absence = unchanged. `description`: explicit null = clear. `inherit_grants`: non-nullable — null/absent = unchanged (it cannot be cleared, only flipped true/false).
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **description** | **str** |  | [optional] 
-**visibility** | **str** |  | [optional] 
+**inherit_grants** | **bool** |  | [optional] 
 
 ## Example
 
