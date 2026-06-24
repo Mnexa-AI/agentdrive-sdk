@@ -21,7 +21,8 @@ start here:
 - **Self-register (only when you're a fully autonomous agent with no human
   reachable):** https://agentdrive.run/auth.md — provision your own drive and have a
   human claim it later.
-- **REST API conventions** (if you're not using MCP): https://agentdrive.run/api.md.
+- **SDKs & developer kit** (plugin, MCP connect, language SDKs, REST
+  conventions): https://agentdrive.run/sdk.md.
 
 Exact tool names + parameters come from the MCP server itself
 (`tools/list`); this page covers *when* and *how*. About AgentDrive and
