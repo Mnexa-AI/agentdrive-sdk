@@ -55,9 +55,17 @@ type APIClient struct {
 
 	DefaultAPI *DefaultAPIService
 
+	DrivesAPI *DrivesAPIService
+
 	McpOauthAPI *McpOauthAPIService
 
 	McpOauthUiAPI *McpOauthUiAPIService
+
+	MembersAPI *MembersAPIService
+
+	TokensAPI *TokensAPIService
+
+	WorkspacesAPI *WorkspacesAPIService
 }
 
 type service struct {
@@ -79,8 +87,12 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.AgentAuthAPI = (*AgentAuthAPIService)(&c.common)
 	c.ClaimUiAPI = (*ClaimUiAPIService)(&c.common)
 	c.DefaultAPI = (*DefaultAPIService)(&c.common)
+	c.DrivesAPI = (*DrivesAPIService)(&c.common)
 	c.McpOauthAPI = (*McpOauthAPIService)(&c.common)
 	c.McpOauthUiAPI = (*McpOauthUiAPIService)(&c.common)
+	c.MembersAPI = (*MembersAPIService)(&c.common)
+	c.TokensAPI = (*TokensAPIService)(&c.common)
+	c.WorkspacesAPI = (*WorkspacesAPIService)(&c.common)
 
 	return c
 }

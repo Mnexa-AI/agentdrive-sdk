@@ -4,6 +4,7 @@ All URIs are relative to *https://api.agentdrive.run*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**acceptInvitationInvitationsTokenGet**](DefaultApi.md#acceptinvitationinvitationstokenget) | **GET** /invitations/{token} | Accept Invitation |
 | [**activityFeedActivityGet**](DefaultApi.md#activityfeedactivityget) | **GET** /activity | Activity Feed |
 | [**addGrantWebShareRidGrantPost**](DefaultApi.md#addgrantwebshareridgrantpost) | **POST** /web/share/{rid}/grant | Add Grant |
 | [**artifactDetailPreviewPreviewArtifactDetailGet**](DefaultApi.md#artifactdetailpreviewpreviewartifactdetailget) | **GET** /preview/artifact-detail | Artifact Detail Preview |
@@ -14,22 +15,27 @@ All URIs are relative to *https://api.agentdrive.run*
 | [**commitUploadV0UploadsUploadIdCommitPost**](DefaultApi.md#commituploadv0uploadsuploadidcommitpost) | **POST** /v0/uploads/{upload_id}/commit | Commit a large (direct-to-GCS) upload |
 | [**connectorsPageConnectorsGet**](DefaultApi.md#connectorspageconnectorsget) | **GET** /connectors | Connectors Page |
 | [**copyArtifactRouteV0ArtifactsArtIdCopyPost**](DefaultApi.md#copyartifactroutev0artifactsartidcopypost) | **POST** /v0/artifacts/{art_id}/copy | Duplicate an artifact to a new path (CAS-shared, new ID) |
+| [**createDriveWebWebDrivesPost**](DefaultApi.md#createdrivewebwebdrivespost) | **POST** /web/drives | Create Drive Web |
 | [**createFolderByPathV0FoldersPathPost**](DefaultApi.md#createfolderbypathv0folderspathpost) | **POST** /v0/folders/{path} | Create a folder (idempotent) |
 | [**createGrantRouteV0GrantsPost**](DefaultApi.md#creategrantroutev0grantspost) | **POST** /v0/grants | Create (or fetch) a per-principal grant on a resource |
 | [**createLinkWebShareRidLinkPost**](DefaultApi.md#createlinkwebshareridlinkpost) | **POST** /web/share/{rid}/link | Create Link |
 | [**createShareRouteV0SharesPost**](DefaultApi.md#createshareroutev0sharespost) | **POST** /v0/shares | Mint a share link (returns the share_key once) |
+| [**createUserTokenWebTokensCreatePost**](DefaultApi.md#createusertokenwebtokenscreatepost) | **POST** /web/tokens/create | Create User Token |
+| [**createWorkspaceWebWebWorkspacesPost**](DefaultApi.md#createworkspacewebwebworkspacespost) | **POST** /web/workspaces | Create Workspace Web |
 | [**dangerZoneOldDashboardDangerGet**](DefaultApi.md#dangerzoneolddashboarddangerget) | **GET** /dashboard/danger | Danger Zone Old |
 | [**dangerZoneSettingsDangerGet**](DefaultApi.md#dangerzonesettingsdangerget) | **GET** /settings/danger | Danger Zone |
 | [**dashboardDashboardGet**](DefaultApi.md#dashboarddashboardget) | **GET** /dashboard | Dashboard |
 | [**deleteAccountWebAccountDeletePost**](DefaultApi.md#deleteaccountwebaccountdeletepost) | **POST** /web/account/delete | Delete Account |
 | [**deleteArtifactByIdRouteV0ArtifactsArtIdDelete**](DefaultApi.md#deleteartifactbyidroutev0artifactsartiddelete) | **DELETE** /v0/artifacts/{art_id} | Soft-delete an artifact by its stable ID |
 | [**deleteArtifactV0ArtifactsPathDelete**](DefaultApi.md#deleteartifactv0artifactspathdelete) | **DELETE** /v0/artifacts/{path} | Delete Artifact |
-| [**deleteDriveRouteV0DrivesDriveIdDelete**](DefaultApi.md#deletedriveroutev0drivesdriveiddelete) | **DELETE** /v0/drives/{drive_id} | Soft-delete the authenticated drive |
+| [**deleteDriveRouteV0DrivesDriveIdDelete**](DefaultApi.md#deletedriveroutev0drivesdriveiddelete) | **DELETE** /v0/drives/{drive_id} | Soft-delete a drive |
+| [**deleteDriveWebWebDrivesDriveIdDeletePost**](DefaultApi.md#deletedrivewebwebdrivesdriveiddeletepost) | **POST** /web/drives/{drive_id}/delete | Delete Drive Web |
 | [**deleteFolderByIdV0FoldersFldIdDelete**](DefaultApi.md#deletefolderbyidv0foldersfldiddelete) | **DELETE** /v0/folders/{fld_id} | Soft-delete a folder by stable ID (cascade with ?recursive&#x3D;true) |
 | [**deleteFolderByPathV0FoldersPathDelete**](DefaultApi.md#deletefolderbypathv0folderspathdelete) | **DELETE** /v0/folders/{path} | Soft-delete a folder (cascade with ?recursive&#x3D;true) |
 | [**deleteGrantRouteV0GrantsGrnIdDelete**](DefaultApi.md#deletegrantroutev0grantsgrniddelete) | **DELETE** /v0/grants/{grn_id} | Revoke a grant (can_manage, or self-revoke own grant) |
 | [**deleteKeyWebKeysDeletePost**](DefaultApi.md#deletekeywebkeysdeletepost) | **POST** /web/keys/delete | Delete Key |
 | [**deleteShareRouteV0SharesShrIdDelete**](DefaultApi.md#deleteshareroutev0sharesshriddelete) | **DELETE** /v0/shares/{shr_id} | Revoke a share link (requires can_manage) |
+| [**deleteWorkspaceWebWebWorkspacesOrgIdDeletePost**](DefaultApi.md#deleteworkspacewebwebworkspacesorgiddeletepost) | **POST** /web/workspaces/{org_id}/delete | Delete Workspace Web |
 | [**downloadArtifactByIdV0ArtifactsArtIdDownloadGet**](DefaultApi.md#downloadartifactbyidv0artifactsartiddownloadget) | **GET** /v0/artifacts/{art_id}/download | Stream the artifact bytes by stable ID (never rendered HTML) |
 | [**downloadArtifactVersionV0ArtifactsArtIdVersionsVersionNumberDownloadGet**](DefaultApi.md#downloadartifactversionv0artifactsartidversionsversionnumberdownloadget) | **GET** /v0/artifacts/{art_id}/versions/{version_number}/download | Stream bytes for a specific version (machine surface) |
 | [**downloadUrlByIdV0ArtifactsArtIdDownloadUrlGet**](DefaultApi.md#downloadurlbyidv0artifactsartiddownloadurlget) | **GET** /v0/artifacts/{art_id}/download-url | Signed direct-from-GCS download URL by stable ID |
@@ -55,6 +61,7 @@ All URIs are relative to *https://api.agentdrive.run*
 | [**getProjectV0ProjectsFldIdGet**](DefaultApi.md#getprojectv0projectsfldidget) | **GET** /v0/projects/{fld_id} | Get a project\&#39;s compile config |
 | [**getShareStateWebShareRidGet**](DefaultApi.md#getsharestatewebshareridget) | **GET** /web/share/{rid} | Get Share State |
 | [**healthHealthGet**](DefaultApi.md#healthhealthget) | **GET** /health | Health |
+| [**inviteMemberWebWebMembersInvitePost**](DefaultApi.md#invitememberwebwebmembersinvitepost) | **POST** /web/members/invite | Invite Member Web |
 | [**listArtifactVersionsV0ArtifactsArtIdVersionsGet**](DefaultApi.md#listartifactversionsv0artifactsartidversionsget) | **GET** /v0/artifacts/{art_id}/versions | List versions of an artifact, newest first |
 | [**listArtifactsV0ArtifactsGet**](DefaultApi.md#listartifactsv0artifactsget) | **GET** /v0/artifacts | List artifacts in the drive |
 | [**listEventsRouteV0EventsGet**](DefaultApi.md#listeventsroutev0eventsget) | **GET** /v0/events | Read the append-only event log for the authenticated drive |
@@ -75,7 +82,10 @@ All URIs are relative to *https://api.agentdrive.run*
 | [**patchFolderByIdV0FoldersFldIdPatch**](DefaultApi.md#patchfolderbyidv0foldersfldidpatch) | **PATCH** /v0/folders/{fld_id} | Update folder metadata by stable ID |
 | [**patchFolderByPathV0FoldersPathPatch**](DefaultApi.md#patchfolderbypathv0folderspathpatch) | **PATCH** /v0/folders/{path} | Update folder metadata by path |
 | [**patchGrantRouteV0GrantsGrnIdPatch**](DefaultApi.md#patchgrantroutev0grantsgrnidpatch) | **PATCH** /v0/grants/{grn_id} | Update a grant\&#39;s role and/or expiry (requires can_manage) |
+| [**postDescribeV0QueryDescribePost**](DefaultApi.md#postdescribev0querydescribepost) | **POST** /v0/query/describe | Describe a dataset\&#39;s column schema |
 | [**postFeedbackV0FeedbackPost**](DefaultApi.md#postfeedbackv0feedbackpost) | **POST** /v0/feedback | Post Feedback |
+| [**postLookupValuesV0QueryLookupValuesPost**](DefaultApi.md#postlookupvaluesv0querylookupvaluespost) | **POST** /v0/query/lookup-values | List distinct values of a dataset column |
+| [**postQueryV0QueryPost**](DefaultApi.md#postqueryv0querypost) | **POST** /v0/query | Run a read-only SQL query over authorized datasets |
 | [**privacyPagePrivacyGet**](DefaultApi.md#privacypageprivacyget) | **GET** /privacy | Privacy Page |
 | [**projectPreviewPageFFldIdPreviewGet**](DefaultApi.md#projectpreviewpageffldidpreviewget) | **GET** /f/{fld_id}/preview | Project Preview Page |
 | [**publisherProfilePublishersHandleGet**](DefaultApi.md#publisherprofilepublishershandleget) | **GET** /publishers/{handle} | Publisher Profile |
@@ -87,23 +97,31 @@ All URIs are relative to *https://api.agentdrive.run*
 | [**recoveryRestoreAuthRecoveryRestorePost**](DefaultApi.md#recoveryrestoreauthrecoveryrestorepost) | **POST** /auth/recovery/restore | Recovery Restore |
 | [**redeemShareSShareKeyGet**](DefaultApi.md#redeemsharessharekeyget) | **GET** /s/{share_key} | Redeem Share |
 | [**redeemShareWithPasswordSShareKeyPost**](DefaultApi.md#redeemsharewithpasswordssharekeypost) | **POST** /s/{share_key} | Redeem Share With Password |
+| [**removeMemberWebWebMembersTargetUserIdRemovePost**](DefaultApi.md#removememberwebwebmemberstargetuseridremovepost) | **POST** /web/members/{target_user_id}/remove | Remove Member Web |
 | [**renameArtifactRouteV0ArtifactsArtIdPatch**](DefaultApi.md#renameartifactroutev0artifactsartidpatch) | **PATCH** /v0/artifacts/{art_id} | Rename / move an artifact to a new path |
+| [**renameDriveWebWebDrivesDriveIdRenamePost**](DefaultApi.md#renamedrivewebwebdrivesdriveidrenamepost) | **POST** /web/drives/{drive_id}/rename | Rename Drive Web |
+| [**renameWorkspaceWebWebWorkspacesOrgIdRenamePost**](DefaultApi.md#renameworkspacewebwebworkspacesorgidrenamepost) | **POST** /web/workspaces/{org_id}/rename | Rename Workspace Web |
+| [**resendInvitationWebWebInvitationsInvitationIdResendPost**](DefaultApi.md#resendinvitationwebwebinvitationsinvitationidresendpost) | **POST** /web/invitations/{invitation_id}/resend | Resend Invitation Web |
 | [**restoreArtifactV0ArtifactsArtIdRestorePost**](DefaultApi.md#restoreartifactv0artifactsartidrestorepost) | **POST** /v0/artifacts/{art_id}/restore | Restore a soft-deleted artifact |
 | [**restoreDriveRouteV0DrivesDriveIdRestorePost**](DefaultApi.md#restoredriveroutev0drivesdriveidrestorepost) | **POST** /v0/drives/{drive_id}/restore | Restore a soft-deleted drive |
 | [**revokeGrantWebShareRidGrantGrnIdRevokePost**](DefaultApi.md#revokegrantwebshareridgrantgrnidrevokepost) | **POST** /web/share/{rid}/grant/{grn_id}/revoke | Revoke Grant |
+| [**revokeInvitationWebWebInvitationsInvitationIdRevokePost**](DefaultApi.md#revokeinvitationwebwebinvitationsinvitationidrevokepost) | **POST** /web/invitations/{invitation_id}/revoke | Revoke Invitation Web |
 | [**revokeLinkWebShareRidLinkShrIdRevokePost**](DefaultApi.md#revokelinkwebshareridlinkshridrevokepost) | **POST** /web/share/{rid}/link/{shr_id}/revoke | Revoke Link |
+| [**revokeUserTokenWebTokensRevokePost**](DefaultApi.md#revokeusertokenwebtokensrevokepost) | **POST** /web/tokens/revoke | Revoke User Token |
+| [**rotateDriveKeyWebWebDrivesDriveIdKeysRotatePost**](DefaultApi.md#rotatedrivekeywebwebdrivesdriveidkeysrotatepost) | **POST** /web/drives/{drive_id}/keys/rotate | Rotate Drive Key Web |
 | [**rotateKeyWebKeysRotatePost**](DefaultApi.md#rotatekeywebkeysrotatepost) | **POST** /web/keys/rotate | Rotate Key |
 | [**rotateShareRouteV0SharesShrIdRotatePost**](DefaultApi.md#rotateshareroutev0sharesshridrotatepost) | **POST** /v0/shares/{shr_id}/rotate | Revoke + reissue a share link\&#39;s key (requires can_share) |
 | [**searchV0SearchGet**](DefaultApi.md#searchv0searchget) | **GET** /v0/search | Full-text search over artifacts in the drive |
+| [**setMemberRoleWebWebMembersTargetUserIdRolePost**](DefaultApi.md#setmemberrolewebwebmemberstargetuseridrolepost) | **POST** /web/members/{target_user_id}/role | Set Member Role Web |
 | [**setPublicWebShareRidPublicPost**](DefaultApi.md#setpublicwebshareridpublicpost) | **POST** /web/share/{rid}/public | Set Public |
 | [**setSealWebShareRidSealPost**](DefaultApi.md#setsealwebshareridsealpost) | **POST** /web/share/{rid}/seal | Set Seal |
 | [**settingsAccountSettingsGet**](DefaultApi.md#settingsaccountsettingsget) | **GET** /settings | Settings Account |
 | [**settingsApiKeysSettingsApiKeysGet**](DefaultApi.md#settingsapikeyssettingsapikeysget) | **GET** /settings/api-keys | Settings Api Keys |
 | [**settingsQuickstartSettingsQuickstartGet**](DefaultApi.md#settingsquickstartsettingsquickstartget) | **GET** /settings/quickstart | Settings Quickstart |
-| [**settingsUsageSettingsUsageGet**](DefaultApi.md#settingsusagesettingsusageget) | **GET** /settings/usage | Settings Usage |
+| [**settingsWorkspaceSettingsWorkspaceGet**](DefaultApi.md#settingsworkspacesettingsworkspaceget) | **GET** /settings/workspace | Settings Workspace |
 | [**sharedFilesSharedGet**](DefaultApi.md#sharedfilessharedget) | **GET** /shared | Shared Files |
 | [**streamUploadV0UploadTokenPut**](DefaultApi.md#streamuploadv0uploadtokenput) | **PUT** /v0/upload/{token} | Proxied streaming upload (via an upload_url token) |
-| [**switchOrgWebSwitchOrgPost**](DefaultApi.md#switchorgwebswitchorgpost) | **POST** /web/switch-org | Switch Org |
+| [**switchDriveWebSwitchPost**](DefaultApi.md#switchdrivewebswitchpost) | **POST** /web/switch | Switch Drive |
 | [**termsPageTermsGet**](DefaultApi.md#termspagetermsget) | **GET** /terms | Terms Page |
 | [**toggleIndexingWebAccountIndexingPost**](DefaultApi.md#toggleindexingwebaccountindexingpost) | **POST** /web/account/indexing | Toggle Indexing |
 | [**trashWebTrashGet**](DefaultApi.md#trashwebtrashget) | **GET** /web/trash | Trash |
@@ -130,6 +148,74 @@ All URIs are relative to *https://api.agentdrive.run*
 | [**webhooksPageWebhooksGet**](DefaultApi.md#webhookspagewebhooksget) | **GET** /webhooks | Webhooks Page |
 | [**welcomeWelcomeGet**](DefaultApi.md#welcomewelcomeget) | **GET** /welcome | Welcome |
 
+
+
+## acceptInvitationInvitationsTokenGet
+
+> string acceptInvitationInvitationsTokenGet(token)
+
+Accept Invitation
+
+Accept a workspace invitation (workspaces-design §4.4). Top-level route — deliberately OFF the reserved single-letter prefixes (&#x60;/a /f /s /v /_&#x60;).  If the visitor isn\&#39;t signed in, bounce through &#x60;/auth/login&#x60; with a same-origin &#x60;return_to&#x60; back here (the login flow validates return_to, so the path is safe). Once signed in, validate + accept:   * email mismatch / expired / revoked / unknown → friendly error page,   * success → join the workspace, set it active, land on the dashboard.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { AcceptInvitationInvitationsTokenGetRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    token: token_example,
+  } satisfies AcceptInvitationInvitationsTokenGetRequest;
+
+  try {
+    const data = await api.acceptInvitationInvitationsTokenGet(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **token** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+**string**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `text/html`, `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
 ## activityFeedActivityGet
@@ -815,6 +901,77 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## createDriveWebWebDrivesPost
+
+> any createDriveWebWebDrivesPost(name, csrf)
+
+Create Drive Web
+
+Create a drive in the active workspace + reveal its key once (workspaces-design §4.5, §5.6).  The web (session+CSRF) twin of &#x60;POST /v0/drives&#x60;. Any MEMBER of the active workspace may create a drive; the creator becomes its owner. The new drive\&#39;s &#x60;ad_live_&#x60; key is shown ONCE via the same &#x60;reveal_key&#x60;-in-session mechanism the api-keys tab consumes; we also pin the new drive as active and land on the api-keys tab so the user sees the reveal.  Authorization is by &#x60;current_user&#x60; + membership, NOT &#x60;current_drive&#x60; (workspaces-design §4.3 empty state): a freshly-invited member owns 0 drives, so &#x60;current_drive&#x60; is None for them — yet this is exactly the \&quot;create your first drive\&quot; moment that MUST work. Gating on a pre-existing drive would dead-end the web onboarding path. Membership + the per-member cap are the real guards; both hold whether or not the user already owns a drive.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { CreateDriveWebWebDrivesPostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    name: name_example,
+    // string
+    csrf: csrf_example,
+  } satisfies CreateDriveWebWebDrivesPostRequest;
+
+  try {
+    const data = await api.createDriveWebWebDrivesPost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **name** | `string` |  | [Defaults to `undefined`] |
+| **csrf** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/x-www-form-urlencoded`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## createFolderByPathV0FoldersPathPost
 
 > FolderOut createFolderByPathV0FoldersPathPost(path, xAgentdriveActor, authorization, folderCreateIn)
@@ -1105,6 +1262,151 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## createUserTokenWebTokensCreatePost
+
+> any createUserTokenWebTokensCreatePost(csrf, label, scope)
+
+Create User Token
+
+Mint an &#x60;ad_user_&#x60; user-identity token (workspaces-design §5.2, §5.6).  **Web-only minting**: the bootstrap chicken-and-egg is solved here, and a leaked token must not be able to mint persistent siblings — so this path exists only behind the browser session + CSRF, never over the &#x60;/v0/&#x60; API.  The raw token is shown ONCE via &#x60;reveal_token&#x60; in the session, then consumed on the next GET of the api-keys tab.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { CreateUserTokenWebTokensCreatePostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    csrf: csrf_example,
+    // string (optional)
+    label: label_example,
+    // string (optional)
+    scope: scope_example,
+  } satisfies CreateUserTokenWebTokensCreatePostRequest;
+
+  try {
+    const data = await api.createUserTokenWebTokensCreatePost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **csrf** | `string` |  | [Defaults to `undefined`] |
+| **label** | `string` |  | [Optional] [Defaults to `&#39;&#39;`] |
+| **scope** | `string` |  | [Optional] [Defaults to `&#39;full&#39;`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/x-www-form-urlencoded`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## createWorkspaceWebWebWorkspacesPost
+
+> any createWorkspaceWebWebWorkspacesPost(name, csrf)
+
+Create Workspace Web
+
+Create a new workspace, set it active, reveal its starter key once (workspaces-design §4.7).  The web (session+CSRF) twin of &#x60;POST /v0/workspaces&#x60;. A user may administer at most a fixed number of workspaces (&#x60;core.entitlements. can_create_workspace&#x60;, a hard cap — §4.7/O2); a blocked create bounces to the dashboard with a limit-reached affordance (&#x60;?err&#x3D;workspace_limit&#x60;) rather than silently allowing. On success the new workspace + its starter drive become active and we land on the api-keys tab so the user sees the one-time key reveal.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { CreateWorkspaceWebWebWorkspacesPostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    name: name_example,
+    // string
+    csrf: csrf_example,
+  } satisfies CreateWorkspaceWebWebWorkspacesPostRequest;
+
+  try {
+    const data = await api.createWorkspaceWebWebWorkspacesPost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **name** | `string` |  | [Defaults to `undefined`] |
+| **csrf** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/x-www-form-urlencoded`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -1544,9 +1846,9 @@ No authorization required
 
 > any deleteDriveRouteV0DrivesDriveIdDelete(driveId, xAgentdriveActor, authorization)
 
-Soft-delete the authenticated drive
+Soft-delete a drive
 
-Mark the drive for cleanup. All tenant data (artifacts, versions, wiki, embeddings, events) is hidden via the &#x60;live_*&#x60; views and CASCADE-removed by the GC cleanup cron at &#x60;purge_at&#x60;. Restore via &#x60;POST /v0/drives/{id}/restore&#x60; while the row is still in trash. The path-param &#x60;drive_id&#x60; MUST match the authenticated drive.
+Mark the drive for cleanup. All tenant data (artifacts, versions, wiki, embeddings, events) is hidden via the &#x60;live_*&#x60; views and CASCADE-removed by the GC cleanup cron at &#x60;purge_at&#x60;. Restore via &#x60;POST /v0/drives/{id}/restore&#x60; while the row is still in trash. The path-param &#x60;drive_id&#x60; MUST match the authenticated drive.  Accepts either an &#x60;ad_live_&#x60; per-drive key (deletes that key\&#39;s drive) or an &#x60;ad_user_&#x60; user token selecting an owned drive (workspaces-design §5.3); a &#x60;read&#x60;-scope user token is rejected with 403 &#x60;INSUFFICIENT_SCOPE&#x60;. **Guard (§8):** a workspace must retain at least one live drive — deleting the workspace\&#39;s last live drive returns 409 &#x60;LAST_DRIVE&#x60;.
 
 ### Example
 
@@ -1602,6 +1904,77 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## deleteDriveWebWebDrivesDriveIdDeletePost
+
+> any deleteDriveWebWebDrivesDriveIdDeletePost(driveId, csrf)
+
+Delete Drive Web
+
+Soft-delete a drive the caller owns, with the last-drive guard (workspaces-design §8). Owner-only (no-leak no-op otherwise).  Guard: blocks deleting the workspace\&#39;s LAST live drive — a member must always land somewhere. On a successful delete of the *active* drive, we drop the pin so &#x60;current_drive&#x60; falls back to the user\&#39;s next oldest owned drive.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { DeleteDriveWebWebDrivesDriveIdDeletePostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    driveId: driveId_example,
+    // string
+    csrf: csrf_example,
+  } satisfies DeleteDriveWebWebDrivesDriveIdDeletePostRequest;
+
+  try {
+    const data = await api.deleteDriveWebWebDrivesDriveIdDeletePost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **driveId** | `string` |  | [Defaults to `undefined`] |
+| **csrf** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/x-www-form-urlencoded`
 - **Accept**: `application/json`
 
 
@@ -1964,6 +2337,80 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## deleteWorkspaceWebWebWorkspacesOrgIdDeletePost
+
+> any deleteWorkspaceWebWebWorkspacesOrgIdDeletePost(orgId, csrf, confirm)
+
+Delete Workspace Web
+
+Explicit delete-workspace path (workspaces-design §4.4): a sole admin who can\&#39;t leave (members remain) may instead destroy the workspace — cascade soft-delete the org + all its live drives.  Admin-gated against the PATH org (not just the session) so a stale cookie can\&#39;t redirect the cascade. A non-admin is a no-leak no-op.  **Typed confirmation required** (parallel to &#x60;delete_account&#x60;\&#39;s &#x60;confirm &#x3D;&#x3D; \&quot;DELETE\&quot;&#x60;): this cascade soft-deletes the WHOLE workspace plus every member\&#39;s drives in it, so a single mis-clicked CSRF POST must not be able to trigger it. The caller must type either the literal &#x60;DELETE&#x60; or the exact workspace name; anything else bounces with no cascade. (Restricting to sole-admin is a separate product question, flagged to the user — not changed here.)
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { DeleteWorkspaceWebWebWorkspacesOrgIdDeletePostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    orgId: orgId_example,
+    // string
+    csrf: csrf_example,
+    // string (optional)
+    confirm: confirm_example,
+  } satisfies DeleteWorkspaceWebWebWorkspacesOrgIdDeletePostRequest;
+
+  try {
+    const data = await api.deleteWorkspaceWebWebWorkspacesOrgIdDeletePost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | `string` |  | [Defaults to `undefined`] |
+| **csrf** | `string` |  | [Defaults to `undefined`] |
+| **confirm** | `string` |  | [Optional] [Defaults to `&#39;&#39;`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/x-www-form-urlencoded`
 - **Accept**: `application/json`
 
 
@@ -3739,6 +4186,83 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## inviteMemberWebWebMembersInvitePost
+
+> any inviteMemberWebWebMembersInvitePost(email, csrf, role, workspaceName)
+
+Invite Member Web
+
+Admin invites a person by email (workspaces-design §4.4). Sends the invite email via the e2a lane. Admin-only; a non-admin is bounced.  Rename-on-first-invite (workspaces-design §4.6): a single-member workspace still carries its onboarding default name. The invite form offers an optional &#x60;workspace_name&#x60; — a LIGHT prompt, not a gate. If non-empty, we rename the workspace in the SAME submit (before sending) so teammates land in a named workspace, not \&quot;Someone\&#39;s Drive\&quot;.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { InviteMemberWebWebMembersInvitePostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    email: email_example,
+    // string
+    csrf: csrf_example,
+    // string (optional)
+    role: role_example,
+    // string (optional)
+    workspaceName: workspaceName_example,
+  } satisfies InviteMemberWebWebMembersInvitePostRequest;
+
+  try {
+    const data = await api.inviteMemberWebWebMembersInvitePost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **email** | `string` |  | [Defaults to `undefined`] |
+| **csrf** | `string` |  | [Defaults to `undefined`] |
+| **role** | `string` |  | [Optional] [Defaults to `&#39;member&#39;`] |
+| **workspaceName** | `string` |  | [Optional] [Defaults to `&#39;&#39;`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/x-www-form-urlencoded`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## listArtifactVersionsV0ArtifactsArtIdVersionsGet
 
 > VersionPage listArtifactVersionsV0ArtifactsArtIdVersionsGet(artId, cursor, limit, authorization)
@@ -5171,6 +5695,75 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## postDescribeV0QueryDescribePost
+
+> any postDescribeV0QueryDescribePost(describeIn, authorization)
+
+Describe a dataset\&#39;s column schema
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { PostDescribeV0QueryDescribePostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // DescribeIn
+    describeIn: ...,
+    // string (optional)
+    authorization: authorization_example,
+  } satisfies PostDescribeV0QueryDescribePostRequest;
+
+  try {
+    const data = await api.postDescribeV0QueryDescribePost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **describeIn** | [DescribeIn](DescribeIn.md) |  | |
+| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## postFeedbackV0FeedbackPost
 
 > any postFeedbackV0FeedbackPost(authorization)
@@ -5234,6 +5827,144 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## postLookupValuesV0QueryLookupValuesPost
+
+> any postLookupValuesV0QueryLookupValuesPost(lookupValuesIn, authorization)
+
+List distinct values of a dataset column
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { PostLookupValuesV0QueryLookupValuesPostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // LookupValuesIn
+    lookupValuesIn: ...,
+    // string (optional)
+    authorization: authorization_example,
+  } satisfies PostLookupValuesV0QueryLookupValuesPostRequest;
+
+  try {
+    const data = await api.postLookupValuesV0QueryLookupValuesPost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **lookupValuesIn** | [LookupValuesIn](LookupValuesIn.md) |  | |
+| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## postQueryV0QueryPost
+
+> any postQueryV0QueryPost(queryIn, authorization)
+
+Run a read-only SQL query over authorized datasets
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { PostQueryV0QueryPostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // QueryIn
+    queryIn: ...,
+    // string (optional)
+    authorization: authorization_example,
+  } satisfies PostQueryV0QueryPostRequest;
+
+  try {
+    const data = await api.postQueryV0QueryPost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **queryIn** | [QueryIn](QueryIn.md) |  | |
+| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -5988,6 +6719,80 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## removeMemberWebWebMembersTargetUserIdRemovePost
+
+> any removeMemberWebWebMembersTargetUserIdRemovePost(targetUserId, csrf, organizationId)
+
+Remove Member Web
+
+Remove a member (admin) or self-leave (any member). Soft-deletes the member\&#39;s owned drives in that workspace (workspaces-design §4.4). The sole-admin-with-members case is blocked (promote-or-delete).  Org scoping: defaults to the session\&#39;s active workspace. The \&quot;Your workspaces\&quot; list passes an explicit &#x60;organization_id&#x60; so a user can Leave a NON-active workspace too — authorized against THAT org\&#39;s standing (self-leave for any member there; admin to remove others). A forged/non-member org id is a no-leak forbidden.  Auth: gates on &#x60;current_user&#x60; + per-org standing, NOT &#x60;current_drive&#x60; (a driveless member of the target workspace must still be able to leave it). Attribution uses the user\&#39;s email.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { RemoveMemberWebWebMembersTargetUserIdRemovePostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    targetUserId: targetUserId_example,
+    // string
+    csrf: csrf_example,
+    // string (optional)
+    organizationId: organizationId_example,
+  } satisfies RemoveMemberWebWebMembersTargetUserIdRemovePostRequest;
+
+  try {
+    const data = await api.removeMemberWebWebMembersTargetUserIdRemovePost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **targetUserId** | `string` |  | [Defaults to `undefined`] |
+| **csrf** | `string` |  | [Defaults to `undefined`] |
+| **organizationId** | `string` |  | [Optional] [Defaults to `&#39;&#39;`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/x-www-form-urlencoded`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## renameArtifactRouteV0ArtifactsArtIdPatch
 
 > ArtifactOut renameArtifactRouteV0ArtifactsArtIdPatch(artId, renameIn, xAgentdriveActor, ifMatch, authorization)
@@ -6056,6 +6861,225 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## renameDriveWebWebDrivesDriveIdRenamePost
+
+> any renameDriveWebWebDrivesDriveIdRenamePost(driveId, name, csrf)
+
+Rename Drive Web
+
+Rename a drive the caller owns (workspaces-design §4.5).  Owner-only: &#x60;drives.get_owned_drive&#x60; returns None for a peer-owned / forged / soft-deleted id, which we treat as a silent no-op (no-leak) and bounce back to the dashboard.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { RenameDriveWebWebDrivesDriveIdRenamePostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    driveId: driveId_example,
+    // string
+    name: name_example,
+    // string
+    csrf: csrf_example,
+  } satisfies RenameDriveWebWebDrivesDriveIdRenamePostRequest;
+
+  try {
+    const data = await api.renameDriveWebWebDrivesDriveIdRenamePost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **driveId** | `string` |  | [Defaults to `undefined`] |
+| **name** | `string` |  | [Defaults to `undefined`] |
+| **csrf** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/x-www-form-urlencoded`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## renameWorkspaceWebWebWorkspacesOrgIdRenamePost
+
+> any renameWorkspaceWebWebWorkspacesOrgIdRenamePost(orgId, name, csrf)
+
+Rename Workspace Web
+
+Rename a workspace the caller administers (workspaces-design §4.6).  Admin-gated against the PATH org (not just the session) so a stale cookie can\&#39;t redirect the rename. A non-admin / non-member is a no-leak no-op.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { RenameWorkspaceWebWebWorkspacesOrgIdRenamePostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    orgId: orgId_example,
+    // string
+    name: name_example,
+    // string
+    csrf: csrf_example,
+  } satisfies RenameWorkspaceWebWebWorkspacesOrgIdRenamePostRequest;
+
+  try {
+    const data = await api.renameWorkspaceWebWebWorkspacesOrgIdRenamePost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | `string` |  | [Defaults to `undefined`] |
+| **name** | `string` |  | [Defaults to `undefined`] |
+| **csrf** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/x-www-form-urlencoded`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## resendInvitationWebWebInvitationsInvitationIdResendPost
+
+> any resendInvitationWebWebInvitationsInvitationIdResendPost(invitationId, csrf)
+
+Resend Invitation Web
+
+Admin re-mints + re-emails a pending invite (workspaces-design §8).
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { ResendInvitationWebWebInvitationsInvitationIdResendPostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    invitationId: invitationId_example,
+    // string
+    csrf: csrf_example,
+  } satisfies ResendInvitationWebWebInvitationsInvitationIdResendPostRequest;
+
+  try {
+    const data = await api.resendInvitationWebWebInvitationsInvitationIdResendPost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **invitationId** | `string` |  | [Defaults to `undefined`] |
+| **csrf** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/x-www-form-urlencoded`
 - **Accept**: `application/json`
 
 
@@ -6294,6 +7318,77 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## revokeInvitationWebWebInvitationsInvitationIdRevokePost
+
+> any revokeInvitationWebWebInvitationsInvitationIdRevokePost(invitationId, csrf)
+
+Revoke Invitation Web
+
+Admin revokes a pending invite (org-scoped, no-leak).
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { RevokeInvitationWebWebInvitationsInvitationIdRevokePostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    invitationId: invitationId_example,
+    // string
+    csrf: csrf_example,
+  } satisfies RevokeInvitationWebWebInvitationsInvitationIdRevokePostRequest;
+
+  try {
+    const data = await api.revokeInvitationWebWebInvitationsInvitationIdRevokePost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **invitationId** | `string` |  | [Defaults to `undefined`] |
+| **csrf** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/x-www-form-urlencoded`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## revokeLinkWebShareRidLinkShrIdRevokePost
 
 > any revokeLinkWebShareRidLinkShrIdRevokePost(rid, shrId, xCsrfToken)
@@ -6354,6 +7449,148 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## revokeUserTokenWebTokensRevokePost
+
+> any revokeUserTokenWebTokensRevokePost(tokenId, csrf)
+
+Revoke User Token
+
+Revoke one of the caller\&#39;s &#x60;ad_user_&#x60; tokens.  Ownership is enforced inside &#x60;user_tokens.revoke(token_id, user_id)&#x60; — the form\&#39;s &#x60;token_id&#x60; is attacker-controllable, so we never revoke by id alone. A non-matching id is a silent no-op (same redirect).
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { RevokeUserTokenWebTokensRevokePostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    tokenId: tokenId_example,
+    // string
+    csrf: csrf_example,
+  } satisfies RevokeUserTokenWebTokensRevokePostRequest;
+
+  try {
+    const data = await api.revokeUserTokenWebTokensRevokePost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **tokenId** | `string` |  | [Defaults to `undefined`] |
+| **csrf** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/x-www-form-urlencoded`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## rotateDriveKeyWebWebDrivesDriveIdKeysRotatePost
+
+> any rotateDriveKeyWebWebDrivesDriveIdKeysRotatePost(driveId, csrf)
+
+Rotate Drive Key Web
+
+Rotate a specific owned drive\&#39;s &#x60;ad_live_&#x60; key + reveal once (workspaces-design §5.6). Owner-only (no-leak no-op otherwise).  The per-drive twin of &#x60;/web/keys/rotate&#x60; (which acts on the active drive). Pins the rotated drive active so the reveal on the api-keys tab shows the key for the drive the user just rotated.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { RotateDriveKeyWebWebDrivesDriveIdKeysRotatePostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    driveId: driveId_example,
+    // string
+    csrf: csrf_example,
+  } satisfies RotateDriveKeyWebWebDrivesDriveIdKeysRotatePostRequest;
+
+  try {
+    const data = await api.rotateDriveKeyWebWebDrivesDriveIdKeysRotatePost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **driveId** | `string` |  | [Defaults to `undefined`] |
+| **csrf** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/x-www-form-urlencoded`
 - **Accept**: `application/json`
 
 
@@ -6593,6 +7830,80 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## setMemberRoleWebWebMembersTargetUserIdRolePost
+
+> any setMemberRoleWebWebMembersTargetUserIdRolePost(targetUserId, role, csrf)
+
+Set Member Role Web
+
+Admin promotes/demotes a member. Last-admin demote is blocked (workspaces-design §4.4).
+
+### Example
+
+```ts
+import {
+  Configuration,
+  DefaultApi,
+} from '@mnexa-ai/agentdrive-sdk';
+import type { SetMemberRoleWebWebMembersTargetUserIdRolePostRequest } from '@mnexa-ai/agentdrive-sdk';
+
+async function example() {
+  console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
+  const api = new DefaultApi();
+
+  const body = {
+    // string
+    targetUserId: targetUserId_example,
+    // string
+    role: role_example,
+    // string
+    csrf: csrf_example,
+  } satisfies SetMemberRoleWebWebMembersTargetUserIdRolePostRequest;
+
+  try {
+    const data = await api.setMemberRoleWebWebMembersTargetUserIdRolePost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **targetUserId** | `string` |  | [Defaults to `undefined`] |
+| **role** | `string` |  | [Defaults to `undefined`] |
+| **csrf** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/x-www-form-urlencoded`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## setPublicWebShareRidPublicPost
 
 > any setPublicWebShareRidPublicPost(rid, publicIn, xCsrfToken)
@@ -6747,7 +8058,7 @@ No authorization required
 
 Settings Account
 
-Default settings landing — Account info + Danger zone.
+Default settings landing — Account info + Usage + Danger zone.  Usage folded in here (was a standalone &#x60;/settings/usage&#x60; tab): the same meter data is fetched via &#x60;_usage_context&#x60; and rendered as a section on this page.
 
 ### Example
 
@@ -6806,7 +8117,7 @@ No authorization required
 
 Settings Api Keys
 
-API key tab. Also where reveal_key is rendered after rotation; the reveal is consumed (removed from session) on first read.
+API key tab. Also where reveal_key is rendered after rotation; the reveal is consumed (removed from session) on first read.  Surfaces two credential classes (workspaces-design §5.6):   * the drive\&#39;s &#x60;ad_live_&#x60; per-drive key (&#x60;drive.api_key_prefix&#x60;,     rotate/delete) — unchanged from v0.   * the user\&#39;s &#x60;ad_user_&#x60; identity tokens (&#x60;user_tokens&#x60;, mint/list/     revoke). Minting reveals the raw token once via the same     &#x60;reveal_key&#x60;-in-session mechanism as the drive key.
 
 ### Example
 
@@ -6918,13 +8229,13 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## settingsUsageSettingsUsageGet
+## settingsWorkspaceSettingsWorkspaceGet
 
-> string settingsUsageSettingsUsageGet()
+> string settingsWorkspaceSettingsWorkspaceGet()
 
-Settings Usage
+Settings Workspace
 
-Usage tab — current-period meters against tier caps.  Reads the same data as &#x60;GET /v0/drives/me/usage&#x60; but renders it as HTML directly so the page doesn\&#39;t need a JS fetch round-trip. The template computes the percentage and warning state per-row from the &#x60;used&#x60; / &#x60;limit&#x60; pair; &#x60;limit &#x3D;&#x3D; 0&#x60; is the unlimited sentinel and the template hides the cap line in that case.
+Standalone workspace settings page (decision O4): members list + pending invites + invite form + role change + remove.  Admin-gated for the management actions; a member sees the roster but no management controls (the template hides them unless &#x60;is_admin&#x60;). The active workspace is the session\&#39;s &#x60;active_organization_id&#x60;.
 
 ### Example
 
@@ -6933,14 +8244,14 @@ import {
   Configuration,
   DefaultApi,
 } from '@mnexa-ai/agentdrive-sdk';
-import type { SettingsUsageSettingsUsageGetRequest } from '@mnexa-ai/agentdrive-sdk';
+import type { SettingsWorkspaceSettingsWorkspaceGetRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
   console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
   const api = new DefaultApi();
 
   try {
-    const data = await api.settingsUsageSettingsUsageGet();
+    const data = await api.settingsWorkspaceSettingsWorkspaceGet();
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -7110,13 +8421,13 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## switchOrgWebSwitchOrgPost
+## switchDriveWebSwitchPost
 
-> any switchOrgWebSwitchOrgPost(organizationId, csrf)
+> any switchDriveWebSwitchPost(csrf, driveId, organizationId)
 
-Switch Org
+Switch Drive
 
-Switch the session\&#39;s active organization (and thus the active drive).  A user can belong to multiple orgs (e.g. a personal org + a shared/business org). v1 binds the active org at login with no way to change it; this lets a member flip it. Membership is re-verified server-side (the form value is attacker-controllable), then the session cookie is re-minted with the new active org — &#x60;current_drive&#x60;\&#39;s membership JOIN enforces access on the next request. Any &#x60;reveal_key&#x60; is dropped: it was scoped to the old drive.
+Switch the active workspace (and drive) — workspace-first (workspaces-design §4.3).  Two modes, mirroring the Linear/Slack/GitHub \&quot;switch by workspace\&quot; model:    * **Workspace switch** (&#x60;organization_id&#x60;): membership-check the     target org for the user; on success set it active and pin the     user\&#39;s OLDEST owned live drive there (deterministic), or None if     they own none — in which case the dashboard\&#39;s     &#x60;resolve_driveless_member&#x60; renders the \&quot;create your first drive\&quot;     empty state for that workspace.   * **Drive switch** (&#x60;drive_id&#x60;): validate the user OWNS the posted     drive (and is a live member of its workspace) via     &#x60;drives_svc.user_owns_drive&#x60;, then set both org + drive active.     Lets a multi-drive workspace pick a specific drive. If BOTH are     posted, the explicit &#x60;drive_id&#x60; wins (subject to its own check).  Both forms are no-leak: a forged / peer-owned / non-member target fails its check and is treated identically to \&quot;no such target\&quot; (303 back to /dashboard without mutating the session — no leak, no error oracle).
 
 ### Example
 
@@ -7125,7 +8436,7 @@ import {
   Configuration,
   DefaultApi,
 } from '@mnexa-ai/agentdrive-sdk';
-import type { SwitchOrgWebSwitchOrgPostRequest } from '@mnexa-ai/agentdrive-sdk';
+import type { SwitchDriveWebSwitchPostRequest } from '@mnexa-ai/agentdrive-sdk';
 
 async function example() {
   console.log("🚀 Testing @mnexa-ai/agentdrive-sdk SDK...");
@@ -7133,13 +8444,15 @@ async function example() {
 
   const body = {
     // string
-    organizationId: organizationId_example,
-    // string
     csrf: csrf_example,
-  } satisfies SwitchOrgWebSwitchOrgPostRequest;
+    // string (optional)
+    driveId: driveId_example,
+    // string (optional)
+    organizationId: organizationId_example,
+  } satisfies SwitchDriveWebSwitchPostRequest;
 
   try {
-    const data = await api.switchOrgWebSwitchOrgPost(body);
+    const data = await api.switchDriveWebSwitchPost(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -7155,8 +8468,9 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **organizationId** | `string` |  | [Defaults to `undefined`] |
 | **csrf** | `string` |  | [Defaults to `undefined`] |
+| **driveId** | `string` |  | [Optional] [Defaults to `&#39;&#39;`] |
+| **organizationId** | `string` |  | [Optional] [Defaults to `&#39;&#39;`] |
 
 ### Return type
 
@@ -8377,7 +9691,7 @@ No authorization required
 
 Web Put Artifact
 
-Cookie-authed write of an image artifact. Used by the SnipIt web editor (&#x60;/a/{art_id}/edit&#x60;) for autosave; the bearer-authed &#x60;PUT /v0/artifacts/{path}&#x60; won\&#39;t accept a cookie-only session.  Owner-only; the path is checked against the signed-in user\&#39;s drive. Accepts &#x60;image/_*&#x60; (SnipIt editor autosave) and &#x60;application/pdf&#x60; (the PDF viewer\&#39;s annotation save) only — refuses everything else so the editor can\&#39;t smuggle markdown/HTML or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved &#x60;_wiki/&#x60; namespace rejection, per-tier max-bytes cap (both &#x60;Content-Length&#x60; short-circuit and post-body length check) — so a logged-in user can\&#39;t bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the &#x60;X-CSRF-Token&#x60; header (see &#x60;csrf.require_csrf_header&#x60;); the editor reads the token from the &#x60;&lt;meta name&#x3D;\&quot;csrf-token\&quot;&gt;&#x60; tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor\&#39;s 1.5s autosave can sustain without flagging abuse.
+Cookie-authed write of an image artifact. Used by the SnipIt web editor (&#x60;/a/{art_id}/edit&#x60;) for autosave; the bearer-authed &#x60;PUT /v0/artifacts/{path}&#x60; won\&#39;t accept a cookie-only session.  Owner-only; the path is checked against the signed-in user\&#39;s drive. Accepts &#x60;image/_*&#x60; (SnipIt editor autosave) and &#x60;application/pdf&#x60; (the PDF viewer\&#39;s annotation save) only — refuses everything else so the editor can\&#39;t smuggle markdown/HTML or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved &#x60;_wiki/&#x60; namespace rejection, per-tier max-bytes cap (both &#x60;Content-Length&#x60; short-circuit and post-body length check) — so a logged-in user can\&#39;t bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the &#x60;X-CSRF-Token&#x60; header (see &#x60;csrf.require_csrf_header&#x60;); the editor reads the token from the &#x60;&lt;meta name&#x3D;\&quot;csrf-token\&quot;&gt;&#x60; tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor\&#39;s 1.5s autosave can sustain without flagging abuse.  Cross-workspace (design §4.3): the editor page is reached by a stable-id URL that may name a drive outside the session\&#39;s active workspace, so the write must target the RESOURCE\&#39;s drive, not the active one. The editor sends the resolved drive in an &#x60;X-Drive-Id&#x60; header; we authorize ownership of THAT drive via &#x60;resolve_owned_drive&#x60; (it returns None for a forged / unowned id → 401, never a write). Absent header ⇒ fall back to &#x60;current_drive&#x60; (pre-fast-follow behavior; a cached old client still works, only without the cross-workspace fix).
 
 ### Example
 

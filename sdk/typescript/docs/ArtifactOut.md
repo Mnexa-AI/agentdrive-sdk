@@ -10,6 +10,7 @@ Name | Type
 `driveId` | string
 `path` | string
 `url` | string
+`permalink` | string
 `contentType` | string
 `fileType` | string
 `sizeBytes` | number
@@ -35,6 +36,7 @@ const example = {
   "driveId": null,
   "path": null,
   "url": null,
+  "permalink": null,
   "contentType": null,
   "fileType": null,
   "sizeBytes": null,

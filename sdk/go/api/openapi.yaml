@@ -802,11 +802,10 @@ paths:
       summary: Restore a soft-deleted artifact
   /v0/drives/{drive_id}:
     delete:
-      description: "Mark the drive for cleanup. All tenant data (artifacts, versions,\
-        \ wiki, embeddings, events) is hidden via the `live_*` views and CASCADE-removed\
-        \ by the GC cleanup cron at `purge_at`. Restore via `POST /v0/drives/{id}/restore`\
-        \ while the row is still in trash. The path-param `drive_id` MUST match the\
-        \ authenticated drive."
+      description: |-
+        Mark the drive for cleanup. All tenant data (artifacts, versions, wiki, embeddings, events) is hidden via the `live_*` views and CASCADE-removed by the GC cleanup cron at `purge_at`. Restore via `POST /v0/drives/{id}/restore` while the row is still in trash. The path-param `drive_id` MUST match the authenticated drive.
+
+        Accepts either an `ad_live_` per-drive key (deletes that key's drive) or an `ad_user_` user token selecting an owned drive (workspaces-design §5.3); a `read`-scope user token is rejected with 403 `INSUFFICIENT_SCOPE`. **Guard (§8):** a workspace must retain at least one live drive — deleting the workspace's last live drive returns 409 `LAST_DRIVE`.
       operationId: delete_drive_route_v0_drives__drive_id__delete
       parameters:
       - explode: false
@@ -845,7 +844,50 @@ paths:
               schema:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
-      summary: Soft-delete the authenticated drive
+      summary: Soft-delete a drive
+    patch:
+      description: Rename a drive. **Owner only** — a drive id that isn't yours returns
+        404 (no-leak). Requires a `full`-scope user token.
+      operationId: rename_drive_route_v0_drives__drive_id__patch
+      parameters:
+      - explode: false
+        in: path
+        name: drive_id
+        required: true
+        schema:
+          title: Drive Id
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DriveRenameIn"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DriveOut"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Rename a drive you own
+      tags:
+      - drives
   /v0/drives/{drive_id}/restore:
     post:
       description: Clear `deleted_at` + `purge_at` on a soft-deleted drive. Soft-deleted
@@ -2290,6 +2332,525 @@ paths:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
       summary: Revoke + reissue a share link's key (requires can_share)
+  /v0/tokens:
+    get:
+      description: List the `ad_user_` tokens belonging to the authenticated user.
+        Metadata only — the raw token is shown once at mint (web only) and is never
+        returned here. Includes recently-revoked tokens (with `revoked_at` set) so
+        the caller can audit them; newest first.
+      operationId: list_tokens_v0_tokens_get
+      parameters:
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserTokenList"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: List your user-identity tokens
+      tags:
+      - tokens
+  /v0/tokens/{token_id}/revoke:
+    post:
+      description: "Revoke a single `ad_user_` token by id. Scoped to the authenticated\
+        \ user: a token id that isn't yours returns 404 (no-leak). Idempotent — revoking\
+        \ an already-revoked token also returns 404 (it is no longer a live token\
+        \ of yours to revoke). On success the revoked token's metadata is returned\
+        \ with `revoked_at` set."
+      operationId: revoke_token_v0_tokens__token_id__revoke_post
+      parameters:
+      - explode: false
+        in: path
+        name: token_id
+        required: true
+        schema:
+          title: Token Id
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserTokenOut"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Revoke one of your user-identity tokens
+      tags:
+      - tokens
+  /v0/drives:
+    get:
+      description: "Returns drive **metadata** (workspaces-design §4.2): an **admin**\
+        \ sees the whole active workspace's drive inventory (every owner); a **member**\
+        \ sees only the drives they own. Metadata only — owner, size, timestamps —\
+        \ never a raw API key, and never an authorization to read a drive's contents.\
+        \ A `read`-scope token may call this; mutations require `full`."
+      operationId: list_drives_route_v0_drives_get
+      parameters:
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DriveList"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: List the drives you can see
+      tags:
+      - drives
+    post:
+      description: |-
+        Create a named drive. Any **member** of the workspace may create one; the creator becomes its **owner**. Requires a `full`-scope user token. The response carries the drive's `ad_live_` API key **once** (`api_key`) — store it now, it is never returned again (rotate via `POST /v0/drives/{id}/keys/rotate`).
+
+        The target workspace is the user's active organization (`users.default_org`); cross-workspace creation names no other workspace in v0.
+
+        A member may own at most a fixed number of drives per workspace (workspaces-design §4.5). A caller at the limit is blocked with `403 DRIVE_LIMIT_REACHED`; this is a hard cap, not a paywall.
+      operationId: create_drive_route_v0_drives_post
+      parameters:
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DriveCreateIn"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DriveCreateOut"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Create a drive in your active workspace
+      tags:
+      - drives
+  /v0/drives/{drive_id}/keys/rotate:
+    post:
+      description: Generate a fresh `ad_live_` key for a drive you own and invalidate
+        the old one immediately. **Owner only** (404 no-leak otherwise) and requires
+        a `full`-scope user token. The new key is returned **once** — store it now.
+      operationId: rotate_drive_key_route_v0_drives__drive_id__keys_rotate_post
+      parameters:
+      - explode: false
+        in: path
+        name: drive_id
+        required: true
+        schema:
+          title: Drive Id
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DriveKeyRotateOut"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Rotate a drive's API key
+      tags:
+      - drives
+  /v0/members:
+    get:
+      description: "List live members (email, role, joined-at) of the caller's active\
+        \ workspace. Any **member** may list; a `read`-scope token is sufficient."
+      operationId: list_members_v0_members_get
+      parameters:
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemberList"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: List the members of your active workspace
+      tags:
+      - members
+  /v0/members/invite:
+    post:
+      description: "Create a pending invitation in the caller's active workspace and\
+        \ enqueue the invite email. **Admin only**, `full` scope. Inviting an existing\
+        \ member is a no-op success (`already_member: true`). A duplicate pending\
+        \ invite for the same email returns 409 `INVITE_PENDING` (resend it from the\
+        \ members page). The raw invite token is delivered only by email — never in\
+        \ this response."
+      operationId: invite_member_v0_members_invite_post
+      parameters:
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MemberInviteIn"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InviteCreateOut"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Invite a person to your workspace by email
+      tags:
+      - members
+  /v0/members/{target_user_id}:
+    delete:
+      description: "Remove a member from the caller's active workspace, soft-deleting\
+        \ every drive that member owns there (workspaces-design §4.4 — no ownership\
+        \ transfer in v0; their `ad_live_` keys then stop working). **Admin** may\
+        \ remove anyone; **any member** may remove themselves (self-leave). `full`\
+        \ scope. Removing the **last/sole admin** is rejected with 409 `LAST_ADMIN`\
+        \ (promote someone first, or delete the workspace)."
+      operationId: remove_member_v0_members__target_user_id__delete
+      parameters:
+      - explode: false
+        in: path
+        name: target_user_id
+        required: true
+        schema:
+          title: Target User Id
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Remove a member (or leave)
+      tags:
+      - members
+    patch:
+      description: "Promote/demote a member in the caller's active workspace. **Admin\
+        \ only**, `full` scope. Demoting the workspace's **last admin** is rejected\
+        \ with 409 `LAST_ADMIN` (promote someone first)."
+      operationId: set_member_role_v0_members__target_user_id__patch
+      parameters:
+      - explode: false
+        in: path
+        name: target_user_id
+        required: true
+        schema:
+          title: Target User Id
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MemberRoleIn"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemberOut"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Change a member's role
+      tags:
+      - members
+  /v0/invitations:
+    get:
+      description: List the pending invitations for the caller's active workspace.
+        **Admin only.** Metadata only — the raw invite token is never surfaced.
+      operationId: list_invitations_v0_invitations_get
+      parameters:
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InvitationList"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: List pending invitations
+      tags:
+      - members
+  /v0/invitations/{invitation_id}:
+    delete:
+      description: "Revoke a pending invitation in the caller's active workspace.\
+        \ **Admin only**, `full` scope. Org-scoped + idempotent: a forged id, an invite\
+        \ from another workspace, or an already-consumed invite all return 404 (no-leak)."
+      operationId: revoke_invitation_v0_invitations__invitation_id__delete
+      parameters:
+      - explode: false
+        in: path
+        name: invitation_id
+        required: true
+        schema:
+          title: Invitation Id
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Revoke a pending invitation
+      tags:
+      - members
+  /v0/workspaces:
+    get:
+      description: "Return every workspace the caller is a member of, each carrying\
+        \ the caller's `role` in it. Metadata only. A `read`-scope token is sufficient."
+      operationId: list_workspaces_route_v0_workspaces_get
+      parameters:
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WorkspaceList"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: List the workspaces you belong to
+      tags:
+      - workspaces
+    post:
+      description: |-
+        Create a new **workspace** (the user-facing name for an organization). You become its **admin** and get a starter drive; the starter drive's `ad_live_` key is returned **once** (`starter_drive_api_key`).
+
+        A user may administer at most a fixed number of workspaces (workspaces-design §4.7). A caller at the limit is blocked with `403 WORKSPACE_LIMIT_REACHED`. Requires a `full`-scope user token.
+      operationId: create_workspace_route_v0_workspaces_post
+      parameters:
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WorkspaceCreateIn"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WorkspaceCreateOut"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Create a new workspace
+      tags:
+      - workspaces
+  /v0/workspaces/{org_id}:
+    patch:
+      description: Rename a workspace. **Admin only** — a workspace you don't administer
+        (or aren't a member of) returns 404 (no-leak). Requires a `full`-scope user
+        token.
+      operationId: rename_workspace_route_v0_workspaces__org_id__patch
+      parameters:
+      - explode: false
+        in: path
+        name: org_id
+        required: true
+        schema:
+          title: Org Id
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WorkspaceRenameIn"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WorkspaceOut"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Rename a workspace you administer
+      tags:
+      - workspaces
   /v0/upload/{token}:
     put:
       description: |-
@@ -2704,6 +3265,99 @@ paths:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
       summary: Set a project's compile config (entrypoint/engine/auto_compile)
+  /v0/query:
+    post:
+      operationId: post_query_v0_query_post
+      parameters:
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QueryIn"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Run a read-only SQL query over authorized datasets
+  /v0/query/describe:
+    post:
+      operationId: post_describe_v0_query_describe_post
+      parameters:
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DescribeIn"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Describe a dataset's column schema
+  /v0/query/lookup-values:
+    post:
+      operationId: post_lookup_values_v0_query_lookup_values_post
+      parameters:
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LookupValuesIn"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: List distinct values of a dataset column
   /.well-known/jwks.json:
     get:
       description: Public half of the RSA signing key for identity_assertion + access_token
@@ -3525,6 +4179,15 @@ paths:
         `<meta name="csrf-token">` tag rendered into the edit page.
         Rate-limited per-IP/user at the same cadence the editor's 1.5s
         autosave can sustain without flagging abuse.
+
+        Cross-workspace (design §4.3): the editor page is reached by a stable-id
+        URL that may name a drive outside the session's active workspace, so the
+        write must target the RESOURCE's drive, not the active one. The editor
+        sends the resolved drive in an `X-Drive-Id` header; we authorize ownership
+        of THAT drive via `resolve_owned_drive` (it returns None for a forged /
+        unowned id → 401, never a write). Absent header ⇒ fall back to
+        `current_drive` (pre-fast-follow behavior; a cached old client still works,
+        only without the cross-workspace fix).
       operationId: web_put_artifact_web_artifacts__path__put
       parameters:
       - explode: false
@@ -4285,7 +4948,12 @@ paths:
       summary: Revoke Link
   /settings:
     get:
-      description: Default settings landing — Account info + Danger zone.
+      description: |-
+        Default settings landing — Account info + Usage + Danger zone.
+
+        Usage folded in here (was a standalone `/settings/usage` tab): the
+        same meter data is fetched via `_usage_context` and rendered as a
+        section on this page.
       operationId: settings_account_settings_get
       responses:
         "200":
@@ -4300,6 +4968,13 @@ paths:
       description: |-
         API key tab. Also where reveal_key is rendered after rotation; the
         reveal is consumed (removed from session) on first read.
+
+        Surfaces two credential classes (workspaces-design §5.6):
+          * the drive's `ad_live_` per-drive key (`drive.api_key_prefix`,
+            rotate/delete) — unchanged from v0.
+          * the user's `ad_user_` identity tokens (`user_tokens`, mint/list/
+            revoke). Minting reveals the raw token once via the same
+            `reveal_key`-in-session mechanism as the drive key.
       operationId: settings_api_keys_settings_api_keys_get
       responses:
         "200":
@@ -4309,37 +4984,6 @@ paths:
                 type: string
           description: Successful Response
       summary: Settings Api Keys
-  /web/switch-org:
-    post:
-      description: |-
-        Switch the session's active organization (and thus the active drive).
-
-        A user can belong to multiple orgs (e.g. a personal org + a shared/business
-        org). v1 binds the active org at login with no way to change it; this lets a
-        member flip it. Membership is re-verified server-side (the form value is
-        attacker-controllable), then the session cookie is re-minted with the new
-        active org — `current_drive`'s membership JOIN enforces access on the next
-        request. Any `reveal_key` is dropped: it was scoped to the old drive.
-      operationId: switch_org_web_switch_org_post
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: "#/components/schemas/Body_switch_org_web_switch_org_post"
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema: {}
-          description: Successful Response
-        "422":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/HTTPValidationError"
-          description: Validation Error
-      summary: Switch Org
   /settings/quickstart:
     get:
       description: |-
@@ -4360,25 +5004,6 @@ paths:
                 type: string
           description: Successful Response
       summary: Settings Quickstart
-  /settings/usage:
-    get:
-      description: |-
-        Usage tab — current-period meters against tier caps.
-
-        Reads the same data as `GET /v0/drives/me/usage` but renders it as
-        HTML directly so the page doesn't need a JS fetch round-trip. The
-        template computes the percentage and warning state per-row from
-        the `used` / `limit` pair; `limit == 0` is the unlimited sentinel
-        and the template hides the cap line in that case.
-      operationId: settings_usage_settings_usage_get
-      responses:
-        "200":
-          content:
-            text/html:
-              schema:
-                type: string
-          description: Successful Response
-      summary: Settings Usage
   /settings/danger:
     get:
       operationId: danger_zone_settings_danger_get
@@ -4426,6 +5051,205 @@ paths:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
       summary: Oauth Disconnect
+  /web/switch:
+    post:
+      description: |-
+        Switch the active workspace (and drive) — workspace-first
+        (workspaces-design §4.3).
+
+        Two modes, mirroring the Linear/Slack/GitHub "switch by workspace"
+        model:
+
+          * **Workspace switch** (`organization_id`): membership-check the
+            target org for the user; on success set it active and pin the
+            user's OLDEST owned live drive there (deterministic), or None if
+            they own none — in which case the dashboard's
+            `resolve_driveless_member` renders the "create your first drive"
+            empty state for that workspace.
+          * **Drive switch** (`drive_id`): validate the user OWNS the posted
+            drive (and is a live member of its workspace) via
+            `drives_svc.user_owns_drive`, then set both org + drive active.
+            Lets a multi-drive workspace pick a specific drive. If BOTH are
+            posted, the explicit `drive_id` wins (subject to its own check).
+
+        Both forms are no-leak: a forged / peer-owned / non-member target
+        fails its check and is treated identically to "no such target"
+        (303 back to /dashboard without mutating the session — no leak, no
+        error oracle).
+      operationId: switch_drive_web_switch_post
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Body_switch_drive_web_switch_post"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Switch Drive
+  /web/drives:
+    post:
+      description: |-
+        Create a drive in the active workspace + reveal its key once
+        (workspaces-design §4.5, §5.6).
+
+        The web (session+CSRF) twin of `POST /v0/drives`. Any MEMBER of the
+        active workspace may create a drive; the creator becomes its owner.
+        The new drive's `ad_live_` key is shown ONCE via the same
+        `reveal_key`-in-session mechanism the api-keys tab consumes; we also
+        pin the new drive as active and land on the api-keys tab so the user
+        sees the reveal.
+
+        Authorization is by `current_user` + membership, NOT `current_drive`
+        (workspaces-design §4.3 empty state): a freshly-invited member owns 0
+        drives, so `current_drive` is None for them — yet this is exactly the
+        "create your first drive" moment that MUST work. Gating on a pre-existing
+        drive would dead-end the web onboarding path. Membership + the per-member
+        cap are the real guards; both hold whether or not the user already owns a
+        drive.
+      operationId: create_drive_web_web_drives_post
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Body_create_drive_web_web_drives_post"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Create Drive Web
+  /web/drives/{drive_id}/rename:
+    post:
+      description: |-
+        Rename a drive the caller owns (workspaces-design §4.5).
+
+        Owner-only: `drives.get_owned_drive` returns None for a peer-owned /
+        forged / soft-deleted id, which we treat as a silent no-op (no-leak)
+        and bounce back to the dashboard.
+      operationId: rename_drive_web_web_drives__drive_id__rename_post
+      parameters:
+      - explode: false
+        in: path
+        name: drive_id
+        required: true
+        schema:
+          title: Drive Id
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Body_rename_drive_web_web_drives__drive_id__rename_post"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Rename Drive Web
+  /web/drives/{drive_id}/delete:
+    post:
+      description: |-
+        Soft-delete a drive the caller owns, with the last-drive guard
+        (workspaces-design §8). Owner-only (no-leak no-op otherwise).
+
+        Guard: blocks deleting the workspace's LAST live drive — a member must
+        always land somewhere. On a successful delete of the *active* drive,
+        we drop the pin so `current_drive` falls back to the user's next
+        oldest owned drive.
+      operationId: delete_drive_web_web_drives__drive_id__delete_post
+      parameters:
+      - explode: false
+        in: path
+        name: drive_id
+        required: true
+        schema:
+          title: Drive Id
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Body_delete_drive_web_web_drives__drive_id__delete_post"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Delete Drive Web
+  /web/drives/{drive_id}/keys/rotate:
+    post:
+      description: |-
+        Rotate a specific owned drive's `ad_live_` key + reveal once
+        (workspaces-design §5.6). Owner-only (no-leak no-op otherwise).
+
+        The per-drive twin of `/web/keys/rotate` (which acts on the active
+        drive). Pins the rotated drive active so the reveal on the api-keys
+        tab shows the key for the drive the user just rotated.
+      operationId: rotate_drive_key_web_web_drives__drive_id__keys_rotate_post
+      parameters:
+      - explode: false
+        in: path
+        name: drive_id
+        required: true
+        schema:
+          title: Drive Id
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Body_rotate_drive_key_web_web_drives__drive_id__keys_rotate_post"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Rotate Drive Key Web
   /web/keys/rotate:
     post:
       operationId: rotate_key_web_keys_rotate_post
@@ -4470,6 +5294,66 @@ paths:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
       summary: Delete Key
+  /web/tokens/create:
+    post:
+      description: |-
+        Mint an `ad_user_` user-identity token (workspaces-design §5.2, §5.6).
+
+        **Web-only minting**: the bootstrap chicken-and-egg is solved here,
+        and a leaked token must not be able to mint persistent siblings — so
+        this path exists only behind the browser session + CSRF, never over
+        the `/v0/` API.
+
+        The raw token is shown ONCE via `reveal_token` in the session, then
+        consumed on the next GET of the api-keys tab.
+      operationId: create_user_token_web_tokens_create_post
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Body_create_user_token_web_tokens_create_post"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Create User Token
+  /web/tokens/revoke:
+    post:
+      description: |-
+        Revoke one of the caller's `ad_user_` tokens.
+
+        Ownership is enforced inside `user_tokens.revoke(token_id, user_id)`
+        — the form's `token_id` is attacker-controllable, so we never revoke
+        by id alone. A non-matching id is a silent no-op (same redirect).
+      operationId: revoke_user_token_web_tokens_revoke_post
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Body_revoke_user_token_web_tokens_revoke_post"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Revoke User Token
   /web/account/delete:
     post:
       description: |-
@@ -4506,6 +5390,354 @@ paths:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
       summary: Delete Account
+  /settings/workspace:
+    get:
+      description: |-
+        Standalone workspace settings page (decision O4): members list +
+        pending invites + invite form + role change + remove.
+
+        Admin-gated for the management actions; a member sees the roster but no
+        management controls (the template hides them unless `is_admin`). The
+        active workspace is the session's `active_organization_id`.
+      operationId: settings_workspace_settings_workspace_get
+      responses:
+        "200":
+          content:
+            text/html:
+              schema:
+                type: string
+          description: Successful Response
+      summary: Settings Workspace
+  /web/members/invite:
+    post:
+      description: |-
+        Admin invites a person by email (workspaces-design §4.4). Sends the
+        invite email via the e2a lane. Admin-only; a non-admin is bounced.
+
+        Rename-on-first-invite (workspaces-design §4.6): a single-member workspace
+        still carries its onboarding default name. The invite form offers an
+        optional `workspace_name` — a LIGHT prompt, not a gate. If non-empty, we
+        rename the workspace in the SAME submit (before sending) so teammates land
+        in a named workspace, not "Someone's Drive".
+      operationId: invite_member_web_web_members_invite_post
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Body_invite_member_web_web_members_invite_post"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Invite Member Web
+  /web/members/{target_user_id}/role:
+    post:
+      description: |-
+        Admin promotes/demotes a member. Last-admin demote is blocked
+        (workspaces-design §4.4).
+      operationId: set_member_role_web_web_members__target_user_id__role_post
+      parameters:
+      - explode: false
+        in: path
+        name: target_user_id
+        required: true
+        schema:
+          title: Target User Id
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Body_set_member_role_web_web_members__target_user_id__role_post"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Set Member Role Web
+  /web/members/{target_user_id}/remove:
+    post:
+      description: |-
+        Remove a member (admin) or self-leave (any member). Soft-deletes the
+        member's owned drives in that workspace (workspaces-design §4.4). The
+        sole-admin-with-members case is blocked (promote-or-delete).
+
+        Org scoping: defaults to the session's active workspace. The "Your
+        workspaces" list passes an explicit `organization_id` so a user can
+        Leave a NON-active workspace too — authorized against THAT org's
+        standing (self-leave for any member there; admin to remove others).
+        A forged/non-member org id is a no-leak forbidden.
+
+        Auth: gates on `current_user` + per-org standing, NOT `current_drive`
+        (a driveless member of the target workspace must still be able to
+        leave it). Attribution uses the user's email.
+      operationId: remove_member_web_web_members__target_user_id__remove_post
+      parameters:
+      - explode: false
+        in: path
+        name: target_user_id
+        required: true
+        schema:
+          title: Target User Id
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Body_remove_member_web_web_members__target_user_id__remove_post"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Remove Member Web
+  /web/invitations/{invitation_id}/revoke:
+    post:
+      description: "Admin revokes a pending invite (org-scoped, no-leak)."
+      operationId: revoke_invitation_web_web_invitations__invitation_id__revoke_post
+      parameters:
+      - explode: false
+        in: path
+        name: invitation_id
+        required: true
+        schema:
+          title: Invitation Id
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Body_revoke_invitation_web_web_invitations__invitation_id__revoke_post"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Revoke Invitation Web
+  /web/invitations/{invitation_id}/resend:
+    post:
+      description: Admin re-mints + re-emails a pending invite (workspaces-design
+        §8).
+      operationId: resend_invitation_web_web_invitations__invitation_id__resend_post
+      parameters:
+      - explode: false
+        in: path
+        name: invitation_id
+        required: true
+        schema:
+          title: Invitation Id
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Body_resend_invitation_web_web_invitations__invitation_id__resend_post"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Resend Invitation Web
+  /web/workspaces:
+    post:
+      description: |-
+        Create a new workspace, set it active, reveal its starter key once
+        (workspaces-design §4.7).
+
+        The web (session+CSRF) twin of `POST /v0/workspaces`. A user may
+        administer at most a fixed number of workspaces (`core.entitlements.
+        can_create_workspace`, a hard cap — §4.7/O2); a blocked create bounces to
+        the dashboard with a limit-reached affordance (`?err=workspace_limit`)
+        rather than silently allowing. On success the new workspace + its starter
+        drive become active and we land on the api-keys tab so the user sees the
+        one-time key reveal.
+      operationId: create_workspace_web_web_workspaces_post
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Body_create_workspace_web_web_workspaces_post"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Create Workspace Web
+  /web/workspaces/{org_id}/rename:
+    post:
+      description: |-
+        Rename a workspace the caller administers (workspaces-design §4.6).
+
+        Admin-gated against the PATH org (not just the session) so a stale cookie
+        can't redirect the rename. A non-admin / non-member is a no-leak no-op.
+      operationId: rename_workspace_web_web_workspaces__org_id__rename_post
+      parameters:
+      - explode: false
+        in: path
+        name: org_id
+        required: true
+        schema:
+          title: Org Id
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Body_rename_workspace_web_web_workspaces__org_id__rename_post"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Rename Workspace Web
+  /web/workspaces/{org_id}/delete:
+    post:
+      description: |-
+        Explicit delete-workspace path (workspaces-design §4.4): a sole admin
+        who can't leave (members remain) may instead destroy the workspace —
+        cascade soft-delete the org + all its live drives.
+
+        Admin-gated against the PATH org (not just the session) so a stale
+        cookie can't redirect the cascade. A non-admin is a no-leak no-op.
+
+        **Typed confirmation required** (parallel to `delete_account`'s
+        `confirm == "DELETE"`): this cascade soft-deletes the WHOLE workspace
+        plus every member's drives in it, so a single mis-clicked CSRF POST must
+        not be able to trigger it. The caller must type either the literal
+        `DELETE` or the exact workspace name; anything else bounces with no
+        cascade. (Restricting to sole-admin is a separate product question,
+        flagged to the user — not changed here.)
+      operationId: delete_workspace_web_web_workspaces__org_id__delete_post
+      parameters:
+      - explode: false
+        in: path
+        name: org_id
+        required: true
+        schema:
+          title: Org Id
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Body_delete_workspace_web_web_workspaces__org_id__delete_post"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Delete Workspace Web
+  /invitations/{token}:
+    get:
+      description: |-
+        Accept a workspace invitation (workspaces-design §4.4). Top-level
+        route — deliberately OFF the reserved single-letter prefixes
+        (`/a /f /s /v /_`).
+
+        If the visitor isn't signed in, bounce through `/auth/login` with a
+        same-origin `return_to` back here (the login flow validates return_to,
+        so the path is safe). Once signed in, validate + accept:
+          * email mismatch / expired / revoked / unknown → friendly error page,
+          * success → join the workspace, set it active, land on the dashboard.
+      operationId: accept_invitation_invitations__token__get
+      parameters:
+      - explode: false
+        in: path
+        name: token
+        required: true
+        schema:
+          title: Token
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            text/html:
+              schema:
+                description: Restore at this path instead of the original. Soft-deletes
+                  the live occupant at the original path with audit `metadata.cause='restore_conflict_rename'`.
+                  Mutually exclusive with `overwrite`.
+                nullable: true
+                type: string
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Accept Invitation
   /web/account/indexing:
     post:
       description: |-
@@ -5074,6 +6306,7 @@ components:
         drive_id: drive_id
         path: path
         url: url
+        permalink: permalink
         content_type: content_type
         file_type: file_type
         size_bytes: 0
@@ -5103,6 +6336,9 @@ components:
           type: string
         url:
           title: Url
+          type: string
+        permalink:
+          title: Permalink
           type: string
         content_type:
           title: Content Type
@@ -5162,6 +6398,7 @@ components:
       - hash
       - id
       - path
+      - permalink
       - size_bytes
       - updated_at
       - url
@@ -5214,6 +6451,46 @@ components:
       - csrf
       - user_code
       title: Body_claim_complete_agent_identity_claim_complete_post
+    Body_create_drive_web_web_drives_post:
+      properties:
+        name:
+          title: Name
+          type: string
+        csrf:
+          title: Csrf
+          type: string
+      required:
+      - csrf
+      - name
+      title: Body_create_drive_web_web_drives_post
+    Body_create_user_token_web_tokens_create_post:
+      properties:
+        label:
+          default: ""
+          title: Label
+          type: string
+        scope:
+          default: full
+          title: Scope
+          type: string
+        csrf:
+          title: Csrf
+          type: string
+      required:
+      - csrf
+      title: Body_create_user_token_web_tokens_create_post
+    Body_create_workspace_web_web_workspaces_post:
+      properties:
+        name:
+          title: Name
+          type: string
+        csrf:
+          title: Csrf
+          type: string
+      required:
+      - csrf
+      - name
+      title: Body_create_workspace_web_web_workspaces_post
     Body_delete_account_web_account_delete_post:
       properties:
         confirm:
@@ -5226,6 +6503,14 @@ components:
       - confirm
       - csrf
       title: Body_delete_account_web_account_delete_post
+    Body_delete_drive_web_web_drives__drive_id__delete_post:
+      properties:
+        csrf:
+          title: Csrf
+          type: string
+      required:
+      - csrf
+      title: Body_delete_drive_web_web_drives__drive_id__delete_post
     Body_delete_key_web_keys_delete_post:
       properties:
         csrf:
@@ -5234,6 +6519,18 @@ components:
       required:
       - csrf
       title: Body_delete_key_web_keys_delete_post
+    Body_delete_workspace_web_web_workspaces__org_id__delete_post:
+      properties:
+        confirm:
+          default: ""
+          title: Confirm
+          type: string
+        csrf:
+          title: Csrf
+          type: string
+      required:
+      - csrf
+      title: Body_delete_workspace_web_web_workspaces__org_id__delete_post
     Body_feedback_submit_feedback_post:
       properties:
         category:
@@ -5265,6 +6562,26 @@ components:
       required:
       - csrf
       title: Body_feedback_submit_feedback_post
+    Body_invite_member_web_web_members_invite_post:
+      properties:
+        email:
+          title: Email
+          type: string
+        role:
+          default: member
+          title: Role
+          type: string
+        workspace_name:
+          default: ""
+          title: Workspace Name
+          type: string
+        csrf:
+          title: Csrf
+          type: string
+      required:
+      - csrf
+      - email
+      title: Body_invite_member_web_web_members_invite_post
     Body_logout_auth_logout_post:
       properties:
         csrf:
@@ -5326,6 +6643,78 @@ components:
           title: Password
           type: string
       title: Body_redeem_share_with_password_s__share_key__post
+    Body_remove_member_web_web_members__target_user_id__remove_post:
+      properties:
+        organization_id:
+          default: ""
+          title: Organization Id
+          type: string
+        csrf:
+          title: Csrf
+          type: string
+      required:
+      - csrf
+      title: Body_remove_member_web_web_members__target_user_id__remove_post
+    Body_rename_drive_web_web_drives__drive_id__rename_post:
+      properties:
+        name:
+          title: Name
+          type: string
+        csrf:
+          title: Csrf
+          type: string
+      required:
+      - csrf
+      - name
+      title: Body_rename_drive_web_web_drives__drive_id__rename_post
+    Body_rename_workspace_web_web_workspaces__org_id__rename_post:
+      properties:
+        name:
+          title: Name
+          type: string
+        csrf:
+          title: Csrf
+          type: string
+      required:
+      - csrf
+      - name
+      title: Body_rename_workspace_web_web_workspaces__org_id__rename_post
+    Body_resend_invitation_web_web_invitations__invitation_id__resend_post:
+      properties:
+        csrf:
+          title: Csrf
+          type: string
+      required:
+      - csrf
+      title: Body_resend_invitation_web_web_invitations__invitation_id__resend_post
+    Body_revoke_invitation_web_web_invitations__invitation_id__revoke_post:
+      properties:
+        csrf:
+          title: Csrf
+          type: string
+      required:
+      - csrf
+      title: Body_revoke_invitation_web_web_invitations__invitation_id__revoke_post
+    Body_revoke_user_token_web_tokens_revoke_post:
+      properties:
+        token_id:
+          title: Token Id
+          type: string
+        csrf:
+          title: Csrf
+          type: string
+      required:
+      - csrf
+      - token_id
+      title: Body_revoke_user_token_web_tokens_revoke_post
+    Body_rotate_drive_key_web_web_drives__drive_id__keys_rotate_post:
+      properties:
+        csrf:
+          title: Csrf
+          type: string
+      required:
+      - csrf
+      title: Body_rotate_drive_key_web_web_drives__drive_id__keys_rotate_post
     Body_rotate_key_web_keys_rotate_post:
       properties:
         csrf:
@@ -5334,9 +6723,26 @@ components:
       required:
       - csrf
       title: Body_rotate_key_web_keys_rotate_post
-    Body_switch_org_web_switch_org_post:
+    Body_set_member_role_web_web_members__target_user_id__role_post:
       properties:
+        role:
+          title: Role
+          type: string
+        csrf:
+          title: Csrf
+          type: string
+      required:
+      - csrf
+      - role
+      title: Body_set_member_role_web_web_members__target_user_id__role_post
+    Body_switch_drive_web_switch_post:
+      properties:
+        drive_id:
+          default: ""
+          title: Drive Id
+          type: string
         organization_id:
+          default: ""
           title: Organization Id
           type: string
         csrf:
@@ -5344,8 +6750,7 @@ components:
           type: string
       required:
       - csrf
-      - organization_id
-      title: Body_switch_org_web_switch_org_post
+      title: Body_switch_drive_web_switch_post
     Body_toggle_indexing_web_account_indexing_post:
       properties:
         enabled:
@@ -5686,6 +7091,16 @@ components:
       required:
       - path
       title: CopyIn
+    DescribeIn:
+      example:
+        dataset: dataset
+      properties:
+        dataset:
+          title: Dataset
+          type: string
+      required:
+      - dataset
+      title: DescribeIn
     DownloadUrlOut:
       description: |-
         A URL the caller can GET to fetch the artifact's bytes.
@@ -5729,6 +7144,174 @@ components:
       - filename
       - size_bytes
       title: DownloadUrlOut
+    DriveCreateIn:
+      description: |-
+        POST /v0/drives body. `name` is the user-facing drive label; the
+        creator becomes the owner.
+      example:
+        name: name
+      properties:
+        name:
+          maxLength: 120
+          minLength: 1
+          title: Name
+          type: string
+      required:
+      - name
+      title: DriveCreateIn
+    DriveCreateOut:
+      description: |-
+        The create response — the ONLY place (besides key-rotate) a raw
+        `ad_live_` key is returned, reveal-once.
+      example:
+        id: id
+        name: name
+        organization_id: organization_id
+        owner_user_id: owner_user_id
+        owner_email: owner_email
+        storage_bytes: 0
+        created_at: 2000-01-23T04:56:07.000+00:00
+        api_key: api_key
+      properties:
+        id:
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        organization_id:
+          title: Organization Id
+          type: string
+        owner_user_id:
+          nullable: true
+          type: string
+        owner_email:
+          nullable: true
+          type: string
+        storage_bytes:
+          title: Storage Bytes
+          type: integer
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        api_key:
+          title: Api Key
+          type: string
+      required:
+      - api_key
+      - created_at
+      - id
+      - name
+      - organization_id
+      - owner_email
+      - owner_user_id
+      - storage_bytes
+      title: DriveCreateOut
+    DriveKeyRotateOut:
+      description: |-
+        POST /v0/drives/{id}/keys/rotate response — the rotated drive's new
+        `ad_live_` key, reveal-once. The old key is invalidated immediately.
+      example:
+        id: id
+        api_key: api_key
+      properties:
+        id:
+          title: Id
+          type: string
+        api_key:
+          title: Api Key
+          type: string
+      required:
+      - api_key
+      - id
+      title: DriveKeyRotateOut
+    DriveList:
+      example:
+        items:
+        - id: id
+          name: name
+          organization_id: organization_id
+          owner_user_id: owner_user_id
+          owner_email: owner_email
+          storage_bytes: 0
+          created_at: 2000-01-23T04:56:07.000+00:00
+        - id: id
+          name: name
+          organization_id: organization_id
+          owner_user_id: owner_user_id
+          owner_email: owner_email
+          storage_bytes: 0
+          created_at: 2000-01-23T04:56:07.000+00:00
+      properties:
+        items:
+          items:
+            $ref: "#/components/schemas/DriveOut"
+          title: Items
+          type: array
+          default: null
+      required:
+      - items
+      title: DriveList
+    DriveOut:
+      description: |-
+        One drive in a listing — metadata only (workspaces-design §4.2).
+        Carries NO capability and NEVER a raw key. An admin's inventory and a
+        member's owned list both serialize to this shape; `owner_email` is the
+        only owner-identifying field surfaced.
+      example:
+        id: id
+        name: name
+        organization_id: organization_id
+        owner_user_id: owner_user_id
+        owner_email: owner_email
+        storage_bytes: 0
+        created_at: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        organization_id:
+          title: Organization Id
+          type: string
+        owner_user_id:
+          nullable: true
+          type: string
+        owner_email:
+          nullable: true
+          type: string
+        storage_bytes:
+          title: Storage Bytes
+          type: integer
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+      required:
+      - created_at
+      - id
+      - name
+      - organization_id
+      - owner_email
+      - owner_user_id
+      - storage_bytes
+      title: DriveOut
+    DriveRenameIn:
+      description: "PATCH /v0/drives/{id} body — rename a drive the caller owns."
+      example:
+        name: name
+      properties:
+        name:
+          maxLength: 120
+          minLength: 1
+          title: Name
+          type: string
+      required:
+      - name
+      title: DriveRenameIn
     EventOut:
       example:
         id: id
@@ -6441,6 +8024,110 @@ components:
           type: array
           default: null
       title: HTTPValidationError
+    InvitationList:
+      example:
+        items:
+        - id: id
+          organization_id: organization_id
+          email: email
+          role: admin
+          status: pending
+          invited_by: invited_by
+          expires_at: 2000-01-23T04:56:07.000+00:00
+          created_at: 2000-01-23T04:56:07.000+00:00
+        - id: id
+          organization_id: organization_id
+          email: email
+          role: admin
+          status: pending
+          invited_by: invited_by
+          expires_at: 2000-01-23T04:56:07.000+00:00
+          created_at: 2000-01-23T04:56:07.000+00:00
+      properties:
+        items:
+          items:
+            $ref: "#/components/schemas/InvitationOut"
+          title: Items
+          type: array
+          default: null
+      required:
+      - items
+      title: InvitationList
+    InvitationOut:
+      description: |-
+        One workspace invitation — metadata only; the raw token is never
+        surfaced over the API (it lives only in the invite email).
+      example:
+        id: id
+        organization_id: organization_id
+        email: email
+        role: admin
+        status: pending
+        invited_by: invited_by
+        expires_at: 2000-01-23T04:56:07.000+00:00
+        created_at: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          title: Id
+          type: string
+        organization_id:
+          title: Organization Id
+          type: string
+        email:
+          title: Email
+          type: string
+        role:
+          enum:
+          - admin
+          - member
+          title: Role
+          type: string
+        status:
+          enum:
+          - pending
+          - accepted
+          - revoked
+          - expired
+          title: Status
+          type: string
+        invited_by:
+          nullable: true
+          type: string
+        expires_at:
+          format: date-time
+          title: Expires At
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+      required:
+      - created_at
+      - email
+      - expires_at
+      - id
+      - invited_by
+      - organization_id
+      - role
+      - status
+      title: InvitationOut
+    InviteCreateOut:
+      description: |-
+        POST /v0/members/invite response. `already_member` is True when the
+        email was already a live member (no invite created — a no-op success).
+      example:
+        invitation: ""
+        already_member: false
+      properties:
+        invitation:
+          allOf:
+          - $ref: "#/components/schemas/InvitationOut"
+          nullable: true
+        already_member:
+          default: false
+          title: Already Member
+          type: boolean
+      title: InviteCreateOut
     LinkIn:
       example:
         password: password
@@ -6454,6 +8141,128 @@ components:
           nullable: true
           type: integer
       title: LinkIn
+    LookupValuesIn:
+      example:
+        dataset: dataset
+        column: column
+        limit: 0
+      properties:
+        dataset:
+          title: Dataset
+          type: string
+        column:
+          title: Column
+          type: string
+        limit:
+          default: 50
+          title: Limit
+          type: integer
+      required:
+      - column
+      - dataset
+      title: LookupValuesIn
+    MemberInviteIn:
+      description: POST /v0/members/invite body — invite a person by email.
+      example:
+        email: email
+        role: member
+      properties:
+        email:
+          maxLength: 320
+          minLength: 3
+          title: Email
+          type: string
+        role:
+          default: member
+          enum:
+          - admin
+          - member
+          title: Role
+          type: string
+      required:
+      - email
+      title: MemberInviteIn
+    MemberList:
+      example:
+        items:
+        - user_id: user_id
+          email: email
+          first_name: first_name
+          last_name: last_name
+          role: admin
+          created_at: 2000-01-23T04:56:07.000+00:00
+        - user_id: user_id
+          email: email
+          first_name: first_name
+          last_name: last_name
+          role: admin
+          created_at: 2000-01-23T04:56:07.000+00:00
+      properties:
+        items:
+          items:
+            $ref: "#/components/schemas/MemberOut"
+          title: Items
+          type: array
+          default: null
+      required:
+      - items
+      title: MemberList
+    MemberOut:
+      description: |-
+        One live member of a workspace — metadata for the members page /
+        `GET /v0/members`.
+      example:
+        user_id: user_id
+        email: email
+        first_name: first_name
+        last_name: last_name
+        role: admin
+        created_at: 2000-01-23T04:56:07.000+00:00
+      properties:
+        user_id:
+          title: User Id
+          type: string
+        email:
+          title: Email
+          type: string
+        first_name:
+          nullable: true
+          type: string
+        last_name:
+          nullable: true
+          type: string
+        role:
+          enum:
+          - admin
+          - member
+          title: Role
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+      required:
+      - created_at
+      - email
+      - first_name
+      - last_name
+      - role
+      - user_id
+      title: MemberOut
+    MemberRoleIn:
+      description: "PATCH /v0/members/{user} body — promote/demote a member."
+      example:
+        role: admin
+      properties:
+        role:
+          enum:
+          - admin
+          - member
+          title: Role
+          type: string
+      required:
+      - role
+      title: MemberRoleIn
     Page:
       example:
         items:
@@ -6461,6 +8270,7 @@ components:
           drive_id: drive_id
           path: path
           url: url
+          permalink: permalink
           content_type: content_type
           file_type: file_type
           size_bytes: 0
@@ -6482,6 +8292,7 @@ components:
           drive_id: drive_id
           path: path
           url: url
+          permalink: permalink
           content_type: content_type
           file_type: file_type
           size_bytes: 0
@@ -6542,6 +8353,27 @@ components:
       required:
       - public
       title: PublicIn
+    QueryIn:
+      example:
+        sql: sql
+        inputs:
+          key: inputs
+        dry_run: false
+      properties:
+        sql:
+          title: Sql
+          type: string
+        inputs:
+          additionalProperties:
+            type: string
+          title: Inputs
+        dry_run:
+          default: false
+          title: Dry Run
+          type: boolean
+      required:
+      - sql
+      title: QueryIn
     RenameIn:
       description: "PATCH /v0/artifacts/{art_id} body — rename / move."
       example:
@@ -6934,6 +8766,7 @@ components:
         actor_name: actor_name
         change_summary: change_summary
         if_match: 6
+        cors_origin: cors_origin
       properties:
         path:
           title: Path
@@ -6972,6 +8805,16 @@ components:
         if_match:
           nullable: true
           type: integer
+        cors_origin:
+          description: "Web origin (scheme://host[:port]) of the browser that will\
+            \ PUT the bytes, e.g. `https://app.example.com`. Set this when the `upload_url`\
+            \ is handed to browser code: GCS binds CORS at session initiate, so the\
+            \ returned session only echoes `Access-Control-Allow-Origin` (and is thus\
+            \ PUT-able from a browser) when opened with the caller's origin. A trusted\
+            \ backend relaying a browser upload forwards the browser's `Origin` here.\
+            \ Omit for server/desktop uploads (no CORS enforcement)."
+          nullable: true
+          type: string
       required:
       - path
       - size_bytes
@@ -7019,6 +8862,98 @@ components:
       - upload_id
       - upload_url
       title: UploadBeginOut
+    UserTokenList:
+      example:
+        items:
+        - id: id
+          prefix: prefix
+          label: label
+          scope: read
+          default_drive_id: default_drive_id
+          last_used_at: 2000-01-23T04:56:07.000+00:00
+          expires_at: 2000-01-23T04:56:07.000+00:00
+          created_at: 2000-01-23T04:56:07.000+00:00
+          revoked_at: 2000-01-23T04:56:07.000+00:00
+        - id: id
+          prefix: prefix
+          label: label
+          scope: read
+          default_drive_id: default_drive_id
+          last_used_at: 2000-01-23T04:56:07.000+00:00
+          expires_at: 2000-01-23T04:56:07.000+00:00
+          created_at: 2000-01-23T04:56:07.000+00:00
+          revoked_at: 2000-01-23T04:56:07.000+00:00
+      properties:
+        items:
+          items:
+            $ref: "#/components/schemas/UserTokenOut"
+          title: Items
+          type: array
+          default: null
+      required:
+      - items
+      title: UserTokenList
+    UserTokenOut:
+      description: |-
+        One `ad_user_` token — metadata only. The raw token is NEVER
+        exposed over the API (minting is web-only, reveal-once); this shape
+        omits both the raw value and the stored hash by construction.
+      example:
+        id: id
+        prefix: prefix
+        label: label
+        scope: read
+        default_drive_id: default_drive_id
+        last_used_at: 2000-01-23T04:56:07.000+00:00
+        expires_at: 2000-01-23T04:56:07.000+00:00
+        created_at: 2000-01-23T04:56:07.000+00:00
+        revoked_at: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          title: Id
+          type: string
+        prefix:
+          title: Prefix
+          type: string
+        label:
+          nullable: true
+          type: string
+        scope:
+          enum:
+          - read
+          - full
+          title: Scope
+          type: string
+        default_drive_id:
+          nullable: true
+          type: string
+        last_used_at:
+          format: date-time
+          nullable: true
+          type: string
+        expires_at:
+          format: date-time
+          nullable: true
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        revoked_at:
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - created_at
+      - default_drive_id
+      - expires_at
+      - id
+      - label
+      - last_used_at
+      - prefix
+      - revoked_at
+      - scope
+      title: UserTokenOut
     ValidationError:
       example:
         loc:
@@ -7132,6 +9067,125 @@ components:
       required:
       - items
       title: VersionPage
+    WorkspaceCreateIn:
+      description: |-
+        POST /v0/workspaces body. `name` is the user-facing workspace label;
+        the creator becomes its admin and gets a starter drive.
+      example:
+        name: name
+      properties:
+        name:
+          maxLength: 120
+          minLength: 1
+          title: Name
+          type: string
+      required:
+      - name
+      title: WorkspaceCreateIn
+    WorkspaceCreateOut:
+      description: |-
+        POST /v0/workspaces response. Carries the new workspace + its starter
+        drive's `ad_live_` key **once** (`starter_drive_api_key`) — reveal-once,
+        store it now (rotate via `POST /v0/drives/{id}/keys/rotate`).
+      example:
+        workspace:
+          id: id
+          name: name
+          role: admin
+          tier_id: tier_id
+          created_at: 2000-01-23T04:56:07.000+00:00
+        starter_drive_id: starter_drive_id
+        starter_drive_api_key: starter_drive_api_key
+      properties:
+        workspace:
+          $ref: "#/components/schemas/WorkspaceOut"
+        starter_drive_id:
+          title: Starter Drive Id
+          type: string
+        starter_drive_api_key:
+          title: Starter Drive Api Key
+          type: string
+      required:
+      - starter_drive_api_key
+      - starter_drive_id
+      - workspace
+      title: WorkspaceCreateOut
+    WorkspaceList:
+      example:
+        items:
+        - id: id
+          name: name
+          role: admin
+          tier_id: tier_id
+          created_at: 2000-01-23T04:56:07.000+00:00
+        - id: id
+          name: name
+          role: admin
+          tier_id: tier_id
+          created_at: 2000-01-23T04:56:07.000+00:00
+      properties:
+        items:
+          items:
+            $ref: "#/components/schemas/WorkspaceOut"
+          title: Items
+          type: array
+          default: null
+      required:
+      - items
+      title: WorkspaceList
+    WorkspaceOut:
+      description: |-
+        One workspace in a listing — metadata only. `role` is the CALLER's
+        role in it (admin/member), so a client can render management affordances
+        without a second round-trip.
+      example:
+        id: id
+        name: name
+        role: admin
+        tier_id: tier_id
+        created_at: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        role:
+          enum:
+          - admin
+          - member
+          title: Role
+          type: string
+        tier_id:
+          title: Tier Id
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+      required:
+      - created_at
+      - id
+      - name
+      - role
+      - tier_id
+      title: WorkspaceOut
+    WorkspaceRenameIn:
+      description: |-
+        PATCH /v0/workspaces/{org} body — rename a workspace the caller
+        administers.
+      example:
+        name: name
+      properties:
+        name:
+          maxLength: 120
+          minLength: 1
+          title: Name
+          type: string
+      required:
+      - name
+      title: WorkspaceRenameIn
     Location_inner:
       anyOf:
       - type: string

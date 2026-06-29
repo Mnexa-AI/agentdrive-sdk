@@ -26,6 +26,13 @@ class TestDefaultApi(unittest.TestCase):
     def tearDown(self) -> None:
         pass
 
+    def test_accept_invitation_invitations_token_get(self) -> None:
+        """Test case for accept_invitation_invitations_token_get
+
+        Accept Invitation
+        """
+        pass
+
     def test_activity_feed_activity_get(self) -> None:
         """Test case for activity_feed_activity_get
 
@@ -96,6 +103,13 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_create_drive_web_web_drives_post(self) -> None:
+        """Test case for create_drive_web_web_drives_post
+
+        Create Drive Web
+        """
+        pass
+
     def test_create_folder_by_path_v0_folders_path_post(self) -> None:
         """Test case for create_folder_by_path_v0_folders_path_post
 
@@ -121,6 +135,20 @@ class TestDefaultApi(unittest.TestCase):
         """Test case for create_share_route_v0_shares_post
 
         Mint a share link (returns the share_key once)
+        """
+        pass
+
+    def test_create_user_token_web_tokens_create_post(self) -> None:
+        """Test case for create_user_token_web_tokens_create_post
+
+        Create User Token
+        """
+        pass
+
+    def test_create_workspace_web_web_workspaces_post(self) -> None:
+        """Test case for create_workspace_web_web_workspaces_post
+
+        Create Workspace Web
         """
         pass
 
@@ -169,7 +197,14 @@ class TestDefaultApi(unittest.TestCase):
     def test_delete_drive_route_v0_drives_drive_id_delete(self) -> None:
         """Test case for delete_drive_route_v0_drives_drive_id_delete
 
-        Soft-delete the authenticated drive
+        Soft-delete a drive
+        """
+        pass
+
+    def test_delete_drive_web_web_drives_drive_id_delete_post(self) -> None:
+        """Test case for delete_drive_web_web_drives_drive_id_delete_post
+
+        Delete Drive Web
         """
         pass
 
@@ -205,6 +240,13 @@ class TestDefaultApi(unittest.TestCase):
         """Test case for delete_share_route_v0_shares_shr_id_delete
 
         Revoke a share link (requires can_manage)
+        """
+        pass
+
+    def test_delete_workspace_web_web_workspaces_org_id_delete_post(self) -> None:
+        """Test case for delete_workspace_web_web_workspaces_org_id_delete_post
+
+        Delete Workspace Web
         """
         pass
 
@@ -383,6 +425,13 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_invite_member_web_web_members_invite_post(self) -> None:
+        """Test case for invite_member_web_web_members_invite_post
+
+        Invite Member Web
+        """
+        pass
+
     def test_list_artifact_versions_v0_artifacts_art_id_versions_get(self) -> None:
         """Test case for list_artifact_versions_v0_artifacts_art_id_versions_get
 
@@ -523,10 +572,31 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_post_describe_v0_query_describe_post(self) -> None:
+        """Test case for post_describe_v0_query_describe_post
+
+        Describe a dataset's column schema
+        """
+        pass
+
     def test_post_feedback_v0_feedback_post(self) -> None:
         """Test case for post_feedback_v0_feedback_post
 
         Post Feedback
+        """
+        pass
+
+    def test_post_lookup_values_v0_query_lookup_values_post(self) -> None:
+        """Test case for post_lookup_values_v0_query_lookup_values_post
+
+        List distinct values of a dataset column
+        """
+        pass
+
+    def test_post_query_v0_query_post(self) -> None:
+        """Test case for post_query_v0_query_post
+
+        Run a read-only SQL query over authorized datasets
         """
         pass
 
@@ -607,10 +677,38 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_remove_member_web_web_members_target_user_id_remove_post(self) -> None:
+        """Test case for remove_member_web_web_members_target_user_id_remove_post
+
+        Remove Member Web
+        """
+        pass
+
     def test_rename_artifact_route_v0_artifacts_art_id_patch(self) -> None:
         """Test case for rename_artifact_route_v0_artifacts_art_id_patch
 
         Rename / move an artifact to a new path
+        """
+        pass
+
+    def test_rename_drive_web_web_drives_drive_id_rename_post(self) -> None:
+        """Test case for rename_drive_web_web_drives_drive_id_rename_post
+
+        Rename Drive Web
+        """
+        pass
+
+    def test_rename_workspace_web_web_workspaces_org_id_rename_post(self) -> None:
+        """Test case for rename_workspace_web_web_workspaces_org_id_rename_post
+
+        Rename Workspace Web
+        """
+        pass
+
+    def test_resend_invitation_web_web_invitations_invitation_id_resend_post(self) -> None:
+        """Test case for resend_invitation_web_web_invitations_invitation_id_resend_post
+
+        Resend Invitation Web
         """
         pass
 
@@ -635,10 +733,31 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_revoke_invitation_web_web_invitations_invitation_id_revoke_post(self) -> None:
+        """Test case for revoke_invitation_web_web_invitations_invitation_id_revoke_post
+
+        Revoke Invitation Web
+        """
+        pass
+
     def test_revoke_link_web_share_rid_link_shr_id_revoke_post(self) -> None:
         """Test case for revoke_link_web_share_rid_link_shr_id_revoke_post
 
         Revoke Link
+        """
+        pass
+
+    def test_revoke_user_token_web_tokens_revoke_post(self) -> None:
+        """Test case for revoke_user_token_web_tokens_revoke_post
+
+        Revoke User Token
+        """
+        pass
+
+    def test_rotate_drive_key_web_web_drives_drive_id_keys_rotate_post(self) -> None:
+        """Test case for rotate_drive_key_web_web_drives_drive_id_keys_rotate_post
+
+        Rotate Drive Key Web
         """
         pass
 
@@ -660,6 +779,13 @@ class TestDefaultApi(unittest.TestCase):
         """Test case for search_v0_search_get
 
         Full-text search over artifacts in the drive
+        """
+        pass
+
+    def test_set_member_role_web_web_members_target_user_id_role_post(self) -> None:
+        """Test case for set_member_role_web_web_members_target_user_id_role_post
+
+        Set Member Role Web
         """
         pass
 
@@ -698,10 +824,10 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
-    def test_settings_usage_settings_usage_get(self) -> None:
-        """Test case for settings_usage_settings_usage_get
+    def test_settings_workspace_settings_workspace_get(self) -> None:
+        """Test case for settings_workspace_settings_workspace_get
 
-        Settings Usage
+        Settings Workspace
         """
         pass
 
@@ -719,10 +845,10 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
-    def test_switch_org_web_switch_org_post(self) -> None:
-        """Test case for switch_org_web_switch_org_post
+    def test_switch_drive_web_switch_post(self) -> None:
+        """Test case for switch_drive_web_switch_post
 
-        Switch Org
+        Switch Drive
         """
         pass
 

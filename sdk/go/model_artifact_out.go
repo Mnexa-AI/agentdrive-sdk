@@ -26,6 +26,7 @@ type ArtifactOut struct {
 	DriveId string `json:"drive_id"`
 	Path string `json:"path"`
 	Url string `json:"url"`
+	Permalink string `json:"permalink"`
 	ContentType string `json:"content_type"`
 	FileType string `json:"file_type"`
 	SizeBytes int32 `json:"size_bytes"`
@@ -47,12 +48,13 @@ type _ArtifactOut ArtifactOut
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewArtifactOut(id string, driveId string, path string, url string, contentType string, fileType string, sizeBytes int32, hash string, createdAt time.Time, updatedAt time.Time) *ArtifactOut {
+func NewArtifactOut(id string, driveId string, path string, url string, permalink string, contentType string, fileType string, sizeBytes int32, hash string, createdAt time.Time, updatedAt time.Time) *ArtifactOut {
 	this := ArtifactOut{}
 	this.Id = id
 	this.DriveId = driveId
 	this.Path = path
 	this.Url = url
+	this.Permalink = permalink
 	this.ContentType = contentType
 	this.FileType = fileType
 	this.SizeBytes = sizeBytes
@@ -168,6 +170,30 @@ func (o *ArtifactOut) GetUrlOk() (*string, bool) {
 // SetUrl sets field value
 func (o *ArtifactOut) SetUrl(v string) {
 	o.Url = v
+}
+
+// GetPermalink returns the Permalink field value
+func (o *ArtifactOut) GetPermalink() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Permalink
+}
+
+// GetPermalinkOk returns a tuple with the Permalink field value
+// and a boolean to check if the value has been set.
+func (o *ArtifactOut) GetPermalinkOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Permalink, true
+}
+
+// SetPermalink sets field value
+func (o *ArtifactOut) SetPermalink(v string) {
+	o.Permalink = v
 }
 
 // GetContentType returns the ContentType field value
@@ -583,6 +609,7 @@ func (o ArtifactOut) ToMap() (map[string]interface{}, error) {
 	toSerialize["drive_id"] = o.DriveId
 	toSerialize["path"] = o.Path
 	toSerialize["url"] = o.Url
+	toSerialize["permalink"] = o.Permalink
 	toSerialize["content_type"] = o.ContentType
 	toSerialize["file_type"] = o.FileType
 	toSerialize["size_bytes"] = o.SizeBytes
@@ -622,6 +649,7 @@ func (o *ArtifactOut) UnmarshalJSON(data []byte) (err error) {
 		"drive_id",
 		"path",
 		"url",
+		"permalink",
 		"content_type",
 		"file_type",
 		"size_bytes",

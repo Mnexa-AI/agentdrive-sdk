@@ -39,7 +39,8 @@ class UploadBeginIn(BaseModel):
     actor_name: Optional[StrictStr] = None
     change_summary: Optional[StrictStr] = None
     if_match: Optional[StrictInt] = None
-    __properties: ClassVar[List[str]] = ["path", "content_type", "size_bytes", "crc32c", "labels", "metadata", "source", "actor_name", "change_summary", "if_match"]
+    cors_origin: Optional[StrictStr] = Field(default=None, description="Web origin (scheme://host[:port]) of the browser that will PUT the bytes, e.g. `https://app.example.com`. Set this when the `upload_url` is handed to browser code: GCS binds CORS at session initiate, so the returned session only echoes `Access-Control-Allow-Origin` (and is thus PUT-able from a browser) when opened with the caller's origin. A trusted backend relaying a browser upload forwards the browser's `Origin` here. Omit for server/desktop uploads (no CORS enforcement).")
+    __properties: ClassVar[List[str]] = ["path", "content_type", "size_bytes", "crc32c", "labels", "metadata", "source", "actor_name", "change_summary", "if_match", "cors_origin"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -118,6 +119,11 @@ class UploadBeginIn(BaseModel):
         if self.if_match is None and "if_match" in self.model_fields_set:
             _dict['if_match'] = None
 
+        # set to None if cors_origin (nullable) is None
+        # and model_fields_set contains the field
+        if self.cors_origin is None and "cors_origin" in self.model_fields_set:
+            _dict['cors_origin'] = None
+
         return _dict
 
     @classmethod
@@ -139,7 +145,8 @@ class UploadBeginIn(BaseModel):
             "source": ArtifactSource.from_dict(obj["source"]) if obj.get("source") is not None else None,
             "actor_name": obj.get("actor_name"),
             "change_summary": obj.get("change_summary"),
-            "if_match": obj.get("if_match")
+            "if_match": obj.get("if_match"),
+            "cors_origin": obj.get("cors_origin")
         })
         return _obj
 

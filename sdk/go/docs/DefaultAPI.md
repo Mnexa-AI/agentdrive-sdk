@@ -4,6 +4,7 @@ All URIs are relative to *https://api.agentdrive.run*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**AcceptInvitationInvitationsTokenGet**](DefaultAPI.md#AcceptInvitationInvitationsTokenGet) | **Get** /invitations/{token} | Accept Invitation
 [**ActivityFeedActivityGet**](DefaultAPI.md#ActivityFeedActivityGet) | **Get** /activity | Activity Feed
 [**AddGrantWebShareRidGrantPost**](DefaultAPI.md#AddGrantWebShareRidGrantPost) | **Post** /web/share/{rid}/grant | Add Grant
 [**ArtifactDetailPreviewPreviewArtifactDetailGet**](DefaultAPI.md#ArtifactDetailPreviewPreviewArtifactDetailGet) | **Get** /preview/artifact-detail | Artifact Detail Preview
@@ -14,22 +15,27 @@ Method | HTTP request | Description
 [**CommitUploadV0UploadsUploadIdCommitPost**](DefaultAPI.md#CommitUploadV0UploadsUploadIdCommitPost) | **Post** /v0/uploads/{upload_id}/commit | Commit a large (direct-to-GCS) upload
 [**ConnectorsPageConnectorsGet**](DefaultAPI.md#ConnectorsPageConnectorsGet) | **Get** /connectors | Connectors Page
 [**CopyArtifactRouteV0ArtifactsArtIdCopyPost**](DefaultAPI.md#CopyArtifactRouteV0ArtifactsArtIdCopyPost) | **Post** /v0/artifacts/{art_id}/copy | Duplicate an artifact to a new path (CAS-shared, new ID)
+[**CreateDriveWebWebDrivesPost**](DefaultAPI.md#CreateDriveWebWebDrivesPost) | **Post** /web/drives | Create Drive Web
 [**CreateFolderByPathV0FoldersPathPost**](DefaultAPI.md#CreateFolderByPathV0FoldersPathPost) | **Post** /v0/folders/{path} | Create a folder (idempotent)
 [**CreateGrantRouteV0GrantsPost**](DefaultAPI.md#CreateGrantRouteV0GrantsPost) | **Post** /v0/grants | Create (or fetch) a per-principal grant on a resource
 [**CreateLinkWebShareRidLinkPost**](DefaultAPI.md#CreateLinkWebShareRidLinkPost) | **Post** /web/share/{rid}/link | Create Link
 [**CreateShareRouteV0SharesPost**](DefaultAPI.md#CreateShareRouteV0SharesPost) | **Post** /v0/shares | Mint a share link (returns the share_key once)
+[**CreateUserTokenWebTokensCreatePost**](DefaultAPI.md#CreateUserTokenWebTokensCreatePost) | **Post** /web/tokens/create | Create User Token
+[**CreateWorkspaceWebWebWorkspacesPost**](DefaultAPI.md#CreateWorkspaceWebWebWorkspacesPost) | **Post** /web/workspaces | Create Workspace Web
 [**DangerZoneOldDashboardDangerGet**](DefaultAPI.md#DangerZoneOldDashboardDangerGet) | **Get** /dashboard/danger | Danger Zone Old
 [**DangerZoneSettingsDangerGet**](DefaultAPI.md#DangerZoneSettingsDangerGet) | **Get** /settings/danger | Danger Zone
 [**DashboardDashboardGet**](DefaultAPI.md#DashboardDashboardGet) | **Get** /dashboard | Dashboard
 [**DeleteAccountWebAccountDeletePost**](DefaultAPI.md#DeleteAccountWebAccountDeletePost) | **Post** /web/account/delete | Delete Account
 [**DeleteArtifactByIdRouteV0ArtifactsArtIdDelete**](DefaultAPI.md#DeleteArtifactByIdRouteV0ArtifactsArtIdDelete) | **Delete** /v0/artifacts/{art_id} | Soft-delete an artifact by its stable ID
 [**DeleteArtifactV0ArtifactsPathDelete**](DefaultAPI.md#DeleteArtifactV0ArtifactsPathDelete) | **Delete** /v0/artifacts/{path} | Delete Artifact
-[**DeleteDriveRouteV0DrivesDriveIdDelete**](DefaultAPI.md#DeleteDriveRouteV0DrivesDriveIdDelete) | **Delete** /v0/drives/{drive_id} | Soft-delete the authenticated drive
+[**DeleteDriveRouteV0DrivesDriveIdDelete**](DefaultAPI.md#DeleteDriveRouteV0DrivesDriveIdDelete) | **Delete** /v0/drives/{drive_id} | Soft-delete a drive
+[**DeleteDriveWebWebDrivesDriveIdDeletePost**](DefaultAPI.md#DeleteDriveWebWebDrivesDriveIdDeletePost) | **Post** /web/drives/{drive_id}/delete | Delete Drive Web
 [**DeleteFolderByIdV0FoldersFldIdDelete**](DefaultAPI.md#DeleteFolderByIdV0FoldersFldIdDelete) | **Delete** /v0/folders/{fld_id} | Soft-delete a folder by stable ID (cascade with ?recursive&#x3D;true)
 [**DeleteFolderByPathV0FoldersPathDelete**](DefaultAPI.md#DeleteFolderByPathV0FoldersPathDelete) | **Delete** /v0/folders/{path} | Soft-delete a folder (cascade with ?recursive&#x3D;true)
 [**DeleteGrantRouteV0GrantsGrnIdDelete**](DefaultAPI.md#DeleteGrantRouteV0GrantsGrnIdDelete) | **Delete** /v0/grants/{grn_id} | Revoke a grant (can_manage, or self-revoke own grant)
 [**DeleteKeyWebKeysDeletePost**](DefaultAPI.md#DeleteKeyWebKeysDeletePost) | **Post** /web/keys/delete | Delete Key
 [**DeleteShareRouteV0SharesShrIdDelete**](DefaultAPI.md#DeleteShareRouteV0SharesShrIdDelete) | **Delete** /v0/shares/{shr_id} | Revoke a share link (requires can_manage)
+[**DeleteWorkspaceWebWebWorkspacesOrgIdDeletePost**](DefaultAPI.md#DeleteWorkspaceWebWebWorkspacesOrgIdDeletePost) | **Post** /web/workspaces/{org_id}/delete | Delete Workspace Web
 [**DownloadArtifactByIdV0ArtifactsArtIdDownloadGet**](DefaultAPI.md#DownloadArtifactByIdV0ArtifactsArtIdDownloadGet) | **Get** /v0/artifacts/{art_id}/download | Stream the artifact bytes by stable ID (never rendered HTML)
 [**DownloadArtifactVersionV0ArtifactsArtIdVersionsVersionNumberDownloadGet**](DefaultAPI.md#DownloadArtifactVersionV0ArtifactsArtIdVersionsVersionNumberDownloadGet) | **Get** /v0/artifacts/{art_id}/versions/{version_number}/download | Stream bytes for a specific version (machine surface)
 [**DownloadUrlByIdV0ArtifactsArtIdDownloadUrlGet**](DefaultAPI.md#DownloadUrlByIdV0ArtifactsArtIdDownloadUrlGet) | **Get** /v0/artifacts/{art_id}/download-url | Signed direct-from-GCS download URL by stable ID
@@ -55,6 +61,7 @@ Method | HTTP request | Description
 [**GetProjectV0ProjectsFldIdGet**](DefaultAPI.md#GetProjectV0ProjectsFldIdGet) | **Get** /v0/projects/{fld_id} | Get a project&#39;s compile config
 [**GetShareStateWebShareRidGet**](DefaultAPI.md#GetShareStateWebShareRidGet) | **Get** /web/share/{rid} | Get Share State
 [**HealthHealthGet**](DefaultAPI.md#HealthHealthGet) | **Get** /health | Health
+[**InviteMemberWebWebMembersInvitePost**](DefaultAPI.md#InviteMemberWebWebMembersInvitePost) | **Post** /web/members/invite | Invite Member Web
 [**ListArtifactVersionsV0ArtifactsArtIdVersionsGet**](DefaultAPI.md#ListArtifactVersionsV0ArtifactsArtIdVersionsGet) | **Get** /v0/artifacts/{art_id}/versions | List versions of an artifact, newest first
 [**ListArtifactsV0ArtifactsGet**](DefaultAPI.md#ListArtifactsV0ArtifactsGet) | **Get** /v0/artifacts | List artifacts in the drive
 [**ListEventsRouteV0EventsGet**](DefaultAPI.md#ListEventsRouteV0EventsGet) | **Get** /v0/events | Read the append-only event log for the authenticated drive
@@ -75,7 +82,10 @@ Method | HTTP request | Description
 [**PatchFolderByIdV0FoldersFldIdPatch**](DefaultAPI.md#PatchFolderByIdV0FoldersFldIdPatch) | **Patch** /v0/folders/{fld_id} | Update folder metadata by stable ID
 [**PatchFolderByPathV0FoldersPathPatch**](DefaultAPI.md#PatchFolderByPathV0FoldersPathPatch) | **Patch** /v0/folders/{path} | Update folder metadata by path
 [**PatchGrantRouteV0GrantsGrnIdPatch**](DefaultAPI.md#PatchGrantRouteV0GrantsGrnIdPatch) | **Patch** /v0/grants/{grn_id} | Update a grant&#39;s role and/or expiry (requires can_manage)
+[**PostDescribeV0QueryDescribePost**](DefaultAPI.md#PostDescribeV0QueryDescribePost) | **Post** /v0/query/describe | Describe a dataset&#39;s column schema
 [**PostFeedbackV0FeedbackPost**](DefaultAPI.md#PostFeedbackV0FeedbackPost) | **Post** /v0/feedback | Post Feedback
+[**PostLookupValuesV0QueryLookupValuesPost**](DefaultAPI.md#PostLookupValuesV0QueryLookupValuesPost) | **Post** /v0/query/lookup-values | List distinct values of a dataset column
+[**PostQueryV0QueryPost**](DefaultAPI.md#PostQueryV0QueryPost) | **Post** /v0/query | Run a read-only SQL query over authorized datasets
 [**PrivacyPagePrivacyGet**](DefaultAPI.md#PrivacyPagePrivacyGet) | **Get** /privacy | Privacy Page
 [**ProjectPreviewPageFFldIdPreviewGet**](DefaultAPI.md#ProjectPreviewPageFFldIdPreviewGet) | **Get** /f/{fld_id}/preview | Project Preview Page
 [**PublisherProfilePublishersHandleGet**](DefaultAPI.md#PublisherProfilePublishersHandleGet) | **Get** /publishers/{handle} | Publisher Profile
@@ -87,23 +97,31 @@ Method | HTTP request | Description
 [**RecoveryRestoreAuthRecoveryRestorePost**](DefaultAPI.md#RecoveryRestoreAuthRecoveryRestorePost) | **Post** /auth/recovery/restore | Recovery Restore
 [**RedeemShareSShareKeyGet**](DefaultAPI.md#RedeemShareSShareKeyGet) | **Get** /s/{share_key} | Redeem Share
 [**RedeemShareWithPasswordSShareKeyPost**](DefaultAPI.md#RedeemShareWithPasswordSShareKeyPost) | **Post** /s/{share_key} | Redeem Share With Password
+[**RemoveMemberWebWebMembersTargetUserIdRemovePost**](DefaultAPI.md#RemoveMemberWebWebMembersTargetUserIdRemovePost) | **Post** /web/members/{target_user_id}/remove | Remove Member Web
 [**RenameArtifactRouteV0ArtifactsArtIdPatch**](DefaultAPI.md#RenameArtifactRouteV0ArtifactsArtIdPatch) | **Patch** /v0/artifacts/{art_id} | Rename / move an artifact to a new path
+[**RenameDriveWebWebDrivesDriveIdRenamePost**](DefaultAPI.md#RenameDriveWebWebDrivesDriveIdRenamePost) | **Post** /web/drives/{drive_id}/rename | Rename Drive Web
+[**RenameWorkspaceWebWebWorkspacesOrgIdRenamePost**](DefaultAPI.md#RenameWorkspaceWebWebWorkspacesOrgIdRenamePost) | **Post** /web/workspaces/{org_id}/rename | Rename Workspace Web
+[**ResendInvitationWebWebInvitationsInvitationIdResendPost**](DefaultAPI.md#ResendInvitationWebWebInvitationsInvitationIdResendPost) | **Post** /web/invitations/{invitation_id}/resend | Resend Invitation Web
 [**RestoreArtifactV0ArtifactsArtIdRestorePost**](DefaultAPI.md#RestoreArtifactV0ArtifactsArtIdRestorePost) | **Post** /v0/artifacts/{art_id}/restore | Restore a soft-deleted artifact
 [**RestoreDriveRouteV0DrivesDriveIdRestorePost**](DefaultAPI.md#RestoreDriveRouteV0DrivesDriveIdRestorePost) | **Post** /v0/drives/{drive_id}/restore | Restore a soft-deleted drive
 [**RevokeGrantWebShareRidGrantGrnIdRevokePost**](DefaultAPI.md#RevokeGrantWebShareRidGrantGrnIdRevokePost) | **Post** /web/share/{rid}/grant/{grn_id}/revoke | Revoke Grant
+[**RevokeInvitationWebWebInvitationsInvitationIdRevokePost**](DefaultAPI.md#RevokeInvitationWebWebInvitationsInvitationIdRevokePost) | **Post** /web/invitations/{invitation_id}/revoke | Revoke Invitation Web
 [**RevokeLinkWebShareRidLinkShrIdRevokePost**](DefaultAPI.md#RevokeLinkWebShareRidLinkShrIdRevokePost) | **Post** /web/share/{rid}/link/{shr_id}/revoke | Revoke Link
+[**RevokeUserTokenWebTokensRevokePost**](DefaultAPI.md#RevokeUserTokenWebTokensRevokePost) | **Post** /web/tokens/revoke | Revoke User Token
+[**RotateDriveKeyWebWebDrivesDriveIdKeysRotatePost**](DefaultAPI.md#RotateDriveKeyWebWebDrivesDriveIdKeysRotatePost) | **Post** /web/drives/{drive_id}/keys/rotate | Rotate Drive Key Web
 [**RotateKeyWebKeysRotatePost**](DefaultAPI.md#RotateKeyWebKeysRotatePost) | **Post** /web/keys/rotate | Rotate Key
 [**RotateShareRouteV0SharesShrIdRotatePost**](DefaultAPI.md#RotateShareRouteV0SharesShrIdRotatePost) | **Post** /v0/shares/{shr_id}/rotate | Revoke + reissue a share link&#39;s key (requires can_share)
 [**SearchV0SearchGet**](DefaultAPI.md#SearchV0SearchGet) | **Get** /v0/search | Full-text search over artifacts in the drive
+[**SetMemberRoleWebWebMembersTargetUserIdRolePost**](DefaultAPI.md#SetMemberRoleWebWebMembersTargetUserIdRolePost) | **Post** /web/members/{target_user_id}/role | Set Member Role Web
 [**SetPublicWebShareRidPublicPost**](DefaultAPI.md#SetPublicWebShareRidPublicPost) | **Post** /web/share/{rid}/public | Set Public
 [**SetSealWebShareRidSealPost**](DefaultAPI.md#SetSealWebShareRidSealPost) | **Post** /web/share/{rid}/seal | Set Seal
 [**SettingsAccountSettingsGet**](DefaultAPI.md#SettingsAccountSettingsGet) | **Get** /settings | Settings Account
 [**SettingsApiKeysSettingsApiKeysGet**](DefaultAPI.md#SettingsApiKeysSettingsApiKeysGet) | **Get** /settings/api-keys | Settings Api Keys
 [**SettingsQuickstartSettingsQuickstartGet**](DefaultAPI.md#SettingsQuickstartSettingsQuickstartGet) | **Get** /settings/quickstart | Settings Quickstart
-[**SettingsUsageSettingsUsageGet**](DefaultAPI.md#SettingsUsageSettingsUsageGet) | **Get** /settings/usage | Settings Usage
+[**SettingsWorkspaceSettingsWorkspaceGet**](DefaultAPI.md#SettingsWorkspaceSettingsWorkspaceGet) | **Get** /settings/workspace | Settings Workspace
 [**SharedFilesSharedGet**](DefaultAPI.md#SharedFilesSharedGet) | **Get** /shared | Shared Files
 [**StreamUploadV0UploadTokenPut**](DefaultAPI.md#StreamUploadV0UploadTokenPut) | **Put** /v0/upload/{token} | Proxied streaming upload (via an upload_url token)
-[**SwitchOrgWebSwitchOrgPost**](DefaultAPI.md#SwitchOrgWebSwitchOrgPost) | **Post** /web/switch-org | Switch Org
+[**SwitchDriveWebSwitchPost**](DefaultAPI.md#SwitchDriveWebSwitchPost) | **Post** /web/switch | Switch Drive
 [**TermsPageTermsGet**](DefaultAPI.md#TermsPageTermsGet) | **Get** /terms | Terms Page
 [**ToggleIndexingWebAccountIndexingPost**](DefaultAPI.md#ToggleIndexingWebAccountIndexingPost) | **Post** /web/account/indexing | Toggle Indexing
 [**TrashWebTrashGet**](DefaultAPI.md#TrashWebTrashGet) | **Get** /web/trash | Trash
@@ -130,6 +148,76 @@ Method | HTTP request | Description
 [**WebhooksPageWebhooksGet**](DefaultAPI.md#WebhooksPageWebhooksGet) | **Get** /webhooks | Webhooks Page
 [**WelcomeWelcomeGet**](DefaultAPI.md#WelcomeWelcomeGet) | **Get** /welcome | Welcome
 
+
+
+## AcceptInvitationInvitationsTokenGet
+
+> string AcceptInvitationInvitationsTokenGet(ctx, token).Execute()
+
+Accept Invitation
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/Mnexa-AI/agentdrive-sdk/agentdrive"
+)
+
+func main() {
+	token := "token_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.AcceptInvitationInvitationsTokenGet(context.Background(), token).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.AcceptInvitationInvitationsTokenGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `AcceptInvitationInvitationsTokenGet`: string
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.AcceptInvitationInvitationsTokenGet`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**token** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiAcceptInvitationInvitationsTokenGetRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+**string**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: text/html, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## ActivityFeedActivityGet
@@ -807,6 +895,74 @@ No authorization required
 [[Back to README]](../README.md)
 
 
+## CreateDriveWebWebDrivesPost
+
+> interface{} CreateDriveWebWebDrivesPost(ctx).Name(name).Csrf(csrf).Execute()
+
+Create Drive Web
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/Mnexa-AI/agentdrive-sdk/agentdrive"
+)
+
+func main() {
+	name := "name_example" // string | 
+	csrf := "csrf_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.CreateDriveWebWebDrivesPost(context.Background()).Name(name).Csrf(csrf).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.CreateDriveWebWebDrivesPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateDriveWebWebDrivesPost`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.CreateDriveWebWebDrivesPost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateDriveWebWebDrivesPostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **name** | **string** |  | 
+ **csrf** | **string** |  | 
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/x-www-form-urlencoded
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## CreateFolderByPathV0FoldersPathPost
 
 > FolderOut CreateFolderByPathV0FoldersPathPost(ctx, path).XAgentdriveActor(xAgentdriveActor).Authorization(authorization).FolderCreateIn(folderCreateIn).Execute()
@@ -1086,6 +1242,144 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateUserTokenWebTokensCreatePost
+
+> interface{} CreateUserTokenWebTokensCreatePost(ctx).Csrf(csrf).Label(label).Scope(scope).Execute()
+
+Create User Token
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/Mnexa-AI/agentdrive-sdk/agentdrive"
+)
+
+func main() {
+	csrf := "csrf_example" // string | 
+	label := "label_example" // string |  (optional) (default to "")
+	scope := "scope_example" // string |  (optional) (default to "full")
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.CreateUserTokenWebTokensCreatePost(context.Background()).Csrf(csrf).Label(label).Scope(scope).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.CreateUserTokenWebTokensCreatePost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateUserTokenWebTokensCreatePost`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.CreateUserTokenWebTokensCreatePost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateUserTokenWebTokensCreatePostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **csrf** | **string** |  | 
+ **label** | **string** |  | [default to &quot;&quot;]
+ **scope** | **string** |  | [default to &quot;full&quot;]
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/x-www-form-urlencoded
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateWorkspaceWebWebWorkspacesPost
+
+> interface{} CreateWorkspaceWebWebWorkspacesPost(ctx).Name(name).Csrf(csrf).Execute()
+
+Create Workspace Web
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/Mnexa-AI/agentdrive-sdk/agentdrive"
+)
+
+func main() {
+	name := "name_example" // string | 
+	csrf := "csrf_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.CreateWorkspaceWebWebWorkspacesPost(context.Background()).Name(name).Csrf(csrf).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.CreateWorkspaceWebWebWorkspacesPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateWorkspaceWebWebWorkspacesPost`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.CreateWorkspaceWebWebWorkspacesPost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateWorkspaceWebWebWorkspacesPostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **name** | **string** |  | 
+ **csrf** | **string** |  | 
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1515,7 +1809,7 @@ No authorization required
 
 > interface{} DeleteDriveRouteV0DrivesDriveIdDelete(ctx, driveId).XAgentdriveActor(xAgentdriveActor).Authorization(authorization).Execute()
 
-Soft-delete the authenticated drive
+Soft-delete a drive
 
 
 
@@ -1578,6 +1872,78 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteDriveWebWebDrivesDriveIdDeletePost
+
+> interface{} DeleteDriveWebWebDrivesDriveIdDeletePost(ctx, driveId).Csrf(csrf).Execute()
+
+Delete Drive Web
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/Mnexa-AI/agentdrive-sdk/agentdrive"
+)
+
+func main() {
+	driveId := "driveId_example" // string | 
+	csrf := "csrf_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.DeleteDriveWebWebDrivesDriveIdDeletePost(context.Background(), driveId).Csrf(csrf).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DeleteDriveWebWebDrivesDriveIdDeletePost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteDriveWebWebDrivesDriveIdDeletePost`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.DeleteDriveWebWebDrivesDriveIdDeletePost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**driveId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteDriveWebWebDrivesDriveIdDeletePostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **csrf** | **string** |  | 
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1936,6 +2302,80 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteWorkspaceWebWebWorkspacesOrgIdDeletePost
+
+> interface{} DeleteWorkspaceWebWebWorkspacesOrgIdDeletePost(ctx, orgId).Csrf(csrf).Confirm(confirm).Execute()
+
+Delete Workspace Web
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/Mnexa-AI/agentdrive-sdk/agentdrive"
+)
+
+func main() {
+	orgId := "orgId_example" // string | 
+	csrf := "csrf_example" // string | 
+	confirm := "confirm_example" // string |  (optional) (default to "")
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.DeleteWorkspaceWebWebWorkspacesOrgIdDeletePost(context.Background(), orgId).Csrf(csrf).Confirm(confirm).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DeleteWorkspaceWebWebWorkspacesOrgIdDeletePost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteWorkspaceWebWebWorkspacesOrgIdDeletePost`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.DeleteWorkspaceWebWebWorkspacesOrgIdDeletePost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orgId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteWorkspaceWebWebWorkspacesOrgIdDeletePostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **csrf** | **string** |  | 
+ **confirm** | **string** |  | [default to &quot;&quot;]
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -3711,6 +4151,78 @@ No authorization required
 [[Back to README]](../README.md)
 
 
+## InviteMemberWebWebMembersInvitePost
+
+> interface{} InviteMemberWebWebMembersInvitePost(ctx).Email(email).Csrf(csrf).Role(role).WorkspaceName(workspaceName).Execute()
+
+Invite Member Web
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/Mnexa-AI/agentdrive-sdk/agentdrive"
+)
+
+func main() {
+	email := "email_example" // string | 
+	csrf := "csrf_example" // string | 
+	role := "role_example" // string |  (optional) (default to "member")
+	workspaceName := "workspaceName_example" // string |  (optional) (default to "")
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.InviteMemberWebWebMembersInvitePost(context.Background()).Email(email).Csrf(csrf).Role(role).WorkspaceName(workspaceName).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.InviteMemberWebWebMembersInvitePost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `InviteMemberWebWebMembersInvitePost`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.InviteMemberWebWebMembersInvitePost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiInviteMemberWebWebMembersInvitePostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **email** | **string** |  | 
+ **csrf** | **string** |  | 
+ **role** | **string** |  | [default to &quot;member&quot;]
+ **workspaceName** | **string** |  | [default to &quot;&quot;]
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/x-www-form-urlencoded
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListArtifactVersionsV0ArtifactsArtIdVersionsGet
 
 > VersionPage ListArtifactVersionsV0ArtifactsArtIdVersionsGet(ctx, artId).Cursor(cursor).Limit(limit).Authorization(authorization).Execute()
@@ -5112,6 +5624,72 @@ No authorization required
 [[Back to README]](../README.md)
 
 
+## PostDescribeV0QueryDescribePost
+
+> interface{} PostDescribeV0QueryDescribePost(ctx).DescribeIn(describeIn).Authorization(authorization).Execute()
+
+Describe a dataset's column schema
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/Mnexa-AI/agentdrive-sdk/agentdrive"
+)
+
+func main() {
+	describeIn := *openapiclient.NewDescribeIn("Dataset_example") // DescribeIn | 
+	authorization := "authorization_example" // string |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.PostDescribeV0QueryDescribePost(context.Background()).DescribeIn(describeIn).Authorization(authorization).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.PostDescribeV0QueryDescribePost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `PostDescribeV0QueryDescribePost`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.PostDescribeV0QueryDescribePost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPostDescribeV0QueryDescribePostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **describeIn** | [**DescribeIn**](DescribeIn.md) |  | 
+ **authorization** | **string** |  | 
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## PostFeedbackV0FeedbackPost
 
 > interface{} PostFeedbackV0FeedbackPost(ctx).Authorization(authorization).Execute()
@@ -5171,6 +5749,138 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## PostLookupValuesV0QueryLookupValuesPost
+
+> interface{} PostLookupValuesV0QueryLookupValuesPost(ctx).LookupValuesIn(lookupValuesIn).Authorization(authorization).Execute()
+
+List distinct values of a dataset column
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/Mnexa-AI/agentdrive-sdk/agentdrive"
+)
+
+func main() {
+	lookupValuesIn := *openapiclient.NewLookupValuesIn("Dataset_example", "Column_example") // LookupValuesIn | 
+	authorization := "authorization_example" // string |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.PostLookupValuesV0QueryLookupValuesPost(context.Background()).LookupValuesIn(lookupValuesIn).Authorization(authorization).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.PostLookupValuesV0QueryLookupValuesPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `PostLookupValuesV0QueryLookupValuesPost`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.PostLookupValuesV0QueryLookupValuesPost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPostLookupValuesV0QueryLookupValuesPostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **lookupValuesIn** | [**LookupValuesIn**](LookupValuesIn.md) |  | 
+ **authorization** | **string** |  | 
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## PostQueryV0QueryPost
+
+> interface{} PostQueryV0QueryPost(ctx).QueryIn(queryIn).Authorization(authorization).Execute()
+
+Run a read-only SQL query over authorized datasets
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/Mnexa-AI/agentdrive-sdk/agentdrive"
+)
+
+func main() {
+	queryIn := *openapiclient.NewQueryIn("Sql_example") // QueryIn | 
+	authorization := "authorization_example" // string |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.PostQueryV0QueryPost(context.Background()).QueryIn(queryIn).Authorization(authorization).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.PostQueryV0QueryPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `PostQueryV0QueryPost`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.PostQueryV0QueryPost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPostQueryV0QueryPostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **queryIn** | [**QueryIn**](QueryIn.md) |  | 
+ **authorization** | **string** |  | 
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -5929,6 +6639,80 @@ No authorization required
 [[Back to README]](../README.md)
 
 
+## RemoveMemberWebWebMembersTargetUserIdRemovePost
+
+> interface{} RemoveMemberWebWebMembersTargetUserIdRemovePost(ctx, targetUserId).Csrf(csrf).OrganizationId(organizationId).Execute()
+
+Remove Member Web
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/Mnexa-AI/agentdrive-sdk/agentdrive"
+)
+
+func main() {
+	targetUserId := "targetUserId_example" // string | 
+	csrf := "csrf_example" // string | 
+	organizationId := "organizationId_example" // string |  (optional) (default to "")
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.RemoveMemberWebWebMembersTargetUserIdRemovePost(context.Background(), targetUserId).Csrf(csrf).OrganizationId(organizationId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.RemoveMemberWebWebMembersTargetUserIdRemovePost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `RemoveMemberWebWebMembersTargetUserIdRemovePost`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.RemoveMemberWebWebMembersTargetUserIdRemovePost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**targetUserId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiRemoveMemberWebWebMembersTargetUserIdRemovePostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **csrf** | **string** |  | 
+ **organizationId** | **string** |  | [default to &quot;&quot;]
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/x-www-form-urlencoded
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## RenameArtifactRouteV0ArtifactsArtIdPatch
 
 > ArtifactOut RenameArtifactRouteV0ArtifactsArtIdPatch(ctx, artId).RenameIn(renameIn).XAgentdriveActor(xAgentdriveActor).IfMatch(ifMatch).Authorization(authorization).Execute()
@@ -6000,6 +6784,226 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## RenameDriveWebWebDrivesDriveIdRenamePost
+
+> interface{} RenameDriveWebWebDrivesDriveIdRenamePost(ctx, driveId).Name(name).Csrf(csrf).Execute()
+
+Rename Drive Web
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/Mnexa-AI/agentdrive-sdk/agentdrive"
+)
+
+func main() {
+	driveId := "driveId_example" // string | 
+	name := "name_example" // string | 
+	csrf := "csrf_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.RenameDriveWebWebDrivesDriveIdRenamePost(context.Background(), driveId).Name(name).Csrf(csrf).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.RenameDriveWebWebDrivesDriveIdRenamePost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `RenameDriveWebWebDrivesDriveIdRenamePost`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.RenameDriveWebWebDrivesDriveIdRenamePost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**driveId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiRenameDriveWebWebDrivesDriveIdRenamePostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **name** | **string** |  | 
+ **csrf** | **string** |  | 
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/x-www-form-urlencoded
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## RenameWorkspaceWebWebWorkspacesOrgIdRenamePost
+
+> interface{} RenameWorkspaceWebWebWorkspacesOrgIdRenamePost(ctx, orgId).Name(name).Csrf(csrf).Execute()
+
+Rename Workspace Web
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/Mnexa-AI/agentdrive-sdk/agentdrive"
+)
+
+func main() {
+	orgId := "orgId_example" // string | 
+	name := "name_example" // string | 
+	csrf := "csrf_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.RenameWorkspaceWebWebWorkspacesOrgIdRenamePost(context.Background(), orgId).Name(name).Csrf(csrf).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.RenameWorkspaceWebWebWorkspacesOrgIdRenamePost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `RenameWorkspaceWebWebWorkspacesOrgIdRenamePost`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.RenameWorkspaceWebWebWorkspacesOrgIdRenamePost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orgId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiRenameWorkspaceWebWebWorkspacesOrgIdRenamePostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **name** | **string** |  | 
+ **csrf** | **string** |  | 
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/x-www-form-urlencoded
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ResendInvitationWebWebInvitationsInvitationIdResendPost
+
+> interface{} ResendInvitationWebWebInvitationsInvitationIdResendPost(ctx, invitationId).Csrf(csrf).Execute()
+
+Resend Invitation Web
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/Mnexa-AI/agentdrive-sdk/agentdrive"
+)
+
+func main() {
+	invitationId := "invitationId_example" // string | 
+	csrf := "csrf_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ResendInvitationWebWebInvitationsInvitationIdResendPost(context.Background(), invitationId).Csrf(csrf).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ResendInvitationWebWebInvitationsInvitationIdResendPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ResendInvitationWebWebInvitationsInvitationIdResendPost`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ResendInvitationWebWebInvitationsInvitationIdResendPost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**invitationId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiResendInvitationWebWebInvitationsInvitationIdResendPostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **csrf** | **string** |  | 
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -6232,6 +7236,78 @@ No authorization required
 [[Back to README]](../README.md)
 
 
+## RevokeInvitationWebWebInvitationsInvitationIdRevokePost
+
+> interface{} RevokeInvitationWebWebInvitationsInvitationIdRevokePost(ctx, invitationId).Csrf(csrf).Execute()
+
+Revoke Invitation Web
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/Mnexa-AI/agentdrive-sdk/agentdrive"
+)
+
+func main() {
+	invitationId := "invitationId_example" // string | 
+	csrf := "csrf_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.RevokeInvitationWebWebInvitationsInvitationIdRevokePost(context.Background(), invitationId).Csrf(csrf).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.RevokeInvitationWebWebInvitationsInvitationIdRevokePost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `RevokeInvitationWebWebInvitationsInvitationIdRevokePost`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.RevokeInvitationWebWebInvitationsInvitationIdRevokePost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**invitationId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiRevokeInvitationWebWebInvitationsInvitationIdRevokePostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **csrf** | **string** |  | 
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/x-www-form-urlencoded
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## RevokeLinkWebShareRidLinkShrIdRevokePost
 
 > interface{} RevokeLinkWebShareRidLinkShrIdRevokePost(ctx, rid, shrId).XCsrfToken(xCsrfToken).Execute()
@@ -6298,6 +7374,146 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## RevokeUserTokenWebTokensRevokePost
+
+> interface{} RevokeUserTokenWebTokensRevokePost(ctx).TokenId(tokenId).Csrf(csrf).Execute()
+
+Revoke User Token
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/Mnexa-AI/agentdrive-sdk/agentdrive"
+)
+
+func main() {
+	tokenId := "tokenId_example" // string | 
+	csrf := "csrf_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.RevokeUserTokenWebTokensRevokePost(context.Background()).TokenId(tokenId).Csrf(csrf).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.RevokeUserTokenWebTokensRevokePost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `RevokeUserTokenWebTokensRevokePost`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.RevokeUserTokenWebTokensRevokePost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiRevokeUserTokenWebTokensRevokePostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **tokenId** | **string** |  | 
+ **csrf** | **string** |  | 
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/x-www-form-urlencoded
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## RotateDriveKeyWebWebDrivesDriveIdKeysRotatePost
+
+> interface{} RotateDriveKeyWebWebDrivesDriveIdKeysRotatePost(ctx, driveId).Csrf(csrf).Execute()
+
+Rotate Drive Key Web
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/Mnexa-AI/agentdrive-sdk/agentdrive"
+)
+
+func main() {
+	driveId := "driveId_example" // string | 
+	csrf := "csrf_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.RotateDriveKeyWebWebDrivesDriveIdKeysRotatePost(context.Background(), driveId).Csrf(csrf).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.RotateDriveKeyWebWebDrivesDriveIdKeysRotatePost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `RotateDriveKeyWebWebDrivesDriveIdKeysRotatePost`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.RotateDriveKeyWebWebDrivesDriveIdKeysRotatePost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**driveId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiRotateDriveKeyWebWebDrivesDriveIdKeysRotatePostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **csrf** | **string** |  | 
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -6515,6 +7731,80 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SetMemberRoleWebWebMembersTargetUserIdRolePost
+
+> interface{} SetMemberRoleWebWebMembersTargetUserIdRolePost(ctx, targetUserId).Role(role).Csrf(csrf).Execute()
+
+Set Member Role Web
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/Mnexa-AI/agentdrive-sdk/agentdrive"
+)
+
+func main() {
+	targetUserId := "targetUserId_example" // string | 
+	role := "role_example" // string | 
+	csrf := "csrf_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.SetMemberRoleWebWebMembersTargetUserIdRolePost(context.Background(), targetUserId).Role(role).Csrf(csrf).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.SetMemberRoleWebWebMembersTargetUserIdRolePost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `SetMemberRoleWebWebMembersTargetUserIdRolePost`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.SetMemberRoleWebWebMembersTargetUserIdRolePost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**targetUserId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSetMemberRoleWebWebMembersTargetUserIdRolePostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **role** | **string** |  | 
+ **csrf** | **string** |  | 
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -6853,11 +8143,11 @@ No authorization required
 [[Back to README]](../README.md)
 
 
-## SettingsUsageSettingsUsageGet
+## SettingsWorkspaceSettingsWorkspaceGet
 
-> string SettingsUsageSettingsUsageGet(ctx).Execute()
+> string SettingsWorkspaceSettingsWorkspaceGet(ctx).Execute()
 
-Settings Usage
+Settings Workspace
 
 
 
@@ -6877,13 +8167,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DefaultAPI.SettingsUsageSettingsUsageGet(context.Background()).Execute()
+	resp, r, err := apiClient.DefaultAPI.SettingsWorkspaceSettingsWorkspaceGet(context.Background()).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.SettingsUsageSettingsUsageGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.SettingsWorkspaceSettingsWorkspaceGet``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `SettingsUsageSettingsUsageGet`: string
-	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.SettingsUsageSettingsUsageGet`: %v\n", resp)
+	// response from `SettingsWorkspaceSettingsWorkspaceGet`: string
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.SettingsWorkspaceSettingsWorkspaceGet`: %v\n", resp)
 }
 ```
 
@@ -6893,7 +8183,7 @@ This endpoint does not need any parameter.
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiSettingsUsageSettingsUsageGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiSettingsWorkspaceSettingsWorkspaceGetRequest struct via the builder pattern
 
 
 ### Return type
@@ -7043,11 +8333,11 @@ No authorization required
 [[Back to README]](../README.md)
 
 
-## SwitchOrgWebSwitchOrgPost
+## SwitchDriveWebSwitchPost
 
-> interface{} SwitchOrgWebSwitchOrgPost(ctx).OrganizationId(organizationId).Csrf(csrf).Execute()
+> interface{} SwitchDriveWebSwitchPost(ctx).Csrf(csrf).DriveId(driveId).OrganizationId(organizationId).Execute()
 
-Switch Org
+Switch Drive
 
 
 
@@ -7064,18 +8354,19 @@ import (
 )
 
 func main() {
-	organizationId := "organizationId_example" // string | 
 	csrf := "csrf_example" // string | 
+	driveId := "driveId_example" // string |  (optional) (default to "")
+	organizationId := "organizationId_example" // string |  (optional) (default to "")
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DefaultAPI.SwitchOrgWebSwitchOrgPost(context.Background()).OrganizationId(organizationId).Csrf(csrf).Execute()
+	resp, r, err := apiClient.DefaultAPI.SwitchDriveWebSwitchPost(context.Background()).Csrf(csrf).DriveId(driveId).OrganizationId(organizationId).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.SwitchOrgWebSwitchOrgPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.SwitchDriveWebSwitchPost``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `SwitchOrgWebSwitchOrgPost`: interface{}
-	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.SwitchOrgWebSwitchOrgPost`: %v\n", resp)
+	// response from `SwitchDriveWebSwitchPost`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.SwitchDriveWebSwitchPost`: %v\n", resp)
 }
 ```
 
@@ -7085,13 +8376,14 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiSwitchOrgWebSwitchOrgPostRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiSwitchDriveWebSwitchPostRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **organizationId** | **string** |  | 
  **csrf** | **string** |  | 
+ **driveId** | **string** |  | [default to &quot;&quot;]
+ **organizationId** | **string** |  | [default to &quot;&quot;]
 
 ### Return type
 

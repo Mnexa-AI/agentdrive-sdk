@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **ActorName** | Pointer to **NullableString** |  | [optional] 
 **ChangeSummary** | Pointer to **NullableString** |  | [optional] 
 **IfMatch** | Pointer to **NullableInt32** |  | [optional] 
+**CorsOrigin** | Pointer to **NullableString** | Web origin (scheme://host[:port]) of the browser that will PUT the bytes, e.g. &#x60;https://app.example.com&#x60;. Set this when the &#x60;upload_url&#x60; is handed to browser code: GCS binds CORS at session initiate, so the returned session only echoes &#x60;Access-Control-Allow-Origin&#x60; (and is thus PUT-able from a browser) when opened with the caller&#39;s origin. A trusted backend relaying a browser upload forwards the browser&#39;s &#x60;Origin&#x60; here. Omit for server/desktop uploads (no CORS enforcement). | [optional] 
 
 ## Methods
 
@@ -344,6 +345,41 @@ HasIfMatch returns a boolean if a field has been set.
 `func (o *UploadBeginIn) UnsetIfMatch()`
 
 UnsetIfMatch ensures that no value is present for IfMatch, not even an explicit nil
+### GetCorsOrigin
+
+`func (o *UploadBeginIn) GetCorsOrigin() string`
+
+GetCorsOrigin returns the CorsOrigin field if non-nil, zero value otherwise.
+
+### GetCorsOriginOk
+
+`func (o *UploadBeginIn) GetCorsOriginOk() (*string, bool)`
+
+GetCorsOriginOk returns a tuple with the CorsOrigin field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCorsOrigin
+
+`func (o *UploadBeginIn) SetCorsOrigin(v string)`
+
+SetCorsOrigin sets CorsOrigin field to given value.
+
+### HasCorsOrigin
+
+`func (o *UploadBeginIn) HasCorsOrigin() bool`
+
+HasCorsOrigin returns a boolean if a field has been set.
+
+### SetCorsOriginNil
+
+`func (o *UploadBeginIn) SetCorsOriginNil(b bool)`
+
+ SetCorsOriginNil sets the value for CorsOrigin to be an explicit nil
+
+### UnsetCorsOrigin
+`func (o *UploadBeginIn) UnsetCorsOrigin()`
+
+UnsetCorsOrigin ensures that no value is present for CorsOrigin, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

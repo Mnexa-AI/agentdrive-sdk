@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **drive_id** | **str** |  | 
 **path** | **str** |  | 
 **url** | **str** |  | 
+**permalink** | **str** |  | 
 **content_type** | **str** |  | 
 **file_type** | **str** |  | 
 **size_bytes** | **int** |  | 

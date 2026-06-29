@@ -22,6 +22,20 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
+	t.Run("Test DefaultAPIService AcceptInvitationInvitationsTokenGet", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var token string
+
+		resp, httpRes, err := apiClient.DefaultAPI.AcceptInvitationInvitationsTokenGet(context.Background(), token).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService ActivityFeedActivityGet", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -152,6 +166,18 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService CreateDriveWebWebDrivesPost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.CreateDriveWebWebDrivesPost(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService CreateFolderByPathV0FoldersPathPost", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -197,6 +223,30 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.CreateShareRouteV0SharesPost(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService CreateUserTokenWebTokensCreatePost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.CreateUserTokenWebTokensCreatePost(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService CreateWorkspaceWebWebWorkspacesPost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.CreateWorkspaceWebWebWorkspacesPost(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -294,6 +344,20 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService DeleteDriveWebWebDrivesDriveIdDeletePost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var driveId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.DeleteDriveWebWebDrivesDriveIdDeletePost(context.Background(), driveId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService DeleteFolderByIdV0FoldersFldIdDelete", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -355,6 +419,20 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 		var shrId string
 
 		resp, httpRes, err := apiClient.DefaultAPI.DeleteShareRouteV0SharesShrIdDelete(context.Background(), shrId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService DeleteWorkspaceWebWebWorkspacesOrgIdDeletePost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var orgId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.DeleteWorkspaceWebWebWorkspacesOrgIdDeletePost(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -705,6 +783,18 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService InviteMemberWebWebMembersInvitePost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.InviteMemberWebWebMembersInvitePost(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService ListArtifactVersionsV0ArtifactsArtIdVersionsGet", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -963,11 +1053,47 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService PostDescribeV0QueryDescribePost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.PostDescribeV0QueryDescribePost(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService PostFeedbackV0FeedbackPost", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.PostFeedbackV0FeedbackPost(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService PostLookupValuesV0QueryLookupValuesPost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.PostLookupValuesV0QueryLookupValuesPost(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService PostQueryV0QueryPost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.PostQueryV0QueryPost(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1119,6 +1245,20 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService RemoveMemberWebWebMembersTargetUserIdRemovePost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var targetUserId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.RemoveMemberWebWebMembersTargetUserIdRemovePost(context.Background(), targetUserId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService RenameArtifactRouteV0ArtifactsArtIdPatch", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -1126,6 +1266,48 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 		var artId string
 
 		resp, httpRes, err := apiClient.DefaultAPI.RenameArtifactRouteV0ArtifactsArtIdPatch(context.Background(), artId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService RenameDriveWebWebDrivesDriveIdRenamePost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var driveId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.RenameDriveWebWebDrivesDriveIdRenamePost(context.Background(), driveId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService RenameWorkspaceWebWebWorkspacesOrgIdRenamePost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var orgId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.RenameWorkspaceWebWebWorkspacesOrgIdRenamePost(context.Background(), orgId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ResendInvitationWebWebInvitationsInvitationIdResendPost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var invitationId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.ResendInvitationWebWebInvitationsInvitationIdResendPost(context.Background(), invitationId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1176,6 +1358,20 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService RevokeInvitationWebWebInvitationsInvitationIdRevokePost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var invitationId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.RevokeInvitationWebWebInvitationsInvitationIdRevokePost(context.Background(), invitationId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService RevokeLinkWebShareRidLinkShrIdRevokePost", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -1184,6 +1380,32 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 		var shrId string
 
 		resp, httpRes, err := apiClient.DefaultAPI.RevokeLinkWebShareRidLinkShrIdRevokePost(context.Background(), rid, shrId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService RevokeUserTokenWebTokensRevokePost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.RevokeUserTokenWebTokensRevokePost(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService RotateDriveKeyWebWebDrivesDriveIdKeysRotatePost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var driveId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.RotateDriveKeyWebWebDrivesDriveIdKeysRotatePost(context.Background(), driveId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1222,6 +1444,20 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.SearchV0SearchGet(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService SetMemberRoleWebWebMembersTargetUserIdRolePost", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var targetUserId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.SetMemberRoleWebWebMembersTargetUserIdRolePost(context.Background(), targetUserId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1293,11 +1529,11 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test DefaultAPIService SettingsUsageSettingsUsageGet", func(t *testing.T) {
+	t.Run("Test DefaultAPIService SettingsWorkspaceSettingsWorkspaceGet", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.DefaultAPI.SettingsUsageSettingsUsageGet(context.Background()).Execute()
+		resp, httpRes, err := apiClient.DefaultAPI.SettingsWorkspaceSettingsWorkspaceGet(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1331,11 +1567,11 @@ func Test_agentdrive_DefaultAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test DefaultAPIService SwitchOrgWebSwitchOrgPost", func(t *testing.T) {
+	t.Run("Test DefaultAPIService SwitchDriveWebSwitchPost", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.DefaultAPI.SwitchOrgWebSwitchOrgPost(context.Background()).Execute()
+		resp, httpRes, err := apiClient.DefaultAPI.SwitchDriveWebSwitchPost(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

@@ -56,6 +56,12 @@ export interface ArtifactOut {
      * @type {string}
      * @memberof ArtifactOut
      */
+    permalink: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArtifactOut
+     */
     contentType: string;
     /**
      * 
@@ -139,6 +145,7 @@ export function instanceOfArtifactOut(value: object): value is ArtifactOut {
     if ((!('driveId' in value) && !('drive_id' in value)) || (value['driveId'] === undefined && value['drive_id'] === undefined)) return false;
     if (!('path' in value) || value['path'] === undefined) return false;
     if (!('url' in value) || value['url'] === undefined) return false;
+    if (!('permalink' in value) || value['permalink'] === undefined) return false;
     if ((!('contentType' in value) && !('content_type' in value)) || (value['contentType'] === undefined && value['content_type'] === undefined)) return false;
     if ((!('fileType' in value) && !('file_type' in value)) || (value['fileType'] === undefined && value['file_type'] === undefined)) return false;
     if ((!('sizeBytes' in value) && !('size_bytes' in value)) || (value['sizeBytes'] === undefined && value['size_bytes'] === undefined)) return false;
@@ -162,6 +169,7 @@ export function ArtifactOutFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'driveId': json['drive_id'],
         'path': json['path'],
         'url': json['url'],
+        'permalink': json['permalink'],
         'contentType': json['content_type'],
         'fileType': json['file_type'],
         'sizeBytes': json['size_bytes'],
@@ -193,6 +201,7 @@ export function ArtifactOutToJSONTyped(value?: ArtifactOut | null, ignoreDiscrim
         'drive_id': value['driveId'],
         'path': value['path'],
         'url': value['url'],
+        'permalink': value['permalink'],
         'content_type': value['contentType'],
         'file_type': value['fileType'],
         'size_bytes': value['sizeBytes'],

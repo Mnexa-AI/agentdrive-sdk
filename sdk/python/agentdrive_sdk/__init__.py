@@ -21,8 +21,12 @@ __all__ = [
     "AgentAuthApi",
     "ClaimUiApi",
     "DefaultApi",
+    "DrivesApi",
     "McpOauthApi",
     "McpOauthUiApi",
+    "MembersApi",
+    "TokensApi",
+    "WorkspacesApi",
     "ApiResponse",
     "ApiClient",
     "Configuration",
@@ -41,7 +45,14 @@ __all__ = [
     "CompileJobIn",
     "CompileOptions",
     "CopyIn",
+    "DescribeIn",
     "DownloadUrlOut",
+    "DriveCreateIn",
+    "DriveCreateOut",
+    "DriveKeyRotateOut",
+    "DriveList",
+    "DriveOut",
+    "DriveRenameIn",
     "EventOut",
     "EventPage",
     "ExtensionExchangeRequest",
@@ -60,11 +71,20 @@ __all__ = [
     "GrantPatchIn",
     "GrantPrincipalIn",
     "HTTPValidationError",
+    "InvitationList",
+    "InvitationOut",
+    "InviteCreateOut",
     "LinkIn",
     "LocationInner",
+    "LookupValuesIn",
+    "MemberInviteIn",
+    "MemberList",
+    "MemberOut",
+    "MemberRoleIn",
     "Page",
     "ProjectConfigIn",
     "PublicIn",
+    "QueryIn",
     "RenameIn",
     "SealIn",
     "SearchHitOut",
@@ -77,17 +97,28 @@ __all__ = [
     "TokenResponse",
     "UploadBeginIn",
     "UploadBeginOut",
+    "UserTokenList",
+    "UserTokenOut",
     "ValidationError",
     "VersionOut",
     "VersionPage",
+    "WorkspaceCreateIn",
+    "WorkspaceCreateOut",
+    "WorkspaceList",
+    "WorkspaceOut",
+    "WorkspaceRenameIn",
 ]
 
 # import apis into sdk package
 from agentdrive_sdk.api.agent_auth_api import AgentAuthApi as AgentAuthApi
 from agentdrive_sdk.api.claim_ui_api import ClaimUiApi as ClaimUiApi
 from agentdrive_sdk.api.default_api import DefaultApi as DefaultApi
+from agentdrive_sdk.api.drives_api import DrivesApi as DrivesApi
 from agentdrive_sdk.api.mcp_oauth_api import McpOauthApi as McpOauthApi
 from agentdrive_sdk.api.mcp_oauth_ui_api import McpOauthUiApi as McpOauthUiApi
+from agentdrive_sdk.api.members_api import MembersApi as MembersApi
+from agentdrive_sdk.api.tokens_api import TokensApi as TokensApi
+from agentdrive_sdk.api.workspaces_api import WorkspacesApi as WorkspacesApi
 
 # import ApiClient
 from agentdrive_sdk.api_response import ApiResponse as ApiResponse
@@ -110,7 +141,14 @@ from agentdrive_sdk.models.claim_metadata import ClaimMetadata as ClaimMetadata
 from agentdrive_sdk.models.compile_job_in import CompileJobIn as CompileJobIn
 from agentdrive_sdk.models.compile_options import CompileOptions as CompileOptions
 from agentdrive_sdk.models.copy_in import CopyIn as CopyIn
+from agentdrive_sdk.models.describe_in import DescribeIn as DescribeIn
 from agentdrive_sdk.models.download_url_out import DownloadUrlOut as DownloadUrlOut
+from agentdrive_sdk.models.drive_create_in import DriveCreateIn as DriveCreateIn
+from agentdrive_sdk.models.drive_create_out import DriveCreateOut as DriveCreateOut
+from agentdrive_sdk.models.drive_key_rotate_out import DriveKeyRotateOut as DriveKeyRotateOut
+from agentdrive_sdk.models.drive_list import DriveList as DriveList
+from agentdrive_sdk.models.drive_out import DriveOut as DriveOut
+from agentdrive_sdk.models.drive_rename_in import DriveRenameIn as DriveRenameIn
 from agentdrive_sdk.models.event_out import EventOut as EventOut
 from agentdrive_sdk.models.event_page import EventPage as EventPage
 from agentdrive_sdk.models.extension_exchange_request import ExtensionExchangeRequest as ExtensionExchangeRequest
@@ -129,11 +167,20 @@ from agentdrive_sdk.models.grant_out import GrantOut as GrantOut
 from agentdrive_sdk.models.grant_patch_in import GrantPatchIn as GrantPatchIn
 from agentdrive_sdk.models.grant_principal_in import GrantPrincipalIn as GrantPrincipalIn
 from agentdrive_sdk.models.http_validation_error import HTTPValidationError as HTTPValidationError
+from agentdrive_sdk.models.invitation_list import InvitationList as InvitationList
+from agentdrive_sdk.models.invitation_out import InvitationOut as InvitationOut
+from agentdrive_sdk.models.invite_create_out import InviteCreateOut as InviteCreateOut
 from agentdrive_sdk.models.link_in import LinkIn as LinkIn
 from agentdrive_sdk.models.location_inner import LocationInner as LocationInner
+from agentdrive_sdk.models.lookup_values_in import LookupValuesIn as LookupValuesIn
+from agentdrive_sdk.models.member_invite_in import MemberInviteIn as MemberInviteIn
+from agentdrive_sdk.models.member_list import MemberList as MemberList
+from agentdrive_sdk.models.member_out import MemberOut as MemberOut
+from agentdrive_sdk.models.member_role_in import MemberRoleIn as MemberRoleIn
 from agentdrive_sdk.models.page import Page as Page
 from agentdrive_sdk.models.project_config_in import ProjectConfigIn as ProjectConfigIn
 from agentdrive_sdk.models.public_in import PublicIn as PublicIn
+from agentdrive_sdk.models.query_in import QueryIn as QueryIn
 from agentdrive_sdk.models.rename_in import RenameIn as RenameIn
 from agentdrive_sdk.models.seal_in import SealIn as SealIn
 from agentdrive_sdk.models.search_hit_out import SearchHitOut as SearchHitOut
@@ -146,7 +193,14 @@ from agentdrive_sdk.models.source_ref import SourceRef as SourceRef
 from agentdrive_sdk.models.token_response import TokenResponse as TokenResponse
 from agentdrive_sdk.models.upload_begin_in import UploadBeginIn as UploadBeginIn
 from agentdrive_sdk.models.upload_begin_out import UploadBeginOut as UploadBeginOut
+from agentdrive_sdk.models.user_token_list import UserTokenList as UserTokenList
+from agentdrive_sdk.models.user_token_out import UserTokenOut as UserTokenOut
 from agentdrive_sdk.models.validation_error import ValidationError as ValidationError
 from agentdrive_sdk.models.version_out import VersionOut as VersionOut
 from agentdrive_sdk.models.version_page import VersionPage as VersionPage
+from agentdrive_sdk.models.workspace_create_in import WorkspaceCreateIn as WorkspaceCreateIn
+from agentdrive_sdk.models.workspace_create_out import WorkspaceCreateOut as WorkspaceCreateOut
+from agentdrive_sdk.models.workspace_list import WorkspaceList as WorkspaceList
+from agentdrive_sdk.models.workspace_out import WorkspaceOut as WorkspaceOut
+from agentdrive_sdk.models.workspace_rename_in import WorkspaceRenameIn as WorkspaceRenameIn
 

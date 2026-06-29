@@ -26,6 +26,127 @@ import (
 // DefaultAPIService DefaultAPI service
 type DefaultAPIService service
 
+type ApiAcceptInvitationInvitationsTokenGetRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	token string
+}
+
+func (r ApiAcceptInvitationInvitationsTokenGetRequest) Execute() (string, *http.Response, error) {
+	return r.ApiService.AcceptInvitationInvitationsTokenGetExecute(r)
+}
+
+/*
+AcceptInvitationInvitationsTokenGet Accept Invitation
+
+Accept a workspace invitation (workspaces-design §4.4). Top-level
+route — deliberately OFF the reserved single-letter prefixes
+(`/a /f /s /v /_`).
+
+If the visitor isn't signed in, bounce through `/auth/login` with a
+same-origin `return_to` back here (the login flow validates return_to,
+so the path is safe). Once signed in, validate + accept:
+  * email mismatch / expired / revoked / unknown → friendly error page,
+  * success → join the workspace, set it active, land on the dashboard.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param token
+ @return ApiAcceptInvitationInvitationsTokenGetRequest
+*/
+func (a *DefaultAPIService) AcceptInvitationInvitationsTokenGet(ctx context.Context, token string) ApiAcceptInvitationInvitationsTokenGetRequest {
+	return ApiAcceptInvitationInvitationsTokenGetRequest{
+		ApiService: a,
+		ctx: ctx,
+		token: token,
+	}
+}
+
+// Execute executes the request
+//  @return string
+func (a *DefaultAPIService) AcceptInvitationInvitationsTokenGetExecute(r ApiAcceptInvitationInvitationsTokenGetRequest) (string, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  string
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.AcceptInvitationInvitationsTokenGet")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/invitations/{token}"
+	localVarPath = strings.Replace(localVarPath, "{"+"token"+"}", url.PathEscape(parameterValueToString(r.token, "token")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"text/html", "application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiActivityFeedActivityGetRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
@@ -1224,6 +1345,151 @@ func (a *DefaultAPIService) CopyArtifactRouteV0ArtifactsArtIdCopyPostExecute(r A
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateDriveWebWebDrivesPostRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	name *string
+	csrf *string
+}
+
+func (r ApiCreateDriveWebWebDrivesPostRequest) Name(name string) ApiCreateDriveWebWebDrivesPostRequest {
+	r.name = &name
+	return r
+}
+
+func (r ApiCreateDriveWebWebDrivesPostRequest) Csrf(csrf string) ApiCreateDriveWebWebDrivesPostRequest {
+	r.csrf = &csrf
+	return r
+}
+
+func (r ApiCreateDriveWebWebDrivesPostRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.CreateDriveWebWebDrivesPostExecute(r)
+}
+
+/*
+CreateDriveWebWebDrivesPost Create Drive Web
+
+Create a drive in the active workspace + reveal its key once
+(workspaces-design §4.5, §5.6).
+
+The web (session+CSRF) twin of `POST /v0/drives`. Any MEMBER of the
+active workspace may create a drive; the creator becomes its owner.
+The new drive's `ad_live_` key is shown ONCE via the same
+`reveal_key`-in-session mechanism the api-keys tab consumes; we also
+pin the new drive as active and land on the api-keys tab so the user
+sees the reveal.
+
+Authorization is by `current_user` + membership, NOT `current_drive`
+(workspaces-design §4.3 empty state): a freshly-invited member owns 0
+drives, so `current_drive` is None for them — yet this is exactly the
+"create your first drive" moment that MUST work. Gating on a pre-existing
+drive would dead-end the web onboarding path. Membership + the per-member
+cap are the real guards; both hold whether or not the user already owns a
+drive.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateDriveWebWebDrivesPostRequest
+*/
+func (a *DefaultAPIService) CreateDriveWebWebDrivesPost(ctx context.Context) ApiCreateDriveWebWebDrivesPostRequest {
+	return ApiCreateDriveWebWebDrivesPostRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *DefaultAPIService) CreateDriveWebWebDrivesPostExecute(r ApiCreateDriveWebWebDrivesPostRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateDriveWebWebDrivesPost")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/web/drives"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.name == nil {
+		return localVarReturnValue, nil, reportError("name is required and must be specified")
+	}
+	if r.csrf == nil {
+		return localVarReturnValue, nil, reportError("csrf is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/x-www-form-urlencoded"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	parameterAddToHeaderOrQuery(localVarFormParams, "name", r.name, "", "")
+	parameterAddToHeaderOrQuery(localVarFormParams, "csrf", r.csrf, "", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreateFolderByPathV0FoldersPathPostRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
@@ -1725,6 +1991,289 @@ func (a *DefaultAPIService) CreateShareRouteV0SharesPostExecute(r ApiCreateShare
 	}
 	// body params
 	localVarPostBody = r.shareCreateIn
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateUserTokenWebTokensCreatePostRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	csrf *string
+	label *string
+	scope *string
+}
+
+func (r ApiCreateUserTokenWebTokensCreatePostRequest) Csrf(csrf string) ApiCreateUserTokenWebTokensCreatePostRequest {
+	r.csrf = &csrf
+	return r
+}
+
+func (r ApiCreateUserTokenWebTokensCreatePostRequest) Label(label string) ApiCreateUserTokenWebTokensCreatePostRequest {
+	r.label = &label
+	return r
+}
+
+func (r ApiCreateUserTokenWebTokensCreatePostRequest) Scope(scope string) ApiCreateUserTokenWebTokensCreatePostRequest {
+	r.scope = &scope
+	return r
+}
+
+func (r ApiCreateUserTokenWebTokensCreatePostRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.CreateUserTokenWebTokensCreatePostExecute(r)
+}
+
+/*
+CreateUserTokenWebTokensCreatePost Create User Token
+
+Mint an `ad_user_` user-identity token (workspaces-design §5.2, §5.6).
+
+**Web-only minting**: the bootstrap chicken-and-egg is solved here,
+and a leaked token must not be able to mint persistent siblings — so
+this path exists only behind the browser session + CSRF, never over
+the `/v0/` API.
+
+The raw token is shown ONCE via `reveal_token` in the session, then
+consumed on the next GET of the api-keys tab.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateUserTokenWebTokensCreatePostRequest
+*/
+func (a *DefaultAPIService) CreateUserTokenWebTokensCreatePost(ctx context.Context) ApiCreateUserTokenWebTokensCreatePostRequest {
+	return ApiCreateUserTokenWebTokensCreatePostRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *DefaultAPIService) CreateUserTokenWebTokensCreatePostExecute(r ApiCreateUserTokenWebTokensCreatePostRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateUserTokenWebTokensCreatePost")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/web/tokens/create"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.csrf == nil {
+		return localVarReturnValue, nil, reportError("csrf is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/x-www-form-urlencoded"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.label != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "label", r.label, "", "")
+	}
+	if r.scope != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "scope", r.scope, "", "")
+	}
+	parameterAddToHeaderOrQuery(localVarFormParams, "csrf", r.csrf, "", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateWorkspaceWebWebWorkspacesPostRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	name *string
+	csrf *string
+}
+
+func (r ApiCreateWorkspaceWebWebWorkspacesPostRequest) Name(name string) ApiCreateWorkspaceWebWebWorkspacesPostRequest {
+	r.name = &name
+	return r
+}
+
+func (r ApiCreateWorkspaceWebWebWorkspacesPostRequest) Csrf(csrf string) ApiCreateWorkspaceWebWebWorkspacesPostRequest {
+	r.csrf = &csrf
+	return r
+}
+
+func (r ApiCreateWorkspaceWebWebWorkspacesPostRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.CreateWorkspaceWebWebWorkspacesPostExecute(r)
+}
+
+/*
+CreateWorkspaceWebWebWorkspacesPost Create Workspace Web
+
+Create a new workspace, set it active, reveal its starter key once
+(workspaces-design §4.7).
+
+The web (session+CSRF) twin of `POST /v0/workspaces`. A user may
+administer at most a fixed number of workspaces (`core.entitlements.
+can_create_workspace`, a hard cap — §4.7/O2); a blocked create bounces to
+the dashboard with a limit-reached affordance (`?err=workspace_limit`)
+rather than silently allowing. On success the new workspace + its starter
+drive become active and we land on the api-keys tab so the user sees the
+one-time key reveal.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateWorkspaceWebWebWorkspacesPostRequest
+*/
+func (a *DefaultAPIService) CreateWorkspaceWebWebWorkspacesPost(ctx context.Context) ApiCreateWorkspaceWebWebWorkspacesPostRequest {
+	return ApiCreateWorkspaceWebWebWorkspacesPostRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *DefaultAPIService) CreateWorkspaceWebWebWorkspacesPostExecute(r ApiCreateWorkspaceWebWebWorkspacesPostRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateWorkspaceWebWebWorkspacesPost")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/web/workspaces"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.name == nil {
+		return localVarReturnValue, nil, reportError("name is required and must be specified")
+	}
+	if r.csrf == nil {
+		return localVarReturnValue, nil, reportError("csrf is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/x-www-form-urlencoded"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	parameterAddToHeaderOrQuery(localVarFormParams, "name", r.name, "", "")
+	parameterAddToHeaderOrQuery(localVarFormParams, "csrf", r.csrf, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -2651,9 +3200,11 @@ func (r ApiDeleteDriveRouteV0DrivesDriveIdDeleteRequest) Execute() (interface{},
 }
 
 /*
-DeleteDriveRouteV0DrivesDriveIdDelete Soft-delete the authenticated drive
+DeleteDriveRouteV0DrivesDriveIdDelete Soft-delete a drive
 
 Mark the drive for cleanup. All tenant data (artifacts, versions, wiki, embeddings, events) is hidden via the `live_*` views and CASCADE-removed by the GC cleanup cron at `purge_at`. Restore via `POST /v0/drives/{id}/restore` while the row is still in trash. The path-param `drive_id` MUST match the authenticated drive.
+
+Accepts either an `ad_live_` per-drive key (deletes that key's drive) or an `ad_user_` user token selecting an owned drive (workspaces-design §5.3); a `read`-scope user token is rejected with 403 `INSUFFICIENT_SCOPE`. **Guard (§8):** a workspace must retain at least one live drive — deleting the workspace's last live drive returns 409 `LAST_DRIVE`.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param driveId
@@ -2712,6 +3263,135 @@ func (a *DefaultAPIService) DeleteDriveRouteV0DrivesDriveIdDeleteExecute(r ApiDe
 	if r.authorization != nil {
 		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
 	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiDeleteDriveWebWebDrivesDriveIdDeletePostRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	driveId string
+	csrf *string
+}
+
+func (r ApiDeleteDriveWebWebDrivesDriveIdDeletePostRequest) Csrf(csrf string) ApiDeleteDriveWebWebDrivesDriveIdDeletePostRequest {
+	r.csrf = &csrf
+	return r
+}
+
+func (r ApiDeleteDriveWebWebDrivesDriveIdDeletePostRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.DeleteDriveWebWebDrivesDriveIdDeletePostExecute(r)
+}
+
+/*
+DeleteDriveWebWebDrivesDriveIdDeletePost Delete Drive Web
+
+Soft-delete a drive the caller owns, with the last-drive guard
+(workspaces-design §8). Owner-only (no-leak no-op otherwise).
+
+Guard: blocks deleting the workspace's LAST live drive — a member must
+always land somewhere. On a successful delete of the *active* drive,
+we drop the pin so `current_drive` falls back to the user's next
+oldest owned drive.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param driveId
+ @return ApiDeleteDriveWebWebDrivesDriveIdDeletePostRequest
+*/
+func (a *DefaultAPIService) DeleteDriveWebWebDrivesDriveIdDeletePost(ctx context.Context, driveId string) ApiDeleteDriveWebWebDrivesDriveIdDeletePostRequest {
+	return ApiDeleteDriveWebWebDrivesDriveIdDeletePostRequest{
+		ApiService: a,
+		ctx: ctx,
+		driveId: driveId,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *DefaultAPIService) DeleteDriveWebWebDrivesDriveIdDeletePostExecute(r ApiDeleteDriveWebWebDrivesDriveIdDeletePostRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteDriveWebWebDrivesDriveIdDeletePost")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/web/drives/{drive_id}/delete"
+	localVarPath = strings.Replace(localVarPath, "{"+"drive_id"+"}", url.PathEscape(parameterValueToString(r.driveId, "driveId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.csrf == nil {
+		return localVarReturnValue, nil, reportError("csrf is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/x-www-form-urlencoded"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	parameterAddToHeaderOrQuery(localVarFormParams, "csrf", r.csrf, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -3375,6 +4055,151 @@ func (a *DefaultAPIService) DeleteShareRouteV0SharesShrIdDeleteExecute(r ApiDele
 	if r.authorization != nil {
 		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
 	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiDeleteWorkspaceWebWebWorkspacesOrgIdDeletePostRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	orgId string
+	csrf *string
+	confirm *string
+}
+
+func (r ApiDeleteWorkspaceWebWebWorkspacesOrgIdDeletePostRequest) Csrf(csrf string) ApiDeleteWorkspaceWebWebWorkspacesOrgIdDeletePostRequest {
+	r.csrf = &csrf
+	return r
+}
+
+func (r ApiDeleteWorkspaceWebWebWorkspacesOrgIdDeletePostRequest) Confirm(confirm string) ApiDeleteWorkspaceWebWebWorkspacesOrgIdDeletePostRequest {
+	r.confirm = &confirm
+	return r
+}
+
+func (r ApiDeleteWorkspaceWebWebWorkspacesOrgIdDeletePostRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.DeleteWorkspaceWebWebWorkspacesOrgIdDeletePostExecute(r)
+}
+
+/*
+DeleteWorkspaceWebWebWorkspacesOrgIdDeletePost Delete Workspace Web
+
+Explicit delete-workspace path (workspaces-design §4.4): a sole admin
+who can't leave (members remain) may instead destroy the workspace —
+cascade soft-delete the org + all its live drives.
+
+Admin-gated against the PATH org (not just the session) so a stale
+cookie can't redirect the cascade. A non-admin is a no-leak no-op.
+
+**Typed confirmation required** (parallel to `delete_account`'s
+`confirm == "DELETE"`): this cascade soft-deletes the WHOLE workspace
+plus every member's drives in it, so a single mis-clicked CSRF POST must
+not be able to trigger it. The caller must type either the literal
+`DELETE` or the exact workspace name; anything else bounces with no
+cascade. (Restricting to sole-admin is a separate product question,
+flagged to the user — not changed here.)
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param orgId
+ @return ApiDeleteWorkspaceWebWebWorkspacesOrgIdDeletePostRequest
+*/
+func (a *DefaultAPIService) DeleteWorkspaceWebWebWorkspacesOrgIdDeletePost(ctx context.Context, orgId string) ApiDeleteWorkspaceWebWebWorkspacesOrgIdDeletePostRequest {
+	return ApiDeleteWorkspaceWebWebWorkspacesOrgIdDeletePostRequest{
+		ApiService: a,
+		ctx: ctx,
+		orgId: orgId,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *DefaultAPIService) DeleteWorkspaceWebWebWorkspacesOrgIdDeletePostExecute(r ApiDeleteWorkspaceWebWebWorkspacesOrgIdDeletePostRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteWorkspaceWebWebWorkspacesOrgIdDeletePost")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/web/workspaces/{org_id}/delete"
+	localVarPath = strings.Replace(localVarPath, "{"+"org_id"+"}", url.PathEscape(parameterValueToString(r.orgId, "orgId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.csrf == nil {
+		return localVarReturnValue, nil, reportError("csrf is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/x-www-form-urlencoded"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.confirm != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "confirm", r.confirm, "", "")
+	}
+	parameterAddToHeaderOrQuery(localVarFormParams, "csrf", r.csrf, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -6631,6 +7456,160 @@ func (a *DefaultAPIService) HealthHealthGetExecute(r ApiHealthHealthGetRequest) 
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiInviteMemberWebWebMembersInvitePostRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	email *string
+	csrf *string
+	role *string
+	workspaceName *string
+}
+
+func (r ApiInviteMemberWebWebMembersInvitePostRequest) Email(email string) ApiInviteMemberWebWebMembersInvitePostRequest {
+	r.email = &email
+	return r
+}
+
+func (r ApiInviteMemberWebWebMembersInvitePostRequest) Csrf(csrf string) ApiInviteMemberWebWebMembersInvitePostRequest {
+	r.csrf = &csrf
+	return r
+}
+
+func (r ApiInviteMemberWebWebMembersInvitePostRequest) Role(role string) ApiInviteMemberWebWebMembersInvitePostRequest {
+	r.role = &role
+	return r
+}
+
+func (r ApiInviteMemberWebWebMembersInvitePostRequest) WorkspaceName(workspaceName string) ApiInviteMemberWebWebMembersInvitePostRequest {
+	r.workspaceName = &workspaceName
+	return r
+}
+
+func (r ApiInviteMemberWebWebMembersInvitePostRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.InviteMemberWebWebMembersInvitePostExecute(r)
+}
+
+/*
+InviteMemberWebWebMembersInvitePost Invite Member Web
+
+Admin invites a person by email (workspaces-design §4.4). Sends the
+invite email via the e2a lane. Admin-only; a non-admin is bounced.
+
+Rename-on-first-invite (workspaces-design §4.6): a single-member workspace
+still carries its onboarding default name. The invite form offers an
+optional `workspace_name` — a LIGHT prompt, not a gate. If non-empty, we
+rename the workspace in the SAME submit (before sending) so teammates land
+in a named workspace, not "Someone's Drive".
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiInviteMemberWebWebMembersInvitePostRequest
+*/
+func (a *DefaultAPIService) InviteMemberWebWebMembersInvitePost(ctx context.Context) ApiInviteMemberWebWebMembersInvitePostRequest {
+	return ApiInviteMemberWebWebMembersInvitePostRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *DefaultAPIService) InviteMemberWebWebMembersInvitePostExecute(r ApiInviteMemberWebWebMembersInvitePostRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.InviteMemberWebWebMembersInvitePost")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/web/members/invite"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.email == nil {
+		return localVarReturnValue, nil, reportError("email is required and must be specified")
+	}
+	if r.csrf == nil {
+		return localVarReturnValue, nil, reportError("csrf is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/x-www-form-urlencoded"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	parameterAddToHeaderOrQuery(localVarFormParams, "email", r.email, "", "")
+	if r.role != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "role", r.role, "", "")
+	}
+	if r.workspaceName != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "workspace_name", r.workspaceName, "", "")
+	}
+	parameterAddToHeaderOrQuery(localVarFormParams, "csrf", r.csrf, "", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiListArtifactVersionsV0ArtifactsArtIdVersionsGetRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
@@ -9303,6 +10282,133 @@ func (a *DefaultAPIService) PatchGrantRouteV0GrantsGrnIdPatchExecute(r ApiPatchG
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiPostDescribeV0QueryDescribePostRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	describeIn *DescribeIn
+	authorization *string
+}
+
+func (r ApiPostDescribeV0QueryDescribePostRequest) DescribeIn(describeIn DescribeIn) ApiPostDescribeV0QueryDescribePostRequest {
+	r.describeIn = &describeIn
+	return r
+}
+
+func (r ApiPostDescribeV0QueryDescribePostRequest) Authorization(authorization string) ApiPostDescribeV0QueryDescribePostRequest {
+	r.authorization = &authorization
+	return r
+}
+
+func (r ApiPostDescribeV0QueryDescribePostRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.PostDescribeV0QueryDescribePostExecute(r)
+}
+
+/*
+PostDescribeV0QueryDescribePost Describe a dataset's column schema
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiPostDescribeV0QueryDescribePostRequest
+*/
+func (a *DefaultAPIService) PostDescribeV0QueryDescribePost(ctx context.Context) ApiPostDescribeV0QueryDescribePostRequest {
+	return ApiPostDescribeV0QueryDescribePostRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *DefaultAPIService) PostDescribeV0QueryDescribePostExecute(r ApiPostDescribeV0QueryDescribePostRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.PostDescribeV0QueryDescribePost")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v0/query/describe"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.describeIn == nil {
+		return localVarReturnValue, nil, reportError("describeIn is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.authorization != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
+	}
+	// body params
+	localVarPostBody = r.describeIn
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiPostFeedbackV0FeedbackPostRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
@@ -9376,6 +10482,260 @@ func (a *DefaultAPIService) PostFeedbackV0FeedbackPostExecute(r ApiPostFeedbackV
 	if r.authorization != nil {
 		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
 	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPostLookupValuesV0QueryLookupValuesPostRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	lookupValuesIn *LookupValuesIn
+	authorization *string
+}
+
+func (r ApiPostLookupValuesV0QueryLookupValuesPostRequest) LookupValuesIn(lookupValuesIn LookupValuesIn) ApiPostLookupValuesV0QueryLookupValuesPostRequest {
+	r.lookupValuesIn = &lookupValuesIn
+	return r
+}
+
+func (r ApiPostLookupValuesV0QueryLookupValuesPostRequest) Authorization(authorization string) ApiPostLookupValuesV0QueryLookupValuesPostRequest {
+	r.authorization = &authorization
+	return r
+}
+
+func (r ApiPostLookupValuesV0QueryLookupValuesPostRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.PostLookupValuesV0QueryLookupValuesPostExecute(r)
+}
+
+/*
+PostLookupValuesV0QueryLookupValuesPost List distinct values of a dataset column
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiPostLookupValuesV0QueryLookupValuesPostRequest
+*/
+func (a *DefaultAPIService) PostLookupValuesV0QueryLookupValuesPost(ctx context.Context) ApiPostLookupValuesV0QueryLookupValuesPostRequest {
+	return ApiPostLookupValuesV0QueryLookupValuesPostRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *DefaultAPIService) PostLookupValuesV0QueryLookupValuesPostExecute(r ApiPostLookupValuesV0QueryLookupValuesPostRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.PostLookupValuesV0QueryLookupValuesPost")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v0/query/lookup-values"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.lookupValuesIn == nil {
+		return localVarReturnValue, nil, reportError("lookupValuesIn is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.authorization != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
+	}
+	// body params
+	localVarPostBody = r.lookupValuesIn
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPostQueryV0QueryPostRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	queryIn *QueryIn
+	authorization *string
+}
+
+func (r ApiPostQueryV0QueryPostRequest) QueryIn(queryIn QueryIn) ApiPostQueryV0QueryPostRequest {
+	r.queryIn = &queryIn
+	return r
+}
+
+func (r ApiPostQueryV0QueryPostRequest) Authorization(authorization string) ApiPostQueryV0QueryPostRequest {
+	r.authorization = &authorization
+	return r
+}
+
+func (r ApiPostQueryV0QueryPostRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.PostQueryV0QueryPostExecute(r)
+}
+
+/*
+PostQueryV0QueryPost Run a read-only SQL query over authorized datasets
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiPostQueryV0QueryPostRequest
+*/
+func (a *DefaultAPIService) PostQueryV0QueryPost(ctx context.Context) ApiPostQueryV0QueryPostRequest {
+	return ApiPostQueryV0QueryPostRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *DefaultAPIService) PostQueryV0QueryPostExecute(r ApiPostQueryV0QueryPostRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.PostQueryV0QueryPost")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v0/query"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.queryIn == nil {
+		return localVarReturnValue, nil, reportError("queryIn is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.authorization != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
+	}
+	// body params
+	localVarPostBody = r.queryIn
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -10775,6 +12135,150 @@ func (a *DefaultAPIService) RedeemShareWithPasswordSShareKeyPostExecute(r ApiRed
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiRemoveMemberWebWebMembersTargetUserIdRemovePostRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	targetUserId string
+	csrf *string
+	organizationId *string
+}
+
+func (r ApiRemoveMemberWebWebMembersTargetUserIdRemovePostRequest) Csrf(csrf string) ApiRemoveMemberWebWebMembersTargetUserIdRemovePostRequest {
+	r.csrf = &csrf
+	return r
+}
+
+func (r ApiRemoveMemberWebWebMembersTargetUserIdRemovePostRequest) OrganizationId(organizationId string) ApiRemoveMemberWebWebMembersTargetUserIdRemovePostRequest {
+	r.organizationId = &organizationId
+	return r
+}
+
+func (r ApiRemoveMemberWebWebMembersTargetUserIdRemovePostRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.RemoveMemberWebWebMembersTargetUserIdRemovePostExecute(r)
+}
+
+/*
+RemoveMemberWebWebMembersTargetUserIdRemovePost Remove Member Web
+
+Remove a member (admin) or self-leave (any member). Soft-deletes the
+member's owned drives in that workspace (workspaces-design §4.4). The
+sole-admin-with-members case is blocked (promote-or-delete).
+
+Org scoping: defaults to the session's active workspace. The "Your
+workspaces" list passes an explicit `organization_id` so a user can
+Leave a NON-active workspace too — authorized against THAT org's
+standing (self-leave for any member there; admin to remove others).
+A forged/non-member org id is a no-leak forbidden.
+
+Auth: gates on `current_user` + per-org standing, NOT `current_drive`
+(a driveless member of the target workspace must still be able to
+leave it). Attribution uses the user's email.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param targetUserId
+ @return ApiRemoveMemberWebWebMembersTargetUserIdRemovePostRequest
+*/
+func (a *DefaultAPIService) RemoveMemberWebWebMembersTargetUserIdRemovePost(ctx context.Context, targetUserId string) ApiRemoveMemberWebWebMembersTargetUserIdRemovePostRequest {
+	return ApiRemoveMemberWebWebMembersTargetUserIdRemovePostRequest{
+		ApiService: a,
+		ctx: ctx,
+		targetUserId: targetUserId,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *DefaultAPIService) RemoveMemberWebWebMembersTargetUserIdRemovePostExecute(r ApiRemoveMemberWebWebMembersTargetUserIdRemovePostRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.RemoveMemberWebWebMembersTargetUserIdRemovePost")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/web/members/{target_user_id}/remove"
+	localVarPath = strings.Replace(localVarPath, "{"+"target_user_id"+"}", url.PathEscape(parameterValueToString(r.targetUserId, "targetUserId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.csrf == nil {
+		return localVarReturnValue, nil, reportError("csrf is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/x-www-form-urlencoded"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.organizationId != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "organization_id", r.organizationId, "", "")
+	}
+	parameterAddToHeaderOrQuery(localVarFormParams, "csrf", r.csrf, "", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiRenameArtifactRouteV0ArtifactsArtIdPatchRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
@@ -10881,6 +12385,402 @@ func (a *DefaultAPIService) RenameArtifactRouteV0ArtifactsArtIdPatchExecute(r Ap
 	}
 	// body params
 	localVarPostBody = r.renameIn
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiRenameDriveWebWebDrivesDriveIdRenamePostRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	driveId string
+	name *string
+	csrf *string
+}
+
+func (r ApiRenameDriveWebWebDrivesDriveIdRenamePostRequest) Name(name string) ApiRenameDriveWebWebDrivesDriveIdRenamePostRequest {
+	r.name = &name
+	return r
+}
+
+func (r ApiRenameDriveWebWebDrivesDriveIdRenamePostRequest) Csrf(csrf string) ApiRenameDriveWebWebDrivesDriveIdRenamePostRequest {
+	r.csrf = &csrf
+	return r
+}
+
+func (r ApiRenameDriveWebWebDrivesDriveIdRenamePostRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.RenameDriveWebWebDrivesDriveIdRenamePostExecute(r)
+}
+
+/*
+RenameDriveWebWebDrivesDriveIdRenamePost Rename Drive Web
+
+Rename a drive the caller owns (workspaces-design §4.5).
+
+Owner-only: `drives.get_owned_drive` returns None for a peer-owned /
+forged / soft-deleted id, which we treat as a silent no-op (no-leak)
+and bounce back to the dashboard.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param driveId
+ @return ApiRenameDriveWebWebDrivesDriveIdRenamePostRequest
+*/
+func (a *DefaultAPIService) RenameDriveWebWebDrivesDriveIdRenamePost(ctx context.Context, driveId string) ApiRenameDriveWebWebDrivesDriveIdRenamePostRequest {
+	return ApiRenameDriveWebWebDrivesDriveIdRenamePostRequest{
+		ApiService: a,
+		ctx: ctx,
+		driveId: driveId,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *DefaultAPIService) RenameDriveWebWebDrivesDriveIdRenamePostExecute(r ApiRenameDriveWebWebDrivesDriveIdRenamePostRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.RenameDriveWebWebDrivesDriveIdRenamePost")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/web/drives/{drive_id}/rename"
+	localVarPath = strings.Replace(localVarPath, "{"+"drive_id"+"}", url.PathEscape(parameterValueToString(r.driveId, "driveId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.name == nil {
+		return localVarReturnValue, nil, reportError("name is required and must be specified")
+	}
+	if r.csrf == nil {
+		return localVarReturnValue, nil, reportError("csrf is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/x-www-form-urlencoded"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	parameterAddToHeaderOrQuery(localVarFormParams, "name", r.name, "", "")
+	parameterAddToHeaderOrQuery(localVarFormParams, "csrf", r.csrf, "", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiRenameWorkspaceWebWebWorkspacesOrgIdRenamePostRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	orgId string
+	name *string
+	csrf *string
+}
+
+func (r ApiRenameWorkspaceWebWebWorkspacesOrgIdRenamePostRequest) Name(name string) ApiRenameWorkspaceWebWebWorkspacesOrgIdRenamePostRequest {
+	r.name = &name
+	return r
+}
+
+func (r ApiRenameWorkspaceWebWebWorkspacesOrgIdRenamePostRequest) Csrf(csrf string) ApiRenameWorkspaceWebWebWorkspacesOrgIdRenamePostRequest {
+	r.csrf = &csrf
+	return r
+}
+
+func (r ApiRenameWorkspaceWebWebWorkspacesOrgIdRenamePostRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.RenameWorkspaceWebWebWorkspacesOrgIdRenamePostExecute(r)
+}
+
+/*
+RenameWorkspaceWebWebWorkspacesOrgIdRenamePost Rename Workspace Web
+
+Rename a workspace the caller administers (workspaces-design §4.6).
+
+Admin-gated against the PATH org (not just the session) so a stale cookie
+can't redirect the rename. A non-admin / non-member is a no-leak no-op.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param orgId
+ @return ApiRenameWorkspaceWebWebWorkspacesOrgIdRenamePostRequest
+*/
+func (a *DefaultAPIService) RenameWorkspaceWebWebWorkspacesOrgIdRenamePost(ctx context.Context, orgId string) ApiRenameWorkspaceWebWebWorkspacesOrgIdRenamePostRequest {
+	return ApiRenameWorkspaceWebWebWorkspacesOrgIdRenamePostRequest{
+		ApiService: a,
+		ctx: ctx,
+		orgId: orgId,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *DefaultAPIService) RenameWorkspaceWebWebWorkspacesOrgIdRenamePostExecute(r ApiRenameWorkspaceWebWebWorkspacesOrgIdRenamePostRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.RenameWorkspaceWebWebWorkspacesOrgIdRenamePost")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/web/workspaces/{org_id}/rename"
+	localVarPath = strings.Replace(localVarPath, "{"+"org_id"+"}", url.PathEscape(parameterValueToString(r.orgId, "orgId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.name == nil {
+		return localVarReturnValue, nil, reportError("name is required and must be specified")
+	}
+	if r.csrf == nil {
+		return localVarReturnValue, nil, reportError("csrf is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/x-www-form-urlencoded"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	parameterAddToHeaderOrQuery(localVarFormParams, "name", r.name, "", "")
+	parameterAddToHeaderOrQuery(localVarFormParams, "csrf", r.csrf, "", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiResendInvitationWebWebInvitationsInvitationIdResendPostRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	invitationId string
+	csrf *string
+}
+
+func (r ApiResendInvitationWebWebInvitationsInvitationIdResendPostRequest) Csrf(csrf string) ApiResendInvitationWebWebInvitationsInvitationIdResendPostRequest {
+	r.csrf = &csrf
+	return r
+}
+
+func (r ApiResendInvitationWebWebInvitationsInvitationIdResendPostRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.ResendInvitationWebWebInvitationsInvitationIdResendPostExecute(r)
+}
+
+/*
+ResendInvitationWebWebInvitationsInvitationIdResendPost Resend Invitation Web
+
+Admin re-mints + re-emails a pending invite (workspaces-design §8).
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param invitationId
+ @return ApiResendInvitationWebWebInvitationsInvitationIdResendPostRequest
+*/
+func (a *DefaultAPIService) ResendInvitationWebWebInvitationsInvitationIdResendPost(ctx context.Context, invitationId string) ApiResendInvitationWebWebInvitationsInvitationIdResendPostRequest {
+	return ApiResendInvitationWebWebInvitationsInvitationIdResendPostRequest{
+		ApiService: a,
+		ctx: ctx,
+		invitationId: invitationId,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *DefaultAPIService) ResendInvitationWebWebInvitationsInvitationIdResendPostExecute(r ApiResendInvitationWebWebInvitationsInvitationIdResendPostRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ResendInvitationWebWebInvitationsInvitationIdResendPost")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/web/invitations/{invitation_id}/resend"
+	localVarPath = strings.Replace(localVarPath, "{"+"invitation_id"+"}", url.PathEscape(parameterValueToString(r.invitationId, "invitationId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.csrf == nil {
+		return localVarReturnValue, nil, reportError("csrf is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/x-www-form-urlencoded"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	parameterAddToHeaderOrQuery(localVarFormParams, "csrf", r.csrf, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -11338,6 +13238,129 @@ func (a *DefaultAPIService) RevokeGrantWebShareRidGrantGrnIdRevokePostExecute(r 
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiRevokeInvitationWebWebInvitationsInvitationIdRevokePostRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	invitationId string
+	csrf *string
+}
+
+func (r ApiRevokeInvitationWebWebInvitationsInvitationIdRevokePostRequest) Csrf(csrf string) ApiRevokeInvitationWebWebInvitationsInvitationIdRevokePostRequest {
+	r.csrf = &csrf
+	return r
+}
+
+func (r ApiRevokeInvitationWebWebInvitationsInvitationIdRevokePostRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.RevokeInvitationWebWebInvitationsInvitationIdRevokePostExecute(r)
+}
+
+/*
+RevokeInvitationWebWebInvitationsInvitationIdRevokePost Revoke Invitation Web
+
+Admin revokes a pending invite (org-scoped, no-leak).
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param invitationId
+ @return ApiRevokeInvitationWebWebInvitationsInvitationIdRevokePostRequest
+*/
+func (a *DefaultAPIService) RevokeInvitationWebWebInvitationsInvitationIdRevokePost(ctx context.Context, invitationId string) ApiRevokeInvitationWebWebInvitationsInvitationIdRevokePostRequest {
+	return ApiRevokeInvitationWebWebInvitationsInvitationIdRevokePostRequest{
+		ApiService: a,
+		ctx: ctx,
+		invitationId: invitationId,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *DefaultAPIService) RevokeInvitationWebWebInvitationsInvitationIdRevokePostExecute(r ApiRevokeInvitationWebWebInvitationsInvitationIdRevokePostRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.RevokeInvitationWebWebInvitationsInvitationIdRevokePost")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/web/invitations/{invitation_id}/revoke"
+	localVarPath = strings.Replace(localVarPath, "{"+"invitation_id"+"}", url.PathEscape(parameterValueToString(r.invitationId, "invitationId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.csrf == nil {
+		return localVarReturnValue, nil, reportError("csrf is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/x-www-form-urlencoded"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	parameterAddToHeaderOrQuery(localVarFormParams, "csrf", r.csrf, "", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiRevokeLinkWebShareRidLinkShrIdRevokePostRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
@@ -11415,6 +13438,267 @@ func (a *DefaultAPIService) RevokeLinkWebShareRidLinkShrIdRevokePostExecute(r Ap
 	if r.xCsrfToken != nil {
 		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-csrf-token", r.xCsrfToken, "simple", "")
 	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiRevokeUserTokenWebTokensRevokePostRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	tokenId *string
+	csrf *string
+}
+
+func (r ApiRevokeUserTokenWebTokensRevokePostRequest) TokenId(tokenId string) ApiRevokeUserTokenWebTokensRevokePostRequest {
+	r.tokenId = &tokenId
+	return r
+}
+
+func (r ApiRevokeUserTokenWebTokensRevokePostRequest) Csrf(csrf string) ApiRevokeUserTokenWebTokensRevokePostRequest {
+	r.csrf = &csrf
+	return r
+}
+
+func (r ApiRevokeUserTokenWebTokensRevokePostRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.RevokeUserTokenWebTokensRevokePostExecute(r)
+}
+
+/*
+RevokeUserTokenWebTokensRevokePost Revoke User Token
+
+Revoke one of the caller's `ad_user_` tokens.
+
+Ownership is enforced inside `user_tokens.revoke(token_id, user_id)`
+— the form's `token_id` is attacker-controllable, so we never revoke
+by id alone. A non-matching id is a silent no-op (same redirect).
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiRevokeUserTokenWebTokensRevokePostRequest
+*/
+func (a *DefaultAPIService) RevokeUserTokenWebTokensRevokePost(ctx context.Context) ApiRevokeUserTokenWebTokensRevokePostRequest {
+	return ApiRevokeUserTokenWebTokensRevokePostRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *DefaultAPIService) RevokeUserTokenWebTokensRevokePostExecute(r ApiRevokeUserTokenWebTokensRevokePostRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.RevokeUserTokenWebTokensRevokePost")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/web/tokens/revoke"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.tokenId == nil {
+		return localVarReturnValue, nil, reportError("tokenId is required and must be specified")
+	}
+	if r.csrf == nil {
+		return localVarReturnValue, nil, reportError("csrf is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/x-www-form-urlencoded"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	parameterAddToHeaderOrQuery(localVarFormParams, "token_id", r.tokenId, "", "")
+	parameterAddToHeaderOrQuery(localVarFormParams, "csrf", r.csrf, "", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiRotateDriveKeyWebWebDrivesDriveIdKeysRotatePostRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	driveId string
+	csrf *string
+}
+
+func (r ApiRotateDriveKeyWebWebDrivesDriveIdKeysRotatePostRequest) Csrf(csrf string) ApiRotateDriveKeyWebWebDrivesDriveIdKeysRotatePostRequest {
+	r.csrf = &csrf
+	return r
+}
+
+func (r ApiRotateDriveKeyWebWebDrivesDriveIdKeysRotatePostRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.RotateDriveKeyWebWebDrivesDriveIdKeysRotatePostExecute(r)
+}
+
+/*
+RotateDriveKeyWebWebDrivesDriveIdKeysRotatePost Rotate Drive Key Web
+
+Rotate a specific owned drive's `ad_live_` key + reveal once
+(workspaces-design §5.6). Owner-only (no-leak no-op otherwise).
+
+The per-drive twin of `/web/keys/rotate` (which acts on the active
+drive). Pins the rotated drive active so the reveal on the api-keys
+tab shows the key for the drive the user just rotated.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param driveId
+ @return ApiRotateDriveKeyWebWebDrivesDriveIdKeysRotatePostRequest
+*/
+func (a *DefaultAPIService) RotateDriveKeyWebWebDrivesDriveIdKeysRotatePost(ctx context.Context, driveId string) ApiRotateDriveKeyWebWebDrivesDriveIdKeysRotatePostRequest {
+	return ApiRotateDriveKeyWebWebDrivesDriveIdKeysRotatePostRequest{
+		ApiService: a,
+		ctx: ctx,
+		driveId: driveId,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *DefaultAPIService) RotateDriveKeyWebWebDrivesDriveIdKeysRotatePostExecute(r ApiRotateDriveKeyWebWebDrivesDriveIdKeysRotatePostRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.RotateDriveKeyWebWebDrivesDriveIdKeysRotatePost")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/web/drives/{drive_id}/keys/rotate"
+	localVarPath = strings.Replace(localVarPath, "{"+"drive_id"+"}", url.PathEscape(parameterValueToString(r.driveId, "driveId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.csrf == nil {
+		return localVarReturnValue, nil, reportError("csrf is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/x-www-form-urlencoded"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	parameterAddToHeaderOrQuery(localVarFormParams, "csrf", r.csrf, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -11925,6 +14209,140 @@ func (a *DefaultAPIService) SearchV0SearchGetExecute(r ApiSearchV0SearchGetReque
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiSetMemberRoleWebWebMembersTargetUserIdRolePostRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	targetUserId string
+	role *string
+	csrf *string
+}
+
+func (r ApiSetMemberRoleWebWebMembersTargetUserIdRolePostRequest) Role(role string) ApiSetMemberRoleWebWebMembersTargetUserIdRolePostRequest {
+	r.role = &role
+	return r
+}
+
+func (r ApiSetMemberRoleWebWebMembersTargetUserIdRolePostRequest) Csrf(csrf string) ApiSetMemberRoleWebWebMembersTargetUserIdRolePostRequest {
+	r.csrf = &csrf
+	return r
+}
+
+func (r ApiSetMemberRoleWebWebMembersTargetUserIdRolePostRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.SetMemberRoleWebWebMembersTargetUserIdRolePostExecute(r)
+}
+
+/*
+SetMemberRoleWebWebMembersTargetUserIdRolePost Set Member Role Web
+
+Admin promotes/demotes a member. Last-admin demote is blocked
+(workspaces-design §4.4).
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param targetUserId
+ @return ApiSetMemberRoleWebWebMembersTargetUserIdRolePostRequest
+*/
+func (a *DefaultAPIService) SetMemberRoleWebWebMembersTargetUserIdRolePost(ctx context.Context, targetUserId string) ApiSetMemberRoleWebWebMembersTargetUserIdRolePostRequest {
+	return ApiSetMemberRoleWebWebMembersTargetUserIdRolePostRequest{
+		ApiService: a,
+		ctx: ctx,
+		targetUserId: targetUserId,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *DefaultAPIService) SetMemberRoleWebWebMembersTargetUserIdRolePostExecute(r ApiSetMemberRoleWebWebMembersTargetUserIdRolePostRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.SetMemberRoleWebWebMembersTargetUserIdRolePost")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/web/members/{target_user_id}/role"
+	localVarPath = strings.Replace(localVarPath, "{"+"target_user_id"+"}", url.PathEscape(parameterValueToString(r.targetUserId, "targetUserId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.role == nil {
+		return localVarReturnValue, nil, reportError("role is required and must be specified")
+	}
+	if r.csrf == nil {
+		return localVarReturnValue, nil, reportError("csrf is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/x-www-form-urlencoded"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	parameterAddToHeaderOrQuery(localVarFormParams, "role", r.role, "", "")
+	parameterAddToHeaderOrQuery(localVarFormParams, "csrf", r.csrf, "", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiSetPublicWebShareRidPublicPostRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
@@ -12207,7 +14625,11 @@ func (r ApiSettingsAccountSettingsGetRequest) Execute() (string, *http.Response,
 /*
 SettingsAccountSettingsGet Settings Account
 
-Default settings landing — Account info + Danger zone.
+Default settings landing — Account info + Usage + Danger zone.
+
+Usage folded in here (was a standalone `/settings/usage` tab): the
+same meter data is fetched via `_usage_context` and rendered as a
+section on this page.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSettingsAccountSettingsGetRequest
@@ -12308,6 +14730,13 @@ SettingsApiKeysSettingsApiKeysGet Settings Api Keys
 
 API key tab. Also where reveal_key is rendered after rotation; the
 reveal is consumed (removed from session) on first read.
+
+Surfaces two credential classes (workspaces-design §5.6):
+  * the drive's `ad_live_` per-drive key (`drive.api_key_prefix`,
+    rotate/delete) — unchanged from v0.
+  * the user's `ad_user_` identity tokens (`user_tokens`, mint/list/
+    revoke). Minting reveals the raw token once via the same
+    `reveal_key`-in-session mechanism as the drive key.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSettingsApiKeysSettingsApiKeysGetRequest
@@ -12500,31 +14929,30 @@ func (a *DefaultAPIService) SettingsQuickstartSettingsQuickstartGetExecute(r Api
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSettingsUsageSettingsUsageGetRequest struct {
+type ApiSettingsWorkspaceSettingsWorkspaceGetRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 }
 
-func (r ApiSettingsUsageSettingsUsageGetRequest) Execute() (string, *http.Response, error) {
-	return r.ApiService.SettingsUsageSettingsUsageGetExecute(r)
+func (r ApiSettingsWorkspaceSettingsWorkspaceGetRequest) Execute() (string, *http.Response, error) {
+	return r.ApiService.SettingsWorkspaceSettingsWorkspaceGetExecute(r)
 }
 
 /*
-SettingsUsageSettingsUsageGet Settings Usage
+SettingsWorkspaceSettingsWorkspaceGet Settings Workspace
 
-Usage tab — current-period meters against tier caps.
+Standalone workspace settings page (decision O4): members list +
+pending invites + invite form + role change + remove.
 
-Reads the same data as `GET /v0/drives/me/usage` but renders it as
-HTML directly so the page doesn't need a JS fetch round-trip. The
-template computes the percentage and warning state per-row from
-the `used` / `limit` pair; `limit == 0` is the unlimited sentinel
-and the template hides the cap line in that case.
+Admin-gated for the management actions; a member sees the roster but no
+management controls (the template hides them unless `is_admin`). The
+active workspace is the session's `active_organization_id`.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSettingsUsageSettingsUsageGetRequest
+ @return ApiSettingsWorkspaceSettingsWorkspaceGetRequest
 */
-func (a *DefaultAPIService) SettingsUsageSettingsUsageGet(ctx context.Context) ApiSettingsUsageSettingsUsageGetRequest {
-	return ApiSettingsUsageSettingsUsageGetRequest{
+func (a *DefaultAPIService) SettingsWorkspaceSettingsWorkspaceGet(ctx context.Context) ApiSettingsWorkspaceSettingsWorkspaceGetRequest {
+	return ApiSettingsWorkspaceSettingsWorkspaceGetRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
@@ -12532,7 +14960,7 @@ func (a *DefaultAPIService) SettingsUsageSettingsUsageGet(ctx context.Context) A
 
 // Execute executes the request
 //  @return string
-func (a *DefaultAPIService) SettingsUsageSettingsUsageGetExecute(r ApiSettingsUsageSettingsUsageGetRequest) (string, *http.Response, error) {
+func (a *DefaultAPIService) SettingsWorkspaceSettingsWorkspaceGetExecute(r ApiSettingsWorkspaceSettingsWorkspaceGetRequest) (string, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -12540,12 +14968,12 @@ func (a *DefaultAPIService) SettingsUsageSettingsUsageGetExecute(r ApiSettingsUs
 		localVarReturnValue  string
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.SettingsUsageSettingsUsageGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.SettingsWorkspaceSettingsWorkspaceGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/settings/usage"
+	localVarPath := localBasePath + "/settings/workspace"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -12819,44 +15247,64 @@ func (a *DefaultAPIService) StreamUploadV0UploadTokenPutExecute(r ApiStreamUploa
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSwitchOrgWebSwitchOrgPostRequest struct {
+type ApiSwitchDriveWebSwitchPostRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	organizationId *string
 	csrf *string
+	driveId *string
+	organizationId *string
 }
 
-func (r ApiSwitchOrgWebSwitchOrgPostRequest) OrganizationId(organizationId string) ApiSwitchOrgWebSwitchOrgPostRequest {
-	r.organizationId = &organizationId
-	return r
-}
-
-func (r ApiSwitchOrgWebSwitchOrgPostRequest) Csrf(csrf string) ApiSwitchOrgWebSwitchOrgPostRequest {
+func (r ApiSwitchDriveWebSwitchPostRequest) Csrf(csrf string) ApiSwitchDriveWebSwitchPostRequest {
 	r.csrf = &csrf
 	return r
 }
 
-func (r ApiSwitchOrgWebSwitchOrgPostRequest) Execute() (interface{}, *http.Response, error) {
-	return r.ApiService.SwitchOrgWebSwitchOrgPostExecute(r)
+func (r ApiSwitchDriveWebSwitchPostRequest) DriveId(driveId string) ApiSwitchDriveWebSwitchPostRequest {
+	r.driveId = &driveId
+	return r
+}
+
+func (r ApiSwitchDriveWebSwitchPostRequest) OrganizationId(organizationId string) ApiSwitchDriveWebSwitchPostRequest {
+	r.organizationId = &organizationId
+	return r
+}
+
+func (r ApiSwitchDriveWebSwitchPostRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.SwitchDriveWebSwitchPostExecute(r)
 }
 
 /*
-SwitchOrgWebSwitchOrgPost Switch Org
+SwitchDriveWebSwitchPost Switch Drive
 
-Switch the session's active organization (and thus the active drive).
+Switch the active workspace (and drive) — workspace-first
+(workspaces-design §4.3).
 
-A user can belong to multiple orgs (e.g. a personal org + a shared/business
-org). v1 binds the active org at login with no way to change it; this lets a
-member flip it. Membership is re-verified server-side (the form value is
-attacker-controllable), then the session cookie is re-minted with the new
-active org — `current_drive`'s membership JOIN enforces access on the next
-request. Any `reveal_key` is dropped: it was scoped to the old drive.
+Two modes, mirroring the Linear/Slack/GitHub "switch by workspace"
+model:
+
+  * **Workspace switch** (`organization_id`): membership-check the
+    target org for the user; on success set it active and pin the
+    user's OLDEST owned live drive there (deterministic), or None if
+    they own none — in which case the dashboard's
+    `resolve_driveless_member` renders the "create your first drive"
+    empty state for that workspace.
+  * **Drive switch** (`drive_id`): validate the user OWNS the posted
+    drive (and is a live member of its workspace) via
+    `drives_svc.user_owns_drive`, then set both org + drive active.
+    Lets a multi-drive workspace pick a specific drive. If BOTH are
+    posted, the explicit `drive_id` wins (subject to its own check).
+
+Both forms are no-leak: a forged / peer-owned / non-member target
+fails its check and is treated identically to "no such target"
+(303 back to /dashboard without mutating the session — no leak, no
+error oracle).
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSwitchOrgWebSwitchOrgPostRequest
+ @return ApiSwitchDriveWebSwitchPostRequest
 */
-func (a *DefaultAPIService) SwitchOrgWebSwitchOrgPost(ctx context.Context) ApiSwitchOrgWebSwitchOrgPostRequest {
-	return ApiSwitchOrgWebSwitchOrgPostRequest{
+func (a *DefaultAPIService) SwitchDriveWebSwitchPost(ctx context.Context) ApiSwitchDriveWebSwitchPostRequest {
+	return ApiSwitchDriveWebSwitchPostRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
@@ -12864,7 +15312,7 @@ func (a *DefaultAPIService) SwitchOrgWebSwitchOrgPost(ctx context.Context) ApiSw
 
 // Execute executes the request
 //  @return interface{}
-func (a *DefaultAPIService) SwitchOrgWebSwitchOrgPostExecute(r ApiSwitchOrgWebSwitchOrgPostRequest) (interface{}, *http.Response, error) {
+func (a *DefaultAPIService) SwitchDriveWebSwitchPostExecute(r ApiSwitchDriveWebSwitchPostRequest) (interface{}, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -12872,19 +15320,16 @@ func (a *DefaultAPIService) SwitchOrgWebSwitchOrgPostExecute(r ApiSwitchOrgWebSw
 		localVarReturnValue  interface{}
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.SwitchOrgWebSwitchOrgPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.SwitchDriveWebSwitchPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/web/switch-org"
+	localVarPath := localBasePath + "/web/switch"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.organizationId == nil {
-		return localVarReturnValue, nil, reportError("organizationId is required and must be specified")
-	}
 	if r.csrf == nil {
 		return localVarReturnValue, nil, reportError("csrf is required and must be specified")
 	}
@@ -12906,7 +15351,12 @@ func (a *DefaultAPIService) SwitchOrgWebSwitchOrgPostExecute(r ApiSwitchOrgWebSw
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	parameterAddToHeaderOrQuery(localVarFormParams, "organization_id", r.organizationId, "", "")
+	if r.driveId != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "drive_id", r.driveId, "", "")
+	}
+	if r.organizationId != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "organization_id", r.organizationId, "", "")
+	}
 	parameterAddToHeaderOrQuery(localVarFormParams, "csrf", r.csrf, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -15192,6 +17642,15 @@ CSRF is checked via the `X-CSRF-Token` header (see
 `<meta name="csrf-token">` tag rendered into the edit page.
 Rate-limited per-IP/user at the same cadence the editor's 1.5s
 autosave can sustain without flagging abuse.
+
+Cross-workspace (design §4.3): the editor page is reached by a stable-id
+URL that may name a drive outside the session's active workspace, so the
+write must target the RESOURCE's drive, not the active one. The editor
+sends the resolved drive in an `X-Drive-Id` header; we authorize ownership
+of THAT drive via `resolve_owned_drive` (it returns None for a forged /
+unowned id → 401, never a write). Absent header ⇒ fall back to
+`current_drive` (pre-fast-follow behavior; a cached old client still works,
+only without the cross-workspace fix).
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param path

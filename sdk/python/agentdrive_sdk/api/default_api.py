@@ -22,6 +22,7 @@ from typing_extensions import Annotated
 from agentdrive_sdk.models.artifact_out import ArtifactOut
 from agentdrive_sdk.models.compile_job_in import CompileJobIn
 from agentdrive_sdk.models.copy_in import CopyIn
+from agentdrive_sdk.models.describe_in import DescribeIn
 from agentdrive_sdk.models.download_url_out import DownloadUrlOut
 from agentdrive_sdk.models.event_page import EventPage
 from agentdrive_sdk.models.find_page import FindPage
@@ -36,9 +37,11 @@ from agentdrive_sdk.models.grant_list import GrantList
 from agentdrive_sdk.models.grant_out import GrantOut
 from agentdrive_sdk.models.grant_patch_in import GrantPatchIn
 from agentdrive_sdk.models.link_in import LinkIn
+from agentdrive_sdk.models.lookup_values_in import LookupValuesIn
 from agentdrive_sdk.models.page import Page
 from agentdrive_sdk.models.project_config_in import ProjectConfigIn
 from agentdrive_sdk.models.public_in import PublicIn
+from agentdrive_sdk.models.query_in import QueryIn
 from agentdrive_sdk.models.rename_in import RenameIn
 from agentdrive_sdk.models.seal_in import SealIn
 from agentdrive_sdk.models.search_page import SearchPage
@@ -66,6 +69,270 @@ class DefaultApi:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+
+
+    @validate_call
+    def accept_invitation_invitations_token_get(
+        self,
+        token: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> str:
+        """Accept Invitation
+
+        Accept a workspace invitation (workspaces-design §4.4). Top-level route — deliberately OFF the reserved single-letter prefixes (`/a /f /s /v /_`).  If the visitor isn't signed in, bounce through `/auth/login` with a same-origin `return_to` back here (the login flow validates return_to, so the path is safe). Once signed in, validate + accept:   * email mismatch / expired / revoked / unknown → friendly error page,   * success → join the workspace, set it active, land on the dashboard.
+
+        :param token: (required)
+        :type token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._accept_invitation_invitations_token_get_serialize(
+            token=token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def accept_invitation_invitations_token_get_with_http_info(
+        self,
+        token: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[str]:
+        """Accept Invitation
+
+        Accept a workspace invitation (workspaces-design §4.4). Top-level route — deliberately OFF the reserved single-letter prefixes (`/a /f /s /v /_`).  If the visitor isn't signed in, bounce through `/auth/login` with a same-origin `return_to` back here (the login flow validates return_to, so the path is safe). Once signed in, validate + accept:   * email mismatch / expired / revoked / unknown → friendly error page,   * success → join the workspace, set it active, land on the dashboard.
+
+        :param token: (required)
+        :type token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._accept_invitation_invitations_token_get_serialize(
+            token=token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def accept_invitation_invitations_token_get_without_preload_content(
+        self,
+        token: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Accept Invitation
+
+        Accept a workspace invitation (workspaces-design §4.4). Top-level route — deliberately OFF the reserved single-letter prefixes (`/a /f /s /v /_`).  If the visitor isn't signed in, bounce through `/auth/login` with a same-origin `return_to` back here (the login flow validates return_to, so the path is safe). Once signed in, validate + accept:   * email mismatch / expired / revoked / unknown → friendly error page,   * success → join the workspace, set it active, land on the dashboard.
+
+        :param token: (required)
+        :type token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._accept_invitation_invitations_token_get_serialize(
+            token=token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _accept_invitation_invitations_token_get_serialize(
+        self,
+        token,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if token is not None:
+            _path_params['token'] = token
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'text/html', 
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/invitations/{token}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
 
 
     @validate_call
@@ -2856,6 +3123,297 @@ class DefaultApi:
 
 
     @validate_call
+    def create_drive_web_web_drives_post(
+        self,
+        name: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Create Drive Web
+
+        Create a drive in the active workspace + reveal its key once (workspaces-design §4.5, §5.6).  The web (session+CSRF) twin of `POST /v0/drives`. Any MEMBER of the active workspace may create a drive; the creator becomes its owner. The new drive's `ad_live_` key is shown ONCE via the same `reveal_key`-in-session mechanism the api-keys tab consumes; we also pin the new drive as active and land on the api-keys tab so the user sees the reveal.  Authorization is by `current_user` + membership, NOT `current_drive` (workspaces-design §4.3 empty state): a freshly-invited member owns 0 drives, so `current_drive` is None for them — yet this is exactly the \"create your first drive\" moment that MUST work. Gating on a pre-existing drive would dead-end the web onboarding path. Membership + the per-member cap are the real guards; both hold whether or not the user already owns a drive.
+
+        :param name: (required)
+        :type name: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_drive_web_web_drives_post_serialize(
+            name=name,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def create_drive_web_web_drives_post_with_http_info(
+        self,
+        name: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Create Drive Web
+
+        Create a drive in the active workspace + reveal its key once (workspaces-design §4.5, §5.6).  The web (session+CSRF) twin of `POST /v0/drives`. Any MEMBER of the active workspace may create a drive; the creator becomes its owner. The new drive's `ad_live_` key is shown ONCE via the same `reveal_key`-in-session mechanism the api-keys tab consumes; we also pin the new drive as active and land on the api-keys tab so the user sees the reveal.  Authorization is by `current_user` + membership, NOT `current_drive` (workspaces-design §4.3 empty state): a freshly-invited member owns 0 drives, so `current_drive` is None for them — yet this is exactly the \"create your first drive\" moment that MUST work. Gating on a pre-existing drive would dead-end the web onboarding path. Membership + the per-member cap are the real guards; both hold whether or not the user already owns a drive.
+
+        :param name: (required)
+        :type name: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_drive_web_web_drives_post_serialize(
+            name=name,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def create_drive_web_web_drives_post_without_preload_content(
+        self,
+        name: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Create Drive Web
+
+        Create a drive in the active workspace + reveal its key once (workspaces-design §4.5, §5.6).  The web (session+CSRF) twin of `POST /v0/drives`. Any MEMBER of the active workspace may create a drive; the creator becomes its owner. The new drive's `ad_live_` key is shown ONCE via the same `reveal_key`-in-session mechanism the api-keys tab consumes; we also pin the new drive as active and land on the api-keys tab so the user sees the reveal.  Authorization is by `current_user` + membership, NOT `current_drive` (workspaces-design §4.3 empty state): a freshly-invited member owns 0 drives, so `current_drive` is None for them — yet this is exactly the \"create your first drive\" moment that MUST work. Gating on a pre-existing drive would dead-end the web onboarding path. Membership + the per-member cap are the real guards; both hold whether or not the user already owns a drive.
+
+        :param name: (required)
+        :type name: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_drive_web_web_drives_post_serialize(
+            name=name,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _create_drive_web_web_drives_post_serialize(
+        self,
+        name,
+        csrf,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        if name is not None:
+            _form_params.append(('name', name))
+        if csrf is not None:
+            _form_params.append(('csrf', csrf))
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/x-www-form-urlencoded'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/web/drives',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def create_folder_by_path_v0_folders_path_post(
         self,
         path: StrictStr,
@@ -4073,6 +4631,603 @@ class DefaultApi:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/v0/shares',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def create_user_token_web_tokens_create_post(
+        self,
+        csrf: StrictStr,
+        label: Optional[StrictStr] = None,
+        scope: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Create User Token
+
+        Mint an `ad_user_` user-identity token (workspaces-design §5.2, §5.6).  **Web-only minting**: the bootstrap chicken-and-egg is solved here, and a leaked token must not be able to mint persistent siblings — so this path exists only behind the browser session + CSRF, never over the `/v0/` API.  The raw token is shown ONCE via `reveal_token` in the session, then consumed on the next GET of the api-keys tab.
+
+        :param csrf: (required)
+        :type csrf: str
+        :param label:
+        :type label: str
+        :param scope:
+        :type scope: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_user_token_web_tokens_create_post_serialize(
+            csrf=csrf,
+            label=label,
+            scope=scope,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def create_user_token_web_tokens_create_post_with_http_info(
+        self,
+        csrf: StrictStr,
+        label: Optional[StrictStr] = None,
+        scope: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Create User Token
+
+        Mint an `ad_user_` user-identity token (workspaces-design §5.2, §5.6).  **Web-only minting**: the bootstrap chicken-and-egg is solved here, and a leaked token must not be able to mint persistent siblings — so this path exists only behind the browser session + CSRF, never over the `/v0/` API.  The raw token is shown ONCE via `reveal_token` in the session, then consumed on the next GET of the api-keys tab.
+
+        :param csrf: (required)
+        :type csrf: str
+        :param label:
+        :type label: str
+        :param scope:
+        :type scope: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_user_token_web_tokens_create_post_serialize(
+            csrf=csrf,
+            label=label,
+            scope=scope,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def create_user_token_web_tokens_create_post_without_preload_content(
+        self,
+        csrf: StrictStr,
+        label: Optional[StrictStr] = None,
+        scope: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Create User Token
+
+        Mint an `ad_user_` user-identity token (workspaces-design §5.2, §5.6).  **Web-only minting**: the bootstrap chicken-and-egg is solved here, and a leaked token must not be able to mint persistent siblings — so this path exists only behind the browser session + CSRF, never over the `/v0/` API.  The raw token is shown ONCE via `reveal_token` in the session, then consumed on the next GET of the api-keys tab.
+
+        :param csrf: (required)
+        :type csrf: str
+        :param label:
+        :type label: str
+        :param scope:
+        :type scope: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_user_token_web_tokens_create_post_serialize(
+            csrf=csrf,
+            label=label,
+            scope=scope,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _create_user_token_web_tokens_create_post_serialize(
+        self,
+        csrf,
+        label,
+        scope,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        if label is not None:
+            _form_params.append(('label', label))
+        if scope is not None:
+            _form_params.append(('scope', scope))
+        if csrf is not None:
+            _form_params.append(('csrf', csrf))
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/x-www-form-urlencoded'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/web/tokens/create',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def create_workspace_web_web_workspaces_post(
+        self,
+        name: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Create Workspace Web
+
+        Create a new workspace, set it active, reveal its starter key once (workspaces-design §4.7).  The web (session+CSRF) twin of `POST /v0/workspaces`. A user may administer at most a fixed number of workspaces (`core.entitlements. can_create_workspace`, a hard cap — §4.7/O2); a blocked create bounces to the dashboard with a limit-reached affordance (`?err=workspace_limit`) rather than silently allowing. On success the new workspace + its starter drive become active and we land on the api-keys tab so the user sees the one-time key reveal.
+
+        :param name: (required)
+        :type name: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_workspace_web_web_workspaces_post_serialize(
+            name=name,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def create_workspace_web_web_workspaces_post_with_http_info(
+        self,
+        name: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Create Workspace Web
+
+        Create a new workspace, set it active, reveal its starter key once (workspaces-design §4.7).  The web (session+CSRF) twin of `POST /v0/workspaces`. A user may administer at most a fixed number of workspaces (`core.entitlements. can_create_workspace`, a hard cap — §4.7/O2); a blocked create bounces to the dashboard with a limit-reached affordance (`?err=workspace_limit`) rather than silently allowing. On success the new workspace + its starter drive become active and we land on the api-keys tab so the user sees the one-time key reveal.
+
+        :param name: (required)
+        :type name: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_workspace_web_web_workspaces_post_serialize(
+            name=name,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def create_workspace_web_web_workspaces_post_without_preload_content(
+        self,
+        name: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Create Workspace Web
+
+        Create a new workspace, set it active, reveal its starter key once (workspaces-design §4.7).  The web (session+CSRF) twin of `POST /v0/workspaces`. A user may administer at most a fixed number of workspaces (`core.entitlements. can_create_workspace`, a hard cap — §4.7/O2); a blocked create bounces to the dashboard with a limit-reached affordance (`?err=workspace_limit`) rather than silently allowing. On success the new workspace + its starter drive become active and we land on the api-keys tab so the user sees the one-time key reveal.
+
+        :param name: (required)
+        :type name: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_workspace_web_web_workspaces_post_serialize(
+            name=name,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _create_workspace_web_web_workspaces_post_serialize(
+        self,
+        name,
+        csrf,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        if name is not None:
+            _form_params.append(('name', name))
+        if csrf is not None:
+            _form_params.append(('csrf', csrf))
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/x-www-form-urlencoded'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/web/workspaces',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -5912,9 +7067,9 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """Soft-delete the authenticated drive
+        """Soft-delete a drive
 
-        Mark the drive for cleanup. All tenant data (artifacts, versions, wiki, embeddings, events) is hidden via the `live_*` views and CASCADE-removed by the GC cleanup cron at `purge_at`. Restore via `POST /v0/drives/{id}/restore` while the row is still in trash. The path-param `drive_id` MUST match the authenticated drive.
+        Mark the drive for cleanup. All tenant data (artifacts, versions, wiki, embeddings, events) is hidden via the `live_*` views and CASCADE-removed by the GC cleanup cron at `purge_at`. Restore via `POST /v0/drives/{id}/restore` while the row is still in trash. The path-param `drive_id` MUST match the authenticated drive.  Accepts either an `ad_live_` per-drive key (deletes that key's drive) or an `ad_user_` user token selecting an owned drive (workspaces-design §5.3); a `read`-scope user token is rejected with 403 `INSUFFICIENT_SCOPE`. **Guard (§8):** a workspace must retain at least one live drive — deleting the workspace's last live drive returns 409 `LAST_DRIVE`.
 
         :param drive_id: (required)
         :type drive_id: str
@@ -5988,9 +7143,9 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """Soft-delete the authenticated drive
+        """Soft-delete a drive
 
-        Mark the drive for cleanup. All tenant data (artifacts, versions, wiki, embeddings, events) is hidden via the `live_*` views and CASCADE-removed by the GC cleanup cron at `purge_at`. Restore via `POST /v0/drives/{id}/restore` while the row is still in trash. The path-param `drive_id` MUST match the authenticated drive.
+        Mark the drive for cleanup. All tenant data (artifacts, versions, wiki, embeddings, events) is hidden via the `live_*` views and CASCADE-removed by the GC cleanup cron at `purge_at`. Restore via `POST /v0/drives/{id}/restore` while the row is still in trash. The path-param `drive_id` MUST match the authenticated drive.  Accepts either an `ad_live_` per-drive key (deletes that key's drive) or an `ad_user_` user token selecting an owned drive (workspaces-design §5.3); a `read`-scope user token is rejected with 403 `INSUFFICIENT_SCOPE`. **Guard (§8):** a workspace must retain at least one live drive — deleting the workspace's last live drive returns 409 `LAST_DRIVE`.
 
         :param drive_id: (required)
         :type drive_id: str
@@ -6064,9 +7219,9 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Soft-delete the authenticated drive
+        """Soft-delete a drive
 
-        Mark the drive for cleanup. All tenant data (artifacts, versions, wiki, embeddings, events) is hidden via the `live_*` views and CASCADE-removed by the GC cleanup cron at `purge_at`. Restore via `POST /v0/drives/{id}/restore` while the row is still in trash. The path-param `drive_id` MUST match the authenticated drive.
+        Mark the drive for cleanup. All tenant data (artifacts, versions, wiki, embeddings, events) is hidden via the `live_*` views and CASCADE-removed by the GC cleanup cron at `purge_at`. Restore via `POST /v0/drives/{id}/restore` while the row is still in trash. The path-param `drive_id` MUST match the authenticated drive.  Accepts either an `ad_live_` per-drive key (deletes that key's drive) or an `ad_user_` user token selecting an owned drive (workspaces-design §5.3); a `read`-scope user token is rejected with 403 `INSUFFICIENT_SCOPE`. **Guard (§8):** a workspace must retain at least one live drive — deleting the workspace's last live drive returns 409 `LAST_DRIVE`.
 
         :param drive_id: (required)
         :type drive_id: str
@@ -6171,6 +7326,297 @@ class DefaultApi:
         return self.api_client.param_serialize(
             method='DELETE',
             resource_path='/v0/drives/{drive_id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def delete_drive_web_web_drives_drive_id_delete_post(
+        self,
+        drive_id: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Delete Drive Web
+
+        Soft-delete a drive the caller owns, with the last-drive guard (workspaces-design §8). Owner-only (no-leak no-op otherwise).  Guard: blocks deleting the workspace's LAST live drive — a member must always land somewhere. On a successful delete of the *active* drive, we drop the pin so `current_drive` falls back to the user's next oldest owned drive.
+
+        :param drive_id: (required)
+        :type drive_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_drive_web_web_drives_drive_id_delete_post_serialize(
+            drive_id=drive_id,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def delete_drive_web_web_drives_drive_id_delete_post_with_http_info(
+        self,
+        drive_id: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Delete Drive Web
+
+        Soft-delete a drive the caller owns, with the last-drive guard (workspaces-design §8). Owner-only (no-leak no-op otherwise).  Guard: blocks deleting the workspace's LAST live drive — a member must always land somewhere. On a successful delete of the *active* drive, we drop the pin so `current_drive` falls back to the user's next oldest owned drive.
+
+        :param drive_id: (required)
+        :type drive_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_drive_web_web_drives_drive_id_delete_post_serialize(
+            drive_id=drive_id,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def delete_drive_web_web_drives_drive_id_delete_post_without_preload_content(
+        self,
+        drive_id: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Delete Drive Web
+
+        Soft-delete a drive the caller owns, with the last-drive guard (workspaces-design §8). Owner-only (no-leak no-op otherwise).  Guard: blocks deleting the workspace's LAST live drive — a member must always land somewhere. On a successful delete of the *active* drive, we drop the pin so `current_drive` falls back to the user's next oldest owned drive.
+
+        :param drive_id: (required)
+        :type drive_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_drive_web_web_drives_drive_id_delete_post_serialize(
+            drive_id=drive_id,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _delete_drive_web_web_drives_drive_id_delete_post_serialize(
+        self,
+        drive_id,
+        csrf,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if drive_id is not None:
+            _path_params['drive_id'] = drive_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        if csrf is not None:
+            _form_params.append(('csrf', csrf))
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/x-www-form-urlencoded'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/web/drives/{drive_id}/delete',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -7641,6 +9087,312 @@ class DefaultApi:
         return self.api_client.param_serialize(
             method='DELETE',
             resource_path='/v0/shares/{shr_id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def delete_workspace_web_web_workspaces_org_id_delete_post(
+        self,
+        org_id: StrictStr,
+        csrf: StrictStr,
+        confirm: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Delete Workspace Web
+
+        Explicit delete-workspace path (workspaces-design §4.4): a sole admin who can't leave (members remain) may instead destroy the workspace — cascade soft-delete the org + all its live drives.  Admin-gated against the PATH org (not just the session) so a stale cookie can't redirect the cascade. A non-admin is a no-leak no-op.  **Typed confirmation required** (parallel to `delete_account`'s `confirm == \"DELETE\"`): this cascade soft-deletes the WHOLE workspace plus every member's drives in it, so a single mis-clicked CSRF POST must not be able to trigger it. The caller must type either the literal `DELETE` or the exact workspace name; anything else bounces with no cascade. (Restricting to sole-admin is a separate product question, flagged to the user — not changed here.)
+
+        :param org_id: (required)
+        :type org_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param confirm:
+        :type confirm: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_workspace_web_web_workspaces_org_id_delete_post_serialize(
+            org_id=org_id,
+            csrf=csrf,
+            confirm=confirm,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def delete_workspace_web_web_workspaces_org_id_delete_post_with_http_info(
+        self,
+        org_id: StrictStr,
+        csrf: StrictStr,
+        confirm: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Delete Workspace Web
+
+        Explicit delete-workspace path (workspaces-design §4.4): a sole admin who can't leave (members remain) may instead destroy the workspace — cascade soft-delete the org + all its live drives.  Admin-gated against the PATH org (not just the session) so a stale cookie can't redirect the cascade. A non-admin is a no-leak no-op.  **Typed confirmation required** (parallel to `delete_account`'s `confirm == \"DELETE\"`): this cascade soft-deletes the WHOLE workspace plus every member's drives in it, so a single mis-clicked CSRF POST must not be able to trigger it. The caller must type either the literal `DELETE` or the exact workspace name; anything else bounces with no cascade. (Restricting to sole-admin is a separate product question, flagged to the user — not changed here.)
+
+        :param org_id: (required)
+        :type org_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param confirm:
+        :type confirm: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_workspace_web_web_workspaces_org_id_delete_post_serialize(
+            org_id=org_id,
+            csrf=csrf,
+            confirm=confirm,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def delete_workspace_web_web_workspaces_org_id_delete_post_without_preload_content(
+        self,
+        org_id: StrictStr,
+        csrf: StrictStr,
+        confirm: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Delete Workspace Web
+
+        Explicit delete-workspace path (workspaces-design §4.4): a sole admin who can't leave (members remain) may instead destroy the workspace — cascade soft-delete the org + all its live drives.  Admin-gated against the PATH org (not just the session) so a stale cookie can't redirect the cascade. A non-admin is a no-leak no-op.  **Typed confirmation required** (parallel to `delete_account`'s `confirm == \"DELETE\"`): this cascade soft-deletes the WHOLE workspace plus every member's drives in it, so a single mis-clicked CSRF POST must not be able to trigger it. The caller must type either the literal `DELETE` or the exact workspace name; anything else bounces with no cascade. (Restricting to sole-admin is a separate product question, flagged to the user — not changed here.)
+
+        :param org_id: (required)
+        :type org_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param confirm:
+        :type confirm: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_workspace_web_web_workspaces_org_id_delete_post_serialize(
+            org_id=org_id,
+            csrf=csrf,
+            confirm=confirm,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _delete_workspace_web_web_workspaces_org_id_delete_post_serialize(
+        self,
+        org_id,
+        csrf,
+        confirm,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if org_id is not None:
+            _path_params['org_id'] = org_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        if confirm is not None:
+            _form_params.append(('confirm', confirm))
+        if csrf is not None:
+            _form_params.append(('csrf', csrf))
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/x-www-form-urlencoded'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/web/workspaces/{org_id}/delete',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -14774,6 +16526,327 @@ class DefaultApi:
 
 
     @validate_call
+    def invite_member_web_web_members_invite_post(
+        self,
+        email: StrictStr,
+        csrf: StrictStr,
+        role: Optional[StrictStr] = None,
+        workspace_name: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Invite Member Web
+
+        Admin invites a person by email (workspaces-design §4.4). Sends the invite email via the e2a lane. Admin-only; a non-admin is bounced.  Rename-on-first-invite (workspaces-design §4.6): a single-member workspace still carries its onboarding default name. The invite form offers an optional `workspace_name` — a LIGHT prompt, not a gate. If non-empty, we rename the workspace in the SAME submit (before sending) so teammates land in a named workspace, not \"Someone's Drive\".
+
+        :param email: (required)
+        :type email: str
+        :param csrf: (required)
+        :type csrf: str
+        :param role:
+        :type role: str
+        :param workspace_name:
+        :type workspace_name: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._invite_member_web_web_members_invite_post_serialize(
+            email=email,
+            csrf=csrf,
+            role=role,
+            workspace_name=workspace_name,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def invite_member_web_web_members_invite_post_with_http_info(
+        self,
+        email: StrictStr,
+        csrf: StrictStr,
+        role: Optional[StrictStr] = None,
+        workspace_name: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Invite Member Web
+
+        Admin invites a person by email (workspaces-design §4.4). Sends the invite email via the e2a lane. Admin-only; a non-admin is bounced.  Rename-on-first-invite (workspaces-design §4.6): a single-member workspace still carries its onboarding default name. The invite form offers an optional `workspace_name` — a LIGHT prompt, not a gate. If non-empty, we rename the workspace in the SAME submit (before sending) so teammates land in a named workspace, not \"Someone's Drive\".
+
+        :param email: (required)
+        :type email: str
+        :param csrf: (required)
+        :type csrf: str
+        :param role:
+        :type role: str
+        :param workspace_name:
+        :type workspace_name: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._invite_member_web_web_members_invite_post_serialize(
+            email=email,
+            csrf=csrf,
+            role=role,
+            workspace_name=workspace_name,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def invite_member_web_web_members_invite_post_without_preload_content(
+        self,
+        email: StrictStr,
+        csrf: StrictStr,
+        role: Optional[StrictStr] = None,
+        workspace_name: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Invite Member Web
+
+        Admin invites a person by email (workspaces-design §4.4). Sends the invite email via the e2a lane. Admin-only; a non-admin is bounced.  Rename-on-first-invite (workspaces-design §4.6): a single-member workspace still carries its onboarding default name. The invite form offers an optional `workspace_name` — a LIGHT prompt, not a gate. If non-empty, we rename the workspace in the SAME submit (before sending) so teammates land in a named workspace, not \"Someone's Drive\".
+
+        :param email: (required)
+        :type email: str
+        :param csrf: (required)
+        :type csrf: str
+        :param role:
+        :type role: str
+        :param workspace_name:
+        :type workspace_name: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._invite_member_web_web_members_invite_post_serialize(
+            email=email,
+            csrf=csrf,
+            role=role,
+            workspace_name=workspace_name,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _invite_member_web_web_members_invite_post_serialize(
+        self,
+        email,
+        csrf,
+        role,
+        workspace_name,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        if email is not None:
+            _form_params.append(('email', email))
+        if role is not None:
+            _form_params.append(('role', role))
+        if workspace_name is not None:
+            _form_params.append(('workspace_name', workspace_name))
+        if csrf is not None:
+            _form_params.append(('csrf', csrf))
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/x-www-form-urlencoded'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/web/members/invite',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def list_artifact_versions_v0_artifacts_art_id_versions_get(
         self,
         art_id: StrictStr,
@@ -20658,6 +22731,294 @@ class DefaultApi:
 
 
     @validate_call
+    def post_describe_v0_query_describe_post(
+        self,
+        describe_in: DescribeIn,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Describe a dataset's column schema
+
+
+        :param describe_in: (required)
+        :type describe_in: DescribeIn
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._post_describe_v0_query_describe_post_serialize(
+            describe_in=describe_in,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def post_describe_v0_query_describe_post_with_http_info(
+        self,
+        describe_in: DescribeIn,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Describe a dataset's column schema
+
+
+        :param describe_in: (required)
+        :type describe_in: DescribeIn
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._post_describe_v0_query_describe_post_serialize(
+            describe_in=describe_in,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def post_describe_v0_query_describe_post_without_preload_content(
+        self,
+        describe_in: DescribeIn,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Describe a dataset's column schema
+
+
+        :param describe_in: (required)
+        :type describe_in: DescribeIn
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._post_describe_v0_query_describe_post_serialize(
+            describe_in=describe_in,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _post_describe_v0_query_describe_post_serialize(
+        self,
+        describe_in,
+        authorization,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        if authorization is not None:
+            _header_params['authorization'] = authorization
+        # process the form parameters
+        # process the body parameter
+        if describe_in is not None:
+            _body_params = describe_in
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/v0/query/describe',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def post_feedback_v0_feedback_post(
         self,
         authorization: Optional[StrictStr] = None,
@@ -20905,6 +23266,582 @@ class DefaultApi:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/v0/feedback',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def post_lookup_values_v0_query_lookup_values_post(
+        self,
+        lookup_values_in: LookupValuesIn,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """List distinct values of a dataset column
+
+
+        :param lookup_values_in: (required)
+        :type lookup_values_in: LookupValuesIn
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._post_lookup_values_v0_query_lookup_values_post_serialize(
+            lookup_values_in=lookup_values_in,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def post_lookup_values_v0_query_lookup_values_post_with_http_info(
+        self,
+        lookup_values_in: LookupValuesIn,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """List distinct values of a dataset column
+
+
+        :param lookup_values_in: (required)
+        :type lookup_values_in: LookupValuesIn
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._post_lookup_values_v0_query_lookup_values_post_serialize(
+            lookup_values_in=lookup_values_in,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def post_lookup_values_v0_query_lookup_values_post_without_preload_content(
+        self,
+        lookup_values_in: LookupValuesIn,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List distinct values of a dataset column
+
+
+        :param lookup_values_in: (required)
+        :type lookup_values_in: LookupValuesIn
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._post_lookup_values_v0_query_lookup_values_post_serialize(
+            lookup_values_in=lookup_values_in,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _post_lookup_values_v0_query_lookup_values_post_serialize(
+        self,
+        lookup_values_in,
+        authorization,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        if authorization is not None:
+            _header_params['authorization'] = authorization
+        # process the form parameters
+        # process the body parameter
+        if lookup_values_in is not None:
+            _body_params = lookup_values_in
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/v0/query/lookup-values',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def post_query_v0_query_post(
+        self,
+        query_in: QueryIn,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Run a read-only SQL query over authorized datasets
+
+
+        :param query_in: (required)
+        :type query_in: QueryIn
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._post_query_v0_query_post_serialize(
+            query_in=query_in,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def post_query_v0_query_post_with_http_info(
+        self,
+        query_in: QueryIn,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Run a read-only SQL query over authorized datasets
+
+
+        :param query_in: (required)
+        :type query_in: QueryIn
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._post_query_v0_query_post_serialize(
+            query_in=query_in,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def post_query_v0_query_post_without_preload_content(
+        self,
+        query_in: QueryIn,
+        authorization: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Run a read-only SQL query over authorized datasets
+
+
+        :param query_in: (required)
+        :type query_in: QueryIn
+        :param authorization:
+        :type authorization: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._post_query_v0_query_post_serialize(
+            query_in=query_in,
+            authorization=authorization,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _post_query_v0_query_post_serialize(
+        self,
+        query_in,
+        authorization,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        if authorization is not None:
+            _header_params['authorization'] = authorization
+        # process the form parameters
+        # process the body parameter
+        if query_in is not None:
+            _body_params = query_in
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/v0/query',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -23982,6 +26919,312 @@ class DefaultApi:
 
 
     @validate_call
+    def remove_member_web_web_members_target_user_id_remove_post(
+        self,
+        target_user_id: StrictStr,
+        csrf: StrictStr,
+        organization_id: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Remove Member Web
+
+        Remove a member (admin) or self-leave (any member). Soft-deletes the member's owned drives in that workspace (workspaces-design §4.4). The sole-admin-with-members case is blocked (promote-or-delete).  Org scoping: defaults to the session's active workspace. The \"Your workspaces\" list passes an explicit `organization_id` so a user can Leave a NON-active workspace too — authorized against THAT org's standing (self-leave for any member there; admin to remove others). A forged/non-member org id is a no-leak forbidden.  Auth: gates on `current_user` + per-org standing, NOT `current_drive` (a driveless member of the target workspace must still be able to leave it). Attribution uses the user's email.
+
+        :param target_user_id: (required)
+        :type target_user_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param organization_id:
+        :type organization_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._remove_member_web_web_members_target_user_id_remove_post_serialize(
+            target_user_id=target_user_id,
+            csrf=csrf,
+            organization_id=organization_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def remove_member_web_web_members_target_user_id_remove_post_with_http_info(
+        self,
+        target_user_id: StrictStr,
+        csrf: StrictStr,
+        organization_id: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Remove Member Web
+
+        Remove a member (admin) or self-leave (any member). Soft-deletes the member's owned drives in that workspace (workspaces-design §4.4). The sole-admin-with-members case is blocked (promote-or-delete).  Org scoping: defaults to the session's active workspace. The \"Your workspaces\" list passes an explicit `organization_id` so a user can Leave a NON-active workspace too — authorized against THAT org's standing (self-leave for any member there; admin to remove others). A forged/non-member org id is a no-leak forbidden.  Auth: gates on `current_user` + per-org standing, NOT `current_drive` (a driveless member of the target workspace must still be able to leave it). Attribution uses the user's email.
+
+        :param target_user_id: (required)
+        :type target_user_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param organization_id:
+        :type organization_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._remove_member_web_web_members_target_user_id_remove_post_serialize(
+            target_user_id=target_user_id,
+            csrf=csrf,
+            organization_id=organization_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def remove_member_web_web_members_target_user_id_remove_post_without_preload_content(
+        self,
+        target_user_id: StrictStr,
+        csrf: StrictStr,
+        organization_id: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Remove Member Web
+
+        Remove a member (admin) or self-leave (any member). Soft-deletes the member's owned drives in that workspace (workspaces-design §4.4). The sole-admin-with-members case is blocked (promote-or-delete).  Org scoping: defaults to the session's active workspace. The \"Your workspaces\" list passes an explicit `organization_id` so a user can Leave a NON-active workspace too — authorized against THAT org's standing (self-leave for any member there; admin to remove others). A forged/non-member org id is a no-leak forbidden.  Auth: gates on `current_user` + per-org standing, NOT `current_drive` (a driveless member of the target workspace must still be able to leave it). Attribution uses the user's email.
+
+        :param target_user_id: (required)
+        :type target_user_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param organization_id:
+        :type organization_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._remove_member_web_web_members_target_user_id_remove_post_serialize(
+            target_user_id=target_user_id,
+            csrf=csrf,
+            organization_id=organization_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _remove_member_web_web_members_target_user_id_remove_post_serialize(
+        self,
+        target_user_id,
+        csrf,
+        organization_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if target_user_id is not None:
+            _path_params['target_user_id'] = target_user_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        if organization_id is not None:
+            _form_params.append(('organization_id', organization_id))
+        if csrf is not None:
+            _form_params.append(('csrf', csrf))
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/x-www-form-urlencoded'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/web/members/{target_user_id}/remove',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def rename_artifact_route_v0_artifacts_art_id_patch(
         self,
         art_id: StrictStr,
@@ -24302,6 +27545,909 @@ class DefaultApi:
         return self.api_client.param_serialize(
             method='PATCH',
             resource_path='/v0/artifacts/{art_id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def rename_drive_web_web_drives_drive_id_rename_post(
+        self,
+        drive_id: StrictStr,
+        name: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Rename Drive Web
+
+        Rename a drive the caller owns (workspaces-design §4.5).  Owner-only: `drives.get_owned_drive` returns None for a peer-owned / forged / soft-deleted id, which we treat as a silent no-op (no-leak) and bounce back to the dashboard.
+
+        :param drive_id: (required)
+        :type drive_id: str
+        :param name: (required)
+        :type name: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._rename_drive_web_web_drives_drive_id_rename_post_serialize(
+            drive_id=drive_id,
+            name=name,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def rename_drive_web_web_drives_drive_id_rename_post_with_http_info(
+        self,
+        drive_id: StrictStr,
+        name: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Rename Drive Web
+
+        Rename a drive the caller owns (workspaces-design §4.5).  Owner-only: `drives.get_owned_drive` returns None for a peer-owned / forged / soft-deleted id, which we treat as a silent no-op (no-leak) and bounce back to the dashboard.
+
+        :param drive_id: (required)
+        :type drive_id: str
+        :param name: (required)
+        :type name: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._rename_drive_web_web_drives_drive_id_rename_post_serialize(
+            drive_id=drive_id,
+            name=name,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def rename_drive_web_web_drives_drive_id_rename_post_without_preload_content(
+        self,
+        drive_id: StrictStr,
+        name: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Rename Drive Web
+
+        Rename a drive the caller owns (workspaces-design §4.5).  Owner-only: `drives.get_owned_drive` returns None for a peer-owned / forged / soft-deleted id, which we treat as a silent no-op (no-leak) and bounce back to the dashboard.
+
+        :param drive_id: (required)
+        :type drive_id: str
+        :param name: (required)
+        :type name: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._rename_drive_web_web_drives_drive_id_rename_post_serialize(
+            drive_id=drive_id,
+            name=name,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _rename_drive_web_web_drives_drive_id_rename_post_serialize(
+        self,
+        drive_id,
+        name,
+        csrf,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if drive_id is not None:
+            _path_params['drive_id'] = drive_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        if name is not None:
+            _form_params.append(('name', name))
+        if csrf is not None:
+            _form_params.append(('csrf', csrf))
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/x-www-form-urlencoded'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/web/drives/{drive_id}/rename',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def rename_workspace_web_web_workspaces_org_id_rename_post(
+        self,
+        org_id: StrictStr,
+        name: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Rename Workspace Web
+
+        Rename a workspace the caller administers (workspaces-design §4.6).  Admin-gated against the PATH org (not just the session) so a stale cookie can't redirect the rename. A non-admin / non-member is a no-leak no-op.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param name: (required)
+        :type name: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._rename_workspace_web_web_workspaces_org_id_rename_post_serialize(
+            org_id=org_id,
+            name=name,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def rename_workspace_web_web_workspaces_org_id_rename_post_with_http_info(
+        self,
+        org_id: StrictStr,
+        name: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Rename Workspace Web
+
+        Rename a workspace the caller administers (workspaces-design §4.6).  Admin-gated against the PATH org (not just the session) so a stale cookie can't redirect the rename. A non-admin / non-member is a no-leak no-op.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param name: (required)
+        :type name: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._rename_workspace_web_web_workspaces_org_id_rename_post_serialize(
+            org_id=org_id,
+            name=name,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def rename_workspace_web_web_workspaces_org_id_rename_post_without_preload_content(
+        self,
+        org_id: StrictStr,
+        name: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Rename Workspace Web
+
+        Rename a workspace the caller administers (workspaces-design §4.6).  Admin-gated against the PATH org (not just the session) so a stale cookie can't redirect the rename. A non-admin / non-member is a no-leak no-op.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param name: (required)
+        :type name: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._rename_workspace_web_web_workspaces_org_id_rename_post_serialize(
+            org_id=org_id,
+            name=name,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _rename_workspace_web_web_workspaces_org_id_rename_post_serialize(
+        self,
+        org_id,
+        name,
+        csrf,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if org_id is not None:
+            _path_params['org_id'] = org_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        if name is not None:
+            _form_params.append(('name', name))
+        if csrf is not None:
+            _form_params.append(('csrf', csrf))
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/x-www-form-urlencoded'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/web/workspaces/{org_id}/rename',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def resend_invitation_web_web_invitations_invitation_id_resend_post(
+        self,
+        invitation_id: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Resend Invitation Web
+
+        Admin re-mints + re-emails a pending invite (workspaces-design §8).
+
+        :param invitation_id: (required)
+        :type invitation_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._resend_invitation_web_web_invitations_invitation_id_resend_post_serialize(
+            invitation_id=invitation_id,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def resend_invitation_web_web_invitations_invitation_id_resend_post_with_http_info(
+        self,
+        invitation_id: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Resend Invitation Web
+
+        Admin re-mints + re-emails a pending invite (workspaces-design §8).
+
+        :param invitation_id: (required)
+        :type invitation_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._resend_invitation_web_web_invitations_invitation_id_resend_post_serialize(
+            invitation_id=invitation_id,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def resend_invitation_web_web_invitations_invitation_id_resend_post_without_preload_content(
+        self,
+        invitation_id: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Resend Invitation Web
+
+        Admin re-mints + re-emails a pending invite (workspaces-design §8).
+
+        :param invitation_id: (required)
+        :type invitation_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._resend_invitation_web_web_invitations_invitation_id_resend_post_serialize(
+            invitation_id=invitation_id,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _resend_invitation_web_web_invitations_invitation_id_resend_post_serialize(
+        self,
+        invitation_id,
+        csrf,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if invitation_id is not None:
+            _path_params['invitation_id'] = invitation_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        if csrf is not None:
+            _form_params.append(('csrf', csrf))
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/x-www-form-urlencoded'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/web/invitations/{invitation_id}/resend',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -25228,6 +29374,297 @@ class DefaultApi:
 
 
     @validate_call
+    def revoke_invitation_web_web_invitations_invitation_id_revoke_post(
+        self,
+        invitation_id: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Revoke Invitation Web
+
+        Admin revokes a pending invite (org-scoped, no-leak).
+
+        :param invitation_id: (required)
+        :type invitation_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._revoke_invitation_web_web_invitations_invitation_id_revoke_post_serialize(
+            invitation_id=invitation_id,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def revoke_invitation_web_web_invitations_invitation_id_revoke_post_with_http_info(
+        self,
+        invitation_id: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Revoke Invitation Web
+
+        Admin revokes a pending invite (org-scoped, no-leak).
+
+        :param invitation_id: (required)
+        :type invitation_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._revoke_invitation_web_web_invitations_invitation_id_revoke_post_serialize(
+            invitation_id=invitation_id,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def revoke_invitation_web_web_invitations_invitation_id_revoke_post_without_preload_content(
+        self,
+        invitation_id: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Revoke Invitation Web
+
+        Admin revokes a pending invite (org-scoped, no-leak).
+
+        :param invitation_id: (required)
+        :type invitation_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._revoke_invitation_web_web_invitations_invitation_id_revoke_post_serialize(
+            invitation_id=invitation_id,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _revoke_invitation_web_web_invitations_invitation_id_revoke_post_serialize(
+        self,
+        invitation_id,
+        csrf,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if invitation_id is not None:
+            _path_params['invitation_id'] = invitation_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        if csrf is not None:
+            _form_params.append(('csrf', csrf))
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/x-www-form-urlencoded'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/web/invitations/{invitation_id}/revoke',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def revoke_link_web_share_rid_link_shr_id_revoke_post(
         self,
         rid: StrictStr,
@@ -25502,6 +29939,588 @@ class DefaultApi:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/web/share/{rid}/link/{shr_id}/revoke',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def revoke_user_token_web_tokens_revoke_post(
+        self,
+        token_id: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Revoke User Token
+
+        Revoke one of the caller's `ad_user_` tokens.  Ownership is enforced inside `user_tokens.revoke(token_id, user_id)` — the form's `token_id` is attacker-controllable, so we never revoke by id alone. A non-matching id is a silent no-op (same redirect).
+
+        :param token_id: (required)
+        :type token_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._revoke_user_token_web_tokens_revoke_post_serialize(
+            token_id=token_id,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def revoke_user_token_web_tokens_revoke_post_with_http_info(
+        self,
+        token_id: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Revoke User Token
+
+        Revoke one of the caller's `ad_user_` tokens.  Ownership is enforced inside `user_tokens.revoke(token_id, user_id)` — the form's `token_id` is attacker-controllable, so we never revoke by id alone. A non-matching id is a silent no-op (same redirect).
+
+        :param token_id: (required)
+        :type token_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._revoke_user_token_web_tokens_revoke_post_serialize(
+            token_id=token_id,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def revoke_user_token_web_tokens_revoke_post_without_preload_content(
+        self,
+        token_id: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Revoke User Token
+
+        Revoke one of the caller's `ad_user_` tokens.  Ownership is enforced inside `user_tokens.revoke(token_id, user_id)` — the form's `token_id` is attacker-controllable, so we never revoke by id alone. A non-matching id is a silent no-op (same redirect).
+
+        :param token_id: (required)
+        :type token_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._revoke_user_token_web_tokens_revoke_post_serialize(
+            token_id=token_id,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _revoke_user_token_web_tokens_revoke_post_serialize(
+        self,
+        token_id,
+        csrf,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        if token_id is not None:
+            _form_params.append(('token_id', token_id))
+        if csrf is not None:
+            _form_params.append(('csrf', csrf))
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/x-www-form-urlencoded'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/web/tokens/revoke',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def rotate_drive_key_web_web_drives_drive_id_keys_rotate_post(
+        self,
+        drive_id: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Rotate Drive Key Web
+
+        Rotate a specific owned drive's `ad_live_` key + reveal once (workspaces-design §5.6). Owner-only (no-leak no-op otherwise).  The per-drive twin of `/web/keys/rotate` (which acts on the active drive). Pins the rotated drive active so the reveal on the api-keys tab shows the key for the drive the user just rotated.
+
+        :param drive_id: (required)
+        :type drive_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._rotate_drive_key_web_web_drives_drive_id_keys_rotate_post_serialize(
+            drive_id=drive_id,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def rotate_drive_key_web_web_drives_drive_id_keys_rotate_post_with_http_info(
+        self,
+        drive_id: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Rotate Drive Key Web
+
+        Rotate a specific owned drive's `ad_live_` key + reveal once (workspaces-design §5.6). Owner-only (no-leak no-op otherwise).  The per-drive twin of `/web/keys/rotate` (which acts on the active drive). Pins the rotated drive active so the reveal on the api-keys tab shows the key for the drive the user just rotated.
+
+        :param drive_id: (required)
+        :type drive_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._rotate_drive_key_web_web_drives_drive_id_keys_rotate_post_serialize(
+            drive_id=drive_id,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def rotate_drive_key_web_web_drives_drive_id_keys_rotate_post_without_preload_content(
+        self,
+        drive_id: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Rotate Drive Key Web
+
+        Rotate a specific owned drive's `ad_live_` key + reveal once (workspaces-design §5.6). Owner-only (no-leak no-op otherwise).  The per-drive twin of `/web/keys/rotate` (which acts on the active drive). Pins the rotated drive active so the reveal on the api-keys tab shows the key for the drive the user just rotated.
+
+        :param drive_id: (required)
+        :type drive_id: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._rotate_drive_key_web_web_drives_drive_id_keys_rotate_post_serialize(
+            drive_id=drive_id,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _rotate_drive_key_web_web_drives_drive_id_keys_rotate_post_serialize(
+        self,
+        drive_id,
+        csrf,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if drive_id is not None:
+            _path_params['drive_id'] = drive_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        if csrf is not None:
+            _form_params.append(('csrf', csrf))
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/x-www-form-urlencoded'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/web/drives/{drive_id}/keys/rotate',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -26482,6 +31501,312 @@ class DefaultApi:
 
 
     @validate_call
+    def set_member_role_web_web_members_target_user_id_role_post(
+        self,
+        target_user_id: StrictStr,
+        role: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Set Member Role Web
+
+        Admin promotes/demotes a member. Last-admin demote is blocked (workspaces-design §4.4).
+
+        :param target_user_id: (required)
+        :type target_user_id: str
+        :param role: (required)
+        :type role: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._set_member_role_web_web_members_target_user_id_role_post_serialize(
+            target_user_id=target_user_id,
+            role=role,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def set_member_role_web_web_members_target_user_id_role_post_with_http_info(
+        self,
+        target_user_id: StrictStr,
+        role: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Set Member Role Web
+
+        Admin promotes/demotes a member. Last-admin demote is blocked (workspaces-design §4.4).
+
+        :param target_user_id: (required)
+        :type target_user_id: str
+        :param role: (required)
+        :type role: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._set_member_role_web_web_members_target_user_id_role_post_serialize(
+            target_user_id=target_user_id,
+            role=role,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def set_member_role_web_web_members_target_user_id_role_post_without_preload_content(
+        self,
+        target_user_id: StrictStr,
+        role: StrictStr,
+        csrf: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Set Member Role Web
+
+        Admin promotes/demotes a member. Last-admin demote is blocked (workspaces-design §4.4).
+
+        :param target_user_id: (required)
+        :type target_user_id: str
+        :param role: (required)
+        :type role: str
+        :param csrf: (required)
+        :type csrf: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._set_member_role_web_web_members_target_user_id_role_post_serialize(
+            target_user_id=target_user_id,
+            role=role,
+            csrf=csrf,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _set_member_role_web_web_members_target_user_id_role_post_serialize(
+        self,
+        target_user_id,
+        role,
+        csrf,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if target_user_id is not None:
+            _path_params['target_user_id'] = target_user_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        if role is not None:
+            _form_params.append(('role', role))
+        if csrf is not None:
+            _form_params.append(('csrf', csrf))
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/x-www-form-urlencoded'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/web/members/{target_user_id}/role',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def set_public_web_share_rid_public_post(
         self,
         rid: StrictStr,
@@ -27111,7 +32436,7 @@ class DefaultApi:
     ) -> str:
         """Settings Account
 
-        Default settings landing — Account info + Danger zone.
+        Default settings landing — Account info + Usage + Danger zone.  Usage folded in here (was a standalone `/settings/usage` tab): the same meter data is fetched via `_usage_context` and rendered as a section on this page.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -27174,7 +32499,7 @@ class DefaultApi:
     ) -> ApiResponse[str]:
         """Settings Account
 
-        Default settings landing — Account info + Danger zone.
+        Default settings landing — Account info + Usage + Danger zone.  Usage folded in here (was a standalone `/settings/usage` tab): the same meter data is fetched via `_usage_context` and rendered as a section on this page.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -27237,7 +32562,7 @@ class DefaultApi:
     ) -> RESTResponseType:
         """Settings Account
 
-        Default settings landing — Account info + Danger zone.
+        Default settings landing — Account info + Usage + Danger zone.  Usage folded in here (was a standalone `/settings/usage` tab): the same meter data is fetched via `_usage_context` and rendered as a section on this page.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -27356,7 +32681,7 @@ class DefaultApi:
     ) -> str:
         """Settings Api Keys
 
-        API key tab. Also where reveal_key is rendered after rotation; the reveal is consumed (removed from session) on first read.
+        API key tab. Also where reveal_key is rendered after rotation; the reveal is consumed (removed from session) on first read.  Surfaces two credential classes (workspaces-design §5.6):   * the drive's `ad_live_` per-drive key (`drive.api_key_prefix`,     rotate/delete) — unchanged from v0.   * the user's `ad_user_` identity tokens (`user_tokens`, mint/list/     revoke). Minting reveals the raw token once via the same     `reveal_key`-in-session mechanism as the drive key.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -27419,7 +32744,7 @@ class DefaultApi:
     ) -> ApiResponse[str]:
         """Settings Api Keys
 
-        API key tab. Also where reveal_key is rendered after rotation; the reveal is consumed (removed from session) on first read.
+        API key tab. Also where reveal_key is rendered after rotation; the reveal is consumed (removed from session) on first read.  Surfaces two credential classes (workspaces-design §5.6):   * the drive's `ad_live_` per-drive key (`drive.api_key_prefix`,     rotate/delete) — unchanged from v0.   * the user's `ad_user_` identity tokens (`user_tokens`, mint/list/     revoke). Minting reveals the raw token once via the same     `reveal_key`-in-session mechanism as the drive key.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -27482,7 +32807,7 @@ class DefaultApi:
     ) -> RESTResponseType:
         """Settings Api Keys
 
-        API key tab. Also where reveal_key is rendered after rotation; the reveal is consumed (removed from session) on first read.
+        API key tab. Also where reveal_key is rendered after rotation; the reveal is consumed (removed from session) on first read.  Surfaces two credential classes (workspaces-design §5.6):   * the drive's `ad_live_` per-drive key (`drive.api_key_prefix`,     rotate/delete) — unchanged from v0.   * the user's `ad_user_` identity tokens (`user_tokens`, mint/list/     revoke). Minting reveals the raw token once via the same     `reveal_key`-in-session mechanism as the drive key.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -27829,7 +33154,7 @@ class DefaultApi:
 
 
     @validate_call
-    def settings_usage_settings_usage_get(
+    def settings_workspace_settings_workspace_get(
         self,
         _request_timeout: Union[
             None,
@@ -27844,9 +33169,9 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> str:
-        """Settings Usage
+        """Settings Workspace
 
-        Usage tab — current-period meters against tier caps.  Reads the same data as `GET /v0/drives/me/usage` but renders it as HTML directly so the page doesn't need a JS fetch round-trip. The template computes the percentage and warning state per-row from the `used` / `limit` pair; `limit == 0` is the unlimited sentinel and the template hides the cap line in that case.
+        Standalone workspace settings page (decision O4): members list + pending invites + invite form + role change + remove.  Admin-gated for the management actions; a member sees the roster but no management controls (the template hides them unless `is_admin`). The active workspace is the session's `active_organization_id`.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -27870,7 +33195,7 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._settings_usage_settings_usage_get_serialize(
+        _param = self._settings_workspace_settings_workspace_get_serialize(
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -27892,7 +33217,7 @@ class DefaultApi:
 
 
     @validate_call
-    def settings_usage_settings_usage_get_with_http_info(
+    def settings_workspace_settings_workspace_get_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -27907,9 +33232,9 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[str]:
-        """Settings Usage
+        """Settings Workspace
 
-        Usage tab — current-period meters against tier caps.  Reads the same data as `GET /v0/drives/me/usage` but renders it as HTML directly so the page doesn't need a JS fetch round-trip. The template computes the percentage and warning state per-row from the `used` / `limit` pair; `limit == 0` is the unlimited sentinel and the template hides the cap line in that case.
+        Standalone workspace settings page (decision O4): members list + pending invites + invite form + role change + remove.  Admin-gated for the management actions; a member sees the roster but no management controls (the template hides them unless `is_admin`). The active workspace is the session's `active_organization_id`.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -27933,7 +33258,7 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._settings_usage_settings_usage_get_serialize(
+        _param = self._settings_workspace_settings_workspace_get_serialize(
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -27955,7 +33280,7 @@ class DefaultApi:
 
 
     @validate_call
-    def settings_usage_settings_usage_get_without_preload_content(
+    def settings_workspace_settings_workspace_get_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -27970,9 +33295,9 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Settings Usage
+        """Settings Workspace
 
-        Usage tab — current-period meters against tier caps.  Reads the same data as `GET /v0/drives/me/usage` but renders it as HTML directly so the page doesn't need a JS fetch round-trip. The template computes the percentage and warning state per-row from the `used` / `limit` pair; `limit == 0` is the unlimited sentinel and the template hides the cap line in that case.
+        Standalone workspace settings page (decision O4): members list + pending invites + invite form + role change + remove.  Admin-gated for the management actions; a member sees the roster but no management controls (the template hides them unless `is_admin`). The active workspace is the session's `active_organization_id`.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -27996,7 +33321,7 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._settings_usage_settings_usage_get_serialize(
+        _param = self._settings_workspace_settings_workspace_get_serialize(
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -28013,7 +33338,7 @@ class DefaultApi:
         return response_data.response
 
 
-    def _settings_usage_settings_usage_get_serialize(
+    def _settings_workspace_settings_workspace_get_serialize(
         self,
         _request_auth,
         _content_type,
@@ -28057,7 +33382,7 @@ class DefaultApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/settings/usage',
+            resource_path='/settings/workspace',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -28603,10 +33928,11 @@ class DefaultApi:
 
 
     @validate_call
-    def switch_org_web_switch_org_post(
+    def switch_drive_web_switch_post(
         self,
-        organization_id: StrictStr,
         csrf: StrictStr,
+        drive_id: Optional[StrictStr] = None,
+        organization_id: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -28620,14 +33946,16 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """Switch Org
+        """Switch Drive
 
-        Switch the session's active organization (and thus the active drive).  A user can belong to multiple orgs (e.g. a personal org + a shared/business org). v1 binds the active org at login with no way to change it; this lets a member flip it. Membership is re-verified server-side (the form value is attacker-controllable), then the session cookie is re-minted with the new active org — `current_drive`'s membership JOIN enforces access on the next request. Any `reveal_key` is dropped: it was scoped to the old drive.
+        Switch the active workspace (and drive) — workspace-first (workspaces-design §4.3).  Two modes, mirroring the Linear/Slack/GitHub \"switch by workspace\" model:    * **Workspace switch** (`organization_id`): membership-check the     target org for the user; on success set it active and pin the     user's OLDEST owned live drive there (deterministic), or None if     they own none — in which case the dashboard's     `resolve_driveless_member` renders the \"create your first drive\"     empty state for that workspace.   * **Drive switch** (`drive_id`): validate the user OWNS the posted     drive (and is a live member of its workspace) via     `drives_svc.user_owns_drive`, then set both org + drive active.     Lets a multi-drive workspace pick a specific drive. If BOTH are     posted, the explicit `drive_id` wins (subject to its own check).  Both forms are no-leak: a forged / peer-owned / non-member target fails its check and is treated identically to \"no such target\" (303 back to /dashboard without mutating the session — no leak, no error oracle).
 
-        :param organization_id: (required)
-        :type organization_id: str
         :param csrf: (required)
         :type csrf: str
+        :param drive_id:
+        :type drive_id: str
+        :param organization_id:
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -28650,9 +33978,10 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._switch_org_web_switch_org_post_serialize(
-            organization_id=organization_id,
+        _param = self._switch_drive_web_switch_post_serialize(
             csrf=csrf,
+            drive_id=drive_id,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -28675,10 +34004,11 @@ class DefaultApi:
 
 
     @validate_call
-    def switch_org_web_switch_org_post_with_http_info(
+    def switch_drive_web_switch_post_with_http_info(
         self,
-        organization_id: StrictStr,
         csrf: StrictStr,
+        drive_id: Optional[StrictStr] = None,
+        organization_id: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -28692,14 +34022,16 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """Switch Org
+        """Switch Drive
 
-        Switch the session's active organization (and thus the active drive).  A user can belong to multiple orgs (e.g. a personal org + a shared/business org). v1 binds the active org at login with no way to change it; this lets a member flip it. Membership is re-verified server-side (the form value is attacker-controllable), then the session cookie is re-minted with the new active org — `current_drive`'s membership JOIN enforces access on the next request. Any `reveal_key` is dropped: it was scoped to the old drive.
+        Switch the active workspace (and drive) — workspace-first (workspaces-design §4.3).  Two modes, mirroring the Linear/Slack/GitHub \"switch by workspace\" model:    * **Workspace switch** (`organization_id`): membership-check the     target org for the user; on success set it active and pin the     user's OLDEST owned live drive there (deterministic), or None if     they own none — in which case the dashboard's     `resolve_driveless_member` renders the \"create your first drive\"     empty state for that workspace.   * **Drive switch** (`drive_id`): validate the user OWNS the posted     drive (and is a live member of its workspace) via     `drives_svc.user_owns_drive`, then set both org + drive active.     Lets a multi-drive workspace pick a specific drive. If BOTH are     posted, the explicit `drive_id` wins (subject to its own check).  Both forms are no-leak: a forged / peer-owned / non-member target fails its check and is treated identically to \"no such target\" (303 back to /dashboard without mutating the session — no leak, no error oracle).
 
-        :param organization_id: (required)
-        :type organization_id: str
         :param csrf: (required)
         :type csrf: str
+        :param drive_id:
+        :type drive_id: str
+        :param organization_id:
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -28722,9 +34054,10 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._switch_org_web_switch_org_post_serialize(
-            organization_id=organization_id,
+        _param = self._switch_drive_web_switch_post_serialize(
             csrf=csrf,
+            drive_id=drive_id,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -28747,10 +34080,11 @@ class DefaultApi:
 
 
     @validate_call
-    def switch_org_web_switch_org_post_without_preload_content(
+    def switch_drive_web_switch_post_without_preload_content(
         self,
-        organization_id: StrictStr,
         csrf: StrictStr,
+        drive_id: Optional[StrictStr] = None,
+        organization_id: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -28764,14 +34098,16 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Switch Org
+        """Switch Drive
 
-        Switch the session's active organization (and thus the active drive).  A user can belong to multiple orgs (e.g. a personal org + a shared/business org). v1 binds the active org at login with no way to change it; this lets a member flip it. Membership is re-verified server-side (the form value is attacker-controllable), then the session cookie is re-minted with the new active org — `current_drive`'s membership JOIN enforces access on the next request. Any `reveal_key` is dropped: it was scoped to the old drive.
+        Switch the active workspace (and drive) — workspace-first (workspaces-design §4.3).  Two modes, mirroring the Linear/Slack/GitHub \"switch by workspace\" model:    * **Workspace switch** (`organization_id`): membership-check the     target org for the user; on success set it active and pin the     user's OLDEST owned live drive there (deterministic), or None if     they own none — in which case the dashboard's     `resolve_driveless_member` renders the \"create your first drive\"     empty state for that workspace.   * **Drive switch** (`drive_id`): validate the user OWNS the posted     drive (and is a live member of its workspace) via     `drives_svc.user_owns_drive`, then set both org + drive active.     Lets a multi-drive workspace pick a specific drive. If BOTH are     posted, the explicit `drive_id` wins (subject to its own check).  Both forms are no-leak: a forged / peer-owned / non-member target fails its check and is treated identically to \"no such target\" (303 back to /dashboard without mutating the session — no leak, no error oracle).
 
-        :param organization_id: (required)
-        :type organization_id: str
         :param csrf: (required)
         :type csrf: str
+        :param drive_id:
+        :type drive_id: str
+        :param organization_id:
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -28794,9 +34130,10 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._switch_org_web_switch_org_post_serialize(
-            organization_id=organization_id,
+        _param = self._switch_drive_web_switch_post_serialize(
             csrf=csrf,
+            drive_id=drive_id,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -28814,10 +34151,11 @@ class DefaultApi:
         return response_data.response
 
 
-    def _switch_org_web_switch_org_post_serialize(
+    def _switch_drive_web_switch_post_serialize(
         self,
-        organization_id,
         csrf,
+        drive_id,
+        organization_id,
         _request_auth,
         _content_type,
         _headers,
@@ -28842,6 +34180,8 @@ class DefaultApi:
         # process the query parameters
         # process the header parameters
         # process the form parameters
+        if drive_id is not None:
+            _form_params.append(('drive_id', drive_id))
         if organization_id is not None:
             _form_params.append(('organization_id', organization_id))
         if csrf is not None:
@@ -28877,7 +34217,7 @@ class DefaultApi:
 
         return self.api_client.param_serialize(
             method='POST',
-            resource_path='/web/switch-org',
+            resource_path='/web/switch',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -33754,7 +39094,7 @@ class DefaultApi:
     ) -> object:
         """Web Put Artifact
 
-        Cookie-authed write of an image artifact. Used by the SnipIt web editor (`/a/{art_id}/edit`) for autosave; the bearer-authed `PUT /v0/artifacts/{path}` won't accept a cookie-only session.  Owner-only; the path is checked against the signed-in user's drive. Accepts `image/*` (SnipIt editor autosave) and `application/pdf` (the PDF viewer's annotation save) only — refuses everything else so the editor can't smuggle markdown/HTML or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved `_wiki/` namespace rejection, per-tier max-bytes cap (both `Content-Length` short-circuit and post-body length check) — so a logged-in user can't bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the `X-CSRF-Token` header (see `csrf.require_csrf_header`); the editor reads the token from the `<meta name=\"csrf-token\">` tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor's 1.5s autosave can sustain without flagging abuse.
+        Cookie-authed write of an image artifact. Used by the SnipIt web editor (`/a/{art_id}/edit`) for autosave; the bearer-authed `PUT /v0/artifacts/{path}` won't accept a cookie-only session.  Owner-only; the path is checked against the signed-in user's drive. Accepts `image/*` (SnipIt editor autosave) and `application/pdf` (the PDF viewer's annotation save) only — refuses everything else so the editor can't smuggle markdown/HTML or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved `_wiki/` namespace rejection, per-tier max-bytes cap (both `Content-Length` short-circuit and post-body length check) — so a logged-in user can't bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the `X-CSRF-Token` header (see `csrf.require_csrf_header`); the editor reads the token from the `<meta name=\"csrf-token\">` tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor's 1.5s autosave can sustain without flagging abuse.  Cross-workspace (design §4.3): the editor page is reached by a stable-id URL that may name a drive outside the session's active workspace, so the write must target the RESOURCE's drive, not the active one. The editor sends the resolved drive in an `X-Drive-Id` header; we authorize ownership of THAT drive via `resolve_owned_drive` (it returns None for a forged / unowned id → 401, never a write). Absent header ⇒ fall back to `current_drive` (pre-fast-follow behavior; a cached old client still works, only without the cross-workspace fix).
 
         :param path: (required)
         :type path: str
@@ -33826,7 +39166,7 @@ class DefaultApi:
     ) -> ApiResponse[object]:
         """Web Put Artifact
 
-        Cookie-authed write of an image artifact. Used by the SnipIt web editor (`/a/{art_id}/edit`) for autosave; the bearer-authed `PUT /v0/artifacts/{path}` won't accept a cookie-only session.  Owner-only; the path is checked against the signed-in user's drive. Accepts `image/*` (SnipIt editor autosave) and `application/pdf` (the PDF viewer's annotation save) only — refuses everything else so the editor can't smuggle markdown/HTML or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved `_wiki/` namespace rejection, per-tier max-bytes cap (both `Content-Length` short-circuit and post-body length check) — so a logged-in user can't bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the `X-CSRF-Token` header (see `csrf.require_csrf_header`); the editor reads the token from the `<meta name=\"csrf-token\">` tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor's 1.5s autosave can sustain without flagging abuse.
+        Cookie-authed write of an image artifact. Used by the SnipIt web editor (`/a/{art_id}/edit`) for autosave; the bearer-authed `PUT /v0/artifacts/{path}` won't accept a cookie-only session.  Owner-only; the path is checked against the signed-in user's drive. Accepts `image/*` (SnipIt editor autosave) and `application/pdf` (the PDF viewer's annotation save) only — refuses everything else so the editor can't smuggle markdown/HTML or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved `_wiki/` namespace rejection, per-tier max-bytes cap (both `Content-Length` short-circuit and post-body length check) — so a logged-in user can't bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the `X-CSRF-Token` header (see `csrf.require_csrf_header`); the editor reads the token from the `<meta name=\"csrf-token\">` tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor's 1.5s autosave can sustain without flagging abuse.  Cross-workspace (design §4.3): the editor page is reached by a stable-id URL that may name a drive outside the session's active workspace, so the write must target the RESOURCE's drive, not the active one. The editor sends the resolved drive in an `X-Drive-Id` header; we authorize ownership of THAT drive via `resolve_owned_drive` (it returns None for a forged / unowned id → 401, never a write). Absent header ⇒ fall back to `current_drive` (pre-fast-follow behavior; a cached old client still works, only without the cross-workspace fix).
 
         :param path: (required)
         :type path: str
@@ -33898,7 +39238,7 @@ class DefaultApi:
     ) -> RESTResponseType:
         """Web Put Artifact
 
-        Cookie-authed write of an image artifact. Used by the SnipIt web editor (`/a/{art_id}/edit`) for autosave; the bearer-authed `PUT /v0/artifacts/{path}` won't accept a cookie-only session.  Owner-only; the path is checked against the signed-in user's drive. Accepts `image/*` (SnipIt editor autosave) and `application/pdf` (the PDF viewer's annotation save) only — refuses everything else so the editor can't smuggle markdown/HTML or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved `_wiki/` namespace rejection, per-tier max-bytes cap (both `Content-Length` short-circuit and post-body length check) — so a logged-in user can't bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the `X-CSRF-Token` header (see `csrf.require_csrf_header`); the editor reads the token from the `<meta name=\"csrf-token\">` tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor's 1.5s autosave can sustain without flagging abuse.
+        Cookie-authed write of an image artifact. Used by the SnipIt web editor (`/a/{art_id}/edit`) for autosave; the bearer-authed `PUT /v0/artifacts/{path}` won't accept a cookie-only session.  Owner-only; the path is checked against the signed-in user's drive. Accepts `image/*` (SnipIt editor autosave) and `application/pdf` (the PDF viewer's annotation save) only — refuses everything else so the editor can't smuggle markdown/HTML or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved `_wiki/` namespace rejection, per-tier max-bytes cap (both `Content-Length` short-circuit and post-body length check) — so a logged-in user can't bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the `X-CSRF-Token` header (see `csrf.require_csrf_header`); the editor reads the token from the `<meta name=\"csrf-token\">` tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor's 1.5s autosave can sustain without flagging abuse.  Cross-workspace (design §4.3): the editor page is reached by a stable-id URL that may name a drive outside the session's active workspace, so the write must target the RESOURCE's drive, not the active one. The editor sends the resolved drive in an `X-Drive-Id` header; we authorize ownership of THAT drive via `resolve_owned_drive` (it returns None for a forged / unowned id → 401, never a write). Absent header ⇒ fall back to `current_drive` (pre-fast-follow behavior; a cached old client still works, only without the cross-workspace fix).
 
         :param path: (required)
         :type path: str

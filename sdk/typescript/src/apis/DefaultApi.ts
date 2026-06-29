@@ -29,6 +29,11 @@ import {
     CopyInToJSON,
 } from '../models/CopyIn';
 import {
+    type DescribeIn,
+    DescribeInFromJSON,
+    DescribeInToJSON,
+} from '../models/DescribeIn';
+import {
     type DownloadUrlOut,
     DownloadUrlOutFromJSON,
     DownloadUrlOutToJSON,
@@ -104,6 +109,11 @@ import {
     LinkInToJSON,
 } from '../models/LinkIn';
 import {
+    type LookupValuesIn,
+    LookupValuesInFromJSON,
+    LookupValuesInToJSON,
+} from '../models/LookupValuesIn';
+import {
     type Page,
     PageFromJSON,
     PageToJSON,
@@ -118,6 +128,11 @@ import {
     PublicInFromJSON,
     PublicInToJSON,
 } from '../models/PublicIn';
+import {
+    type QueryIn,
+    QueryInFromJSON,
+    QueryInToJSON,
+} from '../models/QueryIn';
 import {
     type RenameIn,
     RenameInFromJSON,
@@ -169,6 +184,10 @@ import {
     VersionPageToJSON,
 } from '../models/VersionPage';
 
+export interface AcceptInvitationInvitationsTokenGetRequest {
+    token: string;
+}
+
 export interface AddGrantWebShareRidGrantPostRequest {
     rid: string;
     grantIn: GrantIn;
@@ -207,6 +226,11 @@ export interface CopyArtifactRouteV0ArtifactsArtIdCopyPostRequest {
     authorization?: string | null;
 }
 
+export interface CreateDriveWebWebDrivesPostRequest {
+    name: string;
+    csrf: string;
+}
+
 export interface CreateFolderByPathV0FoldersPathPostRequest {
     path: string;
     xAgentdriveActor?: string | null;
@@ -230,6 +254,17 @@ export interface CreateShareRouteV0SharesPostRequest {
     shareCreateIn: ShareCreateIn;
     xAgentdriveActor?: string | null;
     authorization?: string | null;
+}
+
+export interface CreateUserTokenWebTokensCreatePostRequest {
+    csrf: string;
+    label?: string;
+    scope?: string;
+}
+
+export interface CreateWorkspaceWebWebWorkspacesPostRequest {
+    name: string;
+    csrf: string;
 }
 
 export interface DashboardDashboardGetRequest {
@@ -270,6 +305,11 @@ export interface DeleteDriveRouteV0DrivesDriveIdDeleteRequest {
     authorization?: string | null;
 }
 
+export interface DeleteDriveWebWebDrivesDriveIdDeletePostRequest {
+    driveId: string;
+    csrf: string;
+}
+
 export interface DeleteFolderByIdV0FoldersFldIdDeleteRequest {
     fldId: string;
     recursive?: boolean;
@@ -298,6 +338,12 @@ export interface DeleteShareRouteV0SharesShrIdDeleteRequest {
     shrId: string;
     xAgentdriveActor?: string | null;
     authorization?: string | null;
+}
+
+export interface DeleteWorkspaceWebWebWorkspacesOrgIdDeletePostRequest {
+    orgId: string;
+    csrf: string;
+    confirm?: string;
 }
 
 export interface DownloadArtifactByIdV0ArtifactsArtIdDownloadGetRequest {
@@ -429,6 +475,13 @@ export interface GetShareStateWebShareRidGetRequest {
     rid: string;
 }
 
+export interface InviteMemberWebWebMembersInvitePostRequest {
+    email: string;
+    csrf: string;
+    role?: string;
+    workspaceName?: string;
+}
+
 export interface ListArtifactVersionsV0ArtifactsArtIdVersionsGetRequest {
     artId: string;
     cursor?: string | null;
@@ -537,7 +590,22 @@ export interface PatchGrantRouteV0GrantsGrnIdPatchRequest {
     authorization?: string | null;
 }
 
+export interface PostDescribeV0QueryDescribePostRequest {
+    describeIn: DescribeIn;
+    authorization?: string | null;
+}
+
 export interface PostFeedbackV0FeedbackPostRequest {
+    authorization?: string | null;
+}
+
+export interface PostLookupValuesV0QueryLookupValuesPostRequest {
+    lookupValuesIn: LookupValuesIn;
+    authorization?: string | null;
+}
+
+export interface PostQueryV0QueryPostRequest {
+    queryIn: QueryIn;
     authorization?: string | null;
 }
 
@@ -585,12 +653,35 @@ export interface RedeemShareWithPasswordSShareKeyPostRequest {
     password?: string;
 }
 
+export interface RemoveMemberWebWebMembersTargetUserIdRemovePostRequest {
+    targetUserId: string;
+    csrf: string;
+    organizationId?: string;
+}
+
 export interface RenameArtifactRouteV0ArtifactsArtIdPatchRequest {
     artId: string;
     renameIn: RenameIn;
     xAgentdriveActor?: string | null;
     ifMatch?: string | null;
     authorization?: string | null;
+}
+
+export interface RenameDriveWebWebDrivesDriveIdRenamePostRequest {
+    driveId: string;
+    name: string;
+    csrf: string;
+}
+
+export interface RenameWorkspaceWebWebWorkspacesOrgIdRenamePostRequest {
+    orgId: string;
+    name: string;
+    csrf: string;
+}
+
+export interface ResendInvitationWebWebInvitationsInvitationIdResendPostRequest {
+    invitationId: string;
+    csrf: string;
 }
 
 export interface RestoreArtifactV0ArtifactsArtIdRestorePostRequest {
@@ -613,10 +704,25 @@ export interface RevokeGrantWebShareRidGrantGrnIdRevokePostRequest {
     xCsrfToken?: string | null;
 }
 
+export interface RevokeInvitationWebWebInvitationsInvitationIdRevokePostRequest {
+    invitationId: string;
+    csrf: string;
+}
+
 export interface RevokeLinkWebShareRidLinkShrIdRevokePostRequest {
     rid: string;
     shrId: string;
     xCsrfToken?: string | null;
+}
+
+export interface RevokeUserTokenWebTokensRevokePostRequest {
+    tokenId: string;
+    csrf: string;
+}
+
+export interface RotateDriveKeyWebWebDrivesDriveIdKeysRotatePostRequest {
+    driveId: string;
+    csrf: string;
 }
 
 export interface RotateKeyWebKeysRotatePostRequest {
@@ -640,6 +746,12 @@ export interface SearchV0SearchGetRequest {
     authorization?: string | null;
 }
 
+export interface SetMemberRoleWebWebMembersTargetUserIdRolePostRequest {
+    targetUserId: string;
+    role: string;
+    csrf: string;
+}
+
 export interface SetPublicWebShareRidPublicPostRequest {
     rid: string;
     publicIn: PublicIn;
@@ -656,9 +768,10 @@ export interface StreamUploadV0UploadTokenPutRequest {
     token: string;
 }
 
-export interface SwitchOrgWebSwitchOrgPostRequest {
-    organizationId: string;
+export interface SwitchDriveWebSwitchPostRequest {
     csrf: string;
+    driveId?: string;
+    organizationId?: string;
 }
 
 export interface ToggleIndexingWebAccountIndexingPostRequest {
@@ -785,6 +898,57 @@ export interface WebUploadWebUploadPostRequest {
  * 
  */
 export class DefaultApi extends runtime.BaseAPI {
+
+    /**
+     * Creates request options for acceptInvitationInvitationsTokenGet without sending the request
+     */
+    async acceptInvitationInvitationsTokenGetRequestOpts(requestParameters: AcceptInvitationInvitationsTokenGetRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['token'] == null) {
+            throw new runtime.RequiredError(
+                'token',
+                'Required parameter "token" was null or undefined when calling acceptInvitationInvitationsTokenGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/invitations/{token}`;
+        urlPath = urlPath.replace('{token}', encodeURIComponent(String(requestParameters['token'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Accept a workspace invitation (workspaces-design §4.4). Top-level route — deliberately OFF the reserved single-letter prefixes (`/a /f /s /v /_`).  If the visitor isn\'t signed in, bounce through `/auth/login` with a same-origin `return_to` back here (the login flow validates return_to, so the path is safe). Once signed in, validate + accept:   * email mismatch / expired / revoked / unknown → friendly error page,   * success → join the workspace, set it active, land on the dashboard.
+     * Accept Invitation
+     */
+    async acceptInvitationInvitationsTokenGetRaw(requestParameters: AcceptInvitationInvitationsTokenGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+        const requestOptions = await this.acceptInvitationInvitationsTokenGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<string>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Accept a workspace invitation (workspaces-design §4.4). Top-level route — deliberately OFF the reserved single-letter prefixes (`/a /f /s /v /_`).  If the visitor isn\'t signed in, bounce through `/auth/login` with a same-origin `return_to` back here (the login flow validates return_to, so the path is safe). Once signed in, validate + accept:   * email mismatch / expired / revoked / unknown → friendly error page,   * success → join the workspace, set it active, land on the dashboard.
+     * Accept Invitation
+     */
+    async acceptInvitationInvitationsTokenGet(requestParameters: AcceptInvitationInvitationsTokenGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
+        const response = await this.acceptInvitationInvitationsTokenGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Creates request options for activityFeedActivityGet without sending the request
@@ -1301,6 +1465,86 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for createDriveWebWebDrivesPost without sending the request
+     */
+    async createDriveWebWebDrivesPostRequestOpts(requestParameters: CreateDriveWebWebDrivesPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling createDriveWebWebDrivesPost().'
+            );
+        }
+
+        if (requestParameters['csrf'] == null) {
+            throw new runtime.RequiredError(
+                'csrf',
+                'Required parameter "csrf" was null or undefined when calling createDriveWebWebDrivesPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const consumes: runtime.Consume[] = [
+            { contentType: 'application/x-www-form-urlencoded' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['name'] != null) {
+            formParams.append('name', requestParameters['name'] as any);
+        }
+
+        if (requestParameters['csrf'] != null) {
+            formParams.append('csrf', requestParameters['csrf'] as any);
+        }
+
+
+        let urlPath = `/web/drives`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: formParams,
+        };
+    }
+
+    /**
+     * Create a drive in the active workspace + reveal its key once (workspaces-design §4.5, §5.6).  The web (session+CSRF) twin of `POST /v0/drives`. Any MEMBER of the active workspace may create a drive; the creator becomes its owner. The new drive\'s `ad_live_` key is shown ONCE via the same `reveal_key`-in-session mechanism the api-keys tab consumes; we also pin the new drive as active and land on the api-keys tab so the user sees the reveal.  Authorization is by `current_user` + membership, NOT `current_drive` (workspaces-design §4.3 empty state): a freshly-invited member owns 0 drives, so `current_drive` is None for them — yet this is exactly the \"create your first drive\" moment that MUST work. Gating on a pre-existing drive would dead-end the web onboarding path. Membership + the per-member cap are the real guards; both hold whether or not the user already owns a drive.
+     * Create Drive Web
+     */
+    async createDriveWebWebDrivesPostRaw(requestParameters: CreateDriveWebWebDrivesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.createDriveWebWebDrivesPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Create a drive in the active workspace + reveal its key once (workspaces-design §4.5, §5.6).  The web (session+CSRF) twin of `POST /v0/drives`. Any MEMBER of the active workspace may create a drive; the creator becomes its owner. The new drive\'s `ad_live_` key is shown ONCE via the same `reveal_key`-in-session mechanism the api-keys tab consumes; we also pin the new drive as active and land on the api-keys tab so the user sees the reveal.  Authorization is by `current_user` + membership, NOT `current_drive` (workspaces-design §4.3 empty state): a freshly-invited member owns 0 drives, so `current_drive` is None for them — yet this is exactly the \"create your first drive\" moment that MUST work. Gating on a pre-existing drive would dead-end the web onboarding path. Membership + the per-member cap are the real guards; both hold whether or not the user already owns a drive.
+     * Create Drive Web
+     */
+    async createDriveWebWebDrivesPost(requestParameters: CreateDriveWebWebDrivesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.createDriveWebWebDrivesPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for createFolderByPathV0FoldersPathPost without sending the request
      */
     async createFolderByPathV0FoldersPathPostRequestOpts(requestParameters: CreateFolderByPathV0FoldersPathPostRequest): Promise<runtime.RequestOpts> {
@@ -1530,6 +1774,163 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async createShareRouteV0SharesPost(requestParameters: CreateShareRouteV0SharesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ShareMintOut> {
         const response = await this.createShareRouteV0SharesPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for createUserTokenWebTokensCreatePost without sending the request
+     */
+    async createUserTokenWebTokensCreatePostRequestOpts(requestParameters: CreateUserTokenWebTokensCreatePostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['csrf'] == null) {
+            throw new runtime.RequiredError(
+                'csrf',
+                'Required parameter "csrf" was null or undefined when calling createUserTokenWebTokensCreatePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const consumes: runtime.Consume[] = [
+            { contentType: 'application/x-www-form-urlencoded' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['label'] != null) {
+            formParams.append('label', requestParameters['label'] as any);
+        }
+
+        if (requestParameters['scope'] != null) {
+            formParams.append('scope', requestParameters['scope'] as any);
+        }
+
+        if (requestParameters['csrf'] != null) {
+            formParams.append('csrf', requestParameters['csrf'] as any);
+        }
+
+
+        let urlPath = `/web/tokens/create`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: formParams,
+        };
+    }
+
+    /**
+     * Mint an `ad_user_` user-identity token (workspaces-design §5.2, §5.6).  **Web-only minting**: the bootstrap chicken-and-egg is solved here, and a leaked token must not be able to mint persistent siblings — so this path exists only behind the browser session + CSRF, never over the `/v0/` API.  The raw token is shown ONCE via `reveal_token` in the session, then consumed on the next GET of the api-keys tab.
+     * Create User Token
+     */
+    async createUserTokenWebTokensCreatePostRaw(requestParameters: CreateUserTokenWebTokensCreatePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.createUserTokenWebTokensCreatePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Mint an `ad_user_` user-identity token (workspaces-design §5.2, §5.6).  **Web-only minting**: the bootstrap chicken-and-egg is solved here, and a leaked token must not be able to mint persistent siblings — so this path exists only behind the browser session + CSRF, never over the `/v0/` API.  The raw token is shown ONCE via `reveal_token` in the session, then consumed on the next GET of the api-keys tab.
+     * Create User Token
+     */
+    async createUserTokenWebTokensCreatePost(requestParameters: CreateUserTokenWebTokensCreatePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.createUserTokenWebTokensCreatePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for createWorkspaceWebWebWorkspacesPost without sending the request
+     */
+    async createWorkspaceWebWebWorkspacesPostRequestOpts(requestParameters: CreateWorkspaceWebWebWorkspacesPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling createWorkspaceWebWebWorkspacesPost().'
+            );
+        }
+
+        if (requestParameters['csrf'] == null) {
+            throw new runtime.RequiredError(
+                'csrf',
+                'Required parameter "csrf" was null or undefined when calling createWorkspaceWebWebWorkspacesPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const consumes: runtime.Consume[] = [
+            { contentType: 'application/x-www-form-urlencoded' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['name'] != null) {
+            formParams.append('name', requestParameters['name'] as any);
+        }
+
+        if (requestParameters['csrf'] != null) {
+            formParams.append('csrf', requestParameters['csrf'] as any);
+        }
+
+
+        let urlPath = `/web/workspaces`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: formParams,
+        };
+    }
+
+    /**
+     * Create a new workspace, set it active, reveal its starter key once (workspaces-design §4.7).  The web (session+CSRF) twin of `POST /v0/workspaces`. A user may administer at most a fixed number of workspaces (`core.entitlements. can_create_workspace`, a hard cap — §4.7/O2); a blocked create bounces to the dashboard with a limit-reached affordance (`?err=workspace_limit`) rather than silently allowing. On success the new workspace + its starter drive become active and we land on the api-keys tab so the user sees the one-time key reveal.
+     * Create Workspace Web
+     */
+    async createWorkspaceWebWebWorkspacesPostRaw(requestParameters: CreateWorkspaceWebWebWorkspacesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.createWorkspaceWebWebWorkspacesPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Create a new workspace, set it active, reveal its starter key once (workspaces-design §4.7).  The web (session+CSRF) twin of `POST /v0/workspaces`. A user may administer at most a fixed number of workspaces (`core.entitlements. can_create_workspace`, a hard cap — §4.7/O2); a blocked create bounces to the dashboard with a limit-reached affordance (`?err=workspace_limit`) rather than silently allowing. On success the new workspace + its starter drive become active and we land on the api-keys tab so the user sees the one-time key reveal.
+     * Create Workspace Web
+     */
+    async createWorkspaceWebWebWorkspacesPost(requestParameters: CreateWorkspaceWebWebWorkspacesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.createWorkspaceWebWebWorkspacesPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -1936,8 +2337,8 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Mark the drive for cleanup. All tenant data (artifacts, versions, wiki, embeddings, events) is hidden via the `live_*` views and CASCADE-removed by the GC cleanup cron at `purge_at`. Restore via `POST /v0/drives/{id}/restore` while the row is still in trash. The path-param `drive_id` MUST match the authenticated drive.
-     * Soft-delete the authenticated drive
+     * Mark the drive for cleanup. All tenant data (artifacts, versions, wiki, embeddings, events) is hidden via the `live_*` views and CASCADE-removed by the GC cleanup cron at `purge_at`. Restore via `POST /v0/drives/{id}/restore` while the row is still in trash. The path-param `drive_id` MUST match the authenticated drive.  Accepts either an `ad_live_` per-drive key (deletes that key\'s drive) or an `ad_user_` user token selecting an owned drive (workspaces-design §5.3); a `read`-scope user token is rejected with 403 `INSUFFICIENT_SCOPE`. **Guard (§8):** a workspace must retain at least one live drive — deleting the workspace\'s last live drive returns 409 `LAST_DRIVE`.
+     * Soft-delete a drive
      */
     async deleteDriveRouteV0DrivesDriveIdDeleteRaw(requestParameters: DeleteDriveRouteV0DrivesDriveIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
         const requestOptions = await this.deleteDriveRouteV0DrivesDriveIdDeleteRequestOpts(requestParameters);
@@ -1951,11 +2352,88 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Mark the drive for cleanup. All tenant data (artifacts, versions, wiki, embeddings, events) is hidden via the `live_*` views and CASCADE-removed by the GC cleanup cron at `purge_at`. Restore via `POST /v0/drives/{id}/restore` while the row is still in trash. The path-param `drive_id` MUST match the authenticated drive.
-     * Soft-delete the authenticated drive
+     * Mark the drive for cleanup. All tenant data (artifacts, versions, wiki, embeddings, events) is hidden via the `live_*` views and CASCADE-removed by the GC cleanup cron at `purge_at`. Restore via `POST /v0/drives/{id}/restore` while the row is still in trash. The path-param `drive_id` MUST match the authenticated drive.  Accepts either an `ad_live_` per-drive key (deletes that key\'s drive) or an `ad_user_` user token selecting an owned drive (workspaces-design §5.3); a `read`-scope user token is rejected with 403 `INSUFFICIENT_SCOPE`. **Guard (§8):** a workspace must retain at least one live drive — deleting the workspace\'s last live drive returns 409 `LAST_DRIVE`.
+     * Soft-delete a drive
      */
     async deleteDriveRouteV0DrivesDriveIdDelete(requestParameters: DeleteDriveRouteV0DrivesDriveIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
         const response = await this.deleteDriveRouteV0DrivesDriveIdDeleteRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for deleteDriveWebWebDrivesDriveIdDeletePost without sending the request
+     */
+    async deleteDriveWebWebDrivesDriveIdDeletePostRequestOpts(requestParameters: DeleteDriveWebWebDrivesDriveIdDeletePostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['driveId'] == null) {
+            throw new runtime.RequiredError(
+                'driveId',
+                'Required parameter "driveId" was null or undefined when calling deleteDriveWebWebDrivesDriveIdDeletePost().'
+            );
+        }
+
+        if (requestParameters['csrf'] == null) {
+            throw new runtime.RequiredError(
+                'csrf',
+                'Required parameter "csrf" was null or undefined when calling deleteDriveWebWebDrivesDriveIdDeletePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const consumes: runtime.Consume[] = [
+            { contentType: 'application/x-www-form-urlencoded' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['csrf'] != null) {
+            formParams.append('csrf', requestParameters['csrf'] as any);
+        }
+
+
+        let urlPath = `/web/drives/{drive_id}/delete`;
+        urlPath = urlPath.replace('{drive_id}', encodeURIComponent(String(requestParameters['driveId'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: formParams,
+        };
+    }
+
+    /**
+     * Soft-delete a drive the caller owns, with the last-drive guard (workspaces-design §8). Owner-only (no-leak no-op otherwise).  Guard: blocks deleting the workspace\'s LAST live drive — a member must always land somewhere. On a successful delete of the *active* drive, we drop the pin so `current_drive` falls back to the user\'s next oldest owned drive.
+     * Delete Drive Web
+     */
+    async deleteDriveWebWebDrivesDriveIdDeletePostRaw(requestParameters: DeleteDriveWebWebDrivesDriveIdDeletePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.deleteDriveWebWebDrivesDriveIdDeletePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Soft-delete a drive the caller owns, with the last-drive guard (workspaces-design §8). Owner-only (no-leak no-op otherwise).  Guard: blocks deleting the workspace\'s LAST live drive — a member must always land somewhere. On a successful delete of the *active* drive, we drop the pin so `current_drive` falls back to the user\'s next oldest owned drive.
+     * Delete Drive Web
+     */
+    async deleteDriveWebWebDrivesDriveIdDeletePost(requestParameters: DeleteDriveWebWebDrivesDriveIdDeletePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.deleteDriveWebWebDrivesDriveIdDeletePostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -2253,6 +2731,87 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async deleteShareRouteV0SharesShrIdDelete(requestParameters: DeleteShareRouteV0SharesShrIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
         const response = await this.deleteShareRouteV0SharesShrIdDeleteRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for deleteWorkspaceWebWebWorkspacesOrgIdDeletePost without sending the request
+     */
+    async deleteWorkspaceWebWebWorkspacesOrgIdDeletePostRequestOpts(requestParameters: DeleteWorkspaceWebWebWorkspacesOrgIdDeletePostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling deleteWorkspaceWebWebWorkspacesOrgIdDeletePost().'
+            );
+        }
+
+        if (requestParameters['csrf'] == null) {
+            throw new runtime.RequiredError(
+                'csrf',
+                'Required parameter "csrf" was null or undefined when calling deleteWorkspaceWebWebWorkspacesOrgIdDeletePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const consumes: runtime.Consume[] = [
+            { contentType: 'application/x-www-form-urlencoded' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['confirm'] != null) {
+            formParams.append('confirm', requestParameters['confirm'] as any);
+        }
+
+        if (requestParameters['csrf'] != null) {
+            formParams.append('csrf', requestParameters['csrf'] as any);
+        }
+
+
+        let urlPath = `/web/workspaces/{org_id}/delete`;
+        urlPath = urlPath.replace('{org_id}', encodeURIComponent(String(requestParameters['orgId'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: formParams,
+        };
+    }
+
+    /**
+     * Explicit delete-workspace path (workspaces-design §4.4): a sole admin who can\'t leave (members remain) may instead destroy the workspace — cascade soft-delete the org + all its live drives.  Admin-gated against the PATH org (not just the session) so a stale cookie can\'t redirect the cascade. A non-admin is a no-leak no-op.  **Typed confirmation required** (parallel to `delete_account`\'s `confirm == \"DELETE\"`): this cascade soft-deletes the WHOLE workspace plus every member\'s drives in it, so a single mis-clicked CSRF POST must not be able to trigger it. The caller must type either the literal `DELETE` or the exact workspace name; anything else bounces with no cascade. (Restricting to sole-admin is a separate product question, flagged to the user — not changed here.)
+     * Delete Workspace Web
+     */
+    async deleteWorkspaceWebWebWorkspacesOrgIdDeletePostRaw(requestParameters: DeleteWorkspaceWebWebWorkspacesOrgIdDeletePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.deleteWorkspaceWebWebWorkspacesOrgIdDeletePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Explicit delete-workspace path (workspaces-design §4.4): a sole admin who can\'t leave (members remain) may instead destroy the workspace — cascade soft-delete the org + all its live drives.  Admin-gated against the PATH org (not just the session) so a stale cookie can\'t redirect the cascade. A non-admin is a no-leak no-op.  **Typed confirmation required** (parallel to `delete_account`\'s `confirm == \"DELETE\"`): this cascade soft-deletes the WHOLE workspace plus every member\'s drives in it, so a single mis-clicked CSRF POST must not be able to trigger it. The caller must type either the literal `DELETE` or the exact workspace name; anything else bounces with no cascade. (Restricting to sole-admin is a separate product question, flagged to the user — not changed here.)
+     * Delete Workspace Web
+     */
+    async deleteWorkspaceWebWebWorkspacesOrgIdDeletePost(requestParameters: DeleteWorkspaceWebWebWorkspacesOrgIdDeletePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.deleteWorkspaceWebWebWorkspacesOrgIdDeletePostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -3625,6 +4184,94 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for inviteMemberWebWebMembersInvitePost without sending the request
+     */
+    async inviteMemberWebWebMembersInvitePostRequestOpts(requestParameters: InviteMemberWebWebMembersInvitePostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['email'] == null) {
+            throw new runtime.RequiredError(
+                'email',
+                'Required parameter "email" was null or undefined when calling inviteMemberWebWebMembersInvitePost().'
+            );
+        }
+
+        if (requestParameters['csrf'] == null) {
+            throw new runtime.RequiredError(
+                'csrf',
+                'Required parameter "csrf" was null or undefined when calling inviteMemberWebWebMembersInvitePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const consumes: runtime.Consume[] = [
+            { contentType: 'application/x-www-form-urlencoded' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['email'] != null) {
+            formParams.append('email', requestParameters['email'] as any);
+        }
+
+        if (requestParameters['role'] != null) {
+            formParams.append('role', requestParameters['role'] as any);
+        }
+
+        if (requestParameters['workspaceName'] != null) {
+            formParams.append('workspace_name', requestParameters['workspaceName'] as any);
+        }
+
+        if (requestParameters['csrf'] != null) {
+            formParams.append('csrf', requestParameters['csrf'] as any);
+        }
+
+
+        let urlPath = `/web/members/invite`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: formParams,
+        };
+    }
+
+    /**
+     * Admin invites a person by email (workspaces-design §4.4). Sends the invite email via the e2a lane. Admin-only; a non-admin is bounced.  Rename-on-first-invite (workspaces-design §4.6): a single-member workspace still carries its onboarding default name. The invite form offers an optional `workspace_name` — a LIGHT prompt, not a gate. If non-empty, we rename the workspace in the SAME submit (before sending) so teammates land in a named workspace, not \"Someone\'s Drive\".
+     * Invite Member Web
+     */
+    async inviteMemberWebWebMembersInvitePostRaw(requestParameters: InviteMemberWebWebMembersInvitePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.inviteMemberWebWebMembersInvitePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Admin invites a person by email (workspaces-design §4.4). Sends the invite email via the e2a lane. Admin-only; a non-admin is bounced.  Rename-on-first-invite (workspaces-design §4.6): a single-member workspace still carries its onboarding default name. The invite form offers an optional `workspace_name` — a LIGHT prompt, not a gate. If non-empty, we rename the workspace in the SAME submit (before sending) so teammates land in a named workspace, not \"Someone\'s Drive\".
+     * Invite Member Web
+     */
+    async inviteMemberWebWebMembersInvitePost(requestParameters: InviteMemberWebWebMembersInvitePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.inviteMemberWebWebMembersInvitePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for listArtifactVersionsV0ArtifactsArtIdVersionsGet without sending the request
      */
     async listArtifactVersionsV0ArtifactsArtIdVersionsGetRequestOpts(requestParameters: ListArtifactVersionsV0ArtifactsArtIdVersionsGetRequest): Promise<runtime.RequestOpts> {
@@ -4774,6 +5421,61 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for postDescribeV0QueryDescribePost without sending the request
+     */
+    async postDescribeV0QueryDescribePostRequestOpts(requestParameters: PostDescribeV0QueryDescribePostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['describeIn'] == null) {
+            throw new runtime.RequiredError(
+                'describeIn',
+                'Required parameter "describeIn" was null or undefined when calling postDescribeV0QueryDescribePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['authorization'] != null) {
+            headerParameters['authorization'] = String(requestParameters['authorization']);
+        }
+
+
+        let urlPath = `/v0/query/describe`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: DescribeInToJSON(requestParameters['describeIn']),
+        };
+    }
+
+    /**
+     * Describe a dataset\'s column schema
+     */
+    async postDescribeV0QueryDescribePostRaw(requestParameters: PostDescribeV0QueryDescribePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.postDescribeV0QueryDescribePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Describe a dataset\'s column schema
+     */
+    async postDescribeV0QueryDescribePost(requestParameters: PostDescribeV0QueryDescribePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.postDescribeV0QueryDescribePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for postFeedbackV0FeedbackPost without sending the request
      */
     async postFeedbackV0FeedbackPostRequestOpts(requestParameters: PostFeedbackV0FeedbackPostRequest): Promise<runtime.RequestOpts> {
@@ -4817,6 +5519,116 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async postFeedbackV0FeedbackPost(requestParameters: PostFeedbackV0FeedbackPostRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
         const response = await this.postFeedbackV0FeedbackPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for postLookupValuesV0QueryLookupValuesPost without sending the request
+     */
+    async postLookupValuesV0QueryLookupValuesPostRequestOpts(requestParameters: PostLookupValuesV0QueryLookupValuesPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['lookupValuesIn'] == null) {
+            throw new runtime.RequiredError(
+                'lookupValuesIn',
+                'Required parameter "lookupValuesIn" was null or undefined when calling postLookupValuesV0QueryLookupValuesPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['authorization'] != null) {
+            headerParameters['authorization'] = String(requestParameters['authorization']);
+        }
+
+
+        let urlPath = `/v0/query/lookup-values`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: LookupValuesInToJSON(requestParameters['lookupValuesIn']),
+        };
+    }
+
+    /**
+     * List distinct values of a dataset column
+     */
+    async postLookupValuesV0QueryLookupValuesPostRaw(requestParameters: PostLookupValuesV0QueryLookupValuesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.postLookupValuesV0QueryLookupValuesPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * List distinct values of a dataset column
+     */
+    async postLookupValuesV0QueryLookupValuesPost(requestParameters: PostLookupValuesV0QueryLookupValuesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.postLookupValuesV0QueryLookupValuesPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for postQueryV0QueryPost without sending the request
+     */
+    async postQueryV0QueryPostRequestOpts(requestParameters: PostQueryV0QueryPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['queryIn'] == null) {
+            throw new runtime.RequiredError(
+                'queryIn',
+                'Required parameter "queryIn" was null or undefined when calling postQueryV0QueryPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters['authorization'] != null) {
+            headerParameters['authorization'] = String(requestParameters['authorization']);
+        }
+
+
+        let urlPath = `/v0/query`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: QueryInToJSON(requestParameters['queryIn']),
+        };
+    }
+
+    /**
+     * Run a read-only SQL query over authorized datasets
+     */
+    async postQueryV0QueryPostRaw(requestParameters: PostQueryV0QueryPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.postQueryV0QueryPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Run a read-only SQL query over authorized datasets
+     */
+    async postQueryV0QueryPost(requestParameters: PostQueryV0QueryPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.postQueryV0QueryPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -5451,6 +6263,87 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for removeMemberWebWebMembersTargetUserIdRemovePost without sending the request
+     */
+    async removeMemberWebWebMembersTargetUserIdRemovePostRequestOpts(requestParameters: RemoveMemberWebWebMembersTargetUserIdRemovePostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['targetUserId'] == null) {
+            throw new runtime.RequiredError(
+                'targetUserId',
+                'Required parameter "targetUserId" was null or undefined when calling removeMemberWebWebMembersTargetUserIdRemovePost().'
+            );
+        }
+
+        if (requestParameters['csrf'] == null) {
+            throw new runtime.RequiredError(
+                'csrf',
+                'Required parameter "csrf" was null or undefined when calling removeMemberWebWebMembersTargetUserIdRemovePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const consumes: runtime.Consume[] = [
+            { contentType: 'application/x-www-form-urlencoded' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['organizationId'] != null) {
+            formParams.append('organization_id', requestParameters['organizationId'] as any);
+        }
+
+        if (requestParameters['csrf'] != null) {
+            formParams.append('csrf', requestParameters['csrf'] as any);
+        }
+
+
+        let urlPath = `/web/members/{target_user_id}/remove`;
+        urlPath = urlPath.replace('{target_user_id}', encodeURIComponent(String(requestParameters['targetUserId'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: formParams,
+        };
+    }
+
+    /**
+     * Remove a member (admin) or self-leave (any member). Soft-deletes the member\'s owned drives in that workspace (workspaces-design §4.4). The sole-admin-with-members case is blocked (promote-or-delete).  Org scoping: defaults to the session\'s active workspace. The \"Your workspaces\" list passes an explicit `organization_id` so a user can Leave a NON-active workspace too — authorized against THAT org\'s standing (self-leave for any member there; admin to remove others). A forged/non-member org id is a no-leak forbidden.  Auth: gates on `current_user` + per-org standing, NOT `current_drive` (a driveless member of the target workspace must still be able to leave it). Attribution uses the user\'s email.
+     * Remove Member Web
+     */
+    async removeMemberWebWebMembersTargetUserIdRemovePostRaw(requestParameters: RemoveMemberWebWebMembersTargetUserIdRemovePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.removeMemberWebWebMembersTargetUserIdRemovePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Remove a member (admin) or self-leave (any member). Soft-deletes the member\'s owned drives in that workspace (workspaces-design §4.4). The sole-admin-with-members case is blocked (promote-or-delete).  Org scoping: defaults to the session\'s active workspace. The \"Your workspaces\" list passes an explicit `organization_id` so a user can Leave a NON-active workspace too — authorized against THAT org\'s standing (self-leave for any member there; admin to remove others). A forged/non-member org id is a no-leak forbidden.  Auth: gates on `current_user` + per-org standing, NOT `current_drive` (a driveless member of the target workspace must still be able to leave it). Attribution uses the user\'s email.
+     * Remove Member Web
+     */
+    async removeMemberWebWebMembersTargetUserIdRemovePost(requestParameters: RemoveMemberWebWebMembersTargetUserIdRemovePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.removeMemberWebWebMembersTargetUserIdRemovePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for renameArtifactRouteV0ArtifactsArtIdPatch without sending the request
      */
     async renameArtifactRouteV0ArtifactsArtIdPatchRequestOpts(requestParameters: RenameArtifactRouteV0ArtifactsArtIdPatchRequest): Promise<runtime.RequestOpts> {
@@ -5516,6 +6409,259 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async renameArtifactRouteV0ArtifactsArtIdPatch(requestParameters: RenameArtifactRouteV0ArtifactsArtIdPatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ArtifactOut> {
         const response = await this.renameArtifactRouteV0ArtifactsArtIdPatchRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for renameDriveWebWebDrivesDriveIdRenamePost without sending the request
+     */
+    async renameDriveWebWebDrivesDriveIdRenamePostRequestOpts(requestParameters: RenameDriveWebWebDrivesDriveIdRenamePostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['driveId'] == null) {
+            throw new runtime.RequiredError(
+                'driveId',
+                'Required parameter "driveId" was null or undefined when calling renameDriveWebWebDrivesDriveIdRenamePost().'
+            );
+        }
+
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling renameDriveWebWebDrivesDriveIdRenamePost().'
+            );
+        }
+
+        if (requestParameters['csrf'] == null) {
+            throw new runtime.RequiredError(
+                'csrf',
+                'Required parameter "csrf" was null or undefined when calling renameDriveWebWebDrivesDriveIdRenamePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const consumes: runtime.Consume[] = [
+            { contentType: 'application/x-www-form-urlencoded' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['name'] != null) {
+            formParams.append('name', requestParameters['name'] as any);
+        }
+
+        if (requestParameters['csrf'] != null) {
+            formParams.append('csrf', requestParameters['csrf'] as any);
+        }
+
+
+        let urlPath = `/web/drives/{drive_id}/rename`;
+        urlPath = urlPath.replace('{drive_id}', encodeURIComponent(String(requestParameters['driveId'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: formParams,
+        };
+    }
+
+    /**
+     * Rename a drive the caller owns (workspaces-design §4.5).  Owner-only: `drives.get_owned_drive` returns None for a peer-owned / forged / soft-deleted id, which we treat as a silent no-op (no-leak) and bounce back to the dashboard.
+     * Rename Drive Web
+     */
+    async renameDriveWebWebDrivesDriveIdRenamePostRaw(requestParameters: RenameDriveWebWebDrivesDriveIdRenamePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.renameDriveWebWebDrivesDriveIdRenamePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Rename a drive the caller owns (workspaces-design §4.5).  Owner-only: `drives.get_owned_drive` returns None for a peer-owned / forged / soft-deleted id, which we treat as a silent no-op (no-leak) and bounce back to the dashboard.
+     * Rename Drive Web
+     */
+    async renameDriveWebWebDrivesDriveIdRenamePost(requestParameters: RenameDriveWebWebDrivesDriveIdRenamePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.renameDriveWebWebDrivesDriveIdRenamePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for renameWorkspaceWebWebWorkspacesOrgIdRenamePost without sending the request
+     */
+    async renameWorkspaceWebWebWorkspacesOrgIdRenamePostRequestOpts(requestParameters: RenameWorkspaceWebWebWorkspacesOrgIdRenamePostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling renameWorkspaceWebWebWorkspacesOrgIdRenamePost().'
+            );
+        }
+
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling renameWorkspaceWebWebWorkspacesOrgIdRenamePost().'
+            );
+        }
+
+        if (requestParameters['csrf'] == null) {
+            throw new runtime.RequiredError(
+                'csrf',
+                'Required parameter "csrf" was null or undefined when calling renameWorkspaceWebWebWorkspacesOrgIdRenamePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const consumes: runtime.Consume[] = [
+            { contentType: 'application/x-www-form-urlencoded' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['name'] != null) {
+            formParams.append('name', requestParameters['name'] as any);
+        }
+
+        if (requestParameters['csrf'] != null) {
+            formParams.append('csrf', requestParameters['csrf'] as any);
+        }
+
+
+        let urlPath = `/web/workspaces/{org_id}/rename`;
+        urlPath = urlPath.replace('{org_id}', encodeURIComponent(String(requestParameters['orgId'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: formParams,
+        };
+    }
+
+    /**
+     * Rename a workspace the caller administers (workspaces-design §4.6).  Admin-gated against the PATH org (not just the session) so a stale cookie can\'t redirect the rename. A non-admin / non-member is a no-leak no-op.
+     * Rename Workspace Web
+     */
+    async renameWorkspaceWebWebWorkspacesOrgIdRenamePostRaw(requestParameters: RenameWorkspaceWebWebWorkspacesOrgIdRenamePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.renameWorkspaceWebWebWorkspacesOrgIdRenamePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Rename a workspace the caller administers (workspaces-design §4.6).  Admin-gated against the PATH org (not just the session) so a stale cookie can\'t redirect the rename. A non-admin / non-member is a no-leak no-op.
+     * Rename Workspace Web
+     */
+    async renameWorkspaceWebWebWorkspacesOrgIdRenamePost(requestParameters: RenameWorkspaceWebWebWorkspacesOrgIdRenamePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.renameWorkspaceWebWebWorkspacesOrgIdRenamePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for resendInvitationWebWebInvitationsInvitationIdResendPost without sending the request
+     */
+    async resendInvitationWebWebInvitationsInvitationIdResendPostRequestOpts(requestParameters: ResendInvitationWebWebInvitationsInvitationIdResendPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['invitationId'] == null) {
+            throw new runtime.RequiredError(
+                'invitationId',
+                'Required parameter "invitationId" was null or undefined when calling resendInvitationWebWebInvitationsInvitationIdResendPost().'
+            );
+        }
+
+        if (requestParameters['csrf'] == null) {
+            throw new runtime.RequiredError(
+                'csrf',
+                'Required parameter "csrf" was null or undefined when calling resendInvitationWebWebInvitationsInvitationIdResendPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const consumes: runtime.Consume[] = [
+            { contentType: 'application/x-www-form-urlencoded' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['csrf'] != null) {
+            formParams.append('csrf', requestParameters['csrf'] as any);
+        }
+
+
+        let urlPath = `/web/invitations/{invitation_id}/resend`;
+        urlPath = urlPath.replace('{invitation_id}', encodeURIComponent(String(requestParameters['invitationId'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: formParams,
+        };
+    }
+
+    /**
+     * Admin re-mints + re-emails a pending invite (workspaces-design §8).
+     * Resend Invitation Web
+     */
+    async resendInvitationWebWebInvitationsInvitationIdResendPostRaw(requestParameters: ResendInvitationWebWebInvitationsInvitationIdResendPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.resendInvitationWebWebInvitationsInvitationIdResendPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Admin re-mints + re-emails a pending invite (workspaces-design §8).
+     * Resend Invitation Web
+     */
+    async resendInvitationWebWebInvitationsInvitationIdResendPost(requestParameters: ResendInvitationWebWebInvitationsInvitationIdResendPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.resendInvitationWebWebInvitationsInvitationIdResendPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -5703,6 +6849,83 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for revokeInvitationWebWebInvitationsInvitationIdRevokePost without sending the request
+     */
+    async revokeInvitationWebWebInvitationsInvitationIdRevokePostRequestOpts(requestParameters: RevokeInvitationWebWebInvitationsInvitationIdRevokePostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['invitationId'] == null) {
+            throw new runtime.RequiredError(
+                'invitationId',
+                'Required parameter "invitationId" was null or undefined when calling revokeInvitationWebWebInvitationsInvitationIdRevokePost().'
+            );
+        }
+
+        if (requestParameters['csrf'] == null) {
+            throw new runtime.RequiredError(
+                'csrf',
+                'Required parameter "csrf" was null or undefined when calling revokeInvitationWebWebInvitationsInvitationIdRevokePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const consumes: runtime.Consume[] = [
+            { contentType: 'application/x-www-form-urlencoded' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['csrf'] != null) {
+            formParams.append('csrf', requestParameters['csrf'] as any);
+        }
+
+
+        let urlPath = `/web/invitations/{invitation_id}/revoke`;
+        urlPath = urlPath.replace('{invitation_id}', encodeURIComponent(String(requestParameters['invitationId'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: formParams,
+        };
+    }
+
+    /**
+     * Admin revokes a pending invite (org-scoped, no-leak).
+     * Revoke Invitation Web
+     */
+    async revokeInvitationWebWebInvitationsInvitationIdRevokePostRaw(requestParameters: RevokeInvitationWebWebInvitationsInvitationIdRevokePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.revokeInvitationWebWebInvitationsInvitationIdRevokePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Admin revokes a pending invite (org-scoped, no-leak).
+     * Revoke Invitation Web
+     */
+    async revokeInvitationWebWebInvitationsInvitationIdRevokePost(requestParameters: RevokeInvitationWebWebInvitationsInvitationIdRevokePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.revokeInvitationWebWebInvitationsInvitationIdRevokePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for revokeLinkWebShareRidLinkShrIdRevokePost without sending the request
      */
     async revokeLinkWebShareRidLinkShrIdRevokePostRequestOpts(requestParameters: RevokeLinkWebShareRidLinkShrIdRevokePostRequest): Promise<runtime.RequestOpts> {
@@ -5760,6 +6983,163 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async revokeLinkWebShareRidLinkShrIdRevokePost(requestParameters: RevokeLinkWebShareRidLinkShrIdRevokePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
         const response = await this.revokeLinkWebShareRidLinkShrIdRevokePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for revokeUserTokenWebTokensRevokePost without sending the request
+     */
+    async revokeUserTokenWebTokensRevokePostRequestOpts(requestParameters: RevokeUserTokenWebTokensRevokePostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['tokenId'] == null) {
+            throw new runtime.RequiredError(
+                'tokenId',
+                'Required parameter "tokenId" was null or undefined when calling revokeUserTokenWebTokensRevokePost().'
+            );
+        }
+
+        if (requestParameters['csrf'] == null) {
+            throw new runtime.RequiredError(
+                'csrf',
+                'Required parameter "csrf" was null or undefined when calling revokeUserTokenWebTokensRevokePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const consumes: runtime.Consume[] = [
+            { contentType: 'application/x-www-form-urlencoded' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['tokenId'] != null) {
+            formParams.append('token_id', requestParameters['tokenId'] as any);
+        }
+
+        if (requestParameters['csrf'] != null) {
+            formParams.append('csrf', requestParameters['csrf'] as any);
+        }
+
+
+        let urlPath = `/web/tokens/revoke`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: formParams,
+        };
+    }
+
+    /**
+     * Revoke one of the caller\'s `ad_user_` tokens.  Ownership is enforced inside `user_tokens.revoke(token_id, user_id)` — the form\'s `token_id` is attacker-controllable, so we never revoke by id alone. A non-matching id is a silent no-op (same redirect).
+     * Revoke User Token
+     */
+    async revokeUserTokenWebTokensRevokePostRaw(requestParameters: RevokeUserTokenWebTokensRevokePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.revokeUserTokenWebTokensRevokePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Revoke one of the caller\'s `ad_user_` tokens.  Ownership is enforced inside `user_tokens.revoke(token_id, user_id)` — the form\'s `token_id` is attacker-controllable, so we never revoke by id alone. A non-matching id is a silent no-op (same redirect).
+     * Revoke User Token
+     */
+    async revokeUserTokenWebTokensRevokePost(requestParameters: RevokeUserTokenWebTokensRevokePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.revokeUserTokenWebTokensRevokePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for rotateDriveKeyWebWebDrivesDriveIdKeysRotatePost without sending the request
+     */
+    async rotateDriveKeyWebWebDrivesDriveIdKeysRotatePostRequestOpts(requestParameters: RotateDriveKeyWebWebDrivesDriveIdKeysRotatePostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['driveId'] == null) {
+            throw new runtime.RequiredError(
+                'driveId',
+                'Required parameter "driveId" was null or undefined when calling rotateDriveKeyWebWebDrivesDriveIdKeysRotatePost().'
+            );
+        }
+
+        if (requestParameters['csrf'] == null) {
+            throw new runtime.RequiredError(
+                'csrf',
+                'Required parameter "csrf" was null or undefined when calling rotateDriveKeyWebWebDrivesDriveIdKeysRotatePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const consumes: runtime.Consume[] = [
+            { contentType: 'application/x-www-form-urlencoded' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['csrf'] != null) {
+            formParams.append('csrf', requestParameters['csrf'] as any);
+        }
+
+
+        let urlPath = `/web/drives/{drive_id}/keys/rotate`;
+        urlPath = urlPath.replace('{drive_id}', encodeURIComponent(String(requestParameters['driveId'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: formParams,
+        };
+    }
+
+    /**
+     * Rotate a specific owned drive\'s `ad_live_` key + reveal once (workspaces-design §5.6). Owner-only (no-leak no-op otherwise).  The per-drive twin of `/web/keys/rotate` (which acts on the active drive). Pins the rotated drive active so the reveal on the api-keys tab shows the key for the drive the user just rotated.
+     * Rotate Drive Key Web
+     */
+    async rotateDriveKeyWebWebDrivesDriveIdKeysRotatePostRaw(requestParameters: RotateDriveKeyWebWebDrivesDriveIdKeysRotatePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.rotateDriveKeyWebWebDrivesDriveIdKeysRotatePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Rotate a specific owned drive\'s `ad_live_` key + reveal once (workspaces-design §5.6). Owner-only (no-leak no-op otherwise).  The per-drive twin of `/web/keys/rotate` (which acts on the active drive). Pins the rotated drive active so the reveal on the api-keys tab shows the key for the drive the user just rotated.
+     * Rotate Drive Key Web
+     */
+    async rotateDriveKeyWebWebDrivesDriveIdKeysRotatePost(requestParameters: RotateDriveKeyWebWebDrivesDriveIdKeysRotatePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.rotateDriveKeyWebWebDrivesDriveIdKeysRotatePostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -5962,6 +7342,94 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for setMemberRoleWebWebMembersTargetUserIdRolePost without sending the request
+     */
+    async setMemberRoleWebWebMembersTargetUserIdRolePostRequestOpts(requestParameters: SetMemberRoleWebWebMembersTargetUserIdRolePostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['targetUserId'] == null) {
+            throw new runtime.RequiredError(
+                'targetUserId',
+                'Required parameter "targetUserId" was null or undefined when calling setMemberRoleWebWebMembersTargetUserIdRolePost().'
+            );
+        }
+
+        if (requestParameters['role'] == null) {
+            throw new runtime.RequiredError(
+                'role',
+                'Required parameter "role" was null or undefined when calling setMemberRoleWebWebMembersTargetUserIdRolePost().'
+            );
+        }
+
+        if (requestParameters['csrf'] == null) {
+            throw new runtime.RequiredError(
+                'csrf',
+                'Required parameter "csrf" was null or undefined when calling setMemberRoleWebWebMembersTargetUserIdRolePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const consumes: runtime.Consume[] = [
+            { contentType: 'application/x-www-form-urlencoded' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['role'] != null) {
+            formParams.append('role', requestParameters['role'] as any);
+        }
+
+        if (requestParameters['csrf'] != null) {
+            formParams.append('csrf', requestParameters['csrf'] as any);
+        }
+
+
+        let urlPath = `/web/members/{target_user_id}/role`;
+        urlPath = urlPath.replace('{target_user_id}', encodeURIComponent(String(requestParameters['targetUserId'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: formParams,
+        };
+    }
+
+    /**
+     * Admin promotes/demotes a member. Last-admin demote is blocked (workspaces-design §4.4).
+     * Set Member Role Web
+     */
+    async setMemberRoleWebWebMembersTargetUserIdRolePostRaw(requestParameters: SetMemberRoleWebWebMembersTargetUserIdRolePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.setMemberRoleWebWebMembersTargetUserIdRolePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Admin promotes/demotes a member. Last-admin demote is blocked (workspaces-design §4.4).
+     * Set Member Role Web
+     */
+    async setMemberRoleWebWebMembersTargetUserIdRolePost(requestParameters: SetMemberRoleWebWebMembersTargetUserIdRolePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.setMemberRoleWebWebMembersTargetUserIdRolePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for setPublicWebShareRidPublicPost without sending the request
      */
     async setPublicWebShareRidPublicPostRequestOpts(requestParameters: SetPublicWebShareRidPublicPostRequest): Promise<runtime.RequestOpts> {
@@ -6111,7 +7579,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Default settings landing — Account info + Danger zone.
+     * Default settings landing — Account info + Usage + Danger zone.  Usage folded in here (was a standalone `/settings/usage` tab): the same meter data is fetched via `_usage_context` and rendered as a section on this page.
      * Settings Account
      */
     async settingsAccountSettingsGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
@@ -6126,7 +7594,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Default settings landing — Account info + Danger zone.
+     * Default settings landing — Account info + Usage + Danger zone.  Usage folded in here (was a standalone `/settings/usage` tab): the same meter data is fetched via `_usage_context` and rendered as a section on this page.
      * Settings Account
      */
     async settingsAccountSettingsGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
@@ -6154,7 +7622,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * API key tab. Also where reveal_key is rendered after rotation; the reveal is consumed (removed from session) on first read.
+     * API key tab. Also where reveal_key is rendered after rotation; the reveal is consumed (removed from session) on first read.  Surfaces two credential classes (workspaces-design §5.6):   * the drive\'s `ad_live_` per-drive key (`drive.api_key_prefix`,     rotate/delete) — unchanged from v0.   * the user\'s `ad_user_` identity tokens (`user_tokens`, mint/list/     revoke). Minting reveals the raw token once via the same     `reveal_key`-in-session mechanism as the drive key.
      * Settings Api Keys
      */
     async settingsApiKeysSettingsApiKeysGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
@@ -6169,7 +7637,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * API key tab. Also where reveal_key is rendered after rotation; the reveal is consumed (removed from session) on first read.
+     * API key tab. Also where reveal_key is rendered after rotation; the reveal is consumed (removed from session) on first read.  Surfaces two credential classes (workspaces-design §5.6):   * the drive\'s `ad_live_` per-drive key (`drive.api_key_prefix`,     rotate/delete) — unchanged from v0.   * the user\'s `ad_user_` identity tokens (`user_tokens`, mint/list/     revoke). Minting reveals the raw token once via the same     `reveal_key`-in-session mechanism as the drive key.
      * Settings Api Keys
      */
     async settingsApiKeysSettingsApiKeysGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
@@ -6221,15 +7689,15 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates request options for settingsUsageSettingsUsageGet without sending the request
+     * Creates request options for settingsWorkspaceSettingsWorkspaceGet without sending the request
      */
-    async settingsUsageSettingsUsageGetRequestOpts(): Promise<runtime.RequestOpts> {
+    async settingsWorkspaceSettingsWorkspaceGetRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
 
-        let urlPath = `/settings/usage`;
+        let urlPath = `/settings/workspace`;
 
         return {
             path: urlPath,
@@ -6240,11 +7708,11 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Usage tab — current-period meters against tier caps.  Reads the same data as `GET /v0/drives/me/usage` but renders it as HTML directly so the page doesn\'t need a JS fetch round-trip. The template computes the percentage and warning state per-row from the `used` / `limit` pair; `limit == 0` is the unlimited sentinel and the template hides the cap line in that case.
-     * Settings Usage
+     * Standalone workspace settings page (decision O4): members list + pending invites + invite form + role change + remove.  Admin-gated for the management actions; a member sees the roster but no management controls (the template hides them unless `is_admin`). The active workspace is the session\'s `active_organization_id`.
+     * Settings Workspace
      */
-    async settingsUsageSettingsUsageGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
-        const requestOptions = await this.settingsUsageSettingsUsageGetRequestOpts();
+    async settingsWorkspaceSettingsWorkspaceGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+        const requestOptions = await this.settingsWorkspaceSettingsWorkspaceGetRequestOpts();
         const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -6255,11 +7723,11 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Usage tab — current-period meters against tier caps.  Reads the same data as `GET /v0/drives/me/usage` but renders it as HTML directly so the page doesn\'t need a JS fetch round-trip. The template computes the percentage and warning state per-row from the `used` / `limit` pair; `limit == 0` is the unlimited sentinel and the template hides the cap line in that case.
-     * Settings Usage
+     * Standalone workspace settings page (decision O4): members list + pending invites + invite form + role change + remove.  Admin-gated for the management actions; a member sees the roster but no management controls (the template hides them unless `is_admin`). The active workspace is the session\'s `active_organization_id`.
+     * Settings Workspace
      */
-    async settingsUsageSettingsUsageGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
-        const response = await this.settingsUsageSettingsUsageGetRaw(initOverrides);
+    async settingsWorkspaceSettingsWorkspaceGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
+        const response = await this.settingsWorkspaceSettingsWorkspaceGetRaw(initOverrides);
         return await response.value();
     }
 
@@ -6352,20 +7820,13 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates request options for switchOrgWebSwitchOrgPost without sending the request
+     * Creates request options for switchDriveWebSwitchPost without sending the request
      */
-    async switchOrgWebSwitchOrgPostRequestOpts(requestParameters: SwitchOrgWebSwitchOrgPostRequest): Promise<runtime.RequestOpts> {
-        if (requestParameters['organizationId'] == null) {
-            throw new runtime.RequiredError(
-                'organizationId',
-                'Required parameter "organizationId" was null or undefined when calling switchOrgWebSwitchOrgPost().'
-            );
-        }
-
+    async switchDriveWebSwitchPostRequestOpts(requestParameters: SwitchDriveWebSwitchPostRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['csrf'] == null) {
             throw new runtime.RequiredError(
                 'csrf',
-                'Required parameter "csrf" was null or undefined when calling switchOrgWebSwitchOrgPost().'
+                'Required parameter "csrf" was null or undefined when calling switchDriveWebSwitchPost().'
             );
         }
 
@@ -6387,6 +7848,10 @@ export class DefaultApi extends runtime.BaseAPI {
             formParams = new URLSearchParams();
         }
 
+        if (requestParameters['driveId'] != null) {
+            formParams.append('drive_id', requestParameters['driveId'] as any);
+        }
+
         if (requestParameters['organizationId'] != null) {
             formParams.append('organization_id', requestParameters['organizationId'] as any);
         }
@@ -6396,7 +7861,7 @@ export class DefaultApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/web/switch-org`;
+        let urlPath = `/web/switch`;
 
         return {
             path: urlPath,
@@ -6408,11 +7873,11 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Switch the session\'s active organization (and thus the active drive).  A user can belong to multiple orgs (e.g. a personal org + a shared/business org). v1 binds the active org at login with no way to change it; this lets a member flip it. Membership is re-verified server-side (the form value is attacker-controllable), then the session cookie is re-minted with the new active org — `current_drive`\'s membership JOIN enforces access on the next request. Any `reveal_key` is dropped: it was scoped to the old drive.
-     * Switch Org
+     * Switch the active workspace (and drive) — workspace-first (workspaces-design §4.3).  Two modes, mirroring the Linear/Slack/GitHub \"switch by workspace\" model:    * **Workspace switch** (`organization_id`): membership-check the     target org for the user; on success set it active and pin the     user\'s OLDEST owned live drive there (deterministic), or None if     they own none — in which case the dashboard\'s     `resolve_driveless_member` renders the \"create your first drive\"     empty state for that workspace.   * **Drive switch** (`drive_id`): validate the user OWNS the posted     drive (and is a live member of its workspace) via     `drives_svc.user_owns_drive`, then set both org + drive active.     Lets a multi-drive workspace pick a specific drive. If BOTH are     posted, the explicit `drive_id` wins (subject to its own check).  Both forms are no-leak: a forged / peer-owned / non-member target fails its check and is treated identically to \"no such target\" (303 back to /dashboard without mutating the session — no leak, no error oracle).
+     * Switch Drive
      */
-    async switchOrgWebSwitchOrgPostRaw(requestParameters: SwitchOrgWebSwitchOrgPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        const requestOptions = await this.switchOrgWebSwitchOrgPostRequestOpts(requestParameters);
+    async switchDriveWebSwitchPostRaw(requestParameters: SwitchDriveWebSwitchPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.switchDriveWebSwitchPostRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -6423,11 +7888,11 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Switch the session\'s active organization (and thus the active drive).  A user can belong to multiple orgs (e.g. a personal org + a shared/business org). v1 binds the active org at login with no way to change it; this lets a member flip it. Membership is re-verified server-side (the form value is attacker-controllable), then the session cookie is re-minted with the new active org — `current_drive`\'s membership JOIN enforces access on the next request. Any `reveal_key` is dropped: it was scoped to the old drive.
-     * Switch Org
+     * Switch the active workspace (and drive) — workspace-first (workspaces-design §4.3).  Two modes, mirroring the Linear/Slack/GitHub \"switch by workspace\" model:    * **Workspace switch** (`organization_id`): membership-check the     target org for the user; on success set it active and pin the     user\'s OLDEST owned live drive there (deterministic), or None if     they own none — in which case the dashboard\'s     `resolve_driveless_member` renders the \"create your first drive\"     empty state for that workspace.   * **Drive switch** (`drive_id`): validate the user OWNS the posted     drive (and is a live member of its workspace) via     `drives_svc.user_owns_drive`, then set both org + drive active.     Lets a multi-drive workspace pick a specific drive. If BOTH are     posted, the explicit `drive_id` wins (subject to its own check).  Both forms are no-leak: a forged / peer-owned / non-member target fails its check and is treated identically to \"no such target\" (303 back to /dashboard without mutating the session — no leak, no error oracle).
+     * Switch Drive
      */
-    async switchOrgWebSwitchOrgPost(requestParameters: SwitchOrgWebSwitchOrgPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
-        const response = await this.switchOrgWebSwitchOrgPostRaw(requestParameters, initOverrides);
+    async switchDriveWebSwitchPost(requestParameters: SwitchDriveWebSwitchPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.switchDriveWebSwitchPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -7574,7 +9039,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Cookie-authed write of an image artifact. Used by the SnipIt web editor (`/a/{art_id}/edit`) for autosave; the bearer-authed `PUT /v0/artifacts/{path}` won\'t accept a cookie-only session.  Owner-only; the path is checked against the signed-in user\'s drive. Accepts `image/_*` (SnipIt editor autosave) and `application/pdf` (the PDF viewer\'s annotation save) only — refuses everything else so the editor can\'t smuggle markdown/HTML or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved `_wiki/` namespace rejection, per-tier max-bytes cap (both `Content-Length` short-circuit and post-body length check) — so a logged-in user can\'t bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the `X-CSRF-Token` header (see `csrf.require_csrf_header`); the editor reads the token from the `<meta name=\"csrf-token\">` tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor\'s 1.5s autosave can sustain without flagging abuse.
+     * Cookie-authed write of an image artifact. Used by the SnipIt web editor (`/a/{art_id}/edit`) for autosave; the bearer-authed `PUT /v0/artifacts/{path}` won\'t accept a cookie-only session.  Owner-only; the path is checked against the signed-in user\'s drive. Accepts `image/_*` (SnipIt editor autosave) and `application/pdf` (the PDF viewer\'s annotation save) only — refuses everything else so the editor can\'t smuggle markdown/HTML or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved `_wiki/` namespace rejection, per-tier max-bytes cap (both `Content-Length` short-circuit and post-body length check) — so a logged-in user can\'t bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the `X-CSRF-Token` header (see `csrf.require_csrf_header`); the editor reads the token from the `<meta name=\"csrf-token\">` tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor\'s 1.5s autosave can sustain without flagging abuse.  Cross-workspace (design §4.3): the editor page is reached by a stable-id URL that may name a drive outside the session\'s active workspace, so the write must target the RESOURCE\'s drive, not the active one. The editor sends the resolved drive in an `X-Drive-Id` header; we authorize ownership of THAT drive via `resolve_owned_drive` (it returns None for a forged / unowned id → 401, never a write). Absent header ⇒ fall back to `current_drive` (pre-fast-follow behavior; a cached old client still works, only without the cross-workspace fix).
      * Web Put Artifact
      */
     async webPutArtifactWebArtifactsPathPutRaw(requestParameters: WebPutArtifactWebArtifactsPathPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
@@ -7589,7 +9054,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Cookie-authed write of an image artifact. Used by the SnipIt web editor (`/a/{art_id}/edit`) for autosave; the bearer-authed `PUT /v0/artifacts/{path}` won\'t accept a cookie-only session.  Owner-only; the path is checked against the signed-in user\'s drive. Accepts `image/_*` (SnipIt editor autosave) and `application/pdf` (the PDF viewer\'s annotation save) only — refuses everything else so the editor can\'t smuggle markdown/HTML or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved `_wiki/` namespace rejection, per-tier max-bytes cap (both `Content-Length` short-circuit and post-body length check) — so a logged-in user can\'t bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the `X-CSRF-Token` header (see `csrf.require_csrf_header`); the editor reads the token from the `<meta name=\"csrf-token\">` tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor\'s 1.5s autosave can sustain without flagging abuse.
+     * Cookie-authed write of an image artifact. Used by the SnipIt web editor (`/a/{art_id}/edit`) for autosave; the bearer-authed `PUT /v0/artifacts/{path}` won\'t accept a cookie-only session.  Owner-only; the path is checked against the signed-in user\'s drive. Accepts `image/_*` (SnipIt editor autosave) and `application/pdf` (the PDF viewer\'s annotation save) only — refuses everything else so the editor can\'t smuggle markdown/HTML or anything else through this surface. Mirrors every guard the v0 PUT enforces — write quota, reserved `_wiki/` namespace rejection, per-tier max-bytes cap (both `Content-Length` short-circuit and post-body length check) — so a logged-in user can\'t bypass quota or write into the wiki by routing autosaves through this endpoint instead of the v0 API. CSRF is checked via the `X-CSRF-Token` header (see `csrf.require_csrf_header`); the editor reads the token from the `<meta name=\"csrf-token\">` tag rendered into the edit page. Rate-limited per-IP/user at the same cadence the editor\'s 1.5s autosave can sustain without flagging abuse.  Cross-workspace (design §4.3): the editor page is reached by a stable-id URL that may name a drive outside the session\'s active workspace, so the write must target the RESOURCE\'s drive, not the active one. The editor sends the resolved drive in an `X-Drive-Id` header; we authorize ownership of THAT drive via `resolve_owned_drive` (it returns None for a forged / unowned id → 401, never a write). Absent header ⇒ fall back to `current_drive` (pre-fast-follow behavior; a cached old client still works, only without the cross-workspace fix).
      * Web Put Artifact
      */
     async webPutArtifactWebArtifactsPathPut(requestParameters: WebPutArtifactWebArtifactsPathPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {

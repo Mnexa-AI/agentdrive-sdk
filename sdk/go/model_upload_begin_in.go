@@ -31,6 +31,8 @@ type UploadBeginIn struct {
 	ActorName NullableString `json:"actor_name,omitempty"`
 	ChangeSummary NullableString `json:"change_summary,omitempty"`
 	IfMatch NullableInt32 `json:"if_match,omitempty"`
+	// Web origin (scheme://host[:port]) of the browser that will PUT the bytes, e.g. `https://app.example.com`. Set this when the `upload_url` is handed to browser code: GCS binds CORS at session initiate, so the returned session only echoes `Access-Control-Allow-Origin` (and is thus PUT-able from a browser) when opened with the caller's origin. A trusted backend relaying a browser upload forwards the browser's `Origin` here. Omit for server/desktop uploads (no CORS enforcement).
+	CorsOrigin NullableString `json:"cors_origin,omitempty"`
 }
 
 type _UploadBeginIn UploadBeginIn
@@ -414,6 +416,48 @@ func (o *UploadBeginIn) UnsetIfMatch() {
 	o.IfMatch.Unset()
 }
 
+// GetCorsOrigin returns the CorsOrigin field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *UploadBeginIn) GetCorsOrigin() string {
+	if o == nil || IsNil(o.CorsOrigin.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.CorsOrigin.Get()
+}
+
+// GetCorsOriginOk returns a tuple with the CorsOrigin field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *UploadBeginIn) GetCorsOriginOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CorsOrigin.Get(), o.CorsOrigin.IsSet()
+}
+
+// HasCorsOrigin returns a boolean if a field has been set.
+func (o *UploadBeginIn) HasCorsOrigin() bool {
+	if o != nil && o.CorsOrigin.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCorsOrigin gets a reference to the given NullableString and assigns it to the CorsOrigin field.
+func (o *UploadBeginIn) SetCorsOrigin(v string) {
+	o.CorsOrigin.Set(&v)
+}
+// SetCorsOriginNil sets the value for CorsOrigin to be an explicit nil
+func (o *UploadBeginIn) SetCorsOriginNil() {
+	o.CorsOrigin.Set(nil)
+}
+
+// UnsetCorsOrigin ensures that no value is present for CorsOrigin, not even an explicit nil
+func (o *UploadBeginIn) UnsetCorsOrigin() {
+	o.CorsOrigin.Unset()
+}
+
 func (o UploadBeginIn) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -449,6 +493,9 @@ func (o UploadBeginIn) ToMap() (map[string]interface{}, error) {
 	}
 	if o.IfMatch.IsSet() {
 		toSerialize["if_match"] = o.IfMatch.Get()
+	}
+	if o.CorsOrigin.IsSet() {
+		toSerialize["cors_origin"] = o.CorsOrigin.Get()
 	}
 	return toSerialize, nil
 }

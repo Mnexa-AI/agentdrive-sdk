@@ -33,6 +33,7 @@ class ArtifactOut(BaseModel):
     drive_id: StrictStr
     path: StrictStr
     url: StrictStr
+    permalink: StrictStr
     content_type: StrictStr
     file_type: StrictStr
     size_bytes: StrictInt
@@ -46,7 +47,7 @@ class ArtifactOut(BaseModel):
     created_at: datetime
     updated_at: datetime
     llm_index: Optional[Dict[str, Any]] = None
-    __properties: ClassVar[List[str]] = ["id", "drive_id", "path", "url", "content_type", "file_type", "size_bytes", "hash", "version_number", "labels", "metadata", "source", "indexed_at", "embedded_at", "created_at", "updated_at", "llm_index"]
+    __properties: ClassVar[List[str]] = ["id", "drive_id", "path", "url", "permalink", "content_type", "file_type", "size_bytes", "hash", "version_number", "labels", "metadata", "source", "indexed_at", "embedded_at", "created_at", "updated_at", "llm_index"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -126,6 +127,7 @@ class ArtifactOut(BaseModel):
             "drive_id": obj.get("drive_id"),
             "path": obj.get("path"),
             "url": obj.get("url"),
+            "permalink": obj.get("permalink"),
             "content_type": obj.get("content_type"),
             "file_type": obj.get("file_type"),
             "size_bytes": obj.get("size_bytes"),

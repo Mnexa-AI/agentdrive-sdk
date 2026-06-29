@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **DriveId** | **string** |  | 
 **Path** | **string** |  | 
 **Url** | **string** |  | 
+**Permalink** | **string** |  | 
 **ContentType** | **string** |  | 
 **FileType** | **string** |  | 
 **SizeBytes** | **int32** |  | 
@@ -26,7 +27,7 @@ Name | Type | Description | Notes
 
 ### NewArtifactOut
 
-`func NewArtifactOut(id string, driveId string, path string, url string, contentType string, fileType string, sizeBytes int32, hash string, createdAt time.Time, updatedAt time.Time, ) *ArtifactOut`
+`func NewArtifactOut(id string, driveId string, path string, url string, permalink string, contentType string, fileType string, sizeBytes int32, hash string, createdAt time.Time, updatedAt time.Time, ) *ArtifactOut`
 
 NewArtifactOut instantiates a new ArtifactOut object
 This constructor will assign default values to properties that have it defined,
@@ -119,6 +120,26 @@ and a boolean to check if the value has been set.
 `func (o *ArtifactOut) SetUrl(v string)`
 
 SetUrl sets Url field to given value.
+
+
+### GetPermalink
+
+`func (o *ArtifactOut) GetPermalink() string`
+
+GetPermalink returns the Permalink field if non-nil, zero value otherwise.
+
+### GetPermalinkOk
+
+`func (o *ArtifactOut) GetPermalinkOk() (*string, bool)`
+
+GetPermalinkOk returns a tuple with the Permalink field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPermalink
+
+`func (o *ArtifactOut) SetPermalink(v string)`
+
+SetPermalink sets Permalink field to given value.
 
 
 ### GetContentType
